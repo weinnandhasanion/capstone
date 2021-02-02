@@ -1,0 +1,168 @@
+// colors
+$primary: #2c2c2c;
+$lighter: rgb(77, 77, 77);
+$red: #f53939;
+$green: #117600;
+$disabled: #E5E5E5;
+$disabledText: #A0A0A0;
+
+// html body default
+html, body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #bdc3c7;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom right, #f53939, #a0a0a0);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom right, #f53939, #a0a0a0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: $primary;
+}
+
+// fonts
+$poppins: 'Poppins', sans-serif;
+a {
+  text-decoration: none;
+  color: $primary;
+  font-weight: 400;
+  transition: .3s;
+
+  &:hover {
+    color: white;
+    text-decoration: underline;
+  }
+}
+p, h1, h2, h3, h4, h5, h6 {
+  margin: 0 !important;
+}
+.text-center {
+  text-align: center !important;
+}
+
+// font colors
+.text-primary {
+  color: $primary !important;
+}
+.text-white {
+  color: white !important;
+}
+.text-lighter {
+  color: $lighter !important;
+}
+.text-red {
+  color: $red !important;
+}
+.text-green {
+  color: $green !important;
+}
+.text-disabled {
+  color: $disabledText !important;
+}
+
+// backgrounds
+.bg-lighter {
+  background: $lighter !important;
+}
+.bg-green {
+  background: $green !important;
+}
+.bg-superlight {
+  background: #ebebeb !important;
+}
+
+.shadow-1 {
+  box-shadow: 0 0 20px 1px $primary;
+}
+
+// font weights
+.fw-100 {
+  font-weight: 100;
+}
+.fw-200 {
+  font-weight: 200;
+}
+.fw-300 {
+  font-weight: 300;
+}
+.fw-400 {
+  font-weight: 400;
+}
+.fw-500 {
+  font-weight: 500;
+}
+.fw-600 {
+  font-weight: 600;
+}
+.fw-700 {
+  font-weight: 700;
+}
+.fw-800 {
+  font-weight: 800;
+}
+.fw-900 {
+  font-weight: 900;
+}
+.fw-normal {
+  font-weight: normal;
+}
+.fw-lighter {
+  font-weight: lighter;
+}
+.fw-bold {
+  font-weight: bold;
+}
+
+// modals
+.modal {
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  z-index: 21;
+  position: absolute;
+  top: 0;
+  margin: 0;
+  align-items: center;
+
+  .modal-sm {
+    width: 60%;
+    margin: auto;
+    background: white;
+    border-radius: 15px;
+    padding: 7.5% 5%;
+    position: relative;
+  }
+
+  .modal-md {
+    width: 75%;
+    margin: auto;
+    background: white;
+    border-radius: 15px;
+    padding: 7.5% 5%;
+    position: relative;
+  }
+
+  .modal-lg {
+    width: 90%;
+    margin: auto;
+    background: white;
+    border-radius: 15px;
+    padding: 7.5% 5%;
+    position: relative;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .close-modal {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+}

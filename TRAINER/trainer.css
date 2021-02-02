@@ -1,0 +1,82 @@
+body::-webkit-scrollbar {
+      width: 0 !important;
+    }
+      
+  input[type=text], input[type=date] {
+  
+    height: 45px;
+  } 
+
+  .train select{
+    height: 45px;
+  
+  }
+
+  .bot button{
+    background-color:#DF3A01;
+    color:white;
+  } 
+  .bot{
+    height:70px;
+    background-color:honeydew;
+  }
+
+  .viewbutton input[type="text"]{
+    width:220px;
+  }
+
+  .card-bodyzz {  
+    max-height: 325px;
+    overflow-y: auto;
+  }
+
+  .flexHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  table > thead > tr > th {
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    
+    
+  }
+  
+  th, td, tr{
+    text-align: center;
+  }
+
+  
+  .table-loader {
+        width: 100%;
+        background-color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .table-parent {
+        display: none;
+      }
+
+      .no-data-div {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        height: 375px;
+        width: 100%;
+        position: absolute;
+      }
+ 
+
+    .validation {
+      display: none;
+      margin-left: 0 !important;
+    }

@@ -1,0 +1,184 @@
+@import 'input', 'globals', 'buttons', 'loader', 'sidebar';
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+main {
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+
+  .menu {
+    padding-top: 20px;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+
+    h2 {
+      padding-left: 10px;
+    }
+  }
+  
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+
+  .profile-cont {
+    position: absolute;
+    top: 9vh;
+    z-index: 2;
+    padding-top: 20px;
+    padding-left: 20px;
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+
+    .name-id {
+      margin: 5px;
+      margin-top: 0 !important;
+
+      h4 {
+        padding-top: 0 !important;
+        font-size: .9em;
+      }
+    }
+  }
+
+  .main-cont {
+    padding-top: 0 !important;
+    padding: 30px;
+    background: white;
+    position: absolute;
+    width: 100%;
+    min-height: 80vh;
+    top: 20vh;
+    border-radius: 25px 25px 0 0;
+
+    .edit-btn-cont {
+      height: 10vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .edit-btn {
+        width: 40%;
+        z-index: 3;
+      }
+    }
+
+    .member-info h2 {
+      padding-top: 10px;
+    }
+  
+    .profile-details {
+      display: flex;
+      flex-direction: column;
+  
+      span {
+        display: flex;
+        align-items: center;
+        padding-bottom: 5px;
+  
+        small {
+          padding-left: 5px;
+        }
+      }
+    }
+
+    .details {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      span {
+        display: flex;
+    
+        p {
+          padding-left: 5px;
+          font-size: 15px;
+        }
+      }
+
+      button {
+        width: 80%;
+        margin: 0 !important;
+        margin-top: 10px !important;
+      }
+    }
+  }
+}
+
+// iPhone 6/7/8 Plus
+@media screen and (min-width: 414px) {
+  body {
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .profile-cont {
+    top: 10vh !important;
+
+    img {
+      height: 19vw !important;
+    }
+  }
+}
+
+// iPhone 6/7/8
+@media screen and (max-width: 375px) {
+  body {
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .profile-cont {
+    top: 9vh !important;
+  }
+}
+// iPhone X
+@media screen and (min-height: 812px) {
+  body {
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .profile-cont {
+    top: 11vh !important;
+  }
+
+  .main-cont {
+    height: 80vh !important;
+  }
+}
+
+// iPhone 5/SE
+@media screen and (max-width: 320px) {
+  body {
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  p {
+    font-size: .9em !important;
+  }
+  .menu {
+    h2 {
+      font-size: 1.2rem !important;
+    }
+  }
+
+  .member-info h2 {
+    font-size: 1.2rem;
+  }
+
+ .profile-cont {
+   top: 8vh !important;
+ }
+
+ .btn-reg {
+   font-size: .8rem !important;
+ }
+}

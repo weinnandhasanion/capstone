@@ -1,0 +1,13 @@
+.deets {
+  display: none;
+}
+
+hr {
+  display: none;
+}
+
+.list-content {
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+}
