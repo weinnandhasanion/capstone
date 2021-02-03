@@ -148,7 +148,7 @@
           <h4 class="mb-1 mb-sm-1 pt-1">
             <a data-toggle="modal" data-target="#add"><i style="color:#DF3A01; font-size: 25px;" data-toggle="tooltip"
                 data-placement="top" title="Add New Promo" class="fas fa-plus mr-4"></i></a>
-            Promos ni cagot
+            Promos
           </h4>
           <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" id="sort-permanent" class="btn btn-sm btn-outline-orange">Permanent
