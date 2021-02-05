@@ -4,7 +4,7 @@ require('connect.php');
 
 $id = $_REQUEST['id'];
 
-$sql = "SELECT * FROM `reports` WHERE `report_id` = " . intval($id) . "";
+$sql = "SELECT * FROM `logtrail_doing` WHERE `login_id` = " . intval($id) . "";
 $res = mysqli_query($conn, $sql);
 
 if($row = mysqli_fetch_assoc($res)) {

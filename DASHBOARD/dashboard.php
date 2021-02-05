@@ -59,7 +59,7 @@
 
           ?> 
 
-        <a href="/PROJECT/index.php">
+  <a href="./../index_admin.php">
           <button id="logoutBtn" type="button" class="btn btn-sm btn-danger"
           data-id="<?php echo $row['login_id'] ?>"
           onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>

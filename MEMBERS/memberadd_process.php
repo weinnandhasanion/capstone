@@ -4,6 +4,7 @@ require('connect.php');
 ?>
 
 <?php
+date_default_timezone_set('Asia/Manila');
 
 if($_SESSION['admin_id']){
     $session_admin_id = $_SESSION['admin_id'];
@@ -55,33 +56,78 @@ else if(strlen($phone) == 11){
         phone,member_type,date_registered,program_name )         
         VALUES ( '$first_name', '$last_name', '$gender', '$birthdate', '$email', 
         '$address', '$phone', '$member_type', '$date_registered','$program_name')";
-        mysqli_query($conn, $sql);
+        $query_run = mysqli_query($conn, $sql);
         
 
-    // INSERTINGN REPORTS FOR THE ADMIN INFO
-    $sql0 = "SELECT first_name,last_name,admin_id FROM admin WHERE admin_id = $session_admin_id";
+    if($query_run){
+    //this is for puting member_id in the array
+    $data = array();
+    $member_id;
+    $sql3 = "SELECT * FROM member ORDER BY member_id DESC";
+    $res3 = mysqli_query($conn, $sql3);
+    if($res3) {
+        while($row = mysqli_fetch_assoc($res3)) {
+            $data[] = $row["member_id"];
+        }
+
+        $member_id = $data[0];
+    }
+
+    $login_id_data = array();
+    $login_id;
+    $sql31 = "SELECT * FROM logtrail ORDER BY login_id DESC";
+    $res31 = mysqli_query($conn, $sql31);
+    if($res31) {
+        while($row123 = mysqli_fetch_assoc($res31)) {
+            $login_id_data[] = $row123["login_id"];
+        }
+
+        $login_id = $login_id_data[0];
+    }
+
+    
+    
+    // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
+    $sql0 = "SELECT * FROM admin WHERE admin_id = $session_admin_id";
     $query_run = mysqli_query($conn, $sql0);
     $rows = mysqli_fetch_assoc($query_run);
 
-    $admin_fname = $rows["first_name"];
-    $admin_lname = $rows["last_name"];
+    $last_name = $rows["last_name"];
     $admin_id = $rows["admin_id"];
-    $description = "Added a member";
-    $member_fname = "NOT YET";
-    $member_lname = "FETCH";
-    $identity = "member";
-   
-    $sql1 = "INSERT INTO `reports` ( `admin_id`,`admin_fname`,`admin_lname`,
-    member_fname,member_lname,`description`,`identity`)
-    VALUES ( '$admin_id', '$admin_fname', '$admin_lname', '$member_fname','$member_lname','$description','$identity')";
-    $query_run = mysqli_query($conn, $sql1);
+    // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
+    $sql2 = "SELECT * FROM member WHERE member_id = '$member_id'";
+    $query_run2 = mysqli_query($conn, $sql2);
+    $rows2 = mysqli_fetch_assoc($query_run2);
+
+    $member_id_new = $rows2["member_id"];
+    $user_fname = $rows2["first_name"];
+    $user_lname = $rows2["last_name"];
+    $first_name = $rows["first_name"];
+
+    // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
+    $sql3 = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
+    $query_run3 = mysqli_query($conn, $sql3);
+    $rows3 = mysqli_fetch_assoc($query_run3);
     
+    $login_id_new = $rows3["login_id"];
+    $description = "Added a member";
+    $identity = "member";
+    $timeNow = date("h:i A");
+
+
+    $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
+    `description`, `identity`,`time`)
+    VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
+    mysqli_query($conn, $sql1);
        
-        echo ("<script LANGUAGE='JavaScript'>
-				    window.alert('member is been added.');
-				    window.location.href='/PROJECT/MEMBERS/members.php';
-                    </script>");
-        
+    
+    
+
+    echo ("<script LANGUAGE='JavaScript'>
+			window.alert('member is been added.');
+			window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+    }
 
 // EXIT IF DLE 11 DIGITS IMONG PHONE NUMBER    
 }else{

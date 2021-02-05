@@ -186,7 +186,7 @@
 
           ?> 
 
-        <a href="/PROJECT/index.php">
+        <a href="./../index_admin.php">
           <button id="logoutBtn" type="button" class="btn btn-sm btn-danger"
           data-id="<?php echo $row['login_id'] ?>"
           onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
@@ -261,17 +261,36 @@
                   <th>Date Login</th>
                   <th>Time login</th>
                   <th>Time Logout</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody id='tbody'>
               <?php 
+
+
+                  //this is for puting logtrail_doing_id in the array
+                  $logtrail = array();
+                  $login_id;
+                  $log123 = "SELECT * FROM logtrail ORDER BY login_id DESC";
+                  $logtrail123 = mysqli_query($conn, $log123);
+                    if($logtrail123) {
+                      while($rowrow123 = mysqli_fetch_assoc($logtrail123)) {
+                         $logtrail[] = $rowrow123["login_id"];
+                   }
+ 
+                    $login_id = $logtrail[0];
+                  }
+
+            
+              
               $sql1 = "SELECT * FROM logtrail ORDER BY login_id DESC";
               $result1 = mysqli_query($conn, $sql1);
               $logtrail = mysqli_num_rows($result1);
 
               if($logtrail > 0 ){
                 while($row = mysqli_fetch_assoc($result1) ) {
-
+                $login_id_log = $row['login_id'];
+                $no_action = "No action";   
                 $dateandtime_login = strtotime($row['dateandtime_login']);
                 $dateandtime_logout = strtotime($row['dateandtime_logout'])
               ?>
@@ -282,6 +301,17 @@
                   <td><?php echo date('F d Y', $dateandtime_login) ?></td>
                   <td><?php echo date('h:i A', $dateandtime_login) ?></td>
                   <td><?php echo ($dateandtime_logout != null ? date('h:i A', $dateandtime_logout) : false); ?></td>
+                  <td><?php 
+                        //condition 
+                      ?>
+                  <span data-toggle="tooltip" data-placement="top" title="View doings">
+                  <i style="cursor: pointer; color:brown; font-size: 25px;" 
+                    data-toggle="modal" data-target="#view_member"
+                    class=" fa fa-eye mx-2 get_id" data-id = '<?php echo $row["login_id"]?>'
+                    onclick="member(this)"></i>
+                  </span>
+                  
+                  
               </tr>
              <?php }} ?>
                   
@@ -309,6 +339,46 @@
     </div>
   </main>
   
+
+   <!------------------------------------------------- Regular Payment modal----------------------------------------->
+<div class="modal fade" id="view_member">
+    <div class="modal-dialog" >
+      <div class="modal-content" style="width: 700px;">
+        <div class="modal-header" style="background-color: #DF3A01; color: white;">
+              <h4 class="modal-title" >Admin Doing</h4>
+              <button type='button' class='close' id='close-paymentModal' data-dismiss='modal'>&times;</button>
+            </div>  
+        <div class="modal-body">
+          <table class='table table-hover' >
+              <thead>
+                <tr>
+                  <th>Member ID</th>
+                  <th>member fullname</th>
+                  <th>Admin Doing</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <?php 
+              $sql1 = "SELECT * FROM logtrail_doing ORDER BY logtrail_doing_id DESC";
+              $result1 = mysqli_query($conn, $sql1);
+              $logtrail = mysqli_num_rows($result1);
+
+              if($logtrail > 0 ){
+                while($row = mysqli_fetch_assoc($result1) ) {
+
+              ?>
+              <tr>
+                <td><?php echo $row['member_id'] ?></td>
+                <td><?php echo $row['user_fname'],$row['user_lname'] ?></td>
+                <td><?php echo $row['description'] ?></td>
+                <td><?php echo $row['time'] ?></td>
+              </tr>
+              <?php }} ?>
+      </div>
+    </div>
+  </div>
+</div>
+
   
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/popper.min.js"></script>
@@ -316,6 +386,12 @@
   <script type="text/javascript" src="js/mdb.min.js"></script>
     
  <script>
+
+ // tool tip sa plus button
+ $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+
 
  function logout(el) {
       let id = el.getAttribute('data-id');
@@ -334,6 +410,24 @@
       req.send(); 
       }
     
+
+      function member(el) {
+      let id = el.getAttribute('data-id');
+      console.log(id);
+
+      // AJAX Request
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+          display(JSON.parse(this.responseText));
+          console.log(JSON.parse(this.responseText));
+        }
+      }
+      req.open('GET', 'viewmember.php?id=' + id, true);
+      req.send();
+
+     
+    }
  </script>
 
 

@@ -376,7 +376,7 @@ textarea{
                   <?php } ?>
                   <!------ END OF ACTIVATION AND DEACTIVATION ----->
 
-                  <span data-toggle="tooltip" data-placement="top" title="Update <?php echo $row["last_name"]?>">
+                  <span data-toggle="tooltip" data-placement="top" title="Update <?php echo $row["last_name"]?> to Walk-in">
                     <i style="cursor: pointer; color:#C71585; font-size: 25px;"
                     class="fas fa-pencil-alt mx-2" data-id="<?php echo $row['member_id'] ?>"
                     onclick="updateDetailsRegular(this)"></i>
@@ -471,7 +471,7 @@ textarea{
                     class=" fas fa-eye mx-2 get_id" data-id = '<?php echo $row["member_id"]?>'
                     onclick="displayDetails(this)"></i>
                     </span>
-                    <span data-toggle="tooltip" data-placement="top" title="Update <?php echo $row["last_name"]?>">
+                    <span data-toggle="tooltip" data-placement="top" title="Update <?php echo $row["last_name"]?> to Regular">
                     <i style="cursor: pointer; color:#C71585; font-size: 25px;" 
                     data-toggle="modal" data-target="#update"
                     class=" fas fa-pencil-alt mx-2" data-id="<?php echo $row['member_id'] ?>"
@@ -1403,8 +1403,8 @@ $(document).ready(function(){
         var digit_start_sub = new Date(row.start_subscription);
         var string_start_sub = digit_start_sub.toDateString(digit_start_sub);
 
-        //date annual
-        var annual_start = new Date(row.annual_start);
+       //date annual
+       var annual_start = new Date(row.annual_start);
         var string_annual_start = annual_start.toDateString(annual_start);
         var annual_end = new Date(row.annual_end);
         var string_annual_end = annual_end.toDateString(annual_end);
@@ -1415,6 +1415,27 @@ $(document).ready(function(){
         var monthly_end = new Date(row.monthly_end);
         var string_monthly_end = monthly_end.toDateString(monthly_end);
       
+        function checkUsername(user) {
+          if(user === null) {
+            return "Not yet activated";
+        
+          } else {
+            return user
+          }
+        }
+
+        function checkDates(date) {
+          if(date === null) {
+        
+            return "Not yet started"
+            
+          } else {
+            return date
+
+           
+          }
+        }
+       
         document.getElementById("view_memberId").value = row.member_id;
         document.getElementById("view_status").value = row.member_status;
         document.getElementById("view_lastname").value = row.last_name;
@@ -1423,14 +1444,14 @@ $(document).ready(function(){
         document.getElementById("view_phone").value = row.phone;
         document.getElementById("view_birthdate").value = string_birthdate;
         document.getElementById("view_address").value = row.address;
-        document.getElementById("annual_start").value = row.annual_start;
-        document.getElementById("annual_end").value = row.annual_end;
-        document.getElementById("monthly_start").value = row.monthly_start;
-        document.getElementById("monthly_end").value = row.monthly_end;
+        document.getElementById("annual_start").value = checkDates(row.annual_start);
+        document.getElementById("annual_end").value = checkDates(row.annual_end);
+        document.getElementById("monthly_start").value = checkDates(row.monthly_start);
+        document.getElementById("monthly_end").value = checkDates(row.monthly_end);
         document.getElementById("view_membertype").value = row.member_type;
         document.getElementById("view_dateregistered").value = stringDate;
         document.getElementById("view_gender").value = row.gender;
-        document.getElementById("view_username").value = row.username;
+        document.getElementById("view_username").value = checkUsername(row.username);
         document.getElementById("view_program").value = row.program_name;
         document.getElementById("view_dateHired").value = row.date_registered;
       }
@@ -1645,7 +1666,7 @@ $(document).ready(function(){
       req.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200 ) {
           console.log((this.responseText));
-          alert("Account successfully activated!");
+          alert("Account successfully deactivated!");
           window.location.reload()
         }
        }
