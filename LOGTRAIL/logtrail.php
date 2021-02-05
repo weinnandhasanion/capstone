@@ -345,7 +345,7 @@
     <div class="modal-dialog" >
       <div class="modal-content" style="width: 700px;">
         <div class="modal-header" style="background-color: #DF3A01; color: white;">
-              <h4 class="modal-title" >Admin Doing</h4>
+              <h4 class="modal-title">Admin Doing</h4>
               <button type='button' class='close' id='close-paymentModal' data-dismiss='modal'>&times;</button>
             </div>  
         <div class="modal-body">
@@ -358,22 +358,9 @@
                   <th>Time</th>
                 </tr>
               </thead>
-              <?php 
-              $sql1 = "SELECT * FROM logtrail_doing ORDER BY logtrail_doing_id DESC";
-              $result1 = mysqli_query($conn, $sql1);
-              $logtrail = mysqli_num_rows($result1);
-
-              if($logtrail > 0 ){
-                while($row = mysqli_fetch_assoc($result1) ) {
-
-              ?>
-              <tr>
-                <td><?php echo $row['member_id'] ?></td>
-                <td><?php echo $row['user_fname'],$row['user_lname'] ?></td>
-                <td><?php echo $row['description'] ?></td>
-                <td><?php echo $row['time'] ?></td>
-              </tr>
-              <?php }} ?>
+              <tbody id="modal-tbody">
+              
+              </tbody>
       </div>
     </div>
   </div>
@@ -411,7 +398,7 @@
       }
     
 
-      function member(el) {
+    function member(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
@@ -419,14 +406,31 @@
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200) {
-          display(JSON.parse(this.responseText));
-          console.log(JSON.parse(this.responseText));
+          display(this.responseText);
         }
       }
       req.open('GET', 'viewmember.php?id=' + id, true);
       req.send();
+    }
 
-     
+    function display(res) {
+      let tbody = document.getElementById('modal-tbody');
+      if(res == 0) {
+        tbody.innerHTML = "";
+      } else {
+        let data = JSON.parse(res);
+        tbody.innerHTML = "";
+        data.forEach(row => {
+          let html = `<tr>
+            <td>${row.member_id}</td>
+            <td>${row.user_fname} ${row.user_lname}</td>
+            <td>${row.description}</td>
+            <td>${row.time}</td>
+          </tr>`;
+
+          tbody.innerHTML += html;
+        });
+      }
     }
  </script>
 
