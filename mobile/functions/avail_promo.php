@@ -9,10 +9,10 @@ $date = date("Y-m-d");
 $sql = "SELECT * FROM memberpromos WHERE promo_id = $promoId AND member_id = $memberId";
 $avail = "INSERT INTO memberpromos (promo_id, member_id, date_added)
           VALUES ('$promoId', '$memberId', '$date')";
-$promo = "SELECT promo_starting_date, promo_ending_date FROM promo WHERE promo_id = $promoId";
+$promo = "SELECT promo_name, promo_starting_date, promo_ending_date FROM promo WHERE promo_id = $promoId";
 $res = mysqli_query($con, $sql);
 if(mysqli_num_rows($res) > 0) {
-  echo "ERROR: You have already availed this promo!";
+  echo 3;
 } else {
   $promoRes = mysqli_query($con, $promo);
   $row = mysqli_fetch_assoc($promoRes);
@@ -21,13 +21,13 @@ if(mysqli_num_rows($res) > 0) {
   $end = $row["promo_ending_date"];
 
   if($date < $start) {
-    echo "ERROR: Promo has not yet started!";
+    echo 1;
   } else if($date > $end) {
-    echo "ERROR: Promo has already ended!";
+    echo 2;
   } else {
     $res = mysqli_query($con, $avail);
     if($res) {
-      echo 1;
+      echo $row["promo_name"];
     }
   }
 

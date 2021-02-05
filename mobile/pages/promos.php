@@ -169,7 +169,7 @@ if(!isset($_SESSION["member_id"])) {
             $row = mysqli_fetch_assoc($res);
           
           ?>
-          <h1 class="text-green" style="text-decoration: underline"><?php echo $row["promo_name"] ?></h1>
+          <h1 class="text-green" id="availed-promo" style="text-decoration: underline"><?php echo $row["promo_name"] ?></h1>
           <?php
           } else if(mysqli_num_rows($res) == 2) {
             $sql = "SELECT MP.*, P.promo_name, P.promo_type, P.amount 
@@ -185,7 +185,7 @@ if(!isset($_SESSION["member_id"])) {
           <?php
           } else {
           ?>
-          <h1>N/A</h1>
+          <h1 id="availed-promo">N/A</h1>
           <?php
           }
           ?>
@@ -252,10 +252,17 @@ if(!isset($_SESSION["member_id"])) {
         let id = el.getAttribute('data-id');
         $.post("./../functions/avail_promo.php", {id: id}, function(res) {
           if(res == 1) {
-            $("#avail-message").removeClass("text-red").addClass("text-green").text("Successfully availed promo!");
+            $("#avail-message").removeClass("text-green").addClass("text-red").text("ERROR: Promo has not yet started!");
+            $("#avail-success").css("display", "flex");
+          } else if(res == 2) {
+            $("#avail-message").removeClass("text-green").addClass("text-red").text("ERROR: Promo has already ended!");
+            $("#avail-success").css("display", "flex");
+          } else if(res == 3) {
+            $("#avail-message").removeClass("text-green").addClass("text-red").text("ERROR: You have already availed this promo!");
             $("#avail-success").css("display", "flex");
           } else {
-            $("#avail-message").removeClass("text-green").addClass("text-red").text(res);
+            $("#avail-message").removeClass("text-red").addClass("text-green").text("Successfully availed promo!");
+            $("#availed-promo").addClass("text-green").text(res);
             $("#avail-success").css("display", "flex");
           }
         });
@@ -269,6 +276,7 @@ if(!isset($_SESSION["member_id"])) {
       document.addEventListener('click', (evt) => {
         let target = evt.target;
         let modal = document.getElementById('promo-modal');
+        let resModal = document.getElementById("avail-success");
         let checkModal = document.getElementById('promo-modal-check')
         let buttons = document.getElementsByClassName('btn btn-reg');
 
@@ -282,6 +290,7 @@ if(!isset($_SESSION["member_id"])) {
           target = target.parentNode;
         } while(target);
         modal.style.display = 'none';
+        resModal.style.display = 'none';
       })
     }
   </script>
