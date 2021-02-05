@@ -169,7 +169,9 @@ if(!isset($_SESSION["member_id"])) {
             $row = mysqli_fetch_assoc($res);
           
           ?>
-          <h1 class="text-green" id="availed-promo" style="text-decoration: underline"><?php echo $row["promo_name"] ?></h1>
+          <h1 class="text-green" id="availed-promo" style="text-decoration: underline">
+            <?php echo $row["promo_name"] ?>
+          </h1>
           <?php
           } else if(mysqli_num_rows($res) == 2) {
             $sql = "SELECT MP.*, P.promo_name, P.promo_type, P.amount 
