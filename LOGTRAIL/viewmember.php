@@ -3,8 +3,8 @@ session_start();
 require('connect.php');
 
 $id = $_REQUEST['id'];
-
-$sql = "SELECT * FROM `logtrail_doing` WHERE `login_id` = " . intval($id) . "";
+$newID = intval($id) ;
+$sql = "SELECT * FROM `logtrail_doing` WHERE `login_id` = $newID ORDER BY logtrail_doing_id DESC ";
 $res = mysqli_query($conn, $sql);
 
 if(mysqli_num_rows($res) > 0) {

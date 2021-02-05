@@ -828,7 +828,7 @@ textarea{
                 <span class="checkmark"></span>
                 </label>
                 <label class="container">Annual Subscription
-                <input onclick="Annual()" value="Annual Subscription" id="annual" name="payment_description" type="checkbox">
+                <input onclick="Annual()" value="Annual Membership" id="annual" name="payment_description" type="checkbox">
                 <span class="checkmark"></span>
                 </label>
 
@@ -1404,7 +1404,7 @@ $(document).ready(function(){
         var string_start_sub = digit_start_sub.toDateString(digit_start_sub);
 
        //date annual
-       var annual_start = new Date(row.annual_start);
+        var annual_start = new Date(row.annual_start);
         var string_annual_start = annual_start.toDateString(annual_start);
         var annual_end = new Date(row.annual_end);
         var string_annual_end = annual_end.toDateString(annual_end);

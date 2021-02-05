@@ -340,7 +340,7 @@
   </main>
   
 
-   <!------------------------------------------------- Regular Payment modal----------------------------------------->
+   <!------------------------------------------------- modal----------------------------------------->
 <div class="modal fade" id="view_member">
     <div class="modal-dialog" >
       <div class="modal-content" style="width: 700px;">
