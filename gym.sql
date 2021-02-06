@@ -26,6 +26,9 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
+CREATE DATABASE gym;
+USE gym;
+
 CREATE TABLE `admin` (
   `admin_id` int(100) NOT NULL,
   `username` varchar(100) DEFAULT NULL,
@@ -84,8 +87,11 @@ CREATE TABLE `logtrail_doing` (
   `user_lname` varchar(100) DEFAULT NULL,
   `description` varchar(200) DEFAULT NULL,
   `identity` varchar(200) DEFAULT NULL,
-  `time` varchar(15) DEFAULT NULL
-  
+  `time` varchar(15) DEFAULT NULL,
+  `trainer_status` ENUM('active','inactive') DEFAULT NULL,
+  `trainer_phone` varchar(100) DEFAULT NULL,
+  `trainer_position`  ENUM('junior','senior') DEFAULT NULL,
+  `trainer_address`  varchar(200) DEFAULT NULL
 );
 --
 -- Dumping data for table `logtrail`

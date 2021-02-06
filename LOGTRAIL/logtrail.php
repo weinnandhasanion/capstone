@@ -353,6 +353,7 @@
               <thead>
                 <tr>
                   <th>Member ID</th>
+                  <th>Module</th>
                   <th>member fullname</th>
                   <th>Admin Doing</th>
                   <th>Time</th>
@@ -421,13 +422,23 @@
         let data = JSON.parse(res);
         tbody.innerHTML = "";
         data.forEach(row => {
-          let html = `<tr>
+          if(row.identity === 'member'){
+          var html = `<tr>
             <td>${row.member_id}</td>
+            <td>${row.identity}</td>
             <td>${row.user_fname} ${row.user_lname}</td>
             <td>${row.description}</td>
             <td>${row.time}</td>
           </tr>`;
-
+          }else if(row.identity === 'trainer'){
+            var html = `<tr>
+            <td>${row.trainer_id}</td>
+            <td>${row.identity}</td>
+            <td>${row.user_fname} ${row.user_lname}</td>
+            <td>${row.description}</td>
+            <td>${row.time}</td>
+          </tr>`;
+          }
           tbody.innerHTML += html;
         });
       }
