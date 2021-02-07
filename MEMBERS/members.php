@@ -687,9 +687,9 @@ textarea{
       
           <!-- Modal content-->
           <div class="modal-content" style="width: 700px;">
-    
+            
             <div class="modal-header" style="background-color: #DF3A01; color: white;">
-              <h4 class="modal-title" >Program Member Registered</h4>
+              <h4 class="modal-title" >  Member Registered</h4>
               <form class="d-flex justify-content-center">
                 <input type="text" placeholder="Search deleted name" id="search-delete" class="form-control">
               </form>
@@ -703,31 +703,12 @@ textarea{
                   <tr style="text-align:center;">  
                      <th>Member ID</th>
                      <th>Full Name</th>
-                     <th>action</th>
+                     <th>program name</th>
                    </tr>
                   </thead>
-                  <tbody>
-                  <?php
-            /* code for display data */
-            $sql = "SELECT * FROM member WHERE program_name = 'Light Weight' AND acc_status = 'active'";
-            $result = mysqli_query($conn, $sql);
-            $resultCheck = mysqli_num_rows($result);
+                  <tbody id = "modal-tbody">
+                 
 
-            if($resultCheck > 0){
-              while($row = mysqli_fetch_assoc($result)){
-                ?>
-                  
-                <tr>
-                  <td><?php  echo $row["member_id"]?></td>
-                  <td><?php  echo $row["first_name"]?><?php  echo $row["last_name"]?></td>
-                  <td></td>
-                </tr>
-
-                <?php
-              }
-             } 
-             ?>
-            
                   </tbody>
                 </table> 
             </div>
@@ -1869,6 +1850,42 @@ function logout(el) {
       req.send(); 
       }
     
+
+
+      function displayProgramMembers(el) {
+      let id = el.getAttribute('data-id');
+      console.log(id);
+
+      // AJAX Request
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+          display(this.responseText);
+        }
+      }
+      req.open('GET', 'member_program.php?id=' + id, true);
+      req.send();
+    }
+
+    function display(res) {
+      let tbody = document.getElementById('modal-tbody');
+      if(res == 0) {
+        tbody.innerHTML = "";
+      } else {
+        let data = JSON.parse(res);
+        tbody.innerHTML = "";
+        data.forEach(row => {
+    
+          var html = `<tr>
+            <td>${row.member_id}</td>
+            <td>${row.member_fname} ${row.member_lname}</td>
+            <td>${row.program_name}</td>
+          </tr>`;
+          
+          tbody.innerHTML += html;
+        });
+      }
+    }
   </script>
   
 </body>

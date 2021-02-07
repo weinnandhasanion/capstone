@@ -177,13 +177,26 @@ CREATE TABLE `paymentlog` (
 
 CREATE TABLE `program` (
   `program_id` int(100) NOT NULL,
+  `admin_id`int(100) NOT NULL,  
   `program_name` varchar(100) DEFAULT NULL,
-  `program_type` varchar(100) DEFAULT NULL,
   `date_added` date DEFAULT NULL,
+  `time_added` varchar(15) DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
   `program_description` varchar(500) DEFAULT NULL,
   `program_status` enum('active','remove') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `program_member` (
+  `program_member_id` int(100) PRIMARY KEY NOT NULL,
+  `program_id`int(100) NOT NULL,
+  `member_id`int(100) NOT NULL,
+  `admin_id`int(100) NOT NULL,
+  `program_name` varchar(100) DEFAULT NULL,
+  `member_fname` varchar(100) DEFAULT NULL,
+  `member_lname` varchar(100) DEFAULT NULL,
+  `date_added` date DEFAULT NULL,
+  `time_added` varchar(15) DEFAULT NULL
+);
 
 -- --------------------------------------------------------
 
@@ -364,7 +377,10 @@ ALTER TABLE `paymentlog`
 -- AUTO_INCREMENT for table `program`
 --
 ALTER TABLE `program`
-  MODIFY `program_id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `program_id` int(100) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=092700;
+
+ALTER TABLE `program_member`
+  MODIFY `program_member_id` int(100) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19100;
 --
 -- AUTO_INCREMENT for table `promo`
 --
@@ -406,6 +422,15 @@ ALTER TABLE `memberpromos`
 --
 ALTER TABLE `paymentlog`
   ADD CONSTRAINT `paymentlog_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`);
+
+ALTER TABLE `program`
+  ADD CONSTRAINT `program_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`);
+
+  
+ALTER TABLE `program_member`
+  ADD CONSTRAINT `program_member_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
+  ADD CONSTRAINT `program_member_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
+  ADD CONSTRAINT `program_member_ibfk_3` FOREIGN KEY (`program_id`) REFERENCES `program` (`program_id`);
 
 --
 -- Constraints for table `reports`

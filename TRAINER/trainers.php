@@ -686,44 +686,7 @@ $(function () {
       $('[data-toggle="tooltip"]').tooltip();
     });
     
-    let sortActive = document.getElementById('sort-active');
-    let sortBoth = document.getElementById('sort-both');
-    let sortInactive = document.getElementById('sort-inactive');
-    let tbody = document.getElementById('tbody');
-
-    // Sorting by BOTH
-    sortBoth.onclick = () => {
-      tbody.innerHTML = '';
-      sortBoth.classList.add('btn-orange');
-      sortBoth.classList.remove('btn-outline-orange');
-      sortInactive.classList.add('btn-outline-orange');
-      sortInactive.classList.remove('btn-orange');
-      sortActive.classList.add('btn-outline-orange');
-      sortActive.classList.remove('btn-orange');
-    }
-
-    // Sorting by ACTIVE
-    sortActive.onclick = () => {
-      tbody.innerHTML = '';
-      sortBoth.classList.add('btn-outline-orange');
-      sortBoth.classList.remove('btn-orange');
-      sortInactive.classList.add('btn-outline-orange');
-      sortInactive.classList.remove('btn-orange');
-      sortActive.classList.add('btn-orange');
-      sortActive.classList.remove('btn-outline-orange');
-    }
-
-    // Sorting by INACTIVE
-    sortInactive.onclick = () => {
-      tbody.innerHTML = '';
-      sortBoth.classList.add('btn-outline-orange');
-      sortBoth.classList.remove('btn-orange');
-      sortInactive.classList.add('btn-orange');
-      sortInactive.classList.remove('btn-outline-orange');
-      sortActive.classList.add('btn-outline-orange');
-      sortActive.classList.remove('btn-orange');
-    }
-
+    
 
      //------------------------------------------------------------------------------ VIEW JS 
     // View Trainer Modal
@@ -835,10 +798,6 @@ $(function () {
       }
      }
 
-
-
-
-
      function logout(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
@@ -856,8 +815,8 @@ $(function () {
       req.send(); 
       }
     
-
-
+       
+           
   </script>
 </body>
 </html>

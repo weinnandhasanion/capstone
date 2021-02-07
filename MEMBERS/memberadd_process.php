@@ -62,7 +62,6 @@ else if(strlen($phone) == 11){
     if($query_run){
     //this is for puting member_id in the array
     $data = array();
-    $member_id;
     $sql3 = "SELECT * FROM member ORDER BY member_id DESC";
     $res3 = mysqli_query($conn, $sql3);
     if($res3) {
@@ -74,7 +73,6 @@ else if(strlen($phone) == 11){
     }
 
     $login_id_data = array();
-    $login_id;
     $sql31 = "SELECT * FROM logtrail ORDER BY login_id DESC";
     $res31 = mysqli_query($conn, $sql31);
     if($res31) {
@@ -83,6 +81,17 @@ else if(strlen($phone) == 11){
         }
 
         $login_id = $login_id_data[0];
+    }
+
+    $program_id_data = array();
+    $sql311 = "SELECT * FROM program ORDER BY program_id DESC";
+    $res311 = mysqli_query($conn, $sql311);
+    if($res311) {
+        while($row1234 = mysqli_fetch_assoc($res311)) {
+            $program_id_data[] = $row1234["program_id"];
+        }
+
+        $program_id = $program_id_data[0];
     }
 
     
@@ -114,12 +123,28 @@ else if(strlen($phone) == 11){
     $identity = "member";
     $timeNow = date("h:i A");
 
+    // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
+    $sql5 = "SELECT * FROM program WHERE program_id = '$program_id'";
+    $query_run5 = mysqli_query($conn, $sql5);
+    $rows5 = mysqli_fetch_assoc($query_run5);
+
+    $program_id_new = $rows5["program_id"];
+    $date_added = date("y-m-d");
 
     $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
     `description`, `identity`,`time`)
     VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
     mysqli_query($conn, $sql1);
-       
+
+    $sql4= "INSERT INTO `program_member`
+    ( `program_id`,`admin_id`,`member_id`,`member_fname`,`member_lname`,
+    `date_added`, `time_added`,`program_name`)
+    VALUES 
+    ( '$program_id_new','$admin_id', '$member_id_new', 
+    '$user_fname','$user_lname','$date_added','$timeNow','$program_name')";
+    mysqli_query($conn, $sql4);
+    
+
     
     
 
