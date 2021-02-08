@@ -2,21 +2,16 @@
 session_start();
 require('connect.php');
 date_default_timezone_set('Asia/Manila');
-$id = $_REQUEST['id'];
-
 if($_SESSION['admin_id']){
         $session_admin_id = $_SESSION['admin_id'];
     }
 
     
-$ox = "UPDATE member SET acc_status = 'active'
-WHERE member_id = " . intval($id) . "";     
+$id = $_REQUEST['id'];
+$date_deleted = date("Y-m-d");
 
-if(mysqli_query($conn, $ox))
-        json_encode('success');
-else
-        echo mysqli_error($conn), 'NOT UPDATED'; 
-        
+$ox = "UPDATE member SET acc_status = 'inactive',date_deleted = '$date_deleted' 
+WHERE member_id = " . intval($id) . "";     
 
 
         //this is for puting member_id in the array
@@ -47,14 +42,14 @@ else
     
      
     // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
-    $sql0 = "SELECT * FROM admin WHERE admin_id = $session_admin_id";
+    $sql0 = "SELECT first_name,last_name,admin_id FROM admin WHERE admin_id = $session_admin_id";
     $query_run = mysqli_query($conn, $sql0);
     $rows1 = mysqli_fetch_assoc($query_run);
 
     $last_name = $rows1["last_name"];
     $admin_id = $rows1["admin_id"];
     // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-    $sql2 = "SELECT * FROM member WHERE member_id = '$member_id'";
+    $sql2 = "SELECT first_name,last_name,member_id FROM member WHERE member_id = '$member_id'";
     $query_run2 = mysqli_query($conn, $sql2);
     $rows2 = mysqli_fetch_assoc($query_run2);
  
@@ -62,12 +57,7 @@ else
     $user_fname = $rows2["first_name"];
     $user_lname = $rows2["last_name"];
     $first_name = $rows["first_name"];
-    $echo1 = "Recover an account to";
-    $echo2 = "table";
-    $member_type = $rows2["member_type"];   
-    $description = $echo1.' '.$member_type. ' ' .$echo2;
-
-
+    $description = "Deleted an account from walk-in table";
     $identity = "member";
     $timeNow = date("h:i A");
 
@@ -84,4 +74,8 @@ else
     mysqli_query($conn, $sql1);
             
 
+if(mysqli_query($conn, $ox))
+        json_encode('success');
+else
+        echo mysqli_error($conn), 'NOT UPDATED';    
 ?>

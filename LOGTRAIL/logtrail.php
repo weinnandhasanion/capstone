@@ -352,9 +352,9 @@
           <table class='table table-hover' >
               <thead>
                 <tr>
-                  <th>Member ID</th>
+                  <th> ID</th>
                   <th>Module</th>
-                  <th>member fullname</th>
+                  <th>name</th>
                   <th>Admin Doing</th>
                   <th>Time</th>
                 </tr>
@@ -435,6 +435,14 @@
             <td>${row.trainer_id}</td>
             <td>${row.identity}</td>
             <td>${row.user_fname} ${row.user_lname}</td>
+            <td>${row.description}</td>
+            <td>${row.time}</td>
+          </tr>`;
+          }else if(row.identity === 'program'){
+            var html = `<tr>
+            <td>${row.program_id}</td>
+            <td>${row.identity}</td>
+            <td>${row.user_fname} </td>
             <td>${row.description}</td>
             <td>${row.time}</td>
           </tr>`;

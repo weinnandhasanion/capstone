@@ -113,7 +113,7 @@ else if(strlen($phone) == 11){
     $user_lname = $rows2["last_name"];
     $first_name = $rows["first_name"];
 
-    // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
+    // INSERTING logtrail INFO FOR THE LOGTRAIL DOING
     $sql3 = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
     $query_run3 = mysqli_query($conn, $sql3);
     $rows3 = mysqli_fetch_assoc($query_run3);
@@ -123,7 +123,7 @@ else if(strlen($phone) == 11){
     $identity = "member";
     $timeNow = date("h:i A");
 
-    // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
+    // INSERTING program INFO FOR THE LOGTRAIL DOING
     $sql5 = "SELECT * FROM program WHERE program_id = '$program_id'";
     $query_run5 = mysqli_query($conn, $sql5);
     $rows5 = mysqli_fetch_assoc($query_run5);

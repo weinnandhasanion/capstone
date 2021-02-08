@@ -106,9 +106,12 @@ else if(strlen($phone) == 11){
      $trainer_id_new = $rowew["trainer_id"];
      $user_fname = $rowew["first_name"];
      $user_lname = $rowew["last_name"];
+     $fullname = $user_fname.' '.$user_lname;
      $description = "Added a trainer";
+     //$description = $echo.' '.$fullname;
      $identity = "trainer";
-     $timeNow = date("h:i A");
+     $timeNow = date("h:i A");  
+
 
      // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
      $sql22 = "SELECT * FROM logtrail WHERE login_id = '$login_id'";

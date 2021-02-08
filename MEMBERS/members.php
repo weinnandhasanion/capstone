@@ -484,7 +484,7 @@ textarea{
                     </span>
                     <span  data-toggle="tooltip" data-placement="top" title="Delete <?php echo $row["last_name"]?>">
                     <i style="cursor: pointer; color:red; font-size: 25px;" 
-                    onclick="deleted(this)" class=" far fa-trash-alt mx-2" data-id="<?php echo $row['member_id'] ?>"></i>
+                    onclick="deleted_walkin(this)" class=" far fa-trash-alt mx-2" data-id="<?php echo $row['member_id'] ?>"></i>
                     </span>
                 </td>
                 </tr>
@@ -556,7 +556,7 @@ textarea{
                 <i style="cursor: pointer; color:brown; font-size: 25px;" 
                     data-toggle="modal" data-target="#viewprogram"
                     class=" far fa-user mx-2 get_id" data-id = '<?php echo $row["program_id"]?>'
-                    onclick="displayProgramMembers(this)"></i>
+                    onclick="displayProgramMembers(this)"></i>    
                 </span>
                 
                 <span data-toggle="tooltip" data-placement="top" title="<?php echo $row["program_name"]?> info">
@@ -701,7 +701,7 @@ textarea{
                 <table class='table table-hover'>
                   <thead>
                   <tr style="text-align:center;">  
-                     <th>Member ID</th>
+                     <th>ID</th>
                      <th>Full Name</th>
                      <th>program name</th>
                    </tr>
@@ -741,17 +741,21 @@ textarea{
                  
                 <div class="form-group">
                   <div class="form-row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
                       <label>Program Name</label>
                       <input name="program_name" id="info_name" type="text"   readonly class="form-control">
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-6">
+                      <label>Program Status</label>
+                      <input name="program_status" id="info_stat" type="text"  readonly class="form-control">
+                    </div>
+                    <div class="col-sm-6">
                       <label>Date Added</label>
                       <input name="date_added" id="info_date" type="text"  readonly class="form-control">
                     </div>
-                    <div class="col-sm-4">
-                      <label>Program Status</label>
-                      <input name="program_status" id="info_stat" type="text"  readonly class="form-control">
+                    <div class="col-sm-6">
+                      <label>Time Added</label>
+                      <input name="time_added" id="info_time" type="text"  readonly class="form-control">
                     </div>
                   </div>
                 </div>
@@ -1460,8 +1464,10 @@ $(document).ready(function(){
       function display(row) {
         var digitDate = new Date(row.date_added);
         var stringDate = digitDate.toDateString(digitDate);
+
         document.getElementById("info_name").value = row.program_name;
         document.getElementById("info_date").value = stringDate;
+        document.getElementById("info_time").value = row.time_added;
         document.getElementById("info_stat").value = row.program_status;
         document.getElementById("info_description").value = row.program_description;
       }
@@ -1596,7 +1602,7 @@ $(document).ready(function(){
       console.log(id);
 
       // AJAX Request
-      var r = confirm("Are you sure you want to delete this member?");
+      var r = confirm("Are you sure you want to delete this member from regular?");
       if(r == true){
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
@@ -1607,6 +1613,27 @@ $(document).ready(function(){
         }
        }
       req.open('GET', 'delete.php?id=' + id, true);
+      req.send(); 
+      }
+     }
+
+         //---------------------------------------------------------------------WALK IN DELETE JS 
+         function deleted_walkin(el) {
+      let id = el.getAttribute('data-id');
+      console.log(id);
+
+      // AJAX Request
+      var r = confirm("Are you sure you want to delete this member from walk-in?");
+      if(r == true){
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200 ) {
+          console.log((this.responseText));
+          alert("Member successfully deleted!");
+          window.location.reload()
+        }
+       }
+      req.open('GET', 'delete_walkin.php?id=' + id, true);
       req.send(); 
       }
      }
@@ -1867,6 +1894,8 @@ function logout(el) {
       req.send();
     }
 
+  
+
     function display(res) {
       let tbody = document.getElementById('modal-tbody');
       if(res == 0) {
@@ -1875,7 +1904,6 @@ function logout(el) {
         let data = JSON.parse(res);
         tbody.innerHTML = "";
         data.forEach(row => {
-    
           var html = `<tr>
             <td>${row.member_id}</td>
             <td>${row.member_fname} ${row.member_lname}</td>

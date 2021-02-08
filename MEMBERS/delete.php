@@ -57,7 +57,7 @@ WHERE member_id = " . intval($id) . "";
     $user_fname = $rows2["first_name"];
     $user_lname = $rows2["last_name"];
     $first_name = $rows["first_name"];
-    $description = "Deleted an account";
+    $description = "Deleted an account from regular table";
     $identity = "member";
     $timeNow = date("h:i A");
 

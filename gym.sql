@@ -82,6 +82,7 @@ CREATE TABLE `logtrail_doing` (
   `login_id` int(100) NOT NULL,
   `admin_id` int(100) DEFAULT NULL, 
   `member_id` int(100) DEFAULT NULL,
+  `program_id` int(100) DEFAULT NULL,
   `trainer_id` int(100) DEFAULT NULL,
   `user_fname` varchar(100) DEFAULT NULL,
   `user_lname` varchar(100) DEFAULT NULL,
@@ -266,9 +267,6 @@ CREATE TABLE `trainer` (
 -- Dumping data for table `trainer`
 --
 
-INSERT INTO `trainer` (`trainer_id`, `trainer_status`, `trainer_position`, `first_name`, `last_name`, `address`, `gender`, `phone`, `email`, `file`, `birthdate`, `date_hired`, `date_deleted`, `acc_status`) VALUES
-(1510, 'active', 'junior', 'klintjohn', 'cagot', 'Lambug Beach Rd, Badian, Cebu, Philippines', 'M', '09275109703', 'klintjohn60@gmail.com', NULL, '1998-08-20', '2021-02-03', '2021-02-03', 'able');
-
 --
 -- Indexes for dumped tables
 --
@@ -406,9 +404,10 @@ ALTER TABLE `logtrail`
   
 ALTER TABLE `logtrail_doing`
   ADD CONSTRAINT `logtrail_doing_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
-  ADD CONSTRAINT `logtrail_doing_ibfk_2` FOREIGN KEY (`login_id`) REFERENCES `logtrail` (`login_id`),
-  ADD CONSTRAINT `logtrail_doing_ibfk_3` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
-  ADD CONSTRAINT `logtrail_doing_ibfk_4` FOREIGN KEY (`trainer_id`) REFERENCES `trainer` (`trainer_id`);
+  ADD CONSTRAINT `logtrail_doing_ibfk_2` FOREIGN KEY (`program_id`) REFERENCES `program` (`program_id`),
+  ADD CONSTRAINT `logtrail_doing_ibfk_3` FOREIGN KEY (`login_id`) REFERENCES `logtrail` (`login_id`),
+  ADD CONSTRAINT `logtrail_doing_ibfk_4` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
+  ADD CONSTRAINT `logtrail_doing_ibfk_5` FOREIGN KEY (`trainer_id`) REFERENCES `trainer` (`trainer_id`);
 
 --
 -- Constraints for table `memberpromos`
