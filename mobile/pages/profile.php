@@ -405,7 +405,7 @@
         elem.style.display = 'none';
       }
 
-      new QRCode(document.getElementById("qr-code"), "localhost/capstoneMobile/pages/pay.php");
+      new QRCode(document.getElementById("qr-code"), "./../functions/check_if_paid_qr.php?id=<?php echo $_SESSION["member_id"] ?>");
     }
   </script>
 </body>
