@@ -29,9 +29,6 @@ USE `gym`;
 -- Table structure for table `admin`
 --
 
-CREATE DATABASE gym;
-USE gym;
-
 CREATE TABLE `admin` (
   `admin_id` int(100) NOT NULL,
   `username` varchar(100) DEFAULT NULL,
