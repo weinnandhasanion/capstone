@@ -361,10 +361,10 @@ ALTER TABLE `logtrail`
 --
 ALTER TABLE `logtrail_doing`
   ADD PRIMARY KEY (`logtrail_doing_id`),
-  ADD KEY `logtrail_doing_ibfk_1` (`admin_id`),
-  ADD KEY `logtrail_doing_ibfk_2` (`login_id`),
-  ADD KEY `logtrail_doing_ibfk_3` (`member_id`),
-  ADD KEY `logtrail_doing_ibfk_4` (`trainer_id`);
+  ADD KEY `logtrail_doing_1` (`admin_id`),
+  ADD KEY `logtrail_doing_2` (`login_id`),
+  ADD KEY `logtrail_doing_3` (`member_id`),
+  ADD KEY `logtrail_doing_4` (`trainer_id`);
 
 --
 -- Indexes for table `member`
