@@ -29,6 +29,9 @@ USE `gym`;
 -- Table structure for table `admin`
 --
 
+CREATE DATABASE gym;
+USE gym;
+
 CREATE TABLE `admin` (
   `admin_id` int(100) NOT NULL,
   `username` varchar(100) DEFAULT NULL,
@@ -98,14 +101,18 @@ CREATE TABLE `logtrail_doing` (
   `login_id` int(100) NOT NULL,
   `admin_id` int(100) DEFAULT NULL,
   `member_id` int(100) DEFAULT NULL,
+  `program_id` int(100) DEFAULT NULL,
   `trainer_id` int(100) DEFAULT NULL,
   `user_fname` varchar(100) DEFAULT NULL,
   `user_lname` varchar(100) DEFAULT NULL,
   `description` varchar(200) DEFAULT NULL,
   `identity` varchar(200) DEFAULT NULL,
-  `time` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
+  `time` varchar(15) DEFAULT NULL,
+  `trainer_status` ENUM('active','inactive') DEFAULT NULL,
+  `trainer_phone` varchar(100) DEFAULT NULL,
+  `trainer_position`  ENUM('junior','senior') DEFAULT NULL,
+  `trainer_address`  varchar(200) DEFAULT NULL
+);
 --
 -- Dumping data for table `logtrail_doing`
 --
@@ -252,13 +259,26 @@ INSERT INTO `paymentlog` (`payment_id`, `member_id`, `first_name`, `last_name`, 
 
 CREATE TABLE `program` (
   `program_id` int(100) NOT NULL,
+  `admin_id`int(100) NOT NULL,  
   `program_name` varchar(100) DEFAULT NULL,
-  `program_type` varchar(100) DEFAULT NULL,
   `date_added` date DEFAULT NULL,
+  `time_added` varchar(15) DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
   `program_description` varchar(500) DEFAULT NULL,
   `program_status` enum('active','remove') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `program_member` (
+  `program_member_id` int(100) PRIMARY KEY NOT NULL,
+  `program_id`int(100) NOT NULL,
+  `member_id`int(100) NOT NULL,
+  `admin_id`int(100) NOT NULL,
+  `program_name` varchar(100) DEFAULT NULL,
+  `member_fname` varchar(100) DEFAULT NULL,
+  `member_lname` varchar(100) DEFAULT NULL,
+  `date_added` date DEFAULT NULL,
+  `time_added` varchar(15) DEFAULT NULL
+);
 
 -- --------------------------------------------------------
 
@@ -315,9 +335,6 @@ CREATE TABLE `trainer` (
 --
 -- Dumping data for table `trainer`
 --
-
-INSERT INTO `trainer` (`trainer_id`, `trainer_status`, `trainer_position`, `first_name`, `last_name`, `address`, `gender`, `phone`, `email`, `file`, `birthdate`, `date_hired`, `date_deleted`, `acc_status`) VALUES
-(1510, 'active', 'junior', 'klintjohn', 'cagot', 'Lambug Beach Rd, Badian, Cebu, Philippines', 'M', '09275109703', 'klintjohn60@gmail.com', NULL, '1998-08-20', '2021-02-03', '2021-02-03', 'able');
 
 --
 -- Indexes for dumped tables
@@ -467,8 +484,10 @@ ALTER TABLE `paymentlog`
 -- AUTO_INCREMENT for table `program`
 --
 ALTER TABLE `program`
-  MODIFY `program_id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `program_id` int(100) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=092700;
 
+ALTER TABLE `program_member`
+  MODIFY `program_member_id` int(100) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19100;
 --
 -- AUTO_INCREMENT for table `promo`
 --
@@ -496,9 +515,10 @@ ALTER TABLE `logtrail`
 --
 ALTER TABLE `logtrail_doing`
   ADD CONSTRAINT `logtrail_doing_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
-  ADD CONSTRAINT `logtrail_doing_ibfk_2` FOREIGN KEY (`login_id`) REFERENCES `logtrail` (`login_id`),
-  ADD CONSTRAINT `logtrail_doing_ibfk_3` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
-  ADD CONSTRAINT `logtrail_doing_ibfk_4` FOREIGN KEY (`trainer_id`) REFERENCES `trainer` (`trainer_id`);
+  ADD CONSTRAINT `logtrail_doing_ibfk_2` FOREIGN KEY (`program_id`) REFERENCES `program` (`program_id`),
+  ADD CONSTRAINT `logtrail_doing_ibfk_3` FOREIGN KEY (`login_id`) REFERENCES `logtrail` (`login_id`),
+  ADD CONSTRAINT `logtrail_doing_ibfk_4` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
+  ADD CONSTRAINT `logtrail_doing_ibfk_5` FOREIGN KEY (`trainer_id`) REFERENCES `trainer` (`trainer_id`);
 
 --
 -- Constraints for table `memberpromos`
@@ -519,7 +539,18 @@ ALTER TABLE `member_notifs`
 --
 ALTER TABLE `paymentlog`
   ADD CONSTRAINT `paymentlog_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`);
-COMMIT;
+
+ALTER TABLE `program`
+  ADD CONSTRAINT `program_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`);
+
+  
+ALTER TABLE `program_member`
+  ADD CONSTRAINT `program_member_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
+  ADD CONSTRAINT `program_member_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
+  ADD CONSTRAINT `program_member_ibfk_3` FOREIGN KEY (`program_id`) REFERENCES `program` (`program_id`);
+
+--
+-- Constraints for table `reports`
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

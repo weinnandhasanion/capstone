@@ -265,11 +265,15 @@
             $resultCheck = mysqli_num_rows($result);
             if($resultCheck > 0){
               while($row = mysqli_fetch_array($result)){
+
+                $date_payment = new DateTime( $row["date_payment"]);
+                $date_payment_new = $date_payment->format('F d Y');
+
                 ?>
                 <tr>
                 <td><?php echo $row["payment_id"] ?></td>
                 <td><?php echo $row["time_payment"] ?></td>
-                <td><?php echo $row["date_payment"] ?></td>
+                <td><?php echo $date_payment_new?></td>
                 <td><a style="font-weight: bold;">
                 <?php echo $row["first_name"]." ".$row["last_name"] ?></a></td>
                 <td><?php echo $row["payment_description"] ?></td>
