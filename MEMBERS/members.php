@@ -1145,7 +1145,7 @@
                 <div class="col-sm-12">
                   <label>Program Name</label>
                   <input name="program_name" required="" type="text" id="prgram_name" class="form-control mb-1"
-                    placeholder="Program name">
+                    placeholder="Enter program name here">
                 </div>
               </div>
             </div>
@@ -1153,9 +1153,7 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Program Description</label>
-                  <textarea name="program_description" type="text" style="resize: none" rows="2" required="" class="form-control mb-1"
-                    id="program_desc" placeholder="Enter here...">
-                  </textarea>
+                  <textarea name="program_description" style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc" placeholder="Enter program desciption here"></textarea>
                 </div>
               </div>
             </div>
