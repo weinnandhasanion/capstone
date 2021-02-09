@@ -5,7 +5,7 @@
 	if($_SESSION['admin_id']){
 		$id = $_SESSION['admin_id'];
 	}
-	
+
 	$sql = "select * from admin where admin_id =".$id."";
 	$res = mysqli_query($conn, $sql);
 
@@ -266,16 +266,16 @@
       <div class="container-fluid">
         <h4 style="margin-bottom: 0 !important;">
           Welcome,
-          <?php 
+          <?php
 			    	$row = mysqli_fetch_array($res);
 			    	echo "<strong>".$row['first_name']."</strong>";
 		      ?>
         </h4>
         <div class="logout">
-          <?php 
+          <?php
             /* code for logout  */
             $sql = "SELECT * FROM logtrail ORDER BY login_id DESC";
-            $result = mysqli_query($conn, $sql); 
+            $result = mysqli_query($conn, $sql);
             $data = array();
             if($result){
               while($rows = mysqli_fetch_assoc($result)){
@@ -453,50 +453,7 @@
                     </tr>
                   </thead>
                   <tbody id="program-tbody">
-                    <?php
-            /* code for display data */
-            $sql = "SELECT * FROM program WHERE program_status = 'active'";
-            $result = mysqli_query($conn, $sql);
-            $resultCheck = mysqli_num_rows($result);
-
-            if($resultCheck > 0){
-              while($row = mysqli_fetch_assoc($result)){
-                ?>
-                    <tr>
-                      <td><?php echo $row["program_name"] ?></td>
-                      <td>
-                        <span data-toggle="tooltip" data-placement="top"
-                          title="View <?php echo $row["program_name"]?> members">
-                          <i style="cursor: pointer; color:brown; font-size: 25px;" data-toggle="modal"
-                            data-target="#viewprogram" class=" far fa-user mx-2 get_id"
-                            data-id='<?php echo $row["program_id"]?>' onclick="displayProgramMembers(this)"></i>
-                        </span>
-
-                        <span data-toggle="tooltip" data-placement="top" title="<?php echo $row["program_name"]?> info">
-                          <i style="cursor: pointer; color:#C71585; font-size: 25px;"
-                            class="fas fa-pencil-alt mx-2 get_id" data-toggle="modal" data-target="#programUpdate"
-                            data-id='<?php echo $row["program_id"]?>' onclick="updateProgram(this)"></i>
-                        </span>
-
-                        <span data-toggle="tooltip" data-placement="top" title="<?php echo $row["program_name"]?> info">
-                          <i style="cursor: pointer; color:#00c2c2; font-size: 25px;"
-                            class="fas fa-info-circle mx-2 get_id" data-toggle="modal" data-target="#viewinfo"
-                            data-id='<?php echo $row["program_id"]?>' onclick="displayProgramInformation(this)"></i>
-                        </span>
-
-                        <span data-toggle="tooltip" data-placement="top"
-                          title="Delete <?php echo $row["program_name"]?>">
-                          <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-2"
-                            data-id="<?php echo $row['program_id'] ?>" onclick="removeProgram(this)"></i>
-                        </span>
-
-                      </td>
-                    <tr>
-                      <?php
-              }
-             } 
-             ?>
-
+                    
                   </tbody>
                 </table>
                 <div id="no-data-div-programs" class="no-data-div my-5 text-muted">
@@ -550,13 +507,13 @@
             $result = mysqli_query($conn, $sql);
             $resultCheck = mysqli_num_rows($result);
 
-            
+
 
             if($resultCheck > 0){
               while($row = mysqli_fetch_assoc($result)){
                 $dateDeleted = new DateTime($row["date_deleted"]);
                 $resultDelete = $dateDeleted->format('F d Y');
-                
+
                 $dateAdded = new DateTime( $row["date_added"]);
                 $resultAdded = $dateAdded->format('F d Y');
 
@@ -575,7 +532,7 @@
 
                 <?php
               }
-             } 
+             }
              ?>
               </tbody>
             </table>
@@ -946,7 +903,7 @@
                     <option value="Heavy Weight">Heavy Weight</option>
                   </select>
                   <?php
-                  //} 
+                  //}
                 ?>
                 </div>
               </div>
@@ -1121,7 +1078,7 @@
                 </tr>
                 <?php
               }
-             } 
+             }
              ?>
               </tbody>
             </table>
@@ -1177,7 +1134,7 @@
   <!---------------------------------------------------- add program modal -------------------------------------->
   <div class="modal fade" id="add-program">
     <div class="modal-dialog">
-      <div class="modal-content" style="width:450px; top: 50px;">
+      <div class="modal-content">
         <form action="addprogram.php" method="post">
           <div class="modal-header" style="background-color: #DF3A01; color: white;">
             <h4 class="modal-title">Add Program</h4>
@@ -1185,27 +1142,400 @@
           <div class="modal-body">
             <div class="form-group">
               <div class="form-row">
-                <div class="col-sm-10" style="position:relative; left:9%;">
-                  <label style="position:relative; left:120px;">Program Name</label>
+                <div class="col-sm-12">
+                  <label>Program Name</label>
                   <input name="program_name" required="" type="text" id="prgram_name" class="form-control mb-1"
-                    placeholder="Program Name">
+                    placeholder="Program name">
                 </div>
               </div>
             </div>
             <div class="form-group">
               <div class="form-row">
-                <div class="col-sm-10" style="position:relative; left:9%;">
-                  <label style="position:relative; left:120px;">Program Description</label>
-                  <textarea name="program_description" type="text" required="" class="form-control mb-1"
-                    id="program_desc" placeholder="describe what the program does..." style="height:80px;">
+                <div class="col-sm-12">
+                  <label>Program Description</label>
+                  <textarea name="program_description" type="text" style="resize: none" rows="2" required="" class="form-control mb-1"
+                    id="program_desc" placeholder="Enter here...">
                   </textarea>
-                  <div>
-                    <div>
-                      <div>
-                        <br>
-                      </div>
-                    </div>
-                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <h5>Day 1</h5>
+              <div class="form-row mb-3">
+                <div class="col-sm-4">
+                  <label>Upper Body 1</label>
+                  <select name="upper-1-day-1" id="upper-1-day-1" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label>Upper Body 2</label>
+                  <select name="upper-2-day-1" id="upper-2-day-1" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label>Upper Body 3</label>
+                  <select name="upper-3-day-1" id="upper-3-day-1" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row mb-3">
+                <div class="col-sm-4">
+                  <label>Lower Body 1</label>
+                  <select name="lower-1-day-1" id="lower-1-day-1" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label>Lower Body 2</label>
+                  <select name="lower-2-day-1" id="lower-2-day-1" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label>Lower Body 3</label>
+                  <select name="lower-3-day-1" id="lower-3-day-1" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row mb-3">
+                <div class="col-sm-4">
+                  <label>Abdominals</label>
+                  <select name="abdominal-day-1" id="abdominal-day-1" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <h5>Day 2</h5>
+              <div class="form-row mb-3">
+                <div class="col-sm-4">
+                  <label>Upper Body 1</label>
+                  <select name="upper-1-day-2" id="upper-1-day-2" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label>Upper Body 2</label>
+                  <select name="upper-2-day-2" id="upper-2-day-2" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label>Upper Body 3</label>
+                  <select name="upper-3-day-2" id="upper-3-day-2" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row mb-3">
+                <div class="col-sm-4">
+                  <label>Lower Body 1</label>
+                  <select name="lower-1-day-2" id="lower-1-day-2" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label>Lower Body 2</label>
+                  <select name="lower-2-day-2" id="lower-2-day-2" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label>Lower Body 3</label>
+                  <select name="lower-3-day-2" id="lower-3-day-2" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row mb-3">
+                <div class="col-sm-4">
+                  <label>Abdominals</label>
+                  <select name="abdominal-day-2" id="abdominal-day-2" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <h5>Day 3</h5>
+              <div class="form-row mb-3">
+                <div class="col-sm-4">
+                  <label>Upper Body 1</label>
+                  <select name="upper-1-day-3" id="upper-1-day-3" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label>Upper Body 2</label>
+                  <select name="upper-2-day-3" id="upper-2-day-3" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label>Upper Body 3</label>
+                  <select name="upper-3-day-3" id="upper-3-day-3" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row mb-3">
+                <div class="col-sm-4">
+                  <label>Lower Body 1</label>
+                  <select name="lower-1-day-3" id="lower-1-day-3" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label>Lower Body 2</label>
+                  <select name="lower-2-day-3" id="lower-2-day-3" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label>Lower Body 3</label>
+                  <select name="lower-3-day-3" id="lower-3-day-3" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row mb-3">
+                <div class="col-sm-4">
+                  <label>Abdominals</label>
+                  <select name="abdominal-day-3" id="abdominal-day-3" class="form-control">
+                    <option value="" disabled selected>Select here</option>
+                    <?php 
+                    $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                    <?php
+                      }
+                    }
+                    ?>
+                  </select>
                 </div>
               </div>
             </div>
@@ -1228,7 +1558,7 @@
   <script type="text/javascript" src="addvalidation.js"></script>
 
   <script>
-  var regs, walks;
+  var regs, walks, programs;
   $.get("./members.php?type=regular", function(res) {
     // Gibutang nimo sa regs ang tanan members nga regular
     regs = JSON.parse(res);
@@ -1302,12 +1632,12 @@
         var span;
         if (row.username) {
           span = `<span  data-toggle="tooltip" data-placement="top" title="Deactivate ${row.last_name} Account?">
-                  <i style="cursor: pointer; color:#FF4500; font-size: 25px;" 
+                  <i style="cursor: pointer; color:#FF4500; font-size: 25px;"
                   class="fa fa-lock mx-2" data-id="${row.member_id}"lastname-id="${row.last_name}"
                   onclick="deactivate_account(this)"></i></span>`;
         } else {
           span = `<span  data-toggle="tooltip" data-placement="top" title="Activate ${row.last_name} Account?">
-                  <i style="cursor: pointer; color:#FF4500; font-size: 25px;" 
+                  <i style="cursor: pointer; color:#FF4500; font-size: 25px;"
                   class="fa fa-key mx-2" data-id="${row.member_id}"lastname-id="${row.last_name}"
                   onclick="activate_account(this)"></i></span>`;
         }
@@ -1318,7 +1648,7 @@
           <td>${row.member_status}</td>
           <td>
             <span   data-toggle="tooltip" data-placement="top" title="View ${row.last_name}">
-              <i style="cursor: pointer; color:brown; font-size: 25px;" 
+              <i style="cursor: pointer; color:brown; font-size: 25px;"
               data-toggle="modal" data-target="#view"
               class=" fas fa-eye mx-2 get_id" data-id = '${row.member_id}'
               onclick="displayDetails(this)"></i>
@@ -1330,13 +1660,13 @@
               onclick="updateDetailsRegular(this)"></i>
             </span>
             <span data-toggle="tooltip" data-placement="top" title="pay ${row.last_name}">
-              <i style="cursor: pointer; color:green; font-size: 25px;" 
+              <i style="cursor: pointer; color:green; font-size: 25px;"
               data-toggle="modal" data-target="#regular_payment"
               class="fas fa-money-bill-alt" data-id = '${row.member_id}'
               onclick="regularpaymentDetails(this)"></i>
             </span>
             <span  data-toggle="tooltip" data-placement="top" title="Delete ${row.last_name}">
-              <i style="cursor: pointer; color:red; font-size: 25px;" 
+              <i style="cursor: pointer; color:red; font-size: 25px;"
               class=" far fa-trash-alt mx-2" data-id="${row.member_id}"
               onclick="deleted(this)"></i>
             </span>
@@ -1434,8 +1764,59 @@
     } else {
       $("#no-data-div-walkin").css("display", "flex");
     }
-    
   }
+
+  // Pagination sa programs
+  $("#program-tbody").pagination({
+    dataSource: function(done) {
+      $.get("./getprograms.php", function(res) {
+        done(JSON.parse(res));
+      });
+    },
+    pageSize: 3,
+    showPrevious: false,
+    showNext: false,
+    callback: function(data) {
+      $("#program-tbody").empty();
+      if(data.length > 0) {
+        $("#no-data-div-programs").css("display", "none");
+        data.forEach(row => {
+          let html = `<tr>
+            <td>${row.program_name}</td>
+            <td>
+              <span data-toggle="tooltip" data-placement="top"
+                title="View ${row.program_name} members">
+                <i style="cursor: pointer; color:brown; font-size: 25px;" data-toggle="modal"
+                  data-target="#viewprogram" class=" far fa-user mx-2 get_id"
+                  data-id='${row.program_id}' onclick="displayProgramMembers(this)"></i>
+              </span>
+
+              <span data-toggle="tooltip" data-placement="top" title="${row.program_name} info">
+                <i style="cursor: pointer; color:#C71585; font-size: 25px;"
+                  class="fas fa-pencil-alt mx-2 get_id" data-toggle="modal" data-target="#programUpdate"
+                  data-id='${row.program_id}' onclick="updateProgram(this)"></i>
+              </span>
+
+              <span data-toggle="tooltip" data-placement="top" title="${row.program_name} info">
+                <i style="cursor: pointer; color:#00c2c2; font-size: 25px;"
+                  class="fas fa-info-circle mx-2 get_id" data-toggle="modal" data-target="#viewinfo"
+                  data-id='${row.program_id}' onclick="displayProgramInformation(this)"></i>
+              </span>
+
+              <span data-toggle="tooltip" data-placement="top"
+                title="Delete ${row.program_name}">
+                <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-2"
+                  data-id="${row.program_id}" onclick="removeProgram(this)"></i>
+              </span>
+            </td>
+          <tr>`;
+          $("#program-tbody").append(html);
+        });
+      } else {
+        $("#no-data-div-programs").css("display", "flex");
+      }
+    }
+  });
 
   // tool tip sa plus button
   $(function() {
@@ -1475,7 +1856,7 @@
     });
   });
 
-  //------------------------------------------------------------------------------ VIEW JS 
+  //------------------------------------------------------------------------------ VIEW JS
   // View member Modal
   function displayDetails(el) {
     let id = el.getAttribute('data-id');
@@ -1558,7 +1939,7 @@
 
 
 
-  //---------------------------------------------------------------------------VIEW PROGRAM INFO 
+  //---------------------------------------------------------------------------VIEW PROGRAM INFO
   // View member Modal
   function displayProgramInformation(el) {
     let id = el.getAttribute('data-id');
@@ -1588,7 +1969,7 @@
   }
 
 
-  //------------------------------------------------------------------------------ PAYMENT REGULAR VIEW JS 
+  //------------------------------------------------------------------------------ PAYMENT REGULAR VIEW JS
   // PAYMENT VIEW member Modal
   function regularpaymentDetails(el) {
     let id = el.getAttribute('data-id');
@@ -1612,7 +1993,7 @@
     }
   }
 
-  //------------------------------------------------------------------------------ PAYMENT WALKIN VIEW JS 
+  //------------------------------------------------------------------------------ PAYMENT WALKIN VIEW JS
   // PAYMENT VIEW member Modal
   function walkinpaymentDetails(el) {
     let id = el.getAttribute('data-id');
@@ -1636,7 +2017,7 @@
     }
   }
 
-  //------------------------------------------------------------------------------ UPDATE REGULAR JS 
+  //------------------------------------------------------------------------------ UPDATE REGULAR JS
   // update regular member Modal
   function updateDetailsRegular(el) {
     let id = el.getAttribute('data-id');
@@ -1684,7 +2065,7 @@
   }
 
 
-  //---------------------------------------------------------------------------UPDATE program JS 
+  //---------------------------------------------------------------------------UPDATE program JS
   // update program  Modal
   function updateProgram(el) {
     let id = el.getAttribute('data-id');
@@ -1710,7 +2091,7 @@
     }
   }
 
-  //------------------------------------------------------------------------------ DELETE JS 
+  //------------------------------------------------------------------------------ DELETE JS
   function deleted(el) {
     let id = el.getAttribute('data-id');
     console.log(id);
@@ -1731,7 +2112,7 @@
     }
   }
 
-  //---------------------------------------------------------------------WALK IN DELETE JS 
+  //---------------------------------------------------------------------WALK IN DELETE JS
   function deleted_walkin(el) {
     let id = el.getAttribute('data-id');
     console.log(id);
@@ -1797,7 +2178,7 @@
     }
   }
 
-  //------------------------------------------------------------------------REMOVE PROGRAM JS 
+  //------------------------------------------------------------------------REMOVE PROGRAM JS
   function removeProgram(el) {
     let id = el.getAttribute('data-id');
     console.log(id);
@@ -1820,7 +2201,7 @@
 
 
 
-  //------------------------------------------------------------------------------ RECOVER JS 
+  //------------------------------------------------------------------------------ RECOVER JS
   function recover(el) {
     let id = el.getAttribute('data-id');
     console.log(id);
@@ -1841,7 +2222,7 @@
     }
   }
 
-  //------------------------------------------------------------------------------ RECOVERPROGRAM JS 
+  //------------------------------------------------------------------------------ RECOVERPROGRAM JS
   function recoverProgram(el) {
     let id = el.getAttribute('data-id');
     console.log(id);

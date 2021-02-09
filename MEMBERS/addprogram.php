@@ -7,12 +7,37 @@ require('connect.php');
 date_default_timezone_set('Asia/Manila');
 
 if($_SESSION['admin_id']){
-    $session_admin_id = $_SESSION['admin_id'];
+    $session_admin_id = $_SESSION['admin_id'];  
 }
 
 $program_name = $_POST['program_name'];
 $program_description = $_POST['program_description'];
-$date_added = date("Y-m-d"); 
+$date_added = date("Y-m-d");
+// day 1
+$upper1day1 = $_POST['upper-1-day-1'];
+$upper2day1 = $_POST['upper-2-day-1'];
+$upper3day1 = $_POST['upper-3-day-1'];
+$lower1day1 = $_POST['lower-1-day-1'];
+$lower2day1 = $_POST['lower-2-day-1'];
+$lower3day1 = $_POST['lower-3-day-1'];
+$abdominalday1 = $_POST['abdominal-day-1'];
+// day 2
+$upper1day2 = $_POST['upper-1-day-2'];
+$upper2day2 = $_POST['upper-2-day-2'];
+$upper3day2 = $_POST['upper-3-day-2'];
+$lower1day2 = $_POST['lower-1-day-2'];
+$lower2day2 = $_POST['lower-2-day-2'];
+$lower3day2 = $_POST['lower-3-day-2'];
+$abdominalday2 = $_POST['abdominal-day-2'];
+// day 3
+$upper1day3 = $_POST['upper-1-day-3'];
+$upper2day3 = $_POST['upper-2-day-3'];
+$upper3day3 = $_POST['upper-3-day-3'];
+$lower1day3 = $_POST['lower-1-day-3'];
+$lower2day3 = $_POST['lower-2-day-3'];
+$lower3day3 = $_POST['lower-3-day-3'];
+$abdominalday3 = $_POST['abdominal-day-3'];
+
 //REGEX
 
 $program_name_regex = "/[0-9]/";
