@@ -32,7 +32,7 @@
   <link href="css/theme-colors.css" rel="stylesheet">
 
   <style>
-  input[type=text]{
+  input[type=text], input[type=email]{
     text-align: center;
   }
 
@@ -378,6 +378,7 @@ textarea{
 
                   <span data-toggle="tooltip" data-placement="top" title="Update <?php echo $row["last_name"]?> to Walk-in">
                     <i style="cursor: pointer; color:#C71585; font-size: 25px;"
+                    data-toggle="modal" data-target="#memberUpdate"
                     class="fas fa-pencil-alt mx-2" data-id="<?php echo $row['member_id'] ?>"
                     onclick="updateDetailsRegular(this)"></i>
                   </span>
@@ -566,6 +567,7 @@ textarea{
                   data-id = '<?php echo $row["program_id"]?>'
                   onclick="updateProgram(this)"></i>
                   </span>
+                  
 
                   <span data-toggle="tooltip" data-placement="top" title="<?php echo $row["program_name"]?> info">
                 <i style="cursor: pointer; color:#00c2c2; font-size: 25px;"
@@ -876,6 +878,62 @@ textarea{
     </div>
   </div>
 </div>
+
+
+<!---------------------------------------------------- UPDATE Regular member modal -------------------------------------->
+<div class="modal fade" id="memberUpdate">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width:450px; top: 50px;">
+      <form action="regular_update.php" method="post">
+      <div class="modal-header" style="background-color: #DF3A01; color: white;">
+              <h4 class="modal-title" >Update Regular member</h4>
+              <button type='button' class='close' id='close-paymentModal' data-dismiss='modal'>&times;</button>
+            </div> 
+      <div class="modal-body">
+      <div class="form-group">
+          <div class="form-row">
+            <div class="col-sm-6">
+              <label>member ID</label>
+              <input name="member_id" type="text" id="update_member_id" readonly class="form-control">
+            </div>
+            <div class="col-sm-6">
+              <label>Full name</label>
+              <input name="last_name" type="text" id="update_lastname"  readonly class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col-sm-12">
+              <label>Email Address</label>
+              <input name="email" type="email" id="update_email"  class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col-sm-6">
+              <label>Contact number</label>
+              <input name="phone" type="text" id="update_phone"   class="form-control">
+            </div>
+            <div class="col-sm-6">
+              <label>Member Type</label>
+              <select name="member_type"  id="update_memType" class="form-control">
+                  <option value="Regular">Regular</option>
+                  <option value="Walk-in">Walk-in</option>
+              </select>
+            </div>
+           
+          </div>
+        </div>
+        <div class="modal-footer">
+        <button  type="submit" class="btn btn-orange">UPDATE</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
 
 <!------------------------------------------------- Walk-in Payment modal----------------------------------------->
 <div class="modal fade" id="walkin_payment">
@@ -1529,24 +1587,34 @@ $(document).ready(function(){
       console.log(id);
 
       // AJAX Request
-      var r = confirm("Are you sure you want to update to walk-in member?");
-      if(r == true){
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
-        
       if(this.readyState == 4 && this.status == 200 ) {
-          console.log((this.responseText));
-          alert("Member successfully update to Walk-in!");
-          window.location.reload()
-        }
+          display(JSON.parse(this.responseText));
+          console.log(JSON.parse(this.responseText));
+          
        }
+      }
       
-      req.open('GET', 'update_regular_member.php?id=' + id, true);
+      req.open('GET', 'displayupdate.php?id=' + id, true);
       req.send();
-    }
+
+       function display(row) {
+
+        document.getElementById("update_member_id").value = row.member_id;
+        document.getElementById("update_lastname").value = row.last_name;
+        document.getElementById("update_email").value = row.email;
+        document.getElementById("update_phone").value = row.phone;
+        document.getElementById("update_memType").value = row.member_type;
+  
+      }
     }
 
-  // update regular member Modal
+    
+    
+    
+
+  // update walkin member Modal
   function   updateDetailsWalkin(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
