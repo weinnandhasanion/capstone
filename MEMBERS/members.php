@@ -372,7 +372,7 @@
               </tbody>
             </table>
             <div id="no-data-div" class="no-data-div my-3 text-muted">
-              No results to show.
+              No data to show.
             </div>
             <div class="table-parent my-5" id="table-loader">
               <div class="table-loader">
@@ -417,7 +417,7 @@
                   </tbody>
                 </table>
                 <div id="no-data-div-walkin" class="no-data-div my-3 text-muted">
-                  No results to show.
+                  No data to show.
                 </div>
                 <div class="table-parent my-5" id="table-loader-walkin">
                   <div class="table-loader">
@@ -457,7 +457,7 @@
                   </tbody>
                 </table>
                 <div id="no-data-div-programs" class="no-data-div my-5 text-muted">
-                  No data!
+                  No data to show.
                 </div>
                 <div class="table-parent my-5" id="table-loader-programs">
                   <div class="table-loader">
@@ -892,7 +892,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Program</label>
-                  <select name="program_name" id="program" class="form-control">
+                  <select name="program_id" id="program" class="form-control">
                     <option value="" selected disabled>Select here...</option>
                     <?php
                     $sql = "SELECT program_id, program_name FROM program";
