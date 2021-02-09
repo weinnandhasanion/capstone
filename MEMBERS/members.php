@@ -893,18 +893,19 @@
                 <div class="col-sm-4">
                   <label>Program</label>
                   <select name="program_name" id="program" class="form-control">
+                    <option value="" selected disabled>Select here...</option>
                     <?php
-                 //$sql = "SELCT program_name FROM program";
-                 //$result = mysqli_query($conn, $sql);
-                 //$rows = mysqli_fetch_assoc($result);
-                 //foreach($rows AS $row){
-                ?>
-                    <option value="Light Weight" selected>Light Weight</option>
-                    <option value="Heavy Weight">Heavy Weight</option>
+                    $sql = "SELECT program_id, program_name FROM program";
+                    $res = mysqli_query($conn, $sql);
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?php echo $row["program_id"]?>"><?php echo $row["program_name"] ?></option>
+                    <?php
+                      }
+                    }
+                    ?>
                   </select>
-                  <?php
-                  //}
-                ?>
                 </div>
               </div>
               <small><i>NOTE: All fields are <b>required</b></b></i></small>
