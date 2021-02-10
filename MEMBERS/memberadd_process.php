@@ -19,7 +19,7 @@ $address = $_POST['address'];
 $phone = $_POST['phone'];
 $member_type = $_POST['member_type'];
 $date_registered = date("Y-m-d"); 
-$program_name = $_POST['program_name'];
+$program_id = $_POST['program_id'];
 
 
 
@@ -53,9 +53,9 @@ else if(strlen($phone) == 11){
 
 
         $sql = "INSERT INTO `member` ( first_name,last_name,gender,birthdate,email,address,
-        phone,member_type,date_registered,program_name )         
+        phone,member_type,date_registered,program_id )         
         VALUES ( '$first_name', '$last_name', '$gender', '$birthdate', '$email', 
-        '$address', '$phone', '$member_type', '$date_registered','$program_name')";
+        '$address', '$phone', '$member_type', '$date_registered','$program_id')";
         $query_run = mysqli_query($conn, $sql);
         
 

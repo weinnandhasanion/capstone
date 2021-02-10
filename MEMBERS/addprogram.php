@@ -7,12 +7,37 @@ require('connect.php');
 date_default_timezone_set('Asia/Manila');
 
 if($_SESSION['admin_id']){
-    $session_admin_id = $_SESSION['admin_id'];
+    $session_admin_id = $_SESSION['admin_id'];  
 }
 
 $program_name = $_POST['program_name'];
 $program_description = $_POST['program_description'];
-$date_added = date("Y-m-d"); 
+$date_added = date("Y-m-d");
+// day 1
+$upper1day1 = $_POST['upper-1-day-1'];
+$upper2day1 = $_POST['upper-2-day-1'];
+$upper3day1 = $_POST['upper-3-day-1'];
+$lower1day1 = $_POST['lower-1-day-1'];
+$lower2day1 = $_POST['lower-2-day-1'];
+$lower3day1 = $_POST['lower-3-day-1'];
+$abdominalday1 = $_POST['abdominal-day-1'];
+// day 2
+$upper1day2 = $_POST['upper-1-day-2'];
+$upper2day2 = $_POST['upper-2-day-2'];
+$upper3day2 = $_POST['upper-3-day-2'];
+$lower1day2 = $_POST['lower-1-day-2'];
+$lower2day2 = $_POST['lower-2-day-2'];
+$lower3day2 = $_POST['lower-3-day-2'];
+$abdominalday2 = $_POST['abdominal-day-2'];
+// day 3
+$upper1day3 = $_POST['upper-1-day-3'];
+$upper2day3 = $_POST['upper-2-day-3'];
+$upper3day3 = $_POST['upper-3-day-3'];
+$lower1day3 = $_POST['lower-1-day-3'];
+$lower2day3 = $_POST['lower-2-day-3'];
+$lower3day3 = $_POST['lower-3-day-3'];
+$abdominalday3 = $_POST['abdominal-day-3'];
+
 //REGEX
 
 $program_name_regex = "/[0-9]/";
@@ -35,9 +60,17 @@ if(preg_match($program_name_regex, $program_name, $match)){
     </script>");
 }else{
     
-    $sql = "INSERT INTO `program` ( admin_id, program_name,program_description,date_added,time_added)
-    VALUES ( '$admin_id','$program_name', '$program_description', '$date_added', '$timeNow')";
-
+    $sql = "INSERT INTO `program`
+    ( admin_id, program_name,program_description,date_added,time_added,
+    upper_1_day_1,upper_2_day_1,upper_3_day_1,lower_1_day_1,lower_2_day_1,lower_3_day_1,abdominal_day_1,
+    upper_1_day_2,upper_2_day_2,upper_3_day_2,lower_1_day_2,lower_2_day_2,lower_3_day_2,abdominal_day_2,
+    upper_1_day_3,upper_2_day_3,upper_3_day_3,lower_1_day_3,lower_2_day_3,lower_3_day_3,abdominal_day_3
+     )
+    VALUES ( '$admin_id','$program_name', '$program_description', '$date_added', '$timeNow',
+    '$upper1day1', '$upper2day1', '$upper3day1', '$lower1day1', '$lower2day1', '$lower3day1', '$abdominalday1', 
+    '$upper1day2', '$upper2day2', '$upper3day2', '$lower1day2', '$lower2day2', '$lower3day2', '$abdominalday2', 
+    '$upper1day3', '$upper2day3', '$upper3day3', '$lower1day3', '$lower2day3', '$lower3day3', '$abdominalday3')"; 
+    
     $query_run = mysqli_query($conn, $sql);
 
     echo ("<script LANGUAGE='JavaScript'>
