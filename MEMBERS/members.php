@@ -497,6 +497,7 @@
                   <th>program name</th>
                   <th>Date Added</th>
                   <th>date deleted</th>
+                  <th>Time deleted</th>
                   <th>action</th>
                 </tr>
               </thead>
@@ -506,8 +507,6 @@
             $sql = "SELECT * FROM program WHERE program_status = 'remove'";
             $result = mysqli_query($conn, $sql);
             $resultCheck = mysqli_num_rows($result);
-
-
 
             if($resultCheck > 0){
               while($row = mysqli_fetch_assoc($result)){
@@ -523,6 +522,7 @@
                   <td><?php echo $row["program_name"]?></td>
                   <td><?php echo $resultAdded?></td>
                   <td><?php echo $resultDelete?></td>
+                  <td><?php echo $row["time_deleted"]?></td>
                   <td>
                     <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
                       title="Recover <?php echo $row["program_name"]?>" class="fas fa-undo mx-2"

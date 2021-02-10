@@ -39,8 +39,9 @@ if($progs1) {
 
 $id = $_REQUEST['id'];
 $date_deleted = date("Y-m-d");
+$time_deleted = date("h:i a");
 
-$ox = "UPDATE program SET program_status = 'remove',date_deleted = '$date_deleted' 
+$ox = "UPDATE program SET program_status = 'remove', date_deleted = '$date_deleted', time_deleted = '$time_deleted'  
 WHERE program_id = " . intval($id) . "";     
 
 if(mysqli_query($conn, $ox))

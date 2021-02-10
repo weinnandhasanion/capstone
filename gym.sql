@@ -223,6 +223,9 @@ CREATE TABLE `program` (
   `program_description` text NOT NULL,
   `date_added` date DEFAULT NULL,
   `time_added` varchar(10) NOT NULL,
+  `program_status` ENUM('active','remove') NOT NULL,
+  `date_deleted` DATE,
+  `time_deleted` varchar(10),
   `upper_1_day_1` int(11) DEFAULT NULL,
   `upper_2_day_1` int(11) DEFAULT NULL,
   `upper_3_day_1` int(11) DEFAULT NULL,
@@ -249,9 +252,6 @@ CREATE TABLE `program` (
 --
 -- Dumping data for table `program`
 --
-
-INSERT INTO `program` (`program_id`, `admin_id`, `program_name`, `program_description`, `date_added`, `time_added`, `upper_1_day_1`, `upper_2_day_1`, `upper_3_day_1`, `upper_1_day_2`, `upper_2_day_2`, `upper_3_day_2`, `upper_1_day_3`, `upper_2_day_3`, `upper_3_day_3`, `lower_1_day_1`, `lower_2_day_1`, `lower_3_day_1`, `lower_1_day_2`, `lower_2_day_2`, `lower_3_day_2`, `lower_1_day_3`, `lower_2_day_3`, `lower_3_day_3`, `abdominal_day_1`, `abdominal_day_2`, `abdominal_day_3`) VALUES
-(1, 87001, 'Gaining', 'This is a program for members who aim to gain weight and mass.', NULL, '', 1, 2, 3, 4, 5, 6, 7, 8, 2, 9, 10, 11, 12, 13, 14, 15, 17, 11, 16, 19, 20);
 
 -- --------------------------------------------------------
 
