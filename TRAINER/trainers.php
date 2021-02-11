@@ -141,6 +141,7 @@
 
   input[type=text],
   input[type=date],
+  input[type=email],
   select {
 
     height: 45px;
@@ -148,7 +149,7 @@
   .train input[type=text]{
     text-align: center;
   }
-  input[type=text]{
+  input[type=text],input[type=email]{
     text-align: center;
   }
 
@@ -641,6 +642,14 @@
         </div> 
         <div class="form-group">
           <div class="form-row">
+          <div class="col-sm-12">
+              <label>Email address</label>
+              <input name="email" type="email" id="update_email"   class="form-control">
+            </div>
+          </div>  
+        </div>
+        <div class="form-group">
+          <div class="form-row">
             <div class="col-sm-12">
             <label>Address</label>
               <textarea name="address"  type="text"  required="" id="update_address" 
@@ -751,6 +760,7 @@ $(function () {
         document.getElementById("update_lname").value = row.last_name;
         document.getElementById("update_position").value = row.trainer_position;
         document.getElementById("update_phone").value = row.phone;
+        document.getElementById("update_email").value = row.email;
         document.getElementById("update_address").value = row.address;
       }
     }

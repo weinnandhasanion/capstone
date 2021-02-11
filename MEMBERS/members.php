@@ -671,7 +671,11 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Email</label>
-                  <input type="email" name="email" class="form-control"  id="update_email">
+                  <input type="email" name="email" class="form-control"  id="update_email"
+                  onblur="checkEmail(this)">
+                  <small class="validation text-danger" id="update_email-empty">Please fill out this field</small>
+                  <small class="validation text-danger" id="update_email-invalid">Invalid email</small>
+                
                 </div>
               </div>
             </div>
@@ -679,7 +683,11 @@
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Phone</label>
-                  <input type="text" name="phone" class="form-control"  id="update_phone">
+                  <input type="text" name="phone" class="form-control"  id="update_phone"
+                  onblur="checkNumber(this)">
+                  <small class="validation text-danger" id="update_phone-empty">Please fill out this field</small>
+                  <small class="validation text-danger" id="update_phone-invalid">Invalid input</small>
+                  <small class="validation text-danger" id="update_phone-length">Phone number must contain 11 digits</small>
                 </div>
                 <div class="col-sm-6">
                   <label>Member Type</label>
@@ -690,7 +698,16 @@
                 </div>
               </div>
             </div>
-
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-sm-12">
+                  <center><label>Address</label></center>
+                  <input name="address"  id="update_address" type="text" class="form-control mb-1"
+                    id="address"  oninput="checkIfValid(this)" onblur="checkIfValidupdate(this)">
+                  <small class="validation text-danger" id="update_address-empty">Please fill out this field</small>
+                </div>
+              </div>
+            </div>
             <div class="modal-footer">
               <button class="btn btn-orange">UPDATE</button>
             </div>
@@ -1608,7 +1625,7 @@
   <script type="text/javascript" src="js/mdb.min.js"></script>
   <!--Google Maps-->
   <script src="https://maps.google.com/maps/api/js"></script>
-  <script type="text/javascript" src="addvalidation.js"></script>
+  <script type="text/javascript" src="validation.js"></script>
 
   <script>
 
@@ -2101,7 +2118,7 @@
         document.getElementById("update_email").value = row.email;
         document.getElementById("update_phone").value = row.phone;
         document.getElementById("update_member_type").value = row.member_type;
-        
+        document.getElementById("update_address").value = row.address;
     }
   }
 

@@ -14,9 +14,10 @@ $email= $_POST['email'];
 $id = $_POST['member_id'];
 $phone= $_POST['phone'];
 $member_type= $_POST['member_type'];
+$address= $_POST['address'];
 $phoneregex = "/[a-zA-Z]/";
 
-$sql = "UPDATE member SET email = '$email', phone = '$phone', member_type = '$member_type'
+$sql = "UPDATE member SET email = '$email', address = '$address', phone = '$phone', member_type = '$member_type'
         WHERE member_id = '$id'"; 
 $sql_update = mysqli_query($conn, $sql);
 

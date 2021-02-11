@@ -11,6 +11,7 @@ if($_SESSION['admin_id']){
 $trainer_status= $_POST['trainer_status'];
 $trainer_position= $_POST['trainer_position'];
 $phone= $_POST['phone'];
+$email= $_POST['email'];
 $address= $_POST['address'];
 // CONSTANT VARIABLE... REFERENCE IN THE DATABASE...//
 $seniorSalary='20,000';
@@ -23,9 +24,16 @@ $tan = "UPDATE trainer SET
                trainer_status = '$trainer_status',
                trainer_position = '$trainer_position',
                phone = '$phone',
+               email = '$email',
                address = '$address' 
         WHERE trainer_id = '$_POST[trainer_id]'";
+//---- query validations
+$check_email = "SELECT * from trainer where email='$email'";
+$duplicate_email = mysqli_query($conn, $check_email);
 
+$check_phone = "SELECT * from trainer where phone='$phone'";
+$duplicate_phone = mysqli_query($conn, $check_phone);
+//--------------
 
 //VALIDATION IF NAAY LETTERS ANG GI INPUT NMO SA CONTACT NUMBER.. IF WALA MO PROCEED SHA SA NEXT CHECKING
 $phoneregex = "/[a-zA-Z]/";
@@ -35,6 +43,7 @@ if (preg_match($phoneregex, $phone, $match))
         window.alert('Phone has letters.. pelase check ur inputs.');
         window.location.href='/PROJECT/TRAINER/trainers.php';
         </script>");
+
 // CHECK KUNG 11 NUMBERS IMO INPUT.. IF FALSE MO EXIT SA ELSE
 }else if(strlen($phone) == 11){
    //MAIN  CONDITION NI SA UPDATE
@@ -107,12 +116,7 @@ if (preg_match($phoneregex, $phone, $match))
  
 
 //-------------------------------------------------------------------------------
-
-
-
- //------------------------CONDITIONS In THE LOGTAIL DOING-------------------------------------------
- if($trainer_status == 'active'){
-        $description = "Trainer updated to active";
+        $description = "Updated a Trainer ";
         $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`trainer_id`,`user_fname`,`user_lname`,
         `description`, `identity`,`time`)
         VALUES ( '$login_id_new','$admin_id', '$trainer_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
@@ -122,55 +126,6 @@ if (preg_match($phoneregex, $phone, $match))
         window.alert('Trainer is successfully updated.');
         window.location.href='/PROJECT/TRAINER/trainers.php';
         </script>"); 
-}else if($trainer_status == 'inactive'){
-        $description = "Trainer updated to inactive";
-        $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`trainer_id`,`user_fname`,`user_lname`,
-        `description`, `identity`,`time`)
-        VALUES ( '$login_id_new','$admin_id', '$trainer_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
-        mysqli_query($conn, $sql1);
-
-        echo ("<script LANGUAGE='JavaScript'>
-        window.alert('Trainer is successfully updated.');
-        window.location.href='/PROJECT/TRAINER/trainers.php';
-        </script>"); 
-}
-
-if ($address != null){
-        $description = "Trainer address is updated ";
-        $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`trainer_id`,`user_fname`,`user_lname`,
-        `description`, `identity`,`time`)
-        VALUES ( '$login_id_new','$admin_id', '$trainer_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
-        mysqli_query($conn, $sql1);
-
-        echo ("<script LANGUAGE='JavaScript'>
-        window.alert('Trainer is successfully updated.');
-        window.location.href='/PROJECT/TRAINER/trainers.php';
-        </script>"); 
-}
-
-if($trainer_position == "junior"){
-        $description = "Trainer status is updated to junior ";
-        $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`trainer_id`,`user_fname`,`user_lname`,
-        `description`, `identity`,`time`)
-        VALUES ( '$login_id_new','$admin_id', '$trainer_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
-        mysqli_query($conn, $sql1);
-
-        echo ("<script LANGUAGE='JavaScript'>
-        window.alert('Trainer is successfully updated.');
-        window.location.href='/PROJECT/TRAINER/trainers.php';
-        </script>"); 
-}else if ($trainer_position == "senior"){
-        $description = "Trainer status is updated to senior ";
-        $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`trainer_id`,`user_fname`,`user_lname`,
-        `description`, `identity`,`time`)
-        VALUES ( '$login_id_new','$admin_id', '$trainer_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
-        mysqli_query($conn, $sql1);
-
-        echo ("<script LANGUAGE='JavaScript'>
-        window.alert('Trainer is successfully updated.');
-        window.location.href='/PROJECT/TRAINER/trainers.php';
-        </script>"); 
-}
 //-------------------------------------------------------------------------------
 
 ?>

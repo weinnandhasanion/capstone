@@ -19,6 +19,16 @@ if($_SESSION['admin_id']){
     $gender = $_POST['gender'];
     $date_hired = date("Y-m-d"); 
    
+//---- query validations
+$check_name = "SELECT * from trainer where first_name='$first_name' AND last_name='$last_name'";
+$duplicate_name = mysqli_query($conn, $check_name);
+
+$check_email = "SELECT * from trainer where email='$email'";
+$duplicate_email = mysqli_query($conn, $check_email);
+
+$check_phone = "SELECT * from trainer where phone='$phone'";
+$duplicate_phone = mysqli_query($conn, $check_phone);
+//--------------
      
 //REGEX
 $phoneregex = "/[a-zA-Z]/";
@@ -31,6 +41,27 @@ if(preg_match($Lnameregex, $last_name, $match)){
     window.location.href='/PROJECT/TRAINER/trainers.php';
     </script>");
 }
+//VALIDATION IF EMAIL IS ALREADY TAKEN.. 
+else if(mysqli_num_rows($duplicate_email)>0){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Email address is already Taken');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");
+}
+//VALIDATION IF PHONE IS ALREADY TAKEN.. 
+else if(mysqli_num_rows($duplicate_phone)>0){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('contact number is already Taken');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");
+}
+//VALIDATION IF NAME IS ALREADY TAKEN.. 
+else if(mysqli_num_rows($duplicate_name)>0){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Name is already Taken');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");
+}
 //VALIDATION IF NAAY NUMBERS ANG GI INPUT NMO SA FIRSTNAME.. 
 else if(preg_match($Fnameregex, $first_name, $match)){
     echo ("<script LANGUAGE='JavaScript'>
@@ -38,6 +69,7 @@ else if(preg_match($Fnameregex, $first_name, $match)){
     window.location.href='/PROJECT/TRAINER/trainers.php';
     </script>");
 }
+
 //VALIDATION IF NAAY LETTERS ANG GI INPUT NMO SA CONTACT NUMBER.. IF WALA MO PROCEED SHA SA NEXT CHECKING
 else if (preg_match($phoneregex, $phone, $match)){
         echo ("<script LANGUAGE='JavaScript'>
