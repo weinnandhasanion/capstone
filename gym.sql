@@ -197,7 +197,7 @@ CREATE TABLE `paymentlog` (
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
   `member_type` enum('Regular','Walk-in') DEFAULT NULL,
-  `payment_description` enum('Monthly Subscription','Annual Membership','Walk-in') DEFAULT NULL,
+  `payment_description` enum('Monthly Subscription','Annual Membership','Monthly&Annual','Walk-in') DEFAULT NULL,
   `payment_type` enum('Cash','Online') NOT NULL,
   `date_payment` date DEFAULT NULL,
   `time_payment` varchar(15) NOT NULL,

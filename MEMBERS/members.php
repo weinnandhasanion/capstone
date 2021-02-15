@@ -127,8 +127,12 @@
     text-decoration: underline;
   }
 
-  th,
+  th, 
   td {
+    text-align: center;
+  }
+
+  .form-row {
     text-align: center;
   }
 
@@ -591,7 +595,7 @@
     <div class="modal-dialog">
 
       <!-- Modal content-->
-      <div class="modal-content" style="width: 550px;">
+      <div class="modal-content" style="width: 870px; right: 50px;">
 
         <div class="modal-header" style="background-color: #DF3A01; color: white;">
           <h4 class="modal-title">Program Information</h4>
@@ -605,19 +609,19 @@
 
               <div class="form-group">
                 <div class="form-row">
-                  <div class="col-sm-6">
+                  <div class="col-sm-3">
                     <label>Program Name</label>
                     <input name="program_name" id="info_name" type="text" readonly class="form-control">
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-3">
                     <label>Program Status</label>
                     <input name="program_status" id="info_stat" type="text" readonly class="form-control">
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-3">
                     <label>Date Added</label>
                     <input name="date_added" id="info_date" type="text" readonly class="form-control">
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-3">
                     <label>Time Added</label>
                     <input name="time_added" id="info_time" type="text" readonly class="form-control">
                   </div>
@@ -627,13 +631,126 @@
               <div class="form-group">
                 <div class="form-row">
                   <div class="col-sm-10">
-                    <label>Program Description</label>
+                    <label style="position: relative;left: 55px;">Program Description</label>
                     <textarea name="program_description" type="text" required="" readonly class="form-control mb-1 "
-                      id="info_description" rows="5" style="resize:none; width:511px;"></textarea>
+                      id="info_description" rows="3" style="resize:none; width:835px;"></textarea>
                   </div>
                 </div>
               </div>
 
+              <div class="form-group">
+              <label style="font-size: 25px;">Day 1</label><br>
+              <label>Upper Body </label>
+                <div class="form-row">
+                  <div class="col-sm-4">
+                    <input id="day1upper1" type="text" readonly class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <input id="day1upper2" type="text" readonly class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <input id="day1upper3" type="text" readonly class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+              <label>Lower Body </label>
+                <div class="form-row">
+                  <div class="col-sm-4">
+                    <input id="day1lower1" type="text" readonly class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <input id="day1lower2" type="text" readonly class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <input id="day1lower3" type="text" readonly class="form-control">
+                  </div>
+                </div>
+              </div>            
+              <div class="form-group">
+              <label>Abdominal </label>
+              <div class="form-row">
+                  <div class="col-sm-12">
+                    <input id="day1abdominal1" type="text" readonly class="form-control">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+              <label style="font-size: 25px;">Day 2</label><br>
+              <label>Upper Body </label>
+                <div class="form-row">
+                <div class="col-sm-4">
+                    <input id="day2upper1" type="text" readonly class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <input id="day2upper2" type="text" readonly class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <input id="day2upper3" type="text" readonly class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+              <label>Lower Body </label>
+                <div class="form-row">
+                <div class="col-sm-4">
+                    <input id="day2lower1" type="text" readonly class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <input id="day2lower2" type="text" readonly class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <input id="day2lower3" type="text" readonly class="form-control">
+                  </div>
+                </div>
+              </div>            
+              <div class="form-group">
+              <label>Abdominal </label>
+              <div class="form-row">
+                  <div class="col-sm-12">
+                    <input id="day2abdominal2" type="text" readonly class="form-control">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+              <label style="font-size: 25px;">Day 3</label><br>
+              <label>Upper Body </label>
+              <div class="form-row">
+                <div class="col-sm-4">
+                    <input id="day3upper1" type="text" readonly class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <input id="day3upper2" type="text" readonly class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <input id="day3upper3" type="text" readonly class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+              <label>Lower Body </label>
+                <div class="form-row">
+                <div class="col-sm-4">
+                    <input id="day3lower1" type="text" readonly class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <input id="day3lower2" type="text" readonly class="form-control">
+                  </div>
+                  <div class="col-sm-4">
+                    <input id="day3lower3" type="text" readonly class="form-control">
+                  </div>
+                </div>
+              </div>           
+              <div class="form-group">
+              <label>Abdominal </label>
+              <div class="form-row">
+                  <div class="col-sm-12">
+                    <input id="day3abdominal3" type="text" readonly class="form-control">
+                  </div>
+                </div>
+              </div>
 
             </table>
           </div>
@@ -753,15 +870,18 @@
                       type="checkbox">
                     <span class="checkmark"></span>
                   </label>
-
                 </div>
                 <div class="col-sm-6">
                   <label>Amount</label>
-                  <input style="display:none;" id="payment_750" type="text" name="payment_amount" placeholder="₱750.00"
+                  <input style="display:none;" id="payment_750" type="text" name="payment_amount"
+                    placeholder="₱750.00"
                     class="form-control" readonly>
-                  <input style="display:none;" id="payment_200" type="text" name="payment_amount" placeholder="₱200.00"
+                  <input style="display:none;" id="payment_200" type="text" name="payment_amount"
+                    placeholder="₱200.00"
                     class="form-control" readonly>
-                  </label>
+                  <input style="display:none;" id="payment_950" value="Monthly&Annual" type="text" name="payment_description"
+                    placeholder="₱750 + ₱200 = ₱950.00"
+                    class="form-control" readonly>
                 </div>
               </div>
             </div>
@@ -1896,40 +2016,57 @@
     }
   });
 
+var x = document.getElementById("payment_750");
+var y = document.getElementById("payment_200");
+var z = document.getElementById("payment_950");
+var monthly = document.querySelector('#monthly');
+var annual = document.querySelector('#annual');
 
-
-
-  //show and hide payment subscription
-  function Monthly() {
-    var x = document.getElementById("payment_750");
-    var y = document.getElementById("payment_200");
-    if (x.style.display === "none") {
+//show and hide payment subscription
+function Monthly() {
+  let bothChecked = check();
+  if (!bothChecked) {
+    if (x.style.display === "none")
       x.style.display = "block";
-      y.style.display = "none";
-    } else {
+    else
       x.style.display = "none";
-      y.style.display = "none";
-    }
   }
-  //show and hide payment subscription
-  function Annual() {
-    var x = document.getElementById("payment_750");
-    var y = document.getElementById("payment_200");
-    if (y.style.display === "none") {
-      x.style.display = "none";
+}
+
+//show and hide payment subscription
+function Annual() {
+  let bothChecked = check();
+  if (!bothChecked) {
+    if (y.style.display === "none")
       y.style.display = "block";
-    } else {
-      x.style.display = "none";
+    else
       y.style.display = "none";
-    }
   }
+}
+
+
+function check() {
+  if (monthly.checked && annual.checked) {
+    x.style.display = "none";
+    y.style.display = "none";
+    z.style.display = "block";
+    return true;
+  }
+  z.style.display = "none";
+  return false;
+}
+
+ 
 
   //checkbox only one check
   $(document).ready(function() {
-    $('input:checkbox').click(function() {
+    $('input:checkbox').each(function() {
+      //$('input:checkbox').click(function() {
       $('input:checkbox').not(this).prop('checked', false);
     });
   });
+
+
 
   //------------------------------------------------------------------------------ VIEW JS
   // View member Modal
@@ -2040,6 +2177,27 @@
       document.getElementById("info_time").value = row.time_added;
       document.getElementById("info_stat").value = row.program_status;
       document.getElementById("info_description").value = row.program_description;
+      document.getElementById("day1upper1").value = row.upper_1_day_1;
+      document.getElementById("day1upper2").value = row.upper_2_day_1;
+      document.getElementById("day1upper3").value = row.upper_3_day_1;
+      document.getElementById("day1lower1").value = row.lower_1_day_1;
+      document.getElementById("day1lower2").value = row.lower_2_day_1;
+      document.getElementById("day1lower3").value = row.lower_3_day_1;
+      document.getElementById("day1abdominal1").value = row.abdominal_day_1;
+      document.getElementById("day2upper1").value = row.upper_1_day_2;
+      document.getElementById("day2upper2").value = row.upper_2_day_2;
+      document.getElementById("day2upper3").value = row.upper_3_day_2;
+      document.getElementById("day2lower1").value = row.lower_1_day_2;
+      document.getElementById("day2lower2").value = row.lower_2_day_2;
+      document.getElementById("day2lower3").value = row.lower_3_day_2;
+      document.getElementById("day2abdominal2").value = row.abdominal_day_2;
+      document.getElementById("day3upper1").value = row.upper_1_day_3;
+      document.getElementById("day3upper2").value = row.upper_2_day_3;
+      document.getElementById("day3upper3").value = row.upper_3_day_3;
+      document.getElementById("day3lower1").value = row.lower_1_day_3;
+      document.getElementById("day3lower2").value = row.lower_2_day_3;
+      document.getElementById("day3lower3").value = row.lower_3_day_3;
+      document.getElementById("day3abdominal3").value = row.abdominal_day_3;
     }
   }
 
