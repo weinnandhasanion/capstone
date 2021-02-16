@@ -168,48 +168,51 @@
   <div class="modal fade" role="dialog" id="members-added">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for total members added</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Member type</label>
-                <select id="" class="form-control">
-                  <option value="Regular">Regular</option>
-                  <option value="Walk-in">Walk-in</option>
-                </select>
+        <form action="./members/members_added.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for total members added</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Member type</label>
+                  <select name="member_type" class="form-control">
+                    <option value="Regular">Regular</option>
+                    <option value="Walk-in">Walk-in</option>
+                    <option value="Both">Both</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="members-added-select" name="timespan" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
               </div>
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="members-added-select" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
+            </div>
+            <div class="form-group custom-date" id="members-added-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date" id="" class="form-control">
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date" id="" class="form-control">
+                </div>
               </div>
             </div>
           </div>
-          <div class="form-group custom-date" id="members-added-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="" id="" class="form-control">
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="" id="" class="form-control">
-              </div>
-            </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange">Generate report</button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -218,7 +221,6 @@
   <script type="text/javascript" src="js/popper.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/mdb.min.js"></script>
-
   <script>
   function logout(el) {
     let id = el.getAttribute('data-id');
