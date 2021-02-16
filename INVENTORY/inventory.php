@@ -188,30 +188,56 @@
 
   </header>
   <!--Main layout-->
-  <main class="pt-5 mx-lg-5" >
+  <main class="pt-5 mx-lg-5">
     <div class="container-fluid mt-5" id="main-div">
-    
-      <!-- Heading -->
+      <button class="btn btn-sm btn-outline-orange mb-3" id="view-deleted-promos-btn" onclick="viewDeleted()">
+        <i class="fas fa-eye mr-2"></i>
+        View Deleted/Expired Inventory
+      </button>
       <div class="card mb-4 wow fadeIn">
-        <!--Card content-->
         <div class="card-body d-sm-flex justify-content-between">
           <h4 class="mb-1 mb-sm-1 pt-1">
-            <a data-toggle="modal" data-target="#add"><i style="color:#DF3A01; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Add Item"  class="fas fa-plus mr-4"></i></a>
-            Inventory
+            <a data-toggle="modal" data-target="#add"><i style="color:#DF3A01; font-size: 25px;" data-toggle="tooltip"
+                data-placement="top" title="Add New Promo" class="fas fa-plus mr-4"></i></a>
+            Inverntory
           </h4>
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" id="sort-weights" class="btn btn-sm btn-outline-orange">Cardio Equipment
+            <button type="button" id="sort-permanent" class="btn btn-sm btn-outline-orange">Permanent
             </button>
             <button type="button" id="sort-both" class="btn btn-sm btn-orange">Both</button>
-            <button type="button" id="sort-machines" class="btn btn-sm btn-outline-orange">Weight Room Equipment</button>
+            <button type="button" id="sort-seasonal" class="btn btn-sm btn-outline-orange">Seasonal</button>
           </div>
           <form class="d-flex justify-content-center">
-            <input type="text" placeholder="Search inventory name" id="search-inventory" class="form-control">
+            <input type="text" placeholder="Search promo name" id="search-promo" class="form-control">
           </form>
         </div>
       </div>
-      <div id="inventory-cont">
-
+      <div id="promo-cont">
+        <div class="row" id="promo-cont-row">
+        <?php 
+        $sql = "SELECT * FROM inventory WHERE inv_status = 'active' ORDER BY date_added DESC";
+        $res = mysqli_query($conn, $sql);
+        if($res) {
+          while($row = mysqli_fetch_assoc($res)):
+        ?>
+          <div class="col-sm-4">
+            <div class="card inventory-cards mx-3 my-3">
+              <div class="card-body promo">
+                <h3 class="card-title font-weight-bold text-orange"><?php echo $row["promo_name"] ?></h3>
+                <h6 class="card-subtitle text-muted font-weight-bold"><?php echo $row["promo_type"] ?></h6>
+                <p class="card-text mt-2"><?php echo $row["promo_description"] ?></p>
+              </div>
+              <div class="card-footer">
+                <button onclick="viewDetails(this)" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">details</button>
+                <button onclick="viewUpdate(this)" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">UPDATE</button>
+              </div>
+            </div>
+          </div>
+        <?php
+          endwhile;
+        }
+        ?>
+        </div>
       </div>
     </div>
   </main>

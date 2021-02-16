@@ -29,6 +29,7 @@
   <link href="css/style.min.css" rel="stylesheet">
   <link rel="icon" href="../mobile/img/gym_logo.png">
   <link href="css/theme-colors.css" rel="stylesheet">
+  <link href="./../css/pagination.css" rel="stylesheet">
 
 <style>
   body::-webkit-scrollbar {
@@ -264,60 +265,11 @@
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody id='tbody'>
-              <?php 
-
-
-                  //this is for puting logtrail_doing_id in the array
-                  $logtrail = array();
-                  $login_id;
-                  $log123 = "SELECT * FROM logtrail ORDER BY login_id DESC";
-                  $logtrail123 = mysqli_query($conn, $log123);
-                    if($logtrail123) {
-                      while($rowrow123 = mysqli_fetch_assoc($logtrail123)) {
-                         $logtrail[] = $rowrow123["login_id"];
-                   }
- 
-                    $login_id = $logtrail[0];
-                  }
-
-            
-              
-              $sql1 = "SELECT * FROM logtrail ORDER BY login_id DESC";
-              $result1 = mysqli_query($conn, $sql1);
-              $logtrail = mysqli_num_rows($result1);
-
-              if($logtrail > 0 ){
-                while($row = mysqli_fetch_assoc($result1) ) {
-                $login_id_log = $row['login_id'];
-                $no_action = "No action";   
-                $dateandtime_login = strtotime($row['dateandtime_login']);
-                $dateandtime_logout = strtotime($row['dateandtime_logout'])
-              ?>
-              <tr>
-                <td><?php echo $row['login_id'] ?></td> 
-                  <td><?php echo $row['admin_id'] ?></td>
-                  <td><?php echo $row['first_name'], $row['last_name'] ?></td>
-                  <td><?php echo date('F d Y', $dateandtime_login) ?></td>
-                  <td><?php echo date('h:i A', $dateandtime_login) ?></td>
-                  <td><?php echo ($dateandtime_logout != null ? date('h:i A', $dateandtime_logout) : false); ?></td>
-                  <td><?php 
-                        //condition 
-                      ?>
-                  <span data-toggle="tooltip" data-placement="top" title="View doings">
-                  <i style="cursor: pointer; color:brown; font-size: 25px;" 
-                    data-toggle="modal" data-target="#view_member"
-                    class=" fa fa-eye mx-2 get_id" data-id = '<?php echo $row["login_id"]?>'
-                    onclick="member(this)"></i>
-                  </span>
-                  
-                  
-              </tr>
-             <?php }} ?>
-                  
+              <tbody id='logtrail-tbody'>
+             
               </tbody>
             </table>
-            <div id="no-data-div" class="no-data-div my-3 text-muted">
+            <div id="no-data-div-logtrail" class="no-data-div my-3 text-muted">
               No data!
             </div>
             <div class="table-parent my-5" id="table-loader">
@@ -326,7 +278,7 @@
               </div>
             </div>
           </div>
-          <div class="card-footer flex-this">
+          <div id="footer" class="card-footer flex-this">
             <small id="page"></small>
             <nav aria-label="Page navigation example">
               <ul class="pagination" id="pagination">
@@ -372,7 +324,7 @@
   <script type="text/javascript" src="js/popper.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/mdb.min.js"></script>
-    
+  <script src="./../js/pagination.js"></script>
  <script>
 
  // tool tip sa plus button
@@ -451,6 +403,48 @@
         });
       }
     }
+
+
+    
+       // Pagination sa trainers
+  $("#footer").pagination({
+    dataSource: function(done) {
+      $.get("./getlogtrail.php", function(res) {
+        console.log(res);
+        done(JSON.parse(res));
+      });
+    },
+    pageSize: 5,
+    showPrevious: false,
+    showNext: false,
+    callback: function(data) {
+      $("#logtrail-tbody").empty();
+      if(data.length > 0) {
+        $("#no-data-div-logtrail").css("display", "none");
+        data.forEach(row => {
+          let html = `<tr>
+            <td>${row.login_id}</td>
+            <td>${row.admin_id}</td>
+            <td>${row.fullname}</td>
+            <td>${row.date_login}</td>
+            <td>${row.time_login}</td>
+            <td>${row.time_logout}</td>
+            <td>
+            <span data-toggle="tooltip" data-placement="top" title="View doings">
+                  <i style="cursor: pointer; color:brown; font-size: 25px;" 
+                    data-toggle="modal" data-target="#view_member"
+                    class=" fa fa-eye mx-2 get_id" data-id = "${row.login_id}"
+                    onclick="member(this)"></i>
+            </span></td>
+          <tr>`;
+          $("#logtrail-tbody").append(html);
+        });
+      } else {
+        $("#no-data-div-logtrail").css("display", "flex");
+      }
+    }
+  });
+
  </script>
 
 
