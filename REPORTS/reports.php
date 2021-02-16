@@ -141,7 +141,8 @@
       </button>
     </div>
 
-    <div class="container-fluid mt-5">
+   <!--Trainers--->
+   <div class="container-fluid mt-5">
       <br>
       <ol class="breadcrumb" style="background-color:white;">
         <li class="breadcrumb-item">
@@ -149,21 +150,68 @@
         </li>
         <li class="breadcrumb-item active">Trainers</li>
       </ol>
-      <button class="btn btn-orange btn-sm">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
         <i class="fas fa-eye mr-2"></i>
         total Trainers Added
       </button>
-      <button class="btn btn-orange btn-sm">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-deleted">
         <i class="fas fa-eye mr-2"></i>
        total Trainers Deleted
       </button>
-      <button class="btn btn-orange btn-sm">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-sort">
         <i class="fas fa-eye mr-2"></i>
          Active and Inactive
       </button>
     </div>
-  </main>
+  
+  <!--inventory--->
+  <div class="container-fluid mt-5">
+      <br>
+      <ol class="breadcrumb" style="background-color:white;">
+        <li class="breadcrumb-item">
+          <a href="#" class="text-orange">Reports</a>
+        </li>
+        <li class="breadcrumb-item active">Inventory</li>
+      </ol>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+        <i class="fas fa-eye mr-2"></i>
+        total inventory Added
+      </button>
+    </div>
 
+  <!--Promos--->
+  <div class="container-fluid mt-5">
+      <br>
+      <ol class="breadcrumb" style="background-color:white;">
+        <li class="breadcrumb-item">
+          <a href="#" class="text-orange">Reports</a>
+        </li>
+        <li class="breadcrumb-item active">Promos</li>
+      </ol>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+        <i class="fas fa-eye mr-2"></i>
+        total Promos Added
+      </button>
+    </div>
+
+    <!--Paymentlog--->
+  <div class="container-fluid mt-5">
+      <br>
+      <ol class="breadcrumb" style="background-color:white;">
+        <li class="breadcrumb-item">
+          <a href="#" class="text-orange">Reports</a>
+        </li>
+        <li class="breadcrumb-item active">Payments</li>
+      </ol>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+        <i class="fas fa-eye mr-2"></i>
+        total Payment Added
+      </button>
+    </div>
+
+
+
+</main>
   <!-- total members added -->
   <div class="modal fade" role="dialog" id="members-added">
     <div class="modal-dialog modal-md">
@@ -216,6 +264,144 @@
       </div>
     </div>
   </div>
+
+  <!-- total trainers added -->
+  <div class="modal fade" role="dialog" id="trainers-added">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for total trainers added</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="trainers-added-select" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="trainers-added-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+   <!-- total trainers delete -->
+   <div class="modal fade" role="dialog" id="trainers-deleted">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for total trainers deleted</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="trainers-deleted-select" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="trainers-deleted-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <!--  trainers active and inactive -->
+  <div class="modal fade" role="dialog" id="trainers-sort">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for active  inactive trainers</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">trainer type</label>
+                <select id="" class="form-control">
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="trainers-sort-select" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="trainers-sort-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+      </div>
+    </div>
+  </div>
   
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/popper.min.js"></script>
@@ -237,6 +423,7 @@
     req.send(); 
   }
 
+//modal custom for members
   $("#members-added-select").on("change", function() {
     let select = $("#members-added-select");
     if(select.val() == "Custom") {
@@ -245,6 +432,35 @@
       $("#members-added-custom").css("display", "none");
     }
   });
+
+//modal custom for add trainers 
+  $("#trainers-added-select").on("change", function() {
+    let select = $("#trainers-added-select");
+    if(select.val() == "Custom") {
+      $("#trainers-added-custom").css("display", "block");
+    } else {
+      $("#trainers-added-custom").css("display", "none");
+    }
+  });
+  //modal custom for delete trainers
+  $("#trainers-deleted-select").on("change", function() {
+    let select = $("#trainers-deleted-select");
+    if(select.val() == "Custom") {
+      $("#trainers-deleted-custom").css("display", "block");
+    } else {
+      $("#trainers-deleted-custom").css("display", "none");
+    }
+  });
+    //modal custom for active and inactive trainers
+    $("#trainers-sort-select").on("change", function() {
+    let select = $("#trainers-sort-select");
+    if(select.val() == "Custom") {
+      $("#trainers-sort-custom").css("display", "block");
+    } else {
+      $("#trainers-sort-custom").css("display", "none");
+    }
+  });
+  
   </script>
 </body>
 </html>
