@@ -327,6 +327,7 @@
   <div class="modal fade" role="dialog" id="trainers-added">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
+      <form action="./trainers/trainer_added.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for total trainers added</h4>
         </div>
@@ -335,7 +336,7 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">Time span</label>
-                <select id="trainers-added-select" class="form-control">
+                <select id="trainers-added-select" name="timespan_trainers_added" class="form-control">
                   <option value="Today">Today</option>
                   <option value="This week">This week</option>
                   <option value="This month">This month</option>
@@ -350,11 +351,11 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="" id="" class="form-control">
+                <input type="date" name="from_date_trainers_added" id="" class="form-control">
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="" id="" class="form-control">
+                <input type="date" name="to_date_trainers_added" id="" class="form-control">
               </div>
             </div>
           </div>
@@ -362,6 +363,7 @@
         <div class="modal-footer">
           <button class="btn btn-sm btn-outline-orange">Generate report</button>
         </div>
+        </form>
       </div>
     </div>
   </div>
@@ -371,6 +373,7 @@
    <div class="modal fade" role="dialog" id="trainers-deleted">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
+      <form action="./trainers/trainer_deleted.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for total trainers deleted</h4>
         </div>
@@ -379,13 +382,13 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">Time span</label>
-                <select id="trainers-deleted-select" class="form-control">
+                <select id="trainers-deleted-select"  name="timespan_trainers_deleted" class="form-control">
                   <option value="Today">Today</option>
                   <option value="This week">This week</option>
                   <option value="This month">This month</option>
                   <option value="This year">This year</option>
                   <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
+                  <option value="Custom">Custom</option>s
                 </select>
               </div>
             </div>
@@ -394,11 +397,11 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="" id="" class="form-control">
+                <input type="date" name="from_date_trainers_deleted" id="" class="form-control">
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="" id="" class="form-control">
+                <input type="date" name="to_date_trainers_deleted" id="" class="form-control">
               </div>
             </div>
           </div>
@@ -406,6 +409,7 @@
         <div class="modal-footer">
           <button class="btn btn-sm btn-outline-orange">Generate report</button>
         </div>
+        </form>
       </div>
     </div>
   </div>
