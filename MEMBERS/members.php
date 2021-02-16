@@ -263,7 +263,6 @@
 </head>
 
 <body class="grey lighten-3">
-
   <!--Main Navigation-->
   <header>
     <nav class="navbar fixed-top navbar-light bg-darkgrey">
@@ -394,7 +393,7 @@
     <!-- Walk-in Card -->
     <div class="container-fluid mt-4 mb-3">
       <div class="row">
-        <div class="col-sm-7">
+        <div class="col-sm-6">
           <div class='card'>
             <div class='card-content'>
               <div class='card-header flexHeader'>
@@ -435,7 +434,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-6">
           <div class="card">
             <div class="card-content">
               <div class="card-header">
@@ -469,7 +468,7 @@
                   </div>
                 </div>
               </div>
-              <div class="card-footer"></div>
+              <div class="card-footer" id="program-pagination"></div>
             </div>
           </div>
         </div>
@@ -751,10 +750,8 @@
                   </div>
                 </div>
               </div>
-
             </table>
           </div>
-
         </div>
         <div class="modal-footer">
           <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
@@ -1748,12 +1745,8 @@
   <script type="text/javascript" src="validation.js"></script>
 
   <script>
-
-    // tool tip sa plus button
-   
-
-  
   var regs, walks, programs;
+  
   $.get("./members.php?type=regular", function(res) {
     // Gibutang nimo sa regs ang tanan members nga regular
     regs = JSON.parse(res);
@@ -1766,6 +1759,7 @@
 
   // Regular members pagination after load sa page
   $("#regular-pagination").pagination({
+    className: 'paginationjs-small',
     dataSource: function(done) {
       let data;
       let results;
@@ -1968,7 +1962,7 @@
   }
 
   // Pagination sa programs
-  $("#program-tbody").pagination({
+  $("#program-pagination").pagination({
     dataSource: function(done) {
       $.get("./getprograms.php", function(res) {
         done(JSON.parse(res));
@@ -2161,8 +2155,8 @@ function check() {
     let req = new XMLHttpRequest();
     req.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
         display(JSON.parse(this.responseText));
-        console.log(JSON.parse(this.responseText));
       }
     }
     req.open('GET', 'viewprogram.php?id=' + id, true);

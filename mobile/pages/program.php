@@ -1,9 +1,16 @@
+<?php 
+require "./../functions/connect.php";
+session_start();
+if(!isset($_SESSION["member_id"])) {
+  header("Location: ./../../index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Promo Page</title>
+  <title>Program Page</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./../css/default.css">
   <link rel="icon" href="./../img/gym_logo.png">
@@ -28,9 +35,19 @@
     .content button {
       width: 80%;
     }
+
+    .content > select {
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
+  <div class="full-page-loader" id="loader">
+    <div class="loader"></div>
+  </div>
   <!-- Logout confirmation modal -->
   <div class="modal" id="logout-modal">
     <div class="modal-sm">
@@ -106,72 +123,101 @@
       <div class="content">
         <small>You are currently under the</small>
         <div style="display: flex">
-          <h2 style="font-size: 1.8em">Gaining Program <i class="material-icons text-disabled" style="font-size: 20px">help</i></h2>
+          <h2 style="font-size: 1.8em" id="program-name"></h2>
         </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Target</th>
-              <th>Day 1</th>
-              <th>Day 2</th>
-              <th>Day 3</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Upper<br>Body</strong></td>
-              <td>
-                1. Bench press - 3 sets 10 reps <br>
-                2. Bench press - 3 sets 10 reps <br>
-                3. Bench press - 3 sets 10 reps <br>
-              </td>
-              <td>
-                1. Standing biceps curl - 3 sets 10 reps <br>
-                2. Standing biceps curl - 3 sets 10 reps <br>
-                3. Standing biceps curl - 3 sets 10 reps <br>
-              </td>
-              <td>
-                1. Skull crusher press - 3 sets 10 reps <br>
-                2. Skull crusher press - 3 sets 10 reps <br>
-                3. Skull crusher press - 3 sets 10 reps <br>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Lower<br>Body</strong></td>
-              <td>
-                1. Barbell squats - 3 sets 10 reps <br>
-                2. Barbell squats - 3 sets 10 reps <br>
-                3. Barbell squats - 3 sets 10 reps <br>
-              </td>
-              <td>
-                1. Barbell deadlifts - 3 sets 10 reps <br>
-                2. Barbell deadlifts - 3 sets 10 reps <br>
-                3. Barbell deadlifts - 3 sets 10 reps <br>
-              </td>
-              <td>
-                1. Dumbell squats - 3 sets 10 reps <br>
-                2. Dumbell squats - 3 sets 10 reps <br>
-                3. Dumbell squats - 3 sets 10 reps <br>
-              </td>
-            </tr>
-            <tr>
-              <td><strong>Abdo-<br>minals</strong></td>
-              <td>Push-ups - 50 reps</td>
-              <td>Curl-ups - 50 reps</td>
-              <td>Knee-ins - 50 reps</td>
-            </tr>
-          </tbody>
-        </table>
-        <button class="btn">Change your program</button>
+        <hr style="width: 80vw;">
+        <select id="programDay">
+          <option value="1">Day 1</option>
+          <option value="2">Day 2</option>
+          <option value="3">Day 3</option>
+        </select>
+        <h3 class="text-green">Upper Body</h3>
+        <p id="upper1">Bent-over row &#183; 3 sets &#183; 15 reps</p>
+        <p id="upper2">Bent-over row &#183; 3 sets &#183; 15 reps</p>
+        <p id="upper3">Bent-over row &#183; 3 sets &#183; 15 reps</p>
+        <h3 class="text-green">Lower Body</h3>
+        <p id="lower1">Bent-over row &#183; 3 sets &#183; 15 reps</p>
+        <p id="lower2">Bent-over row &#183; 3 sets &#183; 15 reps</p>
+        <p id="lower3">Bent-over row &#183; 3 sets &#183; 15 reps</p>
+        <h3 class="text-green">Abdominals</h3>
+        <p id="abdominal">Bent-over row &#183; 3 sets &#183; 15 reps</p>
+        <hr style="width: 80vw;">
+        <button class="btn" id="change-program">Change your program</button>
       </div>
     </div>
   </main>
 
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="./../js/sidebar.js"></script>
   <script>
-    window.onload = () => {
+    var program, routines;
 
-    }
+    $.get("./../functions/get_programs.php?day=1", function(res) {
+      program = JSON.parse(res);
+
+      $("#program-name").text(`${program.program_name} Program`);
+    });
+
+    $.get("./../functions/get_routines.php", function(res) {
+      routines = JSON.parse(res);
+      routines.unshift("");
+
+      $("#upper1").html(`${routines[program.upper_1_day_1].routine_name} &#183; ${routines[program.upper_1_day_1].routine_reps} reps &#183; ${routines[program.upper_1_day_1].routine_sets} sets`);
+      $("#upper2").html(`${routines[program.upper_2_day_1].routine_name} &#183; ${routines[program.upper_2_day_1].routine_reps} reps &#183; ${routines[program.upper_2_day_1].routine_sets} sets`);
+      $("#upper3").html(`${routines[program.upper_3_day_1].routine_name} &#183; ${routines[program.upper_3_day_1].routine_reps} reps &#183; ${routines[program.upper_3_day_1].routine_sets} sets`);
+      $("#lower1").html(`${routines[program.lower_1_day_1].routine_name} &#183; ${routines[program.lower_1_day_1].routine_reps} reps &#183; ${routines[program.lower_1_day_1].routine_sets} sets`);
+      $("#lower2").html(`${routines[program.lower_2_day_1].routine_name} &#183; ${routines[program.lower_2_day_1].routine_reps} reps &#183; ${routines[program.lower_2_day_1].routine_sets} sets`);
+      $("#lower3").html(`${routines[program.lower_3_day_1].routine_name} &#183; ${routines[program.lower_3_day_1].routine_reps} reps &#183; ${routines[program.lower_3_day_1].routine_sets} sets`);
+      $("#abdominal").html(`${routines[program.abdominal_day_1].routine_name} &#183; ${routines[program.abdominal_day_1].routine_reps} reps &#183; ${routines[program.abdominal_day_1].routine_sets} set(s)`);
+    });
+
+    $("#programDay").change(function() {
+      let val = $("#programDay").val();
+      if(val == "1") {
+        $("#upper1").html(`${routines[program.upper_1_day_1].routine_name} &#183; ${routines[program.upper_1_day_1].routine_reps} reps &#183; ${routines[program.upper_1_day_1].routine_sets} sets`);
+        $("#upper2").html(`${routines[program.upper_2_day_1].routine_name} &#183; ${routines[program.upper_2_day_1].routine_reps} reps &#183; ${routines[program.upper_2_day_1].routine_sets} sets`);
+        $("#upper3").html(`${routines[program.upper_3_day_1].routine_name} &#183; ${routines[program.upper_3_day_1].routine_reps} reps &#183; ${routines[program.upper_3_day_1].routine_sets} sets`);
+        $("#lower1").html(`${routines[program.lower_1_day_1].routine_name} &#183; ${routines[program.lower_1_day_1].routine_reps} reps &#183; ${routines[program.lower_1_day_1].routine_sets} sets`);
+        $("#lower2").html(`${routines[program.lower_2_day_1].routine_name} &#183; ${routines[program.lower_2_day_1].routine_reps} reps &#183; ${routines[program.lower_2_day_1].routine_sets} sets`);
+        $("#lower3").html(`${routines[program.lower_3_day_1].routine_name} &#183; ${routines[program.lower_3_day_1].routine_reps} reps &#183; ${routines[program.lower_3_day_1].routine_sets} sets`);
+        $("#abdominal").html(`${routines[program.abdominal_day_1].routine_name} &#183; ${routines[program.abdominal_day_1].routine_reps} reps &#183; ${routines[program.abdominal_day_1].routine_sets} set(s)`);
+      } else if(val == "2") {
+        $("#upper1").html(`${routines[program.upper_1_day_2].routine_name} &#183; ${routines[program.upper_1_day_2].routine_reps} reps &#183; ${routines[program.upper_1_day_2].routine_sets} sets`);
+        $("#upper2").html(`${routines[program.upper_2_day_2].routine_name} &#183; ${routines[program.upper_2_day_2].routine_reps} reps &#183; ${routines[program.upper_2_day_2].routine_sets} sets`);
+        $("#upper3").html(`${routines[program.upper_3_day_2].routine_name} &#183; ${routines[program.upper_3_day_2].routine_reps} reps &#183; ${routines[program.upper_3_day_2].routine_sets} sets`);
+        $("#lower1").html(`${routines[program.lower_1_day_2].routine_name} &#183; ${routines[program.lower_1_day_2].routine_reps} reps &#183; ${routines[program.lower_1_day_2].routine_sets} sets`);
+        $("#lower2").html(`${routines[program.lower_2_day_2].routine_name} &#183; ${routines[program.lower_2_day_2].routine_reps} reps &#183; ${routines[program.lower_2_day_2].routine_sets} sets`);
+        $("#lower3").html(`${routines[program.lower_3_day_2].routine_name} &#183; ${routines[program.lower_3_day_2].routine_reps} reps &#183; ${routines[program.lower_3_day_2].routine_sets} sets`);
+        $("#abdominal").html(`${routines[program.abdominal_day_2].routine_name} &#183; ${routines[program.abdominal_day_2].routine_reps} reps &#183; ${routines[program.abdominal_day_2].routine_sets} set(s)`);
+      } else {
+        $("#upper1").html(`${routines[program.upper_1_day_3].routine_name} &#183; ${routines[program.upper_1_day_3].routine_reps} reps &#183; ${routines[program.upper_1_day_3].routine_sets} sets`);
+        $("#upper2").html(`${routines[program.upper_2_day_3].routine_name} &#183; ${routines[program.upper_2_day_3].routine_reps} reps &#183; ${routines[program.upper_2_day_3].routine_sets} sets`);
+        $("#upper3").html(`${routines[program.upper_3_day_3].routine_name} &#183; ${routines[program.upper_3_day_3].routine_reps} reps &#183; ${routines[program.upper_3_day_3].routine_sets} sets`);
+        $("#lower1").html(`${routines[program.lower_1_day_3].routine_name} &#183; ${routines[program.lower_1_day_3].routine_reps} reps &#183; ${routines[program.lower_1_day_3].routine_sets} sets`);
+        $("#lower2").html(`${routines[program.lower_2_day_3].routine_name} &#183; ${routines[program.lower_2_day_3].routine_reps} reps &#183; ${routines[program.lower_2_day_3].routine_sets} sets`);
+        $("#lower3").html(`${routines[program.lower_3_day_3].routine_name} &#183; ${routines[program.lower_3_day_3].routine_reps} reps &#183; ${routines[program.lower_3_day_3].routine_sets} sets`);
+        $("#abdominal").html(`${routines[program.abdominal_day_3].routine_name} &#183; ${routines[program.abdominal_day_3].routine_reps} reps &#183; ${routines[program.abdominal_day_3].routine_sets} set(s)`);
+      }
+    });
+
+    $("#confirm-logout").on("click", function() {
+      $.ajax({
+        url: "./../functions/logout_process.php",
+        type: "json",
+        method: "post",
+        success: function() {
+          window.location.reload();
+        }
+      });
+    });
+    
+    $("#change-program").click(function() {
+      window.location.href = "./change_program.php";
+    });
+
+    setTimeout(() => {
+      $("#loader").css("display", "none");
+    }, 500);
   </script>
 </body>
 </html>
