@@ -35,131 +35,13 @@
     width: 0 !important;
   }
 
-  .john label {
-    font-family: Helvetica;
-    font-size: 18px;
-    position: relative;
-  }
-
-  .table {
-    margin-bottom: 0 !important;
-  }
-
-  table>thead>tr>th {
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-
-  .card-header>.card-title {
-    margin-bottom: 0;
-  }
-
-  .card-header>.card-title>h3 {
-    margin-block-end: 0;
-  }
-
-  .card-bodyzz {
-    overflow-y: auto;
-  }
-
-  .card-bodyzz::-webkit-scrollbar {
-    width: 0;
-  }
-
-  small {
-    color: grey;
-    margin-left: 5px;
-  }
-
-  .add-members {
-    color: #DF3A01;
-  }
-
-  .add-members:hover {
-    filter: brightness(70%);
-    cursor: pointer;
-  }
-
-  .flexHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .flex {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .logoutBtn:hover {
-    text-decoration: underline;
-  }
-
-  th,
-  td {
-    text-align: center;
-  }
-
-  .new-code-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .qrcode-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .flexLa {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-
-  .no-data-div {
+  .custom-date {
     display: none;
-    justify-content: center;
-    align-items: center;
   }
-
-  .validation {
-    display: none;
-    margin-left: 0 !important;
-  }
-
-  .wait-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-radius: 25px;
-  }
-
-  input[type=text],
-  input[type=date],
-  select {
-
-    height: 45px;
-  }
-  .train input[type=text]{
-    text-align: center;
-  }
-  input[type=text]{
-    text-align: center;
-  }
-  textarea{
-    text-align: center;
-  }
- 
 </style>
 </head>
 
-<body  class="grey lighten-3">
+<body class="grey lighten-3">
 
   <!--Main Navigation-->
   <header>
@@ -185,26 +67,16 @@
 
               $row = $data[0];
             }
-
           ?> 
-
-      <a href="./../index_admin.php">
           <button id="logoutBtn" type="button" class="btn btn-sm btn-danger"
           data-id="<?php echo $row['login_id'] ?>"
-          onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
-       
+          onclick="logout(this)">LOGOUT</button>
         </div>
       </div>
     </nav>
-
-
-    <!-- Sidebar -->
     <div class="sidebar-fixed position-fixed" style="background-color:#DF3A01;" >
       <br>
-
       <center><img src="logo.png" class="img-fluid" alt="" style="width: 200px; height: 180px;"></center>
-     
-
       <br>
       <div class="list-group list-group-flush" >
         <a href="/PROJECT/DASHBOARD/dashboard.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
@@ -230,11 +102,8 @@
           <i class="fas fa-history mr-3"></i>Logtrail
         </a>
       </div>  
-
-
     </div>
     <!-- Sidebar -->
-
   </header>
   <!--Main Navigation-->
   <main class="pt-5 mx-lg-5" >
@@ -246,14 +115,82 @@
         </li>
         <li class="breadcrumb-item active">Members</li>
       </ol>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#members-added">
+        <i class="fas fa-eye mr-2"></i>
+        Total members added
+      </button>
       <button class="btn btn-orange btn-sm">
         <i class="fas fa-eye mr-2"></i>
-        View total members
+        Paid members
+      </button>
+      <button class="btn btn-orange btn-sm">
+        <i class="fas fa-eye mr-2"></i>
+        unpaid members
+      </button>
+      <button class="btn btn-orange btn-sm">
+        <i class="fas fa-eye mr-2"></i>
+        deleted members
+      </button>
+      <button class="btn btn-orange btn-sm">
+        <i class="fas fa-eye mr-2"></i>
+        activated members
+      </button>
+      <button class="btn btn-orange btn-sm">
+        <i class="fas fa-eye mr-2"></i>
+        members of certain promo
       </button>
     </div>
   </main>
-  
 
+  <!-- total members added -->
+  <div class="modal fade" role="dialog" id="members-added">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for total members added</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Member type</label>
+                <select id="" class="form-control">
+                  <option value="Regular">Regular</option>
+                  <option value="Walk-in">Walk-in</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="members-added-select" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="members-added-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+      </div>
+    </div>
+  </div>
   
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/popper.min.js"></script>
@@ -261,30 +198,31 @@
   <script type="text/javascript" src="js/mdb.min.js"></script>
 
   <script>
-   function logout(el) {
-      let id = el.getAttribute('data-id');
-      console.log(id);
+  function logout(el) {
+    let id = el.getAttribute('data-id');
+    console.log(id);
 
-      // AJAX Request
-     
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200 ) {
-          console.log((this.responseText));
-          
-        }
-       }
-      req.open('GET', '/PROJECT/logout.php?id=' + id, true);
-      req.send(); 
-      }
+    // AJAX Request
     
+    let req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+      if(this.readyState == 4 && this.status == 200 ) {
+        console.log((this.responseText));
+        
+      }
+      }
+    req.open('GET', '/PROJECT/logout.php?id=' + id, true);
+    req.send(); 
+  }
 
-
+  $("#members-added-select").on("change", function() {
+    let select = $("#members-added-select");
+    if(select.val() == "Custom") {
+      $("#members-added-custom").css("display", "block");
+    } else {
+      $("#members-added-custom").css("display", "none");
+    }
+  });
   </script>
-
-
-  <!--Google Maps-->
-  <script src="https://maps.google.com/maps/api/js"></script>
 </body>
-
 </html>
