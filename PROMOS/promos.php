@@ -54,7 +54,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/mdb.min.css" rel="stylesheet">
   <link href="css/style.min.css" rel="stylesheet">
-  <link rel="icon" href="images/gym_logo.png">
+  <link rel="icon" href="../mobile/img/gym_logo.png">
   <link href="css/theme-colors.css" rel="stylesheet">
 
   <style>
