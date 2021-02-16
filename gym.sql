@@ -339,7 +339,6 @@ INSERT INTO `routines` (`routine_id`, `routine_name`, `routine_link`, `routine_t
 CREATE TABLE `trainer` (
   `trainer_id` int(100) NOT NULL,
   `trainer_status` enum('active','inactive') NOT NULL,
-  `trainer_position` enum('junior','senior') NOT NULL,
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,

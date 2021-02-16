@@ -251,6 +251,28 @@
         View total members
       </button>
     </div>
+
+    <div class="container-fluid mt-5">
+      <br>
+      <ol class="breadcrumb" style="background-color:white;">
+        <li class="breadcrumb-item">
+          <a href="#" class="text-orange">Reports</a>
+        </li>
+        <li class="breadcrumb-item active">Trainers</li>
+      </ol>
+      <button class="btn btn-orange btn-sm">
+        <i class="fas fa-eye mr-2"></i>
+        total Trainers Added
+      </button>
+      <button class="btn btn-orange btn-sm">
+        <i class="fas fa-eye mr-2"></i>
+       total Trainers Deleted
+      </button>
+      <button class="btn btn-orange btn-sm">
+        <i class="fas fa-eye mr-2"></i>
+         Active and Inactive
+      </button>
+    </div>
   </main>
   
 

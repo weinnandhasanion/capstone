@@ -267,7 +267,6 @@
                   <th>First name</th>
                   <th>Last name</th>
                   <th>Status</th>
-                  <th>Position</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -665,7 +664,6 @@
             <td>${row.trainer_id}</td>
             <td>${row.last_name}</td>
             <td>${row.first_name}</td>
-            <td>${row.trainer_status}</td>
             <td>${row.trainer_position}</td>
             <td>
                     <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
@@ -704,7 +702,6 @@
             <td>${row.trainer_id}</td>
             <td>${row.last_name}</td>
             <td>${row.first_name}</td>
-            <td>${row.trainer_status}</td>
             <td>${row.trainer_position}</td>
             <td>
                     <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
@@ -743,7 +740,6 @@
             <td>${row.trainer_id}</td>
             <td>${row.last_name}</td>
             <td>${row.first_name}</td>
-            <td>${row.trainer_status}</td>
             <td>${row.trainer_position}</td>
             <td>
                     <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">

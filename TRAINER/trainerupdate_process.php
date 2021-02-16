@@ -9,7 +9,6 @@ if($_SESSION['admin_id']){
 
 //INPUTS FROM THE UPDATE NA GI STORE SA $VARIABLE NAME
 $trainer_status= $_POST['trainer_status'];
-$trainer_position= $_POST['trainer_position'];
 $phone= $_POST['phone'];
 $email= $_POST['email'];
 $address= $_POST['address'];
@@ -22,7 +21,6 @@ $juniorPos  = 'junior';
 // MAIN QUERY NA MO UPDATE SA TANAN
 $tan = "UPDATE trainer SET
                trainer_status = '$trainer_status',
-               trainer_position = '$trainer_position',
                phone = '$phone',
                email = '$email',
                address = '$address' 

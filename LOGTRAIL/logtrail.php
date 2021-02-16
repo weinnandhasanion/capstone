@@ -314,6 +314,24 @@
               <tbody id="modal-tbody">
               
               </tbody>
+              </table>
+            <div id="no-data-div-logtrail-modal" class="no-data-div my-3 text-muted">
+              No data!
+            </div>
+            <div class="table-parent my-5" id="table-loader">
+              <div class="table-loader">
+                <div class="loader-spinner"></div>
+              </div>
+            </div>
+          </div>
+          <div id="footer-mdoal" class="card-footer flex-this">
+            <small id="page"></small>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination" id="pagination">
+
+              </ul>
+            </nav>
+          </div>
       </div>
     </div>
   </div>
@@ -444,6 +462,8 @@
       }
     }
   });
+
+
 
  </script>
 
