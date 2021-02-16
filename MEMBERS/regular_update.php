@@ -13,7 +13,7 @@ if($_SESSION['admin_id']){
 $email= $_POST['email'];
 $id = $_POST['member_id'];
 $phone= $_POST['phone'];
-$member_type= $_POST['member_type'];
+$member_type = $_POST['member_type'];
 $address= $_POST['address'];
 $phoneregex = "/[a-zA-Z]/";
 
@@ -37,6 +37,12 @@ if (preg_match($phoneregex, $phone, $match))
                 window.alert('Failed to update');
                 window.location.href='/PROJECT/MEMBERS/members.php';
                 </script>");
+}
+
+if($member_type == "Walk-in"){
+        $sql1 = "UPDATE member SET  username = null
+        WHERE member_id = '$id'"; 
+        mysqli_query($conn, $sql1);
 }
 
     ?>

@@ -626,7 +626,7 @@
           <div class="form-row">
             <div class="col-sm-6">
               <label>Contact Number</label>
-              <input name="phone"   type="text" required="" id="update_phone" onblur="checkNumber2(this)" class="form-control">
+              <input name="phone"   type="text" required="" id="update_phone" onblur="checkNumber(this)" class="form-control">
               <small class="validation text-danger" id="update_phone-empty">Please fill out this field</small>
               <small class="validation text-danger" id="update_phone-invalid">Invalid input</small>
               <small class="validation text-danger" id="update_phone-length">Phone number must contain 11 digits</small>
@@ -644,7 +644,9 @@
           <div class="form-row">
           <div class="col-sm-12">
               <label>Email address</label>
-              <input name="email" type="email" id="update_email"   class="form-control">
+              <input name="email"  onblur="checkEmail(this)"  type="email" id="update_email"   class="form-control">
+              <small class="validation text-danger" id="update_email-empty">Please fill out this field</small>
+              <small class="validation text-danger" id="update_email-invalid">Invalid email</small>
             </div>
           </div>  
         </div>
@@ -653,7 +655,7 @@
             <div class="col-sm-12">
             <label>Address</label>
               <textarea name="address"  type="text"  required="" id="update_address" 
-              oninput="checkIfValid2(this)" onblur="checkIfValid2(this)" class="form-control"
+              oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control"
               style="height:80px;"></textarea>
               <small class="validation text-danger" id="update_address-empty">Please fill out this field</small>
             </div>
@@ -676,8 +678,7 @@
   <script type="text/javascript" src="js/popper.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/mdb.min.js"></script>
-  <script type="text/javascript" src="addvalidation.js"></script>
-  <script type="text/javascript" src="updatevalidation.js"></script>
+  <script type="text/javascript" src="validation.js"></script>
   <!--Google Maps-->
   <script src="https://maps.google.com/maps/api/js"></script>
 
