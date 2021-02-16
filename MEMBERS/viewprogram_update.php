@@ -9,9 +9,7 @@ $sql = "SELECT program.*, trainer.* FROM `program`
 $res = mysqli_query($conn, $sql);
 
 if($row = mysqli_fetch_assoc($res)) {
-  $date = date("M d, Y", strtotime($row["date_added"]));
-  $time = date("h:i A", strtotime($row["time_added"]));
-  $row["dateandtime_added"] = $date." ".$time;
+ 
   $row["upper_1_day_1"] = getName($row["upper_1_day_1"]);
   $row["upper_2_day_1"] = getName($row["upper_2_day_1"]);
   $row["upper_3_day_1"] = getName($row["upper_3_day_1"]);

@@ -59,14 +59,32 @@ if(preg_match($program_name_regex, $program_name, $match)){
     window.location.href='/PROJECT/MEMBERS/members.php';
     </script>");
 }else{
-    
+
+$data_trainer = array();
+$tra = "SELECT * FROM trainer ORDER BY trainer_id DESC";
+$trainers = mysqli_query($conn, $tra);
+if($trainers) {
+    while($row_trainer = mysqli_fetch_assoc($trainers)) {
+        $data_trainer[] = $row_trainer["trainer_id"];
+    }
+
+    $trainer_id_array = $data_trainer[0];
+}
+
+// INSERTING  trainer INFO
+$sql_trainer= "SELECT * FROM trainer WHERE trainer_id = $trainer_id_array";
+$query_trainer = mysqli_query($conn, $sql_trainer);
+$rowed_trainer = mysqli_fetch_assoc($query_trainer);
+
+$trainer_id = $rowed_trainer["trainer_id"];
+
     $sql = "INSERT INTO `program`
-    ( admin_id, program_name,program_description,date_added,time_added,
+    ( admin_id, trainer_id, program_name,program_description,date_added,time_added,
     upper_1_day_1,upper_2_day_1,upper_3_day_1,lower_1_day_1,lower_2_day_1,lower_3_day_1,abdominal_day_1,
     upper_1_day_2,upper_2_day_2,upper_3_day_2,lower_1_day_2,lower_2_day_2,lower_3_day_2,abdominal_day_2,
     upper_1_day_3,upper_2_day_3,upper_3_day_3,lower_1_day_3,lower_2_day_3,lower_3_day_3,abdominal_day_3
      )
-    VALUES ( '$admin_id','$program_name', '$program_description', '$date_added', '$timeNow',
+    VALUES ( '$admin_id','$trainer_id','$program_name', '$program_description', '$date_added', '$timeNow',
     '$upper1day1', '$upper2day1', '$upper3day1', '$lower1day1', '$lower2day1', '$lower3day1', '$abdominalday1', 
     '$upper1day2', '$upper2day2', '$upper3day2', '$lower1day2', '$lower2day2', '$lower3day2', '$abdominalday2', 
     '$upper1day3', '$upper2day3', '$upper3day3', '$lower1day3', '$lower2day3', '$lower3day3', '$abdominalday3')"; 

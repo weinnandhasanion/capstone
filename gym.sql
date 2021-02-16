@@ -1,3 +1,5 @@
+
+  
 -- phpMyAdmin SQL Dump
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
@@ -75,7 +77,7 @@ CREATE TABLE `logtrail` (
   `admin_id` int(100) DEFAULT NULL,
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
-  `dateandtime_login` datetime DEFAULT,
+  `dateandtime_login` datetime,
   `dateandtime_logout` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -220,6 +222,7 @@ CREATE TABLE `paymentlog` (
 CREATE TABLE `program` (
   `program_id` int(11) NOT NULL,
   `admin_id` int(11) NOT NULL,
+  `trainer_id` int(11) NOT NULL,
   `program_name` varchar(50) NOT NULL,
   `program_description` text NOT NULL,
   `date_added` date DEFAULT NULL,
@@ -576,9 +579,11 @@ ALTER TABLE `paymentlog`
 -- Constraints for table `program`
 --
 ALTER TABLE `program`
-  ADD CONSTRAINT `program_admin_fk` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`);
+  ADD CONSTRAINT `program_admin_fk` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
+  ADD CONSTRAINT `program_trainer_fk` FOREIGN KEY (`trainer_id`) REFERENCES `trainer` (`trainer_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
