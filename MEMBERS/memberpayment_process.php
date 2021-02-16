@@ -158,7 +158,7 @@ else if($payment_description == 'Monthly Subscription'){
     $pass = password_hash('12345', PASSWORD_DEFAULT);
 
     $sql2 = "UPDATE member 
-    SET member_status = 'Paid', username = '$id', password = '$pass',
+    SET member_status = 'Paid', 
     annual_start = '$annual_start', annual_end = '$annual_end'
     WHERE member_id = $id";     
     mysqli_query($conn, $sql2);
