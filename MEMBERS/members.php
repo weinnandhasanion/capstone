@@ -175,14 +175,6 @@
     border-radius: 25px;
   }
 
-  input[type=text],
-  input[type=date],
-  select {
-
-    height: 45px;
-  }
-
-
   .train input[type=text] {
     text-align: center;
   }
@@ -343,8 +335,12 @@
     <div class='container-fluid mt-5'>
       <button class="btn btn-sm btn-outline-orange mb-3" id="viewDeleted" data-toggle="modal"
         data-target="#deleteModal">
-        <i class="fas fa-eye mr-2"></i>
+        <i class="fas fa-trash mr-2"></i>
         View Deleted Members
+      </button>
+      <button class="btn btn-sm btn-outline-orange mb-3" data-toggle="modal" data-target="#deletedProgram">
+      <i class="fas fa-trash mr-2"></i>
+        View Deleted Programs
       </button>
       <div class='card'>
         <div class='card-content'>
@@ -443,9 +439,6 @@
                   <span class="add-members" data-toggle="tooltip" data-placement="top" title="Add new program"><i
                       data-toggle="modal" data-target="#add-program" class="fas fa-plus mr-2"></i></span>
                   Programs
-                  <button class="btn btn-sm btn-outline-orange mx-2" data-toggle="modal" data-target="#deletedProgram">
-                    Deleted Bin
-                  </button>
                 </h3>
               </div>
               <div class="card-body card-bodyzz table-responsive-0 p-0">
@@ -854,10 +847,21 @@
                 </div>
               </div>
             </div>
+            <div class="form-group" id="promo-form-group">
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <label>Promo Availed</label>
+                  <input type="text" name="promo_availed" class="form-control" readonly id="promo_availed">
+                </div>
+                <div class="col-sm-6">
+                  <label>Promo Discount</label>
+                  <input type="text" name="promo_discount" class="form-control" readonly id="promo_discount">
+                </div>
+              </div>
+            </div>
             <div class="form-group">
               <div class="form-row">
                 <div class="col-sm-6">
-
                   <label>Payment Description</label>
                   <select name="payment_description" id="payment_description" onchange="pay(this)" class="form-control" required="">
                     <option value="" selected>Select Payment</option>
@@ -874,8 +878,7 @@
             </div>
             <div class="d-flex justify-content-center">
               <small><a href="#" class="text-darkgrey"><span id="showCalc"
-                    style="position:relative;right:100px;">Monthly Calculator</span>
-                  <span id="showAnnualCalc" style="position:relative;left:50px;">Annual Calculator</span></a></small>
+                    style="position:relative;right:100px;">Show Calculator</span>
             </div>
             <div id="calculator" class="form-group" style="display: none">
               <div class="form-row">
@@ -893,25 +896,6 @@
                 </div>
               </div>
             </div>
-
-
-            <div id="calculator-annual" class="form-group" style="display: none">
-              <div class="form-row">
-                <div class="col-sm-4">
-                  <label>Cash</label>
-                  <input type="number" class="form-control" id="payment-cash-annual">
-                </div>
-                <div class="col-sm-4">
-                  <label>Change</label>
-                  <input type="text" class="form-control" id="payment-change-annual" readonly>
-                </div>
-                <div class="col-sm-4">
-                  <br>
-                  <input readonly class="btn btn-green" style="width: 120px;" id="enterCalc-annual" value="ENTER">
-                </div>
-              </div>
-            </div>
-
             <div class="modal-footer">
               <button class="btn btn-orange" id="add-payment-btn">Add payment</button>
             </div>
@@ -1110,16 +1094,20 @@
           <div class="row d-flex mt-1 mb-3" style="flex-direction: row; position: relative;left: 70px;">
             <div id="profilepic"
               style="border-radius: 50px; height: 100px; width: 100px; overflow: hidden; background-position: 50% 50%; background-size: cover;  text-align: center;">
-              <img src="member.png" id="output" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+              <img src="member.png" id="member_picture" alt="" style="height: 100%; width: 100%; object-fit: cover;">
             </div>
             <!------------------------------------------------------------------------------------------------------------>
-            <div class="col-sm-4 train" style="position: relative; left: 20px;">
+            <div class="col-sm-3" style="position: relative; left: 20px;">
               <label>Member ID</label>
               <input name="member_id" type="text" id="view_memberId" disabled class="form-control">
             </div>
-            <div class="col-sm-4 train">
+            <div class="col-sm-3">
               <label>Status</label>
               <input name="member_status" type="text" id="view_status" disabled class="form-control">
+            </div>
+            <div class="col-sm-3">
+              <label>Promo Availed</label>
+              <input name="view_promo" type="text" id="view_promo" disabled class="form-control">
             </div>
 
           </div>
@@ -1736,20 +1724,18 @@
 
   <script>
 
-
-  var select = document.querySelector("#payment_description");
   function pay(elem) {
-    console.log(elem.value);
+    let discount = $("#promo_discount").val();
     if(elem.value == 'Monthly Subscription'){
-      var x = document.getElementById("amount");
-      x.value = 750;
+      $("#amount").val(750 - parseInt(discount));
     }else if(elem.value == 'Annual Membership'){
-      var y = document.getElementById("amount");
-      y.value = 200;
+      $("#amount").val(200);
+    } else if(elem.value == 'both') {
+      $("#amount").val(950 - parseInt(discount));
+    } else {
+      $("#amount").val("");
     }
   }
-   
-
   
   var regs, walks, programs;
   
@@ -2040,8 +2026,8 @@
     let req = new XMLHttpRequest();
     req.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
         display(JSON.parse(this.responseText));
-        console.log(JSON.parse(this.responseText));
       }
     }
     req.open('GET', 'viewmember.php?id=' + id, true);
@@ -2090,8 +2076,15 @@
         }
       }
 
+      if(row.image_pathname) {
+        $("#member_picture").attr("src", `./../mobile/img/uploads/${row.image_pathname}`);
+      } else {
+        $("#member_picture").attr("src", "./member.png");
+      }
+
       document.getElementById("view_memberId").value = row.member_id;
       document.getElementById("view_status").value = row.member_status;
+      document.getElementById("view_promo").value = row.promo_name;
       document.getElementById("view_lastname").value = row.last_name;
       document.getElementById("view_firstname").value = row.first_name;
       document.getElementById("view_email").value = row.email;
@@ -2174,8 +2167,8 @@
     let req = new XMLHttpRequest();
     req.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        display(JSON.parse(this.responseText));
-        console.log(JSON.parse(this.responseText));
+        console.log(this.responseText);
+        display(JSON.parse(this.responseText)); 
       }
     }
     req.open('GET', 'paymentmember.php?id=' + id, true);
@@ -2184,7 +2177,13 @@
     function display(row) {
       document.getElementById("member_id").value = row.member_id;
       document.getElementById("member_lastname").value = row.last_name;
-
+      document.getElementById("promo_availed").value = row.promo_name;
+      document.getElementById("promo_discount").value = row.amount;
+      if(row.promo_name == "N/A") {
+        $("#promo-form-group").css("display", "none");
+      } else {
+        $("#promo-form-group").css("display", "block");
+      }
     }
   }
 
@@ -2451,10 +2450,10 @@
     if (calc.style.display == 'none') {
       calc.style.display = 'block';
       document.getElementById('showCalc').innerHTML =
-        '<span style="color:#DF3A01"> Hide Monthly Calculator </span>';
+        '<span style="color:#DF3A01"> Hide Calculator </span>';
     } else {
       calc.style.display = 'none';
-      document.getElementById('showCalc').innerHTML = 'Show Monthly Calculator';
+      document.getElementById('showCalc').innerHTML = 'Show Calculator';
     }
   });
 
@@ -2462,20 +2461,19 @@
   document.getElementById('enterCalc').addEventListener('click', () => {
     let cash = document.getElementById('payment-cash');
     let change = document.getElementById('payment-change');
-    let amount750 = 750;
 
     let val = parseInt(cash.value);
+    let amt = parseInt($("#amount").val());
 
     if (Number.isInteger(val) == true) {
       if (val <= 0 || val >= 9999) {
         alert('Please enter a valid amount!');
-      } else if (val < parseInt(amount750.value)) {
+      } else if (val < parseInt($("#amount").val())) {
         alert('Insufficient cash!');
+      } else if ($("#amount").val() == "") {
+        alert('Please select payment description!');
       } else {
-        let x = val;
-        let y = amount750;
-
-        change.value = `₱${x-y}.00`;
+        change.value = `₱${val - amt}.00`;
       }
     } else {
       console.log(val)

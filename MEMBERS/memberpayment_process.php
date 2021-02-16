@@ -9,6 +9,7 @@ if($_SESSION['admin_id']){
 
 $id = $_REQUEST['member_id'];
 $payment_description = $_POST['payment_description'];
+$discount = $_POST['promo_discount'];
 $monthly_end;
 $monthly_start;
 
@@ -52,7 +53,7 @@ if($payment_description == ''){
 
 //Check if its monthly
 else if($payment_description == 'Monthly Subscription'){
-    $payment_amount = '750';
+    $payment_amount = 750 - $discount;
     
     $sql0 = "SELECT first_name,last_name,member_type FROM member WHERE member_id = $id";
     $query_run = mysqli_query($conn, $sql0);
@@ -144,7 +145,7 @@ else if($payment_description == 'Monthly Subscription'){
 
  //Check if its Annual
 }else if($payment_description == 'Annual Membership'){
-    $payment_amount = '200';
+    $payment_amount = 200;
 
     $sql0 = "SELECT * FROM member WHERE member_id = $id";
     $query_run = mysqli_query($conn, $sql0);
@@ -277,7 +278,7 @@ $query_run123 = mysqli_query($conn, $klint);
 
     $sql2 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,
     `payment_description`,`payment_amount`,`member_type`)
-    VALUES ( '$id', '$first_name', '$last_name', '$timeNow', '$dateNow', 'Monthly subscription','750'
+    VALUES ( '$id', '$first_name', '$last_name', '$timeNow', '$dateNow', 'Monthly subscription',".intval(750 - $discount)."
     ,'$member_type')";
     mysqli_query($conn, $sql2);
 

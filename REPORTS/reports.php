@@ -237,6 +237,21 @@
 
   </header>
   <!--Main Navigation-->
+  <main class="pt-5 mx-lg-5" >
+    <div class="container-fluid mt-5">
+      <br>
+      <ol class="breadcrumb" style="background-color:white;">
+        <li class="breadcrumb-item">
+          <a href="#" class="text-orange">Reports</a>
+        </li>
+        <li class="breadcrumb-item active">Members</li>
+      </ol>
+      <button class="btn btn-orange btn-sm">
+        <i class="fas fa-eye mr-2"></i>
+        View total members
+      </button>
+    </div>
+  </main>
   
 
   

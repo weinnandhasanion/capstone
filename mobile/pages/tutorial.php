@@ -1,3 +1,7 @@
+<?php 
+require "./../functions/connect.php";
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,35 +106,46 @@
       <div class="tutorial-content">
         <div class="cont">
           <h2>Upper Body Workouts</h2>
-          <a href="https://www.youtube.com/watch?v=vT2GjY_Umpw">Bent-over row</a>
-          <a href="https://www.youtube.com/watch?v=3ml7BH7mNwQ">Arnold press</a>
-          <a href="https://www.youtube.com/watch?v=VmB1G1K7v94">Dumbbell bench press</a>
-          <a href="https://www.youtube.com/watch?v=tpLnfSQJ0gg">Pullover</a>
-          <a href="https://www.youtube.com/watch?v=ttvfGg9d76c">Dumbell rear-delt fly</a>
-          <a href="https://www.youtube.com/watch?v=sAq_ocpRh_I">Standing biceps curl</a>
-          <a href="https://www.youtube.com/watch?v=d_KZxkY_0cM">Skull crusher press</a>
-          <a href="https://www.youtube.com/watch?v=YbX7Wd8jQ-Q">Seated overhead triceps extension</a>
+          <?php 
+          $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+          $res = mysqli_query($con, $sql);
+          if($res) {
+            while($row = mysqli_fetch_assoc($res)) {
+          ?>
+          <a href="<?= $row["routine_link"] ?>"><?= $row["routine_name"] ?></a>
+          <?php
+            }
+          }
+          ?>
         </div>
         <div class="cont">
           <h2>Lower Body Workouts</h2>
-          <a href="https://www.youtube.com/watch?v=tlfahNdNPPI">Front Squat</a>
-          <a href="https://www.youtube.com/watch?v=op9kVnSso6Q">Deadlift</a>
-          <a href="https://www.youtube.com/watch?v=2C-uNgKwPLE">Bulgarian split squat</a>
-          <a href="https://www.youtube.com/watch?v=LlTUY7PA_BI">Lateral lunge</a>
-          <a href="https://www.youtube.com/watch?v=9ZknEYboBOQ">Dumbbell Stepup</a>
-          <a href="https://www.youtube.com/watch?v=IZxyjW7MPJQ">Leg Press</a>
-          <a href="https://www.youtube.com/watch?v=m6MczOv_Ayg">Overhead Lunge</a>
+          <?php 
+          $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+          $res = mysqli_query($con, $sql);
+          if($res) {
+            while($row = mysqli_fetch_assoc($res)) {
+          ?>
+          <a href="<?= $row["routine_link"] ?>"><?= $row["routine_name"] ?></a>
+          <?php
+            }
+          }
+          ?>
         </div>
         <div class="cont">
           <h2>Abdominals</h2>
-          <a href="https://www.youtube.com/watch?v=pSHjTRCQxIw">Plank</a>
-          <a href="https://www.youtube.com/watch?v=De3Gl-nC7IQ">Mountain climber</a>
-          <a href="https://www.youtube.com/watch?v=7rRWy7-Gokg">Reverse crunch</a>
-          <a href="https://www.youtube.com/watch?v=MCVX9wRd_h0">Dead bug</a>
-          <a href="https://www.youtube.com/watch?v=l4kQd9eWclE">Leg raise</a>
-          <a href="https://www.youtube.com/watch?v=5Tc7yKQysVQ">Abs roll-out</a>
-          <a href="https://www.youtube.com/watch?v=wiFNA3sqjCA">Bird-dog</a>
-          <a href="https://www.youtube.com/watch?v=p9hhX_Sx5v0">Hanging knee raise</a>
+          <?php 
+          $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
+          $res = mysqli_query($con, $sql);
+          if($res) {
+            
+            while($row = mysqli_fetch_assoc($res)) {
+          ?>
+          <a href="<?= $row["routine_link"] ?>"><?= $row["routine_name"] ?></a>
+          <?php
+            }
+          }
+          ?>
         </div>
       </div>
     </div>
