@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'connect.php';
+date_default_timezone_set('Asia/Manila');
+
 ?>
 
 <?php
@@ -17,10 +19,8 @@ $pass  = $_POST['password'];
 
                 $id = $_SESSION['admin_id'];
 
-                $sql1 =  "INSERT INTO logtrail(admin_id,first_name,last_name)
-                SELECT admin_id,first_name,last_name
-                FROM admin
-                WHERE admin_id = $id";
+                $sql1 =  "INSERT INTO logtrail(admin_id,first_name,last_name,dateandtime_login)
+                VALUES('".$row["admin_id"]."','".$row["first_name"]."','".$row["last_name"]."','".date("Y-m-d H:i:s")."')";
                 $query_run1 = mysqli_query($conn, $sql1);
 
                 

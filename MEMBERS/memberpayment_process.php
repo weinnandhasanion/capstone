@@ -259,10 +259,8 @@ $query_run123 = mysqli_query($conn, $klint);
 
 
 
-}else if($payment_description == 'Monthly&Annual'){
-    $payment_amount = '950';
+}else if($payment_description == 'both'){
 
-    
     $sql0 = "SELECT * FROM member WHERE member_id = $id";
     $query_run = mysqli_query($conn, $sql0);
     $rows = mysqli_fetch_assoc($query_run);
@@ -270,86 +268,29 @@ $query_run123 = mysqli_query($conn, $klint);
     $first_name = $rows["first_name"];
     $last_name = $rows["last_name"];
     $member_type = $rows["member_type"];
- 
-    $annual_start = date("Y-m-d"); 
-    $pass = password_hash('12345', PASSWORD_DEFAULT);
-    $monthly_start = date("Y-m-d"); 
 
-    $sql2 = "UPDATE member 
-    SET member_status = 'Paid', username = '$id', password = '$pass',
-    annual_start = '$annual_start', annual_end = '$annual_end',
-    monthly_start = '$monthly_start', monthly_end = '$monthly_end'
+    $sql1 = "UPDATE member 
+    SET member_status = 'Paid', 
+    annual_start = '$annual_start', annual_end = '$annual_end'
     WHERE member_id = $id";     
+    mysqli_query($conn, $sql1);
+
+    $sql2 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,
+    `payment_description`,`payment_amount`,`member_type`)
+    VALUES ( '$id', '$first_name', '$last_name', '$timeNow', '$dateNow', 'Monthly subscription','750'
+    ,'$member_type')";
     mysqli_query($conn, $sql2);
 
-    $sql1 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,
+    $sql3 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,
     `payment_description`,`payment_amount`,`member_type`)
-    VALUES ( '$id', '$first_name', '$last_name', '$timeNow', '$dateNow', '$payment_description','$payment_amount'
+    VALUES ( '$id', '$first_name', '$last_name', '$timeNow', '$dateNow', 'Annual Membership','200'
     ,'$member_type')";
-    $query_run = mysqli_query($conn, $sql1);
-    
+    mysqli_query($conn, $sql3);
 
-     //this is for puting member_id in the array
-     $data = array();
-     $member_id;
-     $sql3 = "SELECT * FROM member ORDER BY member_id DESC";
-     $res3 = mysqli_query($conn, $sql3);
-     if($res3) {
-         while($row = mysqli_fetch_assoc($res3)) {
-             $data[] = $row["member_id"];
-         }
-
-         $member_id = $data[0];
-     }
-
-     //this is for puting login_id in the array
-     $data_logtrail = array();
-     $login_id;
-     $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
-     $logtrail = mysqli_query($conn, $log);
-     if($logtrail) {
-         while($rowrow = mysqli_fetch_assoc($logtrail)) {
-             $data_logtrail[] = $rowrow["login_id"];
-         }
-
-         $login_id = $data_logtrail[0];
-     }
-
-     // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
-     $ad= "SELECT * FROM admin WHERE admin_id = $session_admin_id";
-     $query_runad = mysqli_query($conn, $ad);
-     $rowed = mysqli_fetch_assoc($query_runad);
-
-     $admin_id = $rowed["admin_id"];
-
-     // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-     $ew = "SELECT * FROM member WHERE member_id = '$member_id'";
-     $query_runew = mysqli_query($conn, $ew);
-     $rowew = mysqli_fetch_assoc($query_runew);
-
-     $member_id_new = $rowew["member_id"];
-     $user_fname = $rowew["first_name"];
-     $user_lname = $rowew["last_name"];
-     $description = "Paid Both Annual Membership and Monthly Subscription";
-     $identity = "member";
-     $timeNow = date("h:i A");
-
-     // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-     $sql_bothboth = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
-     $query_run_bothboth = mysqli_query($conn, $sql_bothboth);
-     $row_bothboth = mysqli_fetch_assoc($query_run_bothboth);
-
-     $login_id_new = $row_bothboth["login_id"];
-
-     $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
-     `description`, `identity`,`time`)
-     VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
-     mysqli_query($conn, $sql1);
-    
     echo ("<script LANGUAGE='JavaScript'>
-                window.alert('Both Annual and Monthly Payment is been added.');
-                window.location.href='/PROJECT/MEMBERS/members.php';
-                </script>");
+    window.alert('Both Annual and Monthly  Payment is been added.');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
 
 
 }else if($payment_description == 'Walk-in'){

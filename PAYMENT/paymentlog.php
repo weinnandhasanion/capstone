@@ -29,6 +29,7 @@
   <link href="css/style.min.css" rel="stylesheet">
   <link rel="icon" href="../mobile/img/gym_logo.png">
   <link href="css/theme-colors.css" rel="stylesheet">
+  <link href="./../css/pagination.css" rel="stylesheet">
 
 <style>
      .john label {
@@ -253,49 +254,11 @@
                         <th>Action</th>
                       </tr>
                     </thead>
-                    <tbody>
-                    <?php
-            /* code for display data */
-            //$sql = "SELECT * 
-                    //FROM paymentlog  
-                    //INNER JOIN member 
-                    //ON  paymentlog.payment_id =  member.member_id";
-            $sql = "SELECT * FROM  paymentlog ORDER BY payment_id DESC";
-            $result = mysqli_query($conn, $sql);
-            $resultCheck = mysqli_num_rows($result);
-            if($resultCheck > 0){
-              while($row = mysqli_fetch_array($result)){
-
-                $date_payment = new DateTime( $row["date_payment"]);
-                $date_payment_new = $date_payment->format('F d Y');
-
-                ?>
-                <tr>
-                <td><?php echo $row["payment_id"] ?></td>
-                <td><?php echo $row["time_payment"] ?></td>
-                <td><?php echo $date_payment_new?></td>
-                <td><a style="font-weight: bold;">
-                <?php echo $row["first_name"]." ".$row["last_name"] ?></a></td>
-                <td><?php echo $row["payment_description"] ?></td>
-                <td><?php echo $row["payment_type"] ?></td>
-
-                <td><span data-toggle="tooltip" data-placement="top" title="View <?php echo $row["first_name"],$row["last_name"]?>">
-                    <i style="cursor: pointer; color:brown; font-size: 25px;" 
-                    data-toggle="modal" data-target="#name_modal"
-                    class=" fas fa-eye mx-2 get_id" data-id = '<?php echo $row["payment_id"]?>'
-                    onclick="displayDetails(this)"></i>
-                  </span></td>
-
-                </tr>
-                <?php
-              }
-             } 
-
-             
-             ?>
+                    <tbody id ="paymentlog-tbody">
+                   
                     </tbody>
                   </table>
-            <div id="no-data-div" class="no-data-div my-3 text-muted">
+            <div id="no-data-div-paymentlog" class="no-data-div my-3 text-muted">
               No data!
             </div>
             <div class="table-parent my-5" id="table-loader">
@@ -304,7 +267,7 @@
               </div>
             </div>
           </div>
-          <div class="card-footer flex-this">
+          <div id="footer" class="card-footer flex-this">
             <small id="page"></small>
             <nav aria-label="Page navigation example">
               <ul class="pagination" id="pagination">
@@ -404,6 +367,8 @@
   <script type="text/javascript" src="js/popper.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/mdb.min.js"></script>
+  <script type="text/javascript" src="validation.js"></script>
+  <script src="./../js/pagination.js"></script>
 
   <script>
    function logout(el) {
@@ -468,12 +433,63 @@
       }
     }
 
+
+
+
+       // Pagination sa paymentlog
+    $("#footer").pagination({
+    dataSource: function(done) {
+      $.get("./getpaymentlog.php", function(res) {
+        console.log(res);
+        done(JSON.parse(res));
+      });
+    },
+    pageSize: 5,
+    showPrevious: false,
+    showNext: false,
+    callback: function(data) {
+      $("#paymentlog-tbody").empty();
+      if(data.length > 0) {
+        $("#no-data-div-paymentlog").css("display", "none");
+        data.forEach(row => {
+          let html = `<tr>
+          
+            <td>${row.payment_id}</td>
+            <td>${row.time_payment}</td>
+            <td>${row.date_payment}</td>
+            <td>${row.fullname}</td>
+            <td>${row.payment_description}</td>
+            <td>${row.payment_type}</td>
+            
+            <td><span data-toggle="tooltip" data-placement="top" title="View ${row.last_name}">
+                    <i style="cursor: pointer; color:brown; font-size: 25px;" 
+                    data-toggle="modal" data-target="#name_modal"
+                    class=" fas fa-eye mx-2 get_id" data-id = "${row.payment_id}""
+                    onclick="displayDetails(this)"></i>
+            </span></td>
+          <tr>`;
+          $("#paymentlog-tbody").append(html);
+        });
+      } else {
+        $("#no-data-div-paymentlog").css("display", "flex");
+      }
+    }
+  });
+
     
   </script>
 
 
   <!--Google Maps-->
   <script src="https://maps.google.com/maps/api/js"></script>
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script src="./../js/pagination.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <!--Google Maps-->
+  <script src="https://maps.google.com/maps/api/js"></script>
+  <script type="text/javascript" src="validation.js"></script>
 </body>
 
 </html>

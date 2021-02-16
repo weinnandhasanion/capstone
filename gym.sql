@@ -60,7 +60,8 @@ CREATE TABLE `inventory` (
   `inventory_working` int(255) DEFAULT NULL,
   `inventory_description` varchar(255) DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
-  `date_added` date DEFAULT NULL
+  `date_added` date DEFAULT NULL,
+  `inv_status` ENUM('active','inactive')
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -74,7 +75,7 @@ CREATE TABLE `logtrail` (
   `admin_id` int(100) DEFAULT NULL,
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
-  `dateandtime_login` datetime DEFAULT current_timestamp(),
+  `dateandtime_login` datetime DEFAULT,
   `dateandtime_logout` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -197,7 +198,7 @@ CREATE TABLE `paymentlog` (
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
   `member_type` enum('Regular','Walk-in') DEFAULT NULL,
-  `payment_description` enum('Monthly Subscription','Annual Membership','Monthly&Annual','Walk-in') DEFAULT NULL,
+  `payment_description` enum('Monthly Subscription','Annual Membership','Walk-in') DEFAULT NULL,
   `payment_type` enum('Cash','Online') NOT NULL,
   `date_payment` date DEFAULT NULL,
   `time_payment` varchar(15) NOT NULL,

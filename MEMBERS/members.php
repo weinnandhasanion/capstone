@@ -182,6 +182,7 @@
     height: 45px;
   }
 
+
   .train input[type=text] {
     text-align: center;
   }
@@ -859,29 +860,18 @@
             <div class="form-group">
               <div class="form-row">
                 <div class="col-sm-6">
-                  <br>
-                  <label class="container">Monthly Subscription
-                    <input onclick="Monthly()" value="Monthly Subscription" id="monthly" name="payment_description"
-                      type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
-                  <label class="container">Annual Subscription
-                    <input onclick="Annual()" value="Annual Membership" id="annual" name="payment_description"
-                      type="checkbox">
-                    <span class="checkmark"></span>
-                  </label>
+
+                  <label>Payment Description</label>
+                  <select name="payment_description" id="payment_description" onchange="pay(this)" class="form-control" required="">
+                    <option value="" selected>Select Payment</option>
+                    <option value="Monthly Subscription">Monthly Subscription</option>
+                    <option value="Annual Membership">Annual Membership</option>
+                    <option value="both">Both</option>
+                  </select>
                 </div>
                 <div class="col-sm-6">
                   <label>Amount</label>
-                  <input style="display:none;" id="payment_750" type="text" name="payment_amount"
-                    placeholder="₱750.00"
-                    class="form-control" readonly>
-                  <input style="display:none;" id="payment_200" type="text" name="payment_amount"
-                    placeholder="₱200.00"
-                    class="form-control" readonly>
-                  <input style="display:none;" id="payment_950" value="Monthly&Annual" type="text" name="payment_description"
-                    placeholder="₱750 + ₱200 = ₱950.00"
-                    class="form-control" readonly>
+                  <input  id="amount" type="text" class="form-control" readonly>
                 </div>
               </div>
             </div>
@@ -1749,7 +1739,18 @@
 
   <script>
 
-    // tool tip sa plus button
+
+  var select = document.querySelector("#payment_description");
+  function pay(elem) {
+    console.log(elem.value);
+    if(elem.value == 'Monthly Subscription'){
+      var x = document.getElementById("amount");
+      x.value = 750;
+    }else if(elem.value == 'Annual Membership'){
+      var y = document.getElementById("amount");
+      y.value = 200;
+    }
+  }
    
 
   
@@ -2016,45 +2017,7 @@
     }
   });
 
-var x = document.getElementById("payment_750");
-var y = document.getElementById("payment_200");
-var z = document.getElementById("payment_950");
-var monthly = document.querySelector('#monthly');
-var annual = document.querySelector('#annual');
 
-//show and hide payment subscription
-function Monthly() {
-  let bothChecked = check();
-  if (!bothChecked) {
-    if (x.style.display === "none")
-      x.style.display = "block";
-    else
-      x.style.display = "none";
-  }
-}
-
-//show and hide payment subscription
-function Annual() {
-  let bothChecked = check();
-  if (!bothChecked) {
-    if (y.style.display === "none")
-      y.style.display = "block";
-    else
-      y.style.display = "none";
-  }
-}
-
-
-function check() {
-  if (monthly.checked && annual.checked) {
-    x.style.display = "none";
-    y.style.display = "none";
-    z.style.display = "block";
-    return true;
-  }
-  z.style.display = "none";
-  return false;
-}
 
  
 

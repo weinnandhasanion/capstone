@@ -1,10 +1,10 @@
 <?php
 session_start();
 require('connect.php');
-
+date_default_timezone_set('Asia/Manila');
 $id = $_REQUEST['id'];
     
-$sql1 = "UPDATE logtrail SET dateandtime_logout = now()
+$sql1 = "UPDATE logtrail SET dateandtime_logout = '".date("Y-m-d H:i:s")."'
 WHERE login_id = " . intval($id) . "";    
 
 
