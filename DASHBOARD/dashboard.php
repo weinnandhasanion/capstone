@@ -112,13 +112,6 @@
         </li>
         <li class="breadcrumb-item active">Total</li>
       </ol>
-      
-      
-
-</div>
-
-
-
     </div>
   </main>
   <!--Main layout-->

@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set('Asia/Manila');
 $conn = mysqli_connect("localhost","root","","gym");
 
 if ($conn->connect_error) {

@@ -119,11 +119,11 @@
         <i class="fas fa-eye mr-2"></i>
         Total members added
       </button>
-      <button class="btn btn-orange btn-sm">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#paid-members">
         <i class="fas fa-eye mr-2"></i>
         Paid members
       </button>
-      <button class="btn btn-orange btn-sm">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#unpaid-members">
         <i class="fas fa-eye mr-2"></i>
         unpaid members
       </button>
@@ -141,8 +141,8 @@
       </button>
     </div>
 
-   <!--Trainers--->
-   <div class="container-fluid mt-5">
+    <!--Trainers--->
+    <div class="container-fluid mt-5">
       <br>
       <ol class="breadcrumb" style="background-color:white;">
         <li class="breadcrumb-item">
@@ -164,8 +164,8 @@
       </button>
     </div>
   
-  <!--inventory--->
-  <div class="container-fluid mt-5">
+    <!--inventory--->
+    <div class="container-fluid mt-5">
       <br>
       <ol class="breadcrumb" style="background-color:white;">
         <li class="breadcrumb-item">
@@ -179,8 +179,8 @@
       </button>
     </div>
 
-  <!--Promos--->
-  <div class="container-fluid mt-5">
+    <!--Promos--->
+    <div class="container-fluid mt-5">
       <br>
       <ol class="breadcrumb" style="background-color:white;">
         <li class="breadcrumb-item">
@@ -195,7 +195,7 @@
     </div>
 
     <!--Paymentlog--->
-  <div class="container-fluid mt-5">
+    <div class="container-fluid mt-5">
       <br>
       <ol class="breadcrumb" style="background-color:white;">
         <li class="breadcrumb-item">
@@ -208,10 +208,8 @@
         total Payment Added
       </button>
     </div>
+  </main>
 
-
-
-</main>
   <!-- total members added -->
   <div class="modal fade" role="dialog" id="members-added">
     <div class="modal-dialog modal-md">
@@ -253,6 +251,66 @@
                 <div class="col-sm-6">
                   <label for="">To Date</label>
                   <input type="date" name="to_date" id="" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- total paid members -->
+  <div class="modal fade" role="dialog" id="paid-members">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <form action="./members/paid_members.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for members who are paid</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Member type</label>
+                  <select name="member_type" class="form-control">
+                    <option value="Regular">Regular</option>
+                    <option value="Walk-in">Walk-in</option>
+                    <option value="Both">Both</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- total unpaid members -->
+  <div class="modal fade" role="dialog" id="unpaid-members">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <form action="./members/unpaid_members.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for members who are not paid</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Member type</label>
+                  <select name="member_type" class="form-control">
+                    <option value="Regular">Regular</option>
+                    <option value="Walk-in">Walk-in</option>
+                    <option value="Both">Both</option>
+                  </select>
                 </div>
               </div>
             </div>

@@ -112,6 +112,10 @@ if($memberType == "Both") {
 </head>
 <body>
   <p><?= $reportText ?></p>
+  <?php 
+  if($res) {
+    if(mysqli_num_rows($res) > 0) {
+  ?>
   <table>
     <thead>
       <tr>
@@ -123,28 +127,28 @@ if($memberType == "Both") {
       </tr>
     </thead>
     <tbody>
-      <?php 
-      if($res) {
-        if(mysqli_num_rows($res) > 0) {
-          while($row = mysqli_fetch_assoc($res)) {
-            ?>
-            <tr>
-              <td><?= $row["member_id"] ?></td>
-              <td><?= $row["first_name"] ?></td>
-              <td><?= $row["last_name"] ?></td>
-              <td><?= $row["member_type"] ?></td>
-              <td><?= date("F d, Y", strtotime($row["date_registered"])) ?></td>
-            </tr>
-            <?php
-            }
-        } else {
-          echo "Empty";
-        }
-      } else {
-        echo mysqli_error($conn);
-      }
+    <?php 
+      while($row = mysqli_fetch_assoc($res)) {
       ?>
+        <tr>
+          <td><?= $row["member_id"] ?></td>
+          <td><?= $row["first_name"] ?></td>
+          <td><?= $row["last_name"] ?></td>
+          <td><?= $row["member_type"] ?></td>
+          <td><?= date("F d, Y", strtotime($row["date_registered"])) ?></td>
+        </tr>
+      <?php
+      }
+    ?>
     </tbody>
   </table>
+  <?php 
+    } else {
+      echo "Empty";
+    }
+  } else {
+    echo mysqli_error($conn);
+  }
+  ?>
 </body>
 </html>
