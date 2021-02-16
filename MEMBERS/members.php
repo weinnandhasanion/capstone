@@ -1274,21 +1274,8 @@
                     placeholder="Enter program name here">
                 </div>
                 <div class="col-sm-4">
-                  <label>Trainer_assign</label>
-                  <select style="width: 230px;" name="trainer_id" id="trainer_name_update" class="form-control">
-                    <option value="" selected disabled>Select here...</option>
-                    <?php
-                    $sql = "SELECT * FROM trainer";
-                    $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                    <option value="<?php echo $row["trainer_id"]?>"><?php echo $row["first_name"], $row["last_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
+                  <label>Trainer assign</label>    
+                    <input name="" id="trainer_name_update" type="text" readonly class="form-control">
                 </div>
               </div>
             </div>

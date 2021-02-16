@@ -49,7 +49,7 @@ $program_description= $_POST['program_description'];
     WHERE program_id = '$_POST[program_id]'";
     $prog_description = mysqli_query($conn, $sql_description);
 
-        if($prog_name ){
+      
             
             // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
             $ad= "SELECT * FROM admin WHERE admin_id = $session_admin_id";
@@ -74,7 +74,7 @@ $program_description= $_POST['program_description'];
             
             $program_id_new = $rows222["program_id"];
             $program_name = $rows222["program_name"];  
-            $description = "Updated the program name";
+            $description = "Updated the program";
             $identity = "program";
             $timeNow = date("h:i A");
             
@@ -84,50 +84,11 @@ $program_description= $_POST['program_description'];
                      mysqli_query($conn, $sql1);
 
             echo ("<script LANGUAGE='JavaScript'>
-            window.alert('program name is updated.');
+            window.alert('program  is updated.');
             window.location.href='/PROJECT/MEMBERS/members.php';
             </script>");
-
      
-        }else if($prog_description){
 
-
-            // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
-            $sql_admin= "SELECT * FROM admin WHERE admin_id = $session_admin_id";
-            $query_run_admin = mysqli_query($conn, $sql_admin);
-            $row_admin = mysqli_fetch_assoc($query_run_admin);
-            
-            $admin_id = $row_admin["admin_id"];
-            
-            
-            // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-            $sql_logtrail = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
-            $query_run_logtrail = mysqli_query($conn, $sql_logtrail);
-            $row_logtrail = mysqli_fetch_assoc($query_run_logtrail);
-            
-            $login_id_new = $row_logtrail["login_id"];
-            
-            
-            // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-            $progprog = "SELECT * FROM program WHERE program_id = '$program_id'";
-            $query_run_program = mysqli_query($conn, $progprog);
-            $row_program= mysqli_fetch_assoc($query_run_program);
-            
-            $program_id_new = $row_program["program_id"];
-            $program_name = $row_program["program_name"];  
-            $description = "Updated the program description";
-            $identity = "program";
-            $timeNow = date("h:i A");
-            
-            $sql1 = "INSERT INTO `logtrail_doing` ( `program_id`, `login_id`,`admin_id`,`user_fname`,
-                    `description`, `identity`,`time`)
-                     VALUES ( '$program_id_new','$login_id_new','$admin_id', '$program_name','$description','$identity', '$timeNow')";
-                     mysqli_query($conn, $sql1);
-
-            echo ("<script LANGUAGE='JavaScript'>
-            window.alert('program description is updated.');
-            window.location.href='/PROJECT/MEMBERS/members.php';
-            </script>");
            
         }else{
             echo "failure to register";

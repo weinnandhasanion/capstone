@@ -202,10 +202,10 @@
             Inverntory
           </h4>
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" id="sort-permanent" class="btn btn-sm btn-outline-orange">Permanent
+            <button type="button" id="sort-permanent" class="btn btn-sm btn-outline-orange">cardio
             </button>
             <button type="button" id="sort-both" class="btn btn-sm btn-orange">Both</button>
-            <button type="button" id="sort-seasonal" class="btn btn-sm btn-outline-orange">Seasonal</button>
+            <button type="button" id="sort-seasonal" class="btn btn-sm btn-outline-orange">weights</button>
           </div>
           <form class="d-flex justify-content-center">
             <input type="text" placeholder="Search promo name" id="search-promo" class="form-control">
@@ -223,9 +223,9 @@
           <div class="col-sm-4">
             <div class="card inventory-cards mx-3 my-3">
               <div class="card-body promo">
-                <h3 class="card-title font-weight-bold text-orange"><?php echo $row["promo_name"] ?></h3>
-                <h6 class="card-subtitle text-muted font-weight-bold"><?php echo $row["promo_type"] ?></h6>
-                <p class="card-text mt-2"><?php echo $row["promo_description"] ?></p>
+                <h3 class="card-title font-weight-bold text-orange"><?php echo $row["inventory_name"] ?></h3>
+                <h6 class="card-subtitle text-muted font-weight-bold"><?php echo $row["inventory_category"] ?></h6>
+                <p class="card-text mt-2"><?php echo $row["inventory_description"] ?></p>
               </div>
               <div class="card-footer">
                 <button onclick="viewDetails(this)" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">details</button>
