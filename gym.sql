@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2021 at 04:11 PM
+-- Generation Time: Feb 18, 2021 at 04:18 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.13
 
@@ -35,7 +35,7 @@ CREATE TABLE `admin` (
   `password` varchar(100) DEFAULT NULL,
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin`
@@ -61,7 +61,7 @@ CREATE TABLE `inventory` (
   `inventory_description` varchar(255) DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
   `date_added` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -76,7 +76,7 @@ CREATE TABLE `logtrail` (
   `last_name` varchar(100) DEFAULT NULL,
   `dateandtime_login` datetime DEFAULT current_timestamp(),
   `dateandtime_logout` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `logtrail`
@@ -178,7 +178,7 @@ CREATE TABLE `member` (
   `acc_status` enum('active','inactive') NOT NULL,
   `program_id` int(11) NOT NULL,
   `image_pathname` varchar(9999) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `member`
@@ -438,7 +438,7 @@ CREATE TABLE `trainer` (
   `date_hired` date DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
   `acc_status` enum('able','disable') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
