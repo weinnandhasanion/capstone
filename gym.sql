@@ -345,7 +345,6 @@ CREATE TABLE `trainer` (
   `gender` enum('M','F') DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `file` blob DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
   `date_hired` date DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,

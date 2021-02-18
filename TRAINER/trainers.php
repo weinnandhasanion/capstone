@@ -592,13 +592,7 @@
               <small class="validation text-danger" id="update_phone-invalid">Invalid input</small>
               <small class="validation text-danger" id="update_phone-length">Phone number must contain 11 digits</small>
             </div>
-            <div class="col-sm-6">
-            <label>Position</label>
-              <select name="trainer_position" id="update_position"  class="form-control" >
-                <option value="junior">Junior Trainer</option>
-                <option value="senior">Senior Trainer</option>
-              </select>
-            </div>
+           
           </div>
         </div> 
         <div class="form-group">
@@ -840,7 +834,6 @@ $(function () {
         document.getElementById("update_status").value = row.trainer_status;
         document.getElementById("update_fname").value = row.first_name;
         document.getElementById("update_lname").value = row.last_name;
-        document.getElementById("update_position").value = row.trainer_position;
         document.getElementById("update_phone").value = row.phone;
         document.getElementById("update_email").value = row.email;
         document.getElementById("update_address").value = row.address;
@@ -928,7 +921,6 @@ $(function () {
             <td>${row.last_name}</td>
             <td>${row.first_name}</td>
             <td>${row.trainer_status}</td>
-            <td>${row.trainer_position}</td>
             <td>
                     <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
                     <i style="cursor: pointer; color:brown; font-size: 25px;"data-toggle="modal" data-target="#view"

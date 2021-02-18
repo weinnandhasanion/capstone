@@ -158,9 +158,13 @@
         <i class="fas fa-eye mr-2"></i>
        total Trainers Deleted
       </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-sort">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-active">
         <i class="fas fa-eye mr-2"></i>
-         Active and Inactive
+         Active Trainers
+      </button>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-inactive">
+        <i class="fas fa-eye mr-2"></i>
+         Inactive Trainers
       </button>
     </div>
   
@@ -415,26 +419,21 @@
   </div>
 
   
-  <!--  trainers active and inactive -->
-  <div class="modal fade" role="dialog" id="trainers-sort">
+  <!--  trainers active -->
+  <div class="modal fade" role="dialog" id="trainers-active">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
+      <form action="./trainers/trainer_active.php" method="post">
         <div class="modal-header">
-          <h4 class="modal-title">Generate report for active  inactive trainers</h4>
+          <h4 class="modal-title">Generate report for active trainers</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
             <div class="row">
-              <div class="col-sm-6">
-                <label for="">trainer type</label>
-                <select id="" class="form-control">
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                </select>
-              </div>
+              
               <div class="col-sm-6">
                 <label for="">Time span</label>
-                <select id="trainers-sort-select" class="form-control">
+                <select id="trainers-active-select" name="timespan_trainers_active" class="form-control">
                   <option value="Today">Today</option>
                   <option value="This week">This week</option>
                   <option value="This month">This month</option>
@@ -445,15 +444,15 @@
               </div>
             </div>
           </div>
-          <div class="form-group custom-date" id="trainers-sort-custom">
+          <div class="form-group custom-date" id="trainers-active-custom">
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="" id="" class="form-control">
+                <input type="date" name="from_date_trainers_active" id="" class="form-control">
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="" id="" class="form-control">
+                <input type="date" name="to_date_trainers_active" id="" class="form-control">
               </div>
             </div>
           </div>
@@ -461,6 +460,54 @@
         <div class="modal-footer">
           <button class="btn btn-sm btn-outline-orange">Generate report</button>
         </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  
+  <!--  trainers inactive -->
+  <div class="modal fade" role="dialog" id="trainers-inactive">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+      <form action="./trainers/trainer_inactive.php" method="post">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for active trainers</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="trainers-inactive-select" name="timespan_trainers_inactive" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="trainers-inactive-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="from_date_trainers_inactive" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="to_date_trainers_inactive" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -513,13 +560,22 @@
       $("#trainers-deleted-custom").css("display", "none");
     }
   });
-    //modal custom for active and inactive trainers
-    $("#trainers-sort-select").on("change", function() {
-    let select = $("#trainers-sort-select");
+    //modal custom for active trainers
+    $("#trainers-active-select").on("change", function() {
+    let select = $("#trainers-active-select");
     if(select.val() == "Custom") {
-      $("#trainers-sort-custom").css("display", "block");
+      $("#trainers-active-custom").css("display", "block");
     } else {
-      $("#trainers-sort-custom").css("display", "none");
+      $("#trainers-active-custom").css("display", "none");
+    }
+  });
+  //modal custom for inactive trainers
+  $("#trainers-inactive-select").on("change", function() {
+    let select = $("#trainers-inactive-select");
+    if(select.val() == "Custom") {
+      $("#trainers-inactive-custom").css("display", "block");
+    } else {
+      $("#trainers-inactive-custom").css("display", "none");
     }
   });
   

@@ -3,62 +3,71 @@ require "./../connect.php";
 session_start();
 
 
-$timespan = $_POST["timespan_trainers_deleted"];
+$timespan = $_POST["timespan_trainers_inactive"];
 if($timespan == "Custom") {
-  $fromDate = date("Y-m-d", strtotime($_POST["from_date_trainers_deleted"]));
-  $toDate = date("Y-m-d", strtotime($_POST["to_date_trainers_deleted"]));
-} else {  
+  $fromDate = date("Y-m-d", strtotime($_POST["from_date_trainers_inactive"]));
+  $toDate = date("Y-m-d", strtotime($_POST["to_date_trainers_inactive"]));
+} else {
   $fromDate = NULL;
   $toDate = NULL;
 }
 
 
+
+
   if($timespan == "Custom") {
-    $reportText = "Generating reports for trainers deleted from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
+    $reportText = "Generating reports for inactive trainers from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
     $sql = "SELECT * FROM trainer
-            WHERE date_deleted >= '$fromDate' 
-            AND date_deleted <= '$toDate'
-            AND acc_status = 'disable'";
+            WHERE date_hired >= '$fromDate' 
+            AND date_hired <= '$toDate'
+            AND trainer_status = 'inactive'
+            AND acc_status = 'able'";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "Today") {
-    $reportText = "Generating reports for trainers deleted today, ".date("F d, Y")."...";
+    $reportText = "Generating reports for inactive trainers  today, ".date("F d, Y")."...";
     $today = date("Y-m-d");
     $sql = "SELECT * FROM trainer
-            WHERE date_deleted = '$today'
-            AND acc_status = 'disable'";
+            WHERE date_hired = '$today' AND
+            trainer_status = 'inactive'AND
+            acc_status = 'able'";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This week") {
     $today = date("Y-m-d");
     $lastWeek = date("Y-m-d", strtotime($today. "- 7 days"));
-    $reportText = "Generating reports for trainers deleted this week (".date("F d, Y", strtotime($lastWeek))." to ".date("F d, Y").")...";
+    $reportText = "Generating reports for inactive trainers  this week (".date("F d, Y", strtotime($lastWeek))." to ".date("F d, Y").")...";
     $sql = "SELECT * FROM trainer
-            WHERE date_deleted >= '$lastWeek'
-            AND date_deleted <= '$today'
-            AND acc_status = 'disable'";
+            WHERE date_hired >= '$lastWeek'
+            AND date_hired <= '$today'
+            AND trainer_status = 'inactive'
+            AND acc_status = 'able'";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This month") {
     $monthStart = date("Y-m-01");
     $monthEnd = date("Y-m-t");
-    $reportText = "Generating reports for trainers deleted this month of ".date("F")."...";
+    $reportText = "Generating reports for inactive trainers  this month of ".date("F")."...";
     $sql = "SELECT * FROM trainer
-            WHERE date_deleted >= '$monthStart'
-            AND date_deleted <= '$monthEnd'
-            AND acc_status = 'disable'";
+            WHERE date_hired >= '$monthStart'
+            AND date_hired <= '$monthEnd'
+            AND trainer_status = 'inactive'
+            AND acc_status = 'able'";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This year") {
     $yearStart = date("Y-01-01");
     $yearEnd = date("Y-12-31");
-    $reportText = "Generating reports for trainers deleted this year (".date("Y").")...";
+    $reportText = "Generating reports for inactive trainers this year (".date("Y").")...";
     $sql = "SELECT * FROM trainer
-            WHERE date_deleted >= '$yearStart'
-            AND date_deleted <= '$yearEnd'
-            AND acc_status = 'disable'";
+            WHERE date_hired >= '$yearStart'
+            AND date_hired <= '$yearEnd'
+            AND trainer_status = 'inactive'
+            AND acc_status = 'able'";
     $res = mysqli_query($conn, $sql);
   } else {
-    $reportText = "Generating reports for trainers deleted since all of time...";
-    $sql = "SELECT * FROM trainer WHERE  acc_status = 'disable'";
+    $reportText = "Generating reports for inactive trainers  since all of time...";
+    $sql = "SELECT * FROM trainer WHERE   trainer_status = 'inactive'
+    AND acc_status = 'able'";
     $res = mysqli_query($conn, $sql);
   }
+
 
 
 ?>
@@ -78,7 +87,7 @@ if($timespan == "Custom") {
         <th>Trainer ID</th>
         <th>First Name</th>
         <th>Last Name</th>
-        <th>Date Deleted</th>
+        <th>Date Registered</th>
       </tr>
     </thead>
     <tbody>
@@ -91,7 +100,7 @@ if($timespan == "Custom") {
               <td><?= $row["trainer_id"] ?></td>
               <td><?= $row["first_name"] ?></td>
               <td><?= $row["last_name"] ?></td>
-              <td><?= date("F d, Y", strtotime($row["date_deleted"])) ?></td>
+              <td><?= date("F d, Y", strtotime($row["date_hired"])) ?></td>
             </tr>
             <?php
             }
