@@ -59,7 +59,7 @@
 
           ?> 
 
-  <a href="./../index_admin.php">
+        <a href="./../index_admin.php">
           <button id="logoutBtn" type="button" class="btn btn-sm btn-danger"
           data-id="<?php echo $row['login_id'] ?>"
           onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
@@ -69,10 +69,7 @@
     <!-- Sidebar -->
     <div class="sidebar-fixed position-fixed" style="background-color:#DF3A01;" >
       <br>
-
       <center><img src="logo.png" class="img-fluid" alt="" style="width: 200px; height: 180px;"></center>
-     
-
       <br>
       <div class="list-group list-group-flush" >
         <a href="/PROJECT/DASHBOARD/dashboard.php" class="list-group-item list-group-item-action waves-effect sidebar-item-active">
@@ -105,7 +102,6 @@
    <main class="pt-5 mx-lg-5" >
     <div class="container-fluid mt-5">
       <br>
-
       <ol class="breadcrumb" style="background-color:white;">
         <li class="breadcrumb-item">
           <a href="#">Dashboard</a>
@@ -115,8 +111,6 @@
     </div>
   </main>
   <!--Main layout-->
-
-  
 
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/popper.min.js"></script>

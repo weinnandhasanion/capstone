@@ -127,11 +127,11 @@
         <i class="fas fa-eye mr-2"></i>
         unpaid members
       </button>
-      <button class="btn btn-orange btn-sm">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#deleted-members">
         <i class="fas fa-eye mr-2"></i>
         deleted members
       </button>
-      <button class="btn btn-orange btn-sm">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#activated-members">
         <i class="fas fa-eye mr-2"></i>
         activated members
       </button>
@@ -323,6 +323,112 @@
     </div>
   </div>
 
+  <!-- total deleted members -->
+  <div class="modal fade" role="dialog" id="deleted-members">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <form action="./members/deleted_members.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for deleted members</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Member type</label>
+                  <select name="member_type" class="form-control">
+                    <option value="Regular">Regular</option>
+                    <option value="Walk-in">Walk-in</option>
+                    <option value="Both">Both</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="deleted-members-select" name="timespan" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group custom-date" id="deleted-members-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date" id="" class="form-control">
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date" id="" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- activated members -->
+  <div class="modal fade" role="dialog" id="activated-members">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <form action="./members/activated_members.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for activated members</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Member type</label>
+                  <select name="member_type" class="form-control">
+                    <option value="Regular">Regular</option>
+                    <option value="Walk-in">Walk-in</option>
+                    <option value="Both">Both</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="deleted-members-select" name="timespan" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group custom-date" id="deleted-members-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date" id="" class="form-control">
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date" id="" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- total trainers added -->
   <div class="modal fade" role="dialog" id="trainers-added">
     <div class="modal-dialog modal-md">
@@ -413,8 +519,6 @@
       </div>
     </div>
   </div>
-
-  
   <!--  trainers active and inactive -->
   <div class="modal fade" role="dialog" id="trainers-sort">
     <div class="modal-dialog modal-md">
@@ -495,6 +599,15 @@
     }
   });
 
+  $("#deleted-members-select").on("change", function() {
+    let select = $("#deleted-members-select");
+    if(select.val() == "Custom") {
+      $("#deleted-members-custom").css("display", "block");
+    } else {
+      $("#deleted-members-custom").css("display", "none");
+    }
+  });
+
 //modal custom for add trainers 
   $("#trainers-added-select").on("change", function() {
     let select = $("#trainers-added-select");
@@ -504,6 +617,7 @@
       $("#trainers-added-custom").css("display", "none");
     }
   });
+
   //modal custom for delete trainers
   $("#trainers-deleted-select").on("change", function() {
     let select = $("#trainers-deleted-select");
