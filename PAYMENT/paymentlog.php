@@ -51,11 +51,6 @@
         margin-block-end: 0;
       }
 
-      .card-bodyzz {
-        max-height: 375px;
-        overflow-y: auto;
-      }
-
       .card-bodyzz::-webkit-scrollbar {
         width: 0;
       }
@@ -246,10 +241,10 @@
                     <thead>
                       <tr>
                         <th>payment ID</th>
-                        <th>Time of Payment</th>
-                        <th>Date of Payment</th>
                         <th>Name</th>
+                        <th>Amount</th>
                         <th>Payment Description</th>
+                        <th>Date and Time of payment</th>
                         <th>Payment Type</th>
                         <th>Action</th>
                       </tr>
@@ -351,6 +346,15 @@
              </div>
           </div>
 
+          <div class="form-group" id="promo-availed">
+            <div class="form-row">
+              <div class="col-sm-5">
+                <label>Promo Used</label>
+                <input type="text" disabled id="promo_availed" class="form-control">
+              </div>
+            </div>
+          </div>
+
           </div>
         </div>
         <div class="modal-footer">
@@ -370,7 +374,12 @@
   <script type="text/javascript" src="validation.js"></script>
   <script src="./../js/pagination.js"></script>
 
-  <script>
+  <script> 
+
+  $(".modal.fade").on("shown.bs.modal", function() {
+    $("body").css("padding-right", "0px");
+  }) 
+
    function logout(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
@@ -386,12 +395,7 @@
        }
       req.open('GET', '/PROJECT/logout.php?id=' + id, true);
       req.send(); 
-      }
-
-
-
-
-     
+      }   
 
 
       function displayDetails(el) {
@@ -417,6 +421,12 @@
         document.getElementById("first_name").value = row.first_name;
         document.getElementById("last_name").value = row.last_name;
         document.getElementById("payment_description").value = row.payment_description;
+        if(row.payment_description == "Monthly Subscription") {
+          $("#promo-availed").css("display", "block");
+          $("#promo_availed").val(row.promo_availed);
+        } else {
+          $("#promo-availed").css("display", "none");
+        }
         document.getElementById("payment_type").value = row.payment_type;
         if(document.getElementById("payment_type").value == "Online") {
           document.getElementById("online_payment_id").value = row.online_payment_id;
@@ -432,9 +442,6 @@
             
       }
     }
-
-
-
 
        // Pagination sa paymentlog
     $("#footer").pagination({
@@ -455,10 +462,10 @@
           let html = `<tr>
           
             <td>${row.payment_id}</td>
-            <td>${row.time_payment}</td>
-            <td>${row.date_payment}</td>
             <td>${row.fullname}</td>
+            <td>${row.payment_amount}</td>
             <td>${row.payment_description}</td>
+            <td>${row.date_payment}<br>${row.time_payment}</td>
             <td>${row.payment_type}</td>
             
             <td><span data-toggle="tooltip" data-placement="top" title="View ${row.last_name}">
@@ -474,22 +481,8 @@
         $("#no-data-div-paymentlog").css("display", "flex");
       }
     }
-  });
-
-    
+  });  
   </script>
-
-
-  <!--Google Maps-->
-  <script src="https://maps.google.com/maps/api/js"></script>
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script src="./../js/pagination.js"></script>
-  <script type="text/javascript" src="js/popper.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="js/mdb.min.js"></script>
-  <!--Google Maps-->
-  <script src="https://maps.google.com/maps/api/js"></script>
-  <script type="text/javascript" src="validation.js"></script>
 </body>
 
 </html>

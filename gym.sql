@@ -1,11 +1,9 @@
-
-  
 -- phpMyAdmin SQL Dump
 -- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 09, 2021 at 12:18 PM
+-- Generation Time: Feb 18, 2021 at 04:18 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.13
 
@@ -37,7 +35,7 @@ CREATE TABLE `admin` (
   `password` varchar(100) DEFAULT NULL,
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin`
@@ -62,9 +60,8 @@ CREATE TABLE `inventory` (
   `inventory_working` int(255) DEFAULT NULL,
   `inventory_description` varchar(255) DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
-  `date_added` date DEFAULT NULL,
-  `inv_status` ENUM('active','inactive')
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `date_added` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -77,9 +74,15 @@ CREATE TABLE `logtrail` (
   `admin_id` int(100) DEFAULT NULL,
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
-  `dateandtime_login` datetime,
+  `dateandtime_login` datetime DEFAULT current_timestamp(),
   `dateandtime_logout` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `logtrail`
+--
+
+
 
 -- --------------------------------------------------------
 
@@ -105,6 +108,10 @@ CREATE TABLE `logtrail_doing` (
   `trainer_address` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `logtrail_doing`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -124,6 +131,7 @@ CREATE TABLE `member` (
   `member_status` enum('Not Paid','Paid','Expired') NOT NULL,
   `date_registered` date DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
+  `date_activated` date DEFAULT NULL,
   `monthly_start` date DEFAULT NULL,
   `monthly_end` date DEFAULT NULL,
   `annual_start` date DEFAULT NULL,
@@ -133,8 +141,11 @@ CREATE TABLE `member` (
   `acc_status` enum('active','inactive') NOT NULL,
   `program_id` int(11) NOT NULL,
   `image_pathname` varchar(9999) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `member`
+--
 
 -- --------------------------------------------------------
 
@@ -150,6 +161,12 @@ CREATE TABLE `memberpromos` (
   `status` enum('Active','Expired') NOT NULL DEFAULT 'Active',
   `date_expired` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `memberpromos`
+--
+
+
 
 -- --------------------------------------------------------
 
@@ -181,13 +198,6 @@ CREATE TABLE `notifications` (
 -- Dumping data for table `notifications`
 --
 
-INSERT INTO `notifications` (`notif_id`, `notif_message`) VALUES
-(1, 'Your subscription will end in 7 days. Please pay before the expiry date to continue your access to the gym.'),
-(2, 'Your subscription will end in 3 days. Please pay before the expiry date to continue your access to the gym.'),
-(3, 'Your subscription will end tomorrow. Please pay before the expiry date to continue your access to the gym.'),
-(4, 'Your monthly subscription has already ended. Please pay within 7 days to continue your gym and member account access.'),
-(5, 'Your annual membership has already ended. Please pay immediately to continue your membership in the gym.');
-
 -- --------------------------------------------------------
 
 --
@@ -205,6 +215,7 @@ CREATE TABLE `paymentlog` (
   `date_payment` date DEFAULT NULL,
   `time_payment` varchar(15) NOT NULL,
   `payment_amount` varchar(4) DEFAULT NULL,
+  `promo_availed` varchar(100) DEFAULT NULL,
   `online_payment_id` varchar(9999) DEFAULT NULL,
   `admin_id` int(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -222,14 +233,12 @@ CREATE TABLE `paymentlog` (
 CREATE TABLE `program` (
   `program_id` int(11) NOT NULL,
   `admin_id` int(11) NOT NULL,
-  `trainer_id` int(11) NOT NULL,
+   `trainer_id` int(11) NOT NULL,
   `program_name` varchar(50) NOT NULL,
   `program_description` text NOT NULL,
+  `program_status` enum('active','inactive') NOT NULL DEFAULT 'active',
   `date_added` date DEFAULT NULL,
-  `time_added` varchar(10) NOT NULL,
-  `program_status` ENUM('active','remove') NOT NULL,
-  `date_deleted` DATE,
-  `time_deleted` varchar(10),
+  `time_added` time NOT NULL,
   `upper_1_day_1` int(11) DEFAULT NULL,
   `upper_2_day_1` int(11) DEFAULT NULL,
   `upper_3_day_1` int(11) DEFAULT NULL,
@@ -255,8 +264,6 @@ CREATE TABLE `program` (
 
 --
 -- Dumping data for table `program`
---
-
 -- --------------------------------------------------------
 
 --
@@ -294,7 +301,7 @@ INSERT INTO `promo` (`promo_id`, `promo_name`, `promo_type`, `promo_description`
 
 CREATE TABLE `routines` (
   `routine_id` int(11) NOT NULL,
-  `routine_name` varchar(30) NOT NULL,
+  `routine_name` varchar(100) NOT NULL,
   `routine_link` varchar(9999) DEFAULT NULL,
   `routine_type` enum('Upper Body','Lower Body','Abdominal') DEFAULT NULL,
   `routine_reps` int(11) DEFAULT NULL,
@@ -313,7 +320,7 @@ INSERT INTO `routines` (`routine_id`, `routine_name`, `routine_link`, `routine_t
 (5, 'Dumbell rear-delt fly', 'https://www.youtube.com/watch?v=ttvfGg9d76c', 'Upper Body', 15, 3),
 (6, 'Standing biceps curl', 'https://www.youtube.com/watch?v=sAq_ocpRh_I', 'Upper Body', 30, 3),
 (7, 'Skull crusher press', 'https://www.youtube.com/watch?v=d_KZxkY_0cM', 'Upper Body', 15, 3),
-(8, 'Seated overhead triceps extens', 'https://www.youtube.com/watch?v=YbX7Wd8jQ-Q', 'Upper Body', 15, 3),
+(8, 'Seated overhead triceps extension', 'https://www.youtube.com/watch?v=YbX7Wd8jQ-Q', 'Upper Body', 15, 3),
 (9, 'Front Squat', 'https://www.youtube.com/watch?v=tlfahNdNPPI', 'Lower Body', 20, 3),
 (10, 'Deadlift', 'https://www.youtube.com/watch?v=op9kVnSso6Q', 'Lower Body', 15, 3),
 (11, 'Bulgarian split squat', 'https://www.youtube.com/watch?v=2C-uNgKwPLE', 'Lower Body', 15, 3),
@@ -339,6 +346,7 @@ INSERT INTO `routines` (`routine_id`, `routine_name`, `routine_link`, `routine_t
 CREATE TABLE `trainer` (
   `trainer_id` int(100) NOT NULL,
   `trainer_status` enum('active','inactive') NOT NULL,
+  `trainer_position` enum('junior','senior') NOT NULL,
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
@@ -349,10 +357,11 @@ CREATE TABLE `trainer` (
   `date_hired` date DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
   `acc_status` enum('able','disable') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `trainer`
+-- Indexes for dumped tables
+--
 
 --
 -- Indexes for table `admin`
@@ -468,25 +477,25 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `logtrail`
 --
 ALTER TABLE `logtrail`
-  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3113;
+  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3117;
 
 --
 -- AUTO_INCREMENT for table `logtrail_doing`
 --
 ALTER TABLE `logtrail_doing`
-  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20201000;
+  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20201031;
 
 --
 -- AUTO_INCREMENT for table `member`
 --
 ALTER TABLE `member`
-  MODIFY `member_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1921681011;
+  MODIFY `member_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1921681025;
 
 --
 -- AUTO_INCREMENT for table `memberpromos`
 --
 ALTER TABLE `memberpromos`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `member_notifs`
@@ -504,13 +513,13 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `paymentlog`
 --
 ALTER TABLE `paymentlog`
-  MODIFY `payment_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `payment_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `program`
 --
 ALTER TABLE `program`
-  MODIFY `program_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `program_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `promo`
@@ -534,9 +543,6 @@ ALTER TABLE `trainer`
 -- Constraints for dumped tables
 --
 
-ALTER TABLE `member`
-  ADD CONSTRAINT `member_ibfk_1` FOREIGN KEY (`program_id`) REFERENCES `program` (`program_id`);
-
 --
 -- Constraints for table `logtrail`
 --
@@ -552,6 +558,12 @@ ALTER TABLE `logtrail_doing`
   ADD CONSTRAINT `logtrail_doing_ibfk_3` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
   ADD CONSTRAINT `logtrail_doing_ibfk_4` FOREIGN KEY (`trainer_id`) REFERENCES `trainer` (`trainer_id`),
   ADD CONSTRAINT `logtrail_doing_ibfk_5` FOREIGN KEY (`program_id`) REFERENCES `program` (`program_id`);
+
+--
+-- Constraints for table `member`
+--
+ALTER TABLE `member`
+  ADD CONSTRAINT `member_ibfk_1` FOREIGN KEY (`program_id`) REFERENCES `program` (`program_id`);
 
 --
 -- Constraints for table `memberpromos`
@@ -584,4 +596,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-

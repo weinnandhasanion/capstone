@@ -1,4 +1,3 @@
-
 <?php 
 session_start();
 require('connect.php');
@@ -13,10 +12,9 @@ $lastnameID = $_REQUEST['lastnameID'];
 
 $pass = password_hash('12345', PASSWORD_DEFAULT);
 
-$annual_start = date("Y-m-d h:i:s"); 
-$annual_end = date("Y-m-d", strtotime($annual_start. " + 365 days"));
+$dateNow = date("Y-m-d");
 
-$ox = "UPDATE member SET username = '$id', password = '$pass', member_status = 'Paid', annual_start = '$annual_start',  annual_end = '$annual_end'
+$ox = "UPDATE member SET username = '$id', password = '$pass', date_activated = '$dateNow'
 WHERE member_id = " . intval($id) . "";     
 
 
@@ -25,85 +23,62 @@ if(mysqli_query($conn, $ox))
 else
         echo mysqli_error($conn), 'NOT UPDATED';    
 
-$annual_description = "Annual Membership";
-$amount = "200";
-$date_payment = date("Y-m-d");
 
-$sql0 = "SELECT first_name,last_name,member_type FROM member WHERE member_id = $id";
-$sql2 = mysqli_query($conn, $sql0);
-$rows = mysqli_fetch_assoc($sql2);
+//this is for puting member_id in the array
+$data = array();
+$member_id;
+$sql3 = "SELECT * FROM member ORDER BY member_id DESC";
+$res3 = mysqli_query($conn, $sql3);
+if($res3) {
+    while($row = mysqli_fetch_assoc($res3)) {
+        $data[] = $row["member_id"];
+    }
 
+    $member_id = $data[0];
+}
+
+//this is for puting login_id in the array
+$data_logtrail = array();
+$login_id;
+$log = "SELECT * FROM logtrail ORDER BY login_id DESC";
+$logtrail = mysqli_query($conn, $log);
+if($logtrail) {
+    while($rowrow = mysqli_fetch_assoc($logtrail)) {
+        $data_logtrail[] = $rowrow["login_id"];
+    }
+
+    $login_id = $data_logtrail[0];
+}
+
+    
+// INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
+$sql0 = "SELECT first_name,last_name,admin_id FROM admin WHERE admin_id = $session_admin_id";
+$query_run = mysqli_query($conn, $sql0);
+$rows1 = mysqli_fetch_assoc($query_run);
+
+$last_name = $rows1["last_name"];
+$admin_id = $rows1["admin_id"];
+// INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
+$sql2 = "SELECT first_name,last_name,member_id FROM member WHERE member_id = '$member_id'";
+$query_run2 = mysqli_query($conn, $sql2);
+$rows2 = mysqli_fetch_assoc($query_run2);
+
+$member_id_new = $rows2["member_id"];
+$user_fname = $rows2["first_name"];
+$user_lname = $rows2["last_name"];
 $first_name = $rows["first_name"];
-$last_name = $rows["last_name"];
-$member_type = $rows["member_type"];
-$time_payment = date("h:i a");
+$description = "Activated the account";
+$identity = "member";
+$timeNow = date("h:i A");
 
-$sql1 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`,
-`payment_description`,`payment_amount`,`member_type`,date_payment,time_payment)
-VALUES ( '$id', '$first_name', '$last_name', '$annual_description','$amount'
-,'$member_type','$date_payment','$time_payment')";
-$query_run = mysqli_query($conn, $sql1);
+// INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
+$sql22 = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
+$query_run22 = mysqli_query($conn, $sql22);
+$rows22 = mysqli_fetch_assoc($query_run22);
 
+$login_id_new = $rows22["login_id"];
 
-
-        //this is for puting member_id in the array
-        $data = array();
-        $member_id;
-        $sql3 = "SELECT * FROM member ORDER BY member_id DESC";
-        $res3 = mysqli_query($conn, $sql3);
-        if($res3) {
-            while($row = mysqli_fetch_assoc($res3)) {
-                $data[] = $row["member_id"];
-            }
-    
-            $member_id = $data[0];
-        }
-    
-        //this is for puting login_id in the array
-        $data_logtrail = array();
-        $login_id;
-        $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
-        $logtrail = mysqli_query($conn, $log);
-        if($logtrail) {
-            while($rowrow = mysqli_fetch_assoc($logtrail)) {
-                $data_logtrail[] = $rowrow["login_id"];
-            }
-    
-            $login_id = $data_logtrail[0];
-        }
-    
-     
-    // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
-    $sql0 = "SELECT first_name,last_name,admin_id FROM admin WHERE admin_id = $session_admin_id";
-    $query_run = mysqli_query($conn, $sql0);
-    $rows1 = mysqli_fetch_assoc($query_run);
-
-    $last_name = $rows1["last_name"];
-    $admin_id = $rows1["admin_id"];
-    // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-    $sql2 = "SELECT first_name,last_name,member_id FROM member WHERE member_id = '$member_id'";
-    $query_run2 = mysqli_query($conn, $sql2);
-    $rows2 = mysqli_fetch_assoc($query_run2);
- 
-    $member_id_new = $rows2["member_id"];
-    $user_fname = $rows2["first_name"];
-    $user_lname = $rows2["last_name"];
-    $first_name = $rows["first_name"];
-    $description = "Activated the account";
-    $identity = "member";
-    $timeNow = date("h:i A");
-
-    // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-    $sql22 = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
-    $query_run22 = mysqli_query($conn, $sql22);
-    $rows22 = mysqli_fetch_assoc($query_run22);
-
-    $login_id_new = $rows22["login_id"];
-
-    $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
-    `description`, `identity`,`time`)
-    VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
-    mysqli_query($conn, $sql1);
-            
-
-?>
+$sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
+`description`, `identity`,`time`)
+VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
+mysqli_query($conn, $sql1);

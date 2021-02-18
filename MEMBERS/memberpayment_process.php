@@ -10,6 +10,7 @@ if($_SESSION['admin_id']){
 $id = $_REQUEST['member_id'];
 $payment_description = $_POST['payment_description'];
 $discount = $_POST['promo_discount'];
+$promo_availed = $_POST["promo_availed"];
 $monthly_end;
 $monthly_start;
 
@@ -19,24 +20,34 @@ $now = date("Y-m-d");
 if($checkIfPaidQuery) {
     $assoc = mysqli_fetch_assoc($checkIfPaidQuery);
 
-    if($now >= $assoc["monthly_start"] && $now < $assoc["monthly_end"]) {
-        $monthly_start = $assoc["monthly_start"];
-        $monthly_end = date("Y-m-d", strtotime($assoc["monthly_end"]. " + 30 days"));
+    if($assoc["monthly_start"] == null || $assoc["monthly_end"] == null) {
+        $monthly_start = $now;
+        $monthly_end = date("Y-m-d", strtotime($now." + 30 days"));
     } else {
-        $monthly_start = date("Y-m-d");
-        $monthly_end = date("Y-m-d", strtotime($monthly_start. " + 30 days"));
+        if($now >= $assoc["monthly_start"] && $now < $assoc["monthly_end"]) {
+            $monthly_start = $assoc["monthly_start"];
+            $monthly_end = date("Y-m-d", strtotime($assoc["monthly_end"]. " + 30 days"));
+        } else {
+            $monthly_start = date("Y-m-d");
+            $monthly_end = date("Y-m-d", strtotime($monthly_start. " + 30 days"));
+        }
     }
 }
 
 if($checkIfPaidQuery) {
     $assoc1 = mysqli_fetch_assoc($checkIfPaidQuery);
 
-    if($now >= $assoc1["annual_start"] && $now < $assoc1["annual_end"]) {
-        $annual_start = $assoc1["annual_start"];
-        $annual_end = date("Y-m-d", strtotime($assoc1["annual_end"]. " + 365 days"));
+    if($assoc1["annual_start"] == null || $assoc1["annual_end"] == null) {
+        $annual_start = $now;
+        $annual_end = date("Y-m-d", strtotime($now." + 365 days"));
     } else {
-        $annual_start = date("Y-m-d");
-        $annual_end = date("Y-m-d", strtotime($annual_start. " + 365 days"));
+        if($now >= $assoc1["annual_start"] && $now < $assoc1["annual_end"]) {
+            $annual_start = $assoc1["annual_start"];
+            $annual_end = date("Y-m-d", strtotime($assoc1["annual_end"]. " + 365 days"));
+        } else {
+            $annual_start = date("Y-m-d");
+            $annual_end = date("Y-m-d", strtotime($annual_start. " + 365 days"));
+        }
     }
 }
 
@@ -65,14 +76,14 @@ else if($payment_description == 'Monthly Subscription'){
  
     $monthly_start = date("Y-m-d"); 
     $sql2 = "UPDATE member 
-    SET member_status = 'Paid',monthly_start = '$monthly_start', monthly_end = '$monthly_end'
+    SET monthly_start = '$monthly_start', monthly_end = '$monthly_end'
     WHERE member_id = $id";     
     mysqli_query($conn, $sql2);
 
     $sql1 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,
-    `payment_description`,`payment_amount`,`member_type`)
-    VALUES ( '$id', '$first_name', '$last_name', '$timeNow', '$dateNow', '$payment_description','$payment_amount'
-    ,'$member_type')";
+    `payment_description`,`payment_amount`,`member_type`, `promo_availed`)
+    VALUES ('$id', '$first_name', '$last_name', '$timeNow', '$dateNow', '$payment_description','$payment_amount',
+    '$member_type', '$promo_availed')";
     $query_run = mysqli_query($conn, $sql1);
     
     if($query_run) {
@@ -145,7 +156,7 @@ else if($payment_description == 'Monthly Subscription'){
 
  //Check if its Annual
 }else if($payment_description == 'Annual Membership'){
-    $payment_amount = 200;
+    $payment_amount = 200 - $discount;
 
     $sql0 = "SELECT * FROM member WHERE member_id = $id";
     $query_run = mysqli_query($conn, $sql0);
@@ -159,8 +170,7 @@ else if($payment_description == 'Monthly Subscription'){
     $pass = password_hash('12345', PASSWORD_DEFAULT);
 
     $sql2 = "UPDATE member 
-    SET member_status = 'Paid', 
-    annual_start = '$annual_start', annual_end = '$annual_end'
+    SET annual_start = '$annual_start', annual_end = '$annual_end'
     WHERE member_id = $id";     
     mysqli_query($conn, $sql2);
 
@@ -261,6 +271,7 @@ $query_run123 = mysqli_query($conn, $klint);
 
 
 }else if($payment_description == 'both'){
+    //$payment_amount = 200 + 750 - $discount;
 
     $sql0 = "SELECT * FROM member WHERE member_id = $id";
     $query_run = mysqli_query($conn, $sql0);
@@ -271,15 +282,15 @@ $query_run123 = mysqli_query($conn, $klint);
     $member_type = $rows["member_type"];
 
     $sql1 = "UPDATE member 
-    SET member_status = 'Paid', 
+    SET monthly_start = '$monthly_start', monthly_end = '$monthly_end',
     annual_start = '$annual_start', annual_end = '$annual_end'
     WHERE member_id = $id";     
     mysqli_query($conn, $sql1);
 
     $sql2 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,
-    `payment_description`,`payment_amount`,`member_type`)
+    `payment_description`,`payment_amount`,`member_type`, `promo_availed`)
     VALUES ( '$id', '$first_name', '$last_name', '$timeNow', '$dateNow', 'Monthly subscription',".intval(750 - $discount)."
-    ,'$member_type')";
+    ,'$member_type', '$promo_availed')";
     mysqli_query($conn, $sql2);
 
     $sql3 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,
@@ -439,12 +450,59 @@ $query_run123 = mysqli_query($conn, $klint);
                 window.alert('Annual Payment is been added.');
                 window.location.href='/PROJECT/MEMBERS/members.php';
                 </script>");
-
-
-    
 }else{
     echo "failure to register";
     header('Location: /PROJECT/MEMBERS/members.php?failure to pay');
 }
-    
+
+// Checking if paid
+$lastMonthly;
+$lastAnnual;
+
+$sqlMonthly = "SELECT * FROM paymentlog WHERE member_id = '$id'
+        AND payment_description = 'Monthly Subscription'
+        ORDER BY payment_id DESC";
+$resMonthly = mysqli_query($conn, $sqlMonthly);
+if($resMonthly) {
+    $results = array();
+    while($row = mysqli_fetch_assoc($resMonthly)) {
+        $results[] = $row;
+    }
+
+    $lastMonthly = strtotime($results[0]["date_payment"]);
+    echo $lastMonthly;
+} else {
+    echo mysqli_error($conn);
+}
+
+$sqlAnnual = "SELECT * FROM paymentlog WHERE member_id = '$id'
+        AND payment_description = 'Annual Membership'
+        ORDER BY payment_id DESC";
+$resAnnual = mysqli_query($conn, $sqlAnnual);
+if($resAnnual) {
+    $results = array();
+    while($row = mysqli_fetch_assoc($resAnnual)) {
+        $results[] = $row;
+    }
+
+    $lastAnnual = strtotime($results[0]["date_payment"]);
+    echo $lastAnnual;
+}
+
+if($resAnnual && $resMonthly) {
+    $today = date("Y-m-d");
+    $now = strtotime($today);
+    $lastMonth = strtotime(date("Y-m-d", strtotime($today." - 30 days")));
+    $lastYear = strtotime(date("Y-m-d", strtotime($today." - 365 days")));
+
+    if($lastMonthly >= $lastMonth && $lastMonthly <= $now && $lastAnnual >= $lastYear && $lastAnnual <= $now) {
+        $sql = "UPDATE member SET member_status = 'Paid'
+                WHERE member_id = $id";
+        if(mysqli_query($conn, $sql)) {
+            echo "Paid naka dots";
+        } else {
+            echo mysqli_error($conn);
+        }
+    }
+}
 ?>

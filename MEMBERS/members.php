@@ -1108,7 +1108,6 @@
               <label>Promo Availed</label>
               <input name="view_promo" type="text" id="view_promo" disabled class="form-control">
             </div>
-
           </div>
           <div class="form-group">
             <div class="form-row">
@@ -1132,7 +1131,6 @@
           </div>
           <div class="form-group">
             <div class="form-row">
-
               <div class="col-sm-3 train">
                 <label>Start Sub Monthly Date</label>
                 <input name="monthly_start" type="text" id="monthly_start" disabled class="form-control">
@@ -1149,8 +1147,10 @@
                 <label>End Sub Annual Date</label>
                 <input name="annual_end" id="annual_end" type="text" class="form-control" id="" disabled>
               </div>
-
-
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
               <div class="col-sm-8 train">
                 <label>E-mail</label>
                 <input name="email" type="text" id="view_email" disabled class="form-control">
@@ -1159,7 +1159,10 @@
                 <label>Contact Number</label>
                 <input name="phone" type="text" id="view_phone" disabled class="form-control">
               </div>
-
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
               <div class="col-sm-2 train">
                 <label>Gender</label>
                 <input name="gender" type="text" class="form-control" id="view_gender" disabled>
@@ -1177,6 +1180,10 @@
                 <label>Program</label>
                 <input name="program" type="text" id="view_program" disabled class="form-control">
               </div>
+            </div>
+          </div>  
+          <div class="form-group">
+            <div class="form-row">
               <div class="col-sm-12 train">
                 <label>Address</label>
                 <input name="address" type="text" class="form-control" id="view_address" disabled>
@@ -1184,11 +1191,8 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-        </div>
       </div>
     </div>
-  </div>
   </div>
 
   <!---------------------------------------------------- DELETED RECORD -------------------------------------->
@@ -2430,45 +2434,19 @@
     req.send();
 
     function display(row) {
-      var digitDate = new Date(row.date_registered);
-      var stringDate = digitDate.toDateString(digitDate);
-
-      var digit_birthdate = new Date(row.birthdate);
-      var string_birthdate = digit_birthdate.toDateString(digit_birthdate);
-
-      var digit_start_sub = new Date(row.start_subscription);
-      var string_start_sub = digit_start_sub.toDateString(digit_start_sub);
-
-      //date annual
-      var annual_start = new Date(row.annual_start);
-      var string_annual_start = annual_start.toDateString(annual_start);
-      var annual_end = new Date(row.annual_end);
-      var string_annual_end = annual_end.toDateString(annual_end);
-
-      //date monthly
-      var monthly_start = new Date(row.monthly_start);
-      var string_monthly_start = monthly_start.toDateString(monthly_start);
-      var monthly_end = new Date(row.monthly_end);
-      var string_monthly_end = monthly_end.toDateString(monthly_end);
-
       function checkUsername(user) {
         if (user === null) {
           return "Not yet activated";
-
         } else {
-          return user
+          return user;
         }
       }
 
       function checkDates(date) {
         if (date === null) {
-
-          return "Not yet started"
-
+          return "Not yet started";
         } else {
-          return date
-
-
+          return date;
         }
       }
 
@@ -2485,14 +2463,14 @@
       document.getElementById("view_firstname").value = row.first_name;
       document.getElementById("view_email").value = row.email;
       document.getElementById("view_phone").value = row.phone;
-      document.getElementById("view_birthdate").value = string_birthdate;
+      document.getElementById("view_birthdate").value = row.birthdate;
       document.getElementById("view_address").value = row.address;
       document.getElementById("annual_start").value = checkDates(row.annual_start);
       document.getElementById("annual_end").value = checkDates(row.annual_end);
       document.getElementById("monthly_start").value = checkDates(row.monthly_start);
       document.getElementById("monthly_end").value = checkDates(row.monthly_end);
       document.getElementById("view_membertype").value = row.member_type;
-      document.getElementById("view_dateregistered").value = stringDate;
+      document.getElementById("view_dateregistered").value = row.date_registered;
       document.getElementById("view_gender").value = row.gender;
       document.getElementById("view_username").value = checkUsername(row.username);
       document.getElementById("view_program").value = row.program_name;
@@ -2625,8 +2603,10 @@
       document.getElementById("member_lastname").value = row.last_name;
       document.getElementById("promo_availed").value = row.promo_name;
       document.getElementById("promo_discount").value = row.amount;
+      console.log(row);
       if(row.promo_name == "N/A") {
         $("#promo-form-group").css("display", "none");
+        $("#promo-availed").val("N/A")
       } else {
         $("#promo-form-group").css("display", "block");
       }

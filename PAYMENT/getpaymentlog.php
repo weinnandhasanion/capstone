@@ -9,6 +9,7 @@ if(isset($_GET)) {
     $data = array();
     while($row = mysqli_fetch_assoc($res)) {
       $row["fullname"] = $row["first_name"]." ".$row["last_name"];
+      $row["date_payment"] = date("M d, Y", strtotime($row["date_payment"]));
       $data[] = $row;
     }
 

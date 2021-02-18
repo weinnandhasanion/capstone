@@ -18,6 +18,7 @@ if($row = mysqli_fetch_assoc($res1)) {
     if(mysqli_num_rows($promoQuery) == 1) {
       $promoResult = mysqli_fetch_assoc($promoQuery);
       $row["promo_name"] = $promoResult["promo_name"];
+      $row["amount"] = $promoResult["amount"];
     } else if(mysqli_num_rows($promoQuery) > 1){
       $promoCheck = "SELECT promo.promo_name, promo.amount FROM promo
               INNER JOIN memberpromos ON promo.promo_id = memberpromos.promo_id

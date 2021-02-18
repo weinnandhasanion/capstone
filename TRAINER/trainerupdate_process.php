@@ -12,11 +12,7 @@ $trainer_status= $_POST['trainer_status'];
 $phone= $_POST['phone'];
 $email= $_POST['email'];
 $address= $_POST['address'];
-// CONSTANT VARIABLE... REFERENCE IN THE DATABASE...//
-$seniorSalary='20,000';
-$juniorSalary='10,000';
-$seniorPos = 'senior';
-$juniorPos  = 'junior';
+
 
 // MAIN QUERY NA MO UPDATE SA TANAN
 $tan = "UPDATE trainer SET
