@@ -2402,10 +2402,6 @@
     }
   });
 
-
-
- 
-
   //checkbox only one check
   $(document).ready(function() {
     $('input:checkbox').each(function() {
@@ -2413,8 +2409,6 @@
       $('input:checkbox').not(this).prop('checked', false);
     });
   });
-
-
 
   //------------------------------------------------------------------------------ VIEW JS
   // View member Modal

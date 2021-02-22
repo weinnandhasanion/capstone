@@ -10,7 +10,7 @@ $data = array();
 
 if(mysqli_num_rows($res) > 0) {
   while($row = mysqli_fetch_assoc($res)) {
-    $row["promo_starting_date"] = date("M d Yq", strtotime($row["promo_starting_date"]));
+    $row["promo_starting_date"] = date("M d Y", strtotime($row["promo_starting_date"]));
     $row["promo_ending_date"] = date("M d Y", strtotime($row["promo_ending_date"]));
     $data[] = $row;
   }

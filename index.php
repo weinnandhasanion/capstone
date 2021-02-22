@@ -28,6 +28,14 @@
       font-weight: 700;
       color: #2c2c2c;
     }
+
+    .form-field {
+      width: 80vw;
+    }
+
+    input {
+      border-radius: 0 !important;
+    }
   </style>
 </head>
 <body>

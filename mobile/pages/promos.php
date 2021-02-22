@@ -293,7 +293,7 @@ if(!isset($_SESSION["member_id"])) {
         } while(target);
         modal.style.display = 'none';
         resModal.style.display = 'none';
-      })
+      });
     }
   </script>
 </body>
