@@ -11,7 +11,7 @@
 
   if(isset($_GET["type"])) {
     if($_GET["type"] == "regular") {
-      $sql = "SELECT * FROM member WHERE member_type = 'Regular' AND acc_status = 'active' ORDER BY member_id DESC";
+      $sql = "SELECT * FROM member WHERE member_type = 'Regular' AND acc_status = 'active' ORDER BY date_registered DESC";
       $res = mysqli_query($conn, $sql);
       $data = array();
       while($row = mysqli_fetch_assoc($res)) {
@@ -22,7 +22,7 @@
       echo json_encode($data);
       exit();
     } else {
-      $sql = "SELECT * FROM member WHERE member_type = 'Walk-in' AND acc_status = 'active' ORDER BY member_id DESC";
+      $sql = "SELECT * FROM member WHERE member_type = 'Walk-in' AND acc_status = 'active' ORDER BY date_registered DESC";
       $res = mysqli_query($conn, $sql);
       $data = array();
       while($row = mysqli_fetch_assoc($res)) {

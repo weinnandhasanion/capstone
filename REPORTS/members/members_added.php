@@ -17,13 +17,15 @@ if($memberType == "Both") {
     $reportText = "Generating reports for members added from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
     $sql = "SELECT * FROM member
             WHERE date_registered >= '$fromDate' 
-            AND date_registered <= '$toDate'";
+            AND date_registered <= '$toDate'
+            ORDER BY date_registered DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "Today") {
     $reportText = "Generating reports for members added today, ".date("F d, Y")."...";
     $today = date("Y-m-d");
     $sql = "SELECT * FROM member
-            WHERE date_registered = '$today'";
+            WHERE date_registered = '$today'
+            ORDER BY date_registered DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This week") {
     $today = date("Y-m-d");
@@ -31,7 +33,8 @@ if($memberType == "Both") {
     $reportText = "Generating reports for members added this week (".date("F d, Y", strtotime($lastWeek))." to ".date("F d, Y").")...";
     $sql = "SELECT * FROM member
             WHERE date_registered >= '$lastWeek'
-            AND date_registered <= '$today'";
+            AND date_registered <= '$today'
+            ORDER BY date_registered DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This month") {
     $monthStart = date("Y-m-01");
@@ -39,7 +42,8 @@ if($memberType == "Both") {
     $reportText = "Generating reports for members added this month of ".date("F")."...";
     $sql = "SELECT * FROM member
             WHERE date_registered >= '$monthStart'
-            AND date_registered <= '$monthEnd'";
+            AND date_registered <= '$monthEnd'
+            ORDER BY date_registered DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This year") {
     $yearStart = date("Y-01-01");
@@ -47,11 +51,12 @@ if($memberType == "Both") {
     $reportText = "Generating reports for members added this year (".date("Y").")...";
     $sql = "SELECT * FROM member
             WHERE date_registered >= '$yearStart'
-            AND date_registered <= '$yearEnd'";
+            AND date_registered <= '$yearEnd'
+            ORDER BY date_registered DESC";
     $res = mysqli_query($conn, $sql);
   } else {
     $reportText = "Generating reports for members added since all of time...";
-    $sql = "SELECT * FROM member";
+    $sql = "SELECT * FROM member ORDER BY date_registered DESC";
     $res = mysqli_query($conn, $sql);
   }
 } else {
@@ -59,14 +64,16 @@ if($memberType == "Both") {
     $reportText = "Generating reports for members added from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
     $sql = "SELECT * FROM member WHERE member_type = '$memberType' 
             AND date_registered > '$fromDate' 
-            AND date_registered < '$toDate'";
+            AND date_registered < '$toDate'
+            ORDER BY date_registered DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "Today") {
     $reportText = "Generating reports for members added today, ".date("F d, Y")."...";
     $today = date("Y-m-d");
     $sql = "SELECT * FROM member
             WHERE member_type = '$memberType'
-            AND date_registered = '$today'";
+            AND date_registered = '$today'
+            ORDER BY date_registered DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This week") {
     $today = date("Y-m-d");
@@ -75,7 +82,8 @@ if($memberType == "Both") {
     $sql = "SELECT * FROM member
             WHERE member_type = '$memberType'
             AND date_registered >= '$lastWeek'
-            AND date_registered <= '$today'";
+            AND date_registered <= '$today'
+            ORDER BY date_registered DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This month") {
     $monthStart = date("Y-m-01");
@@ -84,7 +92,8 @@ if($memberType == "Both") {
     $sql = "SELECT * FROM member
             WHERE member_type = '$memberType'
             AND date_registered >= '$monthStart'
-            AND date_registered <= '$monthEnd'";
+            AND date_registered <= '$monthEnd'
+            ORDER BY date_registered DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This year") {
     $yearStart = date("Y-01-01");
@@ -93,11 +102,12 @@ if($memberType == "Both") {
     $sql = "SELECT * FROM member
             WHERE member_type = '$memberType'
             AND date_registered >= '$yearStart'
-            AND date_registered <= '$yearEnd'";
+            AND date_registered <= '$yearEnd'
+            ORDER BY date_registered DESC";
     $res = mysqli_query($conn, $sql);
   } else {
     $reportText = "Generating reports for members added since all of time...";
-    $sql = "SELECT * FROM member WHERE member_type = '$memberType'";
+    $sql = "SELECT * FROM member WHERE member_type = '$memberType' ORDER BY date_registered DESC";
     $res = mysqli_query($conn, $sql);
   }
 }

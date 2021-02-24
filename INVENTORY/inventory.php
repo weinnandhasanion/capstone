@@ -12,106 +12,78 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>INVENTORY - California Fitness Gym</title>
 
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-  <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- Material Design Bootstrap -->
   <link href="css/mdb.min.css" rel="stylesheet">
-  <!-- Your custom styles (optional) -->
   <link href="css/style.min.css" rel="stylesheet">
   <link rel="icon" href="../mobile/img/gym_logo.png">
   <link href="css/theme-colors.css" rel="stylesheet">
 
-<style>
-  
-  input[type=text], input[type=date] {
-  
-  height: 45px;
-} 
+  <style>
+  .bat button {
+    background-color: #DF3A01;
+    color: white;
+  } 
 
-.train select{
-  height: 45px;
-  
-}
-
-.bat button{
-  background-color:#DF3A01;
-  color:white;
-} 
-.bot{
-  height:70px;
-  background-color:honeydew;
-}
-
+  .bot {
+    height: 70px;
+    background-color: honeydew;
+  }
 
   .card-bodyzz {
-      max-height: 325px;
-      overflow-y: auto;
-    }
-    .flexHeader {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    max-height: 325px;
+    overflow-y: auto;
+  }
 
-    .flex {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    table > thead > tr > th {
-      font-weight: bold;
-      text-transform: uppercase;
-      
-    }
-    .inventory-cards {
-          width: 30%;
-        }
+  .flexHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-        #inventory-cont {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: flex-start;
-        }
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-        #main-div {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-        }
+  table > thead > tr > th {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 
-        .card-img-top {
-          width: 100% !important;
-          height: 10vw !important;
-          object-fit: cover !important;
-        }
-        body::-webkit-scrollbar {
-        width: 0 !important;
-      }
-        td{
-          text-align:center;
-        }
+  .card-img-top {
+    width: 100% !important;
+    height: 175px !important;
+    object-fit: cover !important;
+  }
 
-        
-    .validation {
-      display: none;
-      margin-left: 0 !important;
-    }
+  .card-body.inventory {
+    min-height: 100px;
+  }
 
+  body::-webkit-scrollbar {
+    width: 0 !important;
+  }
 
-</style>
+  td{
+    text-align: center;
+  }
+     
+  .validation {
+    display: none;
+    margin-left: 0 !important;
+  }
+  </style>
 </head>
 
 <body  class="grey lighten-3">
-
   <!--Main Navigation-->
   <header>
     <nav class="navbar fixed-top navbar-light bg-darkgrey" >
@@ -199,7 +171,7 @@
           <h4 class="mb-1 mb-sm-1 pt-1">
             <a data-toggle="modal" data-target="#add"><i style="color:#DF3A01; font-size: 25px;" data-toggle="tooltip"
                 data-placement="top" title="Add New Promo" class="fas fa-plus mr-4"></i></a>
-            Inverntory
+            Inventory
           </h4>
           <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" id="sort-permanent" class="btn btn-sm btn-outline-orange">cardio
@@ -208,36 +180,41 @@
             <button type="button" id="sort-seasonal" class="btn btn-sm btn-outline-orange">weights</button>
           </div>
           <form class="d-flex justify-content-center">
-            <input type="text" placeholder="Search promo name" id="search-promo" class="form-control">
+            <input type="text" placeholder="Search equipment name" id="search-promo" class="form-control">
           </form>
         </div>
       </div>
-      <div id="promo-cont">
-        <div class="row" id="promo-cont-row">
-        <?php 
-        $sql = "SELECT * FROM inventory WHERE inv_status = 'active' ORDER BY date_added DESC";
-        $res = mysqli_query($conn, $sql);
-        if($res) {
-          while($row = mysqli_fetch_assoc($res)):
-        ?>
-          <div class="col-sm-4">
-            <div class="card inventory-cards mx-3 my-3">
-              <div class="card-body promo">
-                <h3 class="card-title font-weight-bold text-orange"><?php echo $row["inventory_name"] ?></h3>
-                <h6 class="card-subtitle text-muted font-weight-bold"><?php echo $row["inventory_category"] ?></h6>
-                <p class="card-text mt-2"><?php echo $row["inventory_description"] ?></p>
-              </div>
-              <div class="card-footer">
-                <button onclick="viewDetails(this)" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">details</button>
-                <button onclick="viewUpdate(this)" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">UPDATE</button>
-              </div>
+      <div class="row" id="inventory-cont">
+      <?php 
+      $sql = "SELECT * FROM inventory ORDER BY date_added DESC";
+      $res = mysqli_query($conn, $sql);
+      if($res) {
+        while($row = mysqli_fetch_assoc($res)) {
+      ?>
+        <div class="col-sm-4">
+          <div class="card inventory-cards mx-3 my-3">
+            <img class="card-img-top" 
+            <?php if(!$row["image_pathname"] == null) {
+              ?>
+              src="./img/<?= $row["image_pathname"] ?>"
+              <?php
+            } ?>
+            alt="Card image cap">
+            <div class="card-body inventory">
+              <h3 class="card-title font-weight-bold text-orange"><?php echo $row["inventory_name"] ?></h3>
+              <h6 class="card-subtitle text-muted font-weight-bold"><?php echo $row["inventory_category"] ?></h6>
+              <p class="card-text mt-2"><?php echo $row["inventory_description"] ?></p>
+            </div>
+            <div class="card-footer">
+              <button onclick="viewDetails(this)" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">details</button>
+              <button onclick="viewUpdate(this)" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">UPDATE</button>
             </div>
           </div>
-        <?php
-          endwhile;
-        }
-        ?>
         </div>
+      <?php
+        }
+      }
+      ?>
       </div>
     </div>
   </main>
@@ -251,14 +228,14 @@
         <button type='button' class='close' id='close-modal' data-dismiss='modal'>&times;</button>
       </div>  
       <div class="modal-body">
-      <form action="inventoryadd_process.php" method="post">
+      <form action="inventoryadd_process.php" method="post" enctype="multipart/form-data">
         <div class="row d-flex mt-1 mb-3" style="flex-direction: row; position: relative;left: 70px;">
           <div id="profilepic" style="border-radius: 50px; height: 100px; width: 100px; overflow: hidden; background-position: 50% 50%; background-size: cover;  text-align: center;">
-            <img src="blank.png" id="output" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+            <img src="blank.png" id="add-item-img" alt="" style="height: 100%; width: 100%; object-fit: cover;">
             
           </div>
           
-          <p><input type="file" value="upload" id="fileButton" accept="image/*" name="image"   onchange="loadFile(event)" style="display: none;"></p>
+          <p><input type="file" value="upload" id="fileButton" accept="image/*" name="image" onchange="loadFile(this)" style="display: none;"></p>
           <p><label for="fileButton" style="cursor: pointer;"><i  data-toggle="tooltip" data-placement="top" title="Add inventory picture" style="font-size: 35px;color:teal;" class="fas fa-plus-circle"></i></label></p>
            
           <div class="col-sm-6" style="position: relative; left: 35px;">
@@ -330,7 +307,18 @@
        }
       req.open('GET', '/PROJECT/logout.php?id=' + id, true);
       req.send(); 
+    }
+
+    function loadFile (elem) {
+      if (elem.files && elem.files[0]) {
+        var img = document.querySelector('#add-item-img');
+        img.onload = () => {
+            URL.revokeObjectURL(img.src);  // no longer needed, free memory
+        }
+
+        img.src = URL.createObjectURL(elem.files[0]); // set src to blob url
       }
+    }
     
 </script>
 

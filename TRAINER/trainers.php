@@ -141,16 +141,10 @@
     border-radius: 25px;
   }
 
-  input[type=text],
-  input[type=date],
-  input[type=email],
-  select {
-
-    height: 45px;
-  }
   .train input[type=text]{
     text-align: center;
   }
+  
   input[type=text],input[type=email]{
     text-align: center;
   }

@@ -19,20 +19,33 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>DASHBOARD - California Fitness Gym</title>
 
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-  <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- Material Design Bootstrap -->
   <link href="css/mdb.min.css" rel="stylesheet">
-  <!-- Your custom styles (optional) -->
   <link href="css/style.min.css" rel="stylesheet">
   <link rel="icon" href="../mobile/img/gym_logo.png">
   <link href="css/theme-colors.css" rel="stylesheet">
+
+  <style>
+    .chart-cont {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    table > thead > tr > th {
+      font-weight: bold;
+      vertical-align: middle !important;
+    }
+
+    th, td {
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body class="grey lighten-3">
-  <!--Main Navigation-->
 <header>
     <nav class="navbar fixed-top navbar-light bg-darkgrey" >
       <div class="container-fluid" >
@@ -45,7 +58,6 @@
         </h4>
         <div class="logout">
         <?php 
-            /* code for logout  */
             $sql = "SELECT * FROM logtrail ORDER BY login_id DESC";
             $result = mysqli_query($conn, $sql); 
             $data = array();
@@ -56,7 +68,6 @@
 
               $row = $data[0];
             }
-
           ?> 
 
         <a href="./../index_admin.php">
@@ -66,10 +77,11 @@
         </div>
       </div>
     </nav>
-    <!-- Sidebar -->
     <div class="sidebar-fixed position-fixed" style="background-color:#DF3A01;" >
       <br>
-      <center><img src="logo.png" class="img-fluid" alt="" style="width: 200px; height: 180px;"></center>
+      <center>
+        <img src="logo.png" class="img-fluid" alt="" style="width: 200px; height: 180px;">
+      </center>
       <br>
       <div class="list-group list-group-flush" >
         <a href="/PROJECT/DASHBOARD/dashboard.php" class="list-group-item list-group-item-action waves-effect sidebar-item-active">
@@ -97,50 +109,180 @@
       </div>  
     </div>
   </header>
-  <!--Main Navigation-->
-   <!--Main Navigation-->
    <main class="pt-5 mx-lg-5" >
     <div class="container-fluid mt-5">
-      <br>
-      <ol class="breadcrumb" style="background-color:white;">
-        <li class="breadcrumb-item">
-          <a href="#">Dashboard</a>
-        </li>
-        <li class="breadcrumb-item active">Total</li>
-      </ol>
+      <div class="row mb-4">
+        <div class="col-sm-6">
+          <div class="card">
+            <h5 class="card-header">Total Members</h5>
+            <div class="card-body chart-cont">
+              <canvas id="new-members-chart"></canvas>
+            </div>  
+            <div class="card-footer"></div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <h5 class="card-header">Member Types</h5>
+            <div class="card-body chart-cont">
+              <canvas id="member-type-chart"></canvas>
+            </div>  
+            <div class="card-footer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="card">
+            <h5 class="card-header">Promos availed</h5>
+            <div class="card-body chart-cont">
+              <canvas id="promos-chart"></canvas>
+            </div>
+            <div class="card-footer"></div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card">
+            <h5 class="card-header">Available Programs</h5>
+            <div class="card-body table-responsive p-0">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Program</th>
+                    <th>Trainer assigned</th>
+                    <th># of members</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php 
+                    $programSql = "SELECT p.program_id, p.program_name, t.first_name, t.last_name
+                                  FROM program AS p
+                                  INNER JOIN trainer AS t
+                                  ON p.trainer_id = t.trainer_id";
+                    $programQuery = mysqli_query($conn, $programSql);
+
+                    if($programQuery) {
+                      while($row = mysqli_fetch_assoc($programQuery)) {
+                        $sql = "SELECT COUNT(*) AS total FROM member
+                                WHERE program_id = '".$row["program_id"]."'";
+                        $res = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+                        $row["count"] = $res["total"];
+
+                  ?>
+                  <tr>
+                    <td><?= $row["program_name"] ?></td>
+                    <td><?= $row["first_name"]." ".$row["last_name"] ?></td>
+                    <td><?= $row["count"] ?></td>
+                  </tr>
+                  <?php
+                      }
+                    }
+                      
+                  ?>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
-  <!--Main layout-->
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/popper.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/mdb.min.js"></script>
 
   <script>
-    function logout(el) {
-      let id = el.getAttribute('data-id');
-      console.log(id);
+    var totalMembers, newMembers, memTypes, promoNames, promoMembers;
+    $.get("./get_dashboard_data.php", function(res) {
+      data = JSON.parse(res);
+      totalMembers = data.total;
+      newMembers = data.new;
+      memTypes = data.types;
+      promoNames = data.promos;
+      promoMembers = data.promoMems;
+    });
 
-      // AJAX Request
-     
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200 ) {
-          console.log((this.responseText));
-          
+    window.onload = () => {
+      Chart.defaults.global.animation.duration = 1750;
+
+      var ctx = document.getElementById('new-members-chart').getContext('2d');
+      new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: ['Jan 2018', 'May 2018', 'Sept 2018', 'Jan 2019', 'May 2019', 
+              'Sept 2019', 'Jan 2020', 'May 2020', 'Sept 2020', 'Jan 2021'],
+              datasets: [
+                {
+                  label: 'New gym members',
+                  backgroundColor: 'rgba(135, 206, 250, 0.7)',
+                  borderColor: 'rgb(135, 206, 250)',
+                  data: newMembers
+                },
+                {
+                  label: 'Total gym members',
+                  backgroundColor: 'rgba(0, 0, 0, 0)',
+                  borderColor: 'rgb(255, 99, 132)',
+                  data: totalMembers
+                }
+              ]
+          },
+          options: {}
+      });
+
+      var memberTypes = document.getElementById('member-type-chart').getContext('2d');
+      new Chart(memberTypes, {
+          type: 'doughnut',
+          data: {
+              labels: ['Regular', 'Walk-in'],
+              datasets: [
+                {
+                  data: memTypes,
+                  backgroundColor: ['rgb(255, 102, 0)', 'rgb(128, 128, 128)']
+                },
+              ]
+          },
+          options: {}
+      });
+
+      var promos = document.getElementById('promos-chart').getContext('2d');
+      new Chart(promos, {
+          type: 'polarArea',
+          data: {
+              labels: promoNames,
+              datasets: [
+                {
+                  data: promoMembers,
+                  backgroundColor: ['rgb(255, 102, 0)', 'rgb(128, 128, 128)',
+                  'rgb(204, 153, 0)', 'rgb(204, 51, 0)']
+                },
+              ]
+          },
+          options: {}
+      });
+
+      function logout(el) {
+        let id = el.getAttribute('data-id');
+        console.log(id);
+
+        // AJAX Request
+      
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = function() {
+          if(this.readyState == 4 && this.status == 200 ) {
+            console.log((this.responseText));
+            
+          }
         }
-       }
-      req.open('GET', '/PROJECT/logout.php?id=' + id, true);
-      req.send(); 
+        req.open('GET', '/PROJECT/logout.php?id=' + id, true);
+        req.send(); 
       }
+    }
     
   </script> 
-
-  
-
-  <!--Google Maps-->
-  <script src="https://maps.google.com/maps/api/js"></script>
 </body>
 
 </html>
