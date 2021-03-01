@@ -112,78 +112,92 @@
    <main class="pt-5 mx-lg-5" >
     <div class="container-fluid mt-5">
       <div class="row mb-4">
-        <div class="col-sm-6">
-          <div class="card">
-            <h5 class="card-header">Total Members</h5>
-            <div class="card-body chart-cont">
-              <canvas id="new-members-chart"></canvas>
-            </div>  
-            <div class="card-footer"></div>
+        <div class="col-sm-8">
+          <div class="row mb-3">
+            <div class="col-sm-12">
+              <div class="card">
+                <h5 class="card-header">Total Members</h5>
+                <div class="card-body chart-cont">
+                  <canvas id="new-members-chart"></canvas>
+                </div>  
+                <div class="card-footer"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card">
+                <h5 class="card-header">Promos availed</h5>
+                <div class="card-body chart-cont">
+                  <canvas id="promos-chart"></canvas>
+                </div>
+                <div class="card-footer"></div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-sm-6">
-          <div class="card">
-            <h5 class="card-header">Member Types</h5>
-            <div class="card-body chart-cont">
-              <canvas id="member-type-chart"></canvas>
-            </div>  
-            <div class="card-footer"></div>
+        <div class="col-sm-4">
+          <div class="row mb-3">
+            <div class="card">
+              <h5 class="card-header">Member Types</h5>
+              <div class="card-body chart-cont">
+                <canvas id="member-type-chart"></canvas>
+              </div>  
+              <div class="card-footer"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="card">
+              <h5 class="card-header">Available Programs</h5>
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Program</th>
+                      <th>Trainer assigned</th>
+                      <th># of members</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php 
+                      $programSql = "SELECT p.program_id, p.program_name, t.first_name, t.last_name
+                                    FROM program AS p
+                                    INNER JOIN trainer AS t
+                                    ON p.trainer_id = t.trainer_id";
+                      $programQuery = mysqli_query($conn, $programSql);
+
+                      if($programQuery) {
+                        while($row = mysqli_fetch_assoc($programQuery)) {
+                          $sql = "SELECT COUNT(*) AS total FROM member
+                                  WHERE program_id = '".$row["program_id"]."'";
+                          $res = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+                          $row["count"] = $res["total"];
+
+                    ?>
+                    <tr>
+                      <td><?= $row["program_name"] ?></td>
+                      <td><?= $row["first_name"]." ".$row["last_name"] ?></td>
+                      <td><?= $row["count"] ?></td>
+                    </tr>
+                    <?php
+                        }
+                      }
+                        
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer"></div>
+            </div>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-8">
-          <div class="card">
-            <h5 class="card-header">Promos availed</h5>
-            <div class="card-body chart-cont">
-              <canvas id="promos-chart"></canvas>
-            </div>
-            <div class="card-footer"></div>
-          </div>
+     
         </div>
         <div class="col-sm-4">
-          <div class="card">
-            <h5 class="card-header">Available Programs</h5>
-            <div class="card-body table-responsive p-0">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>Program</th>
-                    <th>Trainer assigned</th>
-                    <th># of members</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php 
-                    $programSql = "SELECT p.program_id, p.program_name, t.first_name, t.last_name
-                                  FROM program AS p
-                                  INNER JOIN trainer AS t
-                                  ON p.trainer_id = t.trainer_id";
-                    $programQuery = mysqli_query($conn, $programSql);
-
-                    if($programQuery) {
-                      while($row = mysqli_fetch_assoc($programQuery)) {
-                        $sql = "SELECT COUNT(*) AS total FROM member
-                                WHERE program_id = '".$row["program_id"]."'";
-                        $res = mysqli_fetch_assoc(mysqli_query($conn, $sql));
-                        $row["count"] = $res["total"];
-
-                  ?>
-                  <tr>
-                    <td><?= $row["program_name"] ?></td>
-                    <td><?= $row["first_name"]." ".$row["last_name"] ?></td>
-                    <td><?= $row["count"] ?></td>
-                  </tr>
-                  <?php
-                      }
-                    }
-                      
-                  ?>
-                </tbody>
-              </table>
-            </div>
-            <div class="card-footer"></div>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -213,8 +227,8 @@
       new Chart(ctx, {
           type: 'line',
           data: {
-              labels: ['Jan 2018', 'May 2018', 'Sept 2018', 'Jan 2019', 'May 2019', 
-              'Sept 2019', 'Jan 2020', 'May 2020', 'Sept 2020', 'Jan 2021'],
+              labels: ['Jan-Apr \'18', 'May-Aug \'18', 'Sept-Dec \'18', 'Jan-Apr \'19', 'May-Aug \'19', 
+              'Sept-Dec \'19', 'Jan-Apr \'20', 'May-Aug \'20', 'Sept-Dec \'20', 'Jan-Apr \'21'],
               datasets: [
                 {
                   label: 'New gym members',

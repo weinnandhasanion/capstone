@@ -2,9 +2,11 @@
 	session_start();
     require('connect.php');
 
-	if($_SESSION['admin_id']){
+	if(isset($_SESSION['admin_id'])){
 		$id = $_SESSION['admin_id'];
-	}
+	} else {
+    header("Location: ./../index_admin.php");
+  }
 	
 	$sql = "select * from admin where admin_id =".$id."";
 	$res = mysqli_query($conn, $sql);
@@ -117,27 +119,23 @@
       </ol>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#members-added">
         <i class="fas fa-eye mr-2"></i>
-        Total members added
+        List of members
       </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#paid-members">
         <i class="fas fa-eye mr-2"></i>
-        Paid members
+        List of members with ongoing subscription
       </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#unpaid-members">
         <i class="fas fa-eye mr-2"></i>
-        unpaid members
-      </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#deleted-members">
-        <i class="fas fa-eye mr-2"></i>
-        deleted members
+        List of inactive members
       </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#activated-members">
         <i class="fas fa-eye mr-2"></i>
-        activated members
+        List of members who have activated their mobile account
       </button>
       <button class="btn btn-orange btn-sm">
         <i class="fas fa-eye mr-2"></i>
-        members of certain promo
+       List of members who availed a promo
       </button>
     </div>
 
@@ -152,19 +150,11 @@
       </ol>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
         <i class="fas fa-eye mr-2"></i>
-        total Trainers Added
+        list of active trainers
       </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-deleted">
         <i class="fas fa-eye mr-2"></i>
-       total Trainers Deleted
-      </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-active">
-        <i class="fas fa-eye mr-2"></i>
-         Active Trainers
-      </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-inactive">
-        <i class="fas fa-eye mr-2"></i>
-         Inactive Trainers
+       list of inactive trainers
       </button>
     </div>
   
@@ -179,7 +169,15 @@
       </ol>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
         <i class="fas fa-eye mr-2"></i>
-        total inventory Added
+        list of equipments
+      </button>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+        <i class="fas fa-eye mr-2"></i>
+        list of working equipments
+      </button>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+        <i class="fas fa-eye mr-2"></i>
+        list of damaged equipments
       </button>
     </div>
 
@@ -194,7 +192,15 @@
       </ol>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
         <i class="fas fa-eye mr-2"></i>
-        total Promos Added
+        list of promos
+      </button>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+        <i class="fas fa-eye mr-2"></i>
+        list of permanent promos
+      </button>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+        <i class="fas fa-eye mr-2"></i>
+        list of seasonal promos
       </button>
     </div>
 
@@ -209,7 +215,19 @@
       </ol>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
         <i class="fas fa-eye mr-2"></i>
-        total Payment Added
+        total sales
+      </button>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+        <i class="fas fa-eye mr-2"></i>
+        list of monthly payments
+      </button>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+        <i class="fas fa-eye mr-2"></i>
+        list of annual payments
+      </button>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+        <i class="fas fa-eye mr-2"></i>
+        list of walk-in payments
       </button>
     </div>
   </main>
@@ -399,17 +417,6 @@
                     <option value="Both">Both</option>
                   </select>
                 </div>
-                <div class="col-sm-6">
-                  <label for="">Time span</label>
-                  <select id="deleted-members-select" name="timespan" class="form-control">
-                    <option value="Today">Today</option>
-                    <option value="This week">This week</option>
-                    <option value="This month">This month</option>
-                    <option value="This year">This year</option>
-                    <option value="All-time">All-time</option>
-                    <option value="Custom">Custom</option>
-                  </select>
-                </div>
               </div>
             </div>
             <div class="form-group custom-date" id="deleted-members-custom">
@@ -478,7 +485,6 @@
     </div>
   </div>
 
-
    <!-- total trainers delete -->
    <div class="modal fade" role="dialog" id="trainers-deleted">
     <div class="modal-dialog modal-md">
@@ -524,7 +530,6 @@
     </div>
   </div>
 
-  
   <!--  trainers active -->
   <div class="modal fade" role="dialog" id="trainers-active">
     <div class="modal-dialog modal-md">
@@ -536,7 +541,6 @@
         <div class="modal-body">
           <div class="form-group">
             <div class="row">
-              
               <div class="col-sm-6">
                 <label for="">Time span</label>
                 <select id="trainers-active-select" name="timespan_trainers_active" class="form-control">
