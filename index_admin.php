@@ -14,9 +14,8 @@
    <link rel="icon" href="./mobile/img/gym_logo.png">
    <link href="css/index.css" rel="stylesheet">
    <script src="js/prefixfree.min.js"></script>
-   <link href="indexCSS.css" rel="stylesheet">
+   <link href="index_admin.css" rel="stylesheet">
 </head>
-
 
 <body>
   <div class="body"></div>
