@@ -801,7 +801,8 @@ ALTER TABLE `paymentlog`
 -- Constraints for table `program`
 --
 ALTER TABLE `program`
-  ADD CONSTRAINT `program_admin_fk` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`);
+  ADD CONSTRAINT `program_admin_fk` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
+  ADD CONSTRAINT `program_admin_fk` FOREIGN KEY (`trainer_id`) REFERENCES `trainer` (`trainer_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

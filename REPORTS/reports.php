@@ -198,7 +198,7 @@
         <i class="fas fa-eye mr-2"></i>
         list of permanent promos
       </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#promos-seasonal">
         <i class="fas fa-eye mr-2"></i>
         list of seasonal promos
       </button>
@@ -637,6 +637,60 @@
       </div>
     </div>
   </div>
+
+  
+  <!-- list of seasonal promos -->
+  <div class="modal fade" role="dialog" id="promos-seasonal">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+      <form action="./promos/promo_seasonal.php" method="post">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for Seasonal Promos</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="promos-seasonal-select" name="timespan_promos_seasonal" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                  <label for="">Promo status</label>
+                  <select name="status" class="form-control">
+                    <option value="Active">Active</option>
+                    <option value="Expired">Expired</option>
+                    <option value="Deleted">Deleted</option>
+                  </select>
+                </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="promos-seasonal-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="from_date_promos_seasonal" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="to_date_promos_seasonal" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
   
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/popper.min.js"></script>
@@ -716,6 +770,15 @@
       $("#promos-permanent-custom").css("display", "block");
     } else {
       $("#promos-permanent-custom").css("display", "none");
+    }
+  });
+   //modal custom for seasonal of promos
+   $("#promos-seasonal-select").on("change", function() {
+    let select = $("#promos-seasonal-select");
+    if(select.val() == "Custom") {
+      $("#promos-seasonal-custom").css("display", "block");
+    } else {
+      $("#promos-seasonal-custom").css("display", "none");
     }
   });
   </script>
