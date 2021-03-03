@@ -12,9 +12,6 @@ if($timespan == "Custom") {
   $toDate = NULL;
 }
 
-
-
-
   if($timespan == "Custom") {
     $reportText = "Generating reports for active trainers from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
     $sql = "SELECT * FROM trainer

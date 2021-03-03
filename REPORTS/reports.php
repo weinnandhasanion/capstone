@@ -148,11 +148,11 @@
         </li>
         <li class="breadcrumb-item active">Trainers</li>
       </ol>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-active">
         <i class="fas fa-eye mr-2"></i>
         list of active trainers
       </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-deleted">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-inactive">
         <i class="fas fa-eye mr-2"></i>
        list of inactive trainers
       </button>
@@ -167,15 +167,15 @@
         </li>
         <li class="breadcrumb-item active">Inventory</li>
       </ol>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#">
         <i class="fas fa-eye mr-2"></i>
         list of equipments
       </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#">
         <i class="fas fa-eye mr-2"></i>
         list of working equipments
       </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#">
         <i class="fas fa-eye mr-2"></i>
         list of damaged equipments
       </button>
@@ -190,15 +190,15 @@
         </li>
         <li class="breadcrumb-item active">Promos</li>
       </ol>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#promos-list">
         <i class="fas fa-eye mr-2"></i>
         list of promos
       </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#promos-permanent">
         <i class="fas fa-eye mr-2"></i>
         list of permanent promos
       </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#promos-seasonal">
         <i class="fas fa-eye mr-2"></i>
         list of seasonal promos
       </button>
@@ -441,10 +441,10 @@
   </div>
 
   <!-- total trainers added -->
-  <div class="modal fade" role="dialog" id="trainers-added">
+  <div class="modal fade" role="dialog" id="trainers-active">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form action="./trainers/trainer_added.php" method="post">
+      <form action="./trainers/trainer_active.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for total trainers added</h4>
         </div>
@@ -453,7 +453,7 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">Time span</label>
-                <select id="trainers-added-select" name="timespan_trainers_added" class="form-control">
+                <select id="trainers-added-select" name="timespan_trainers_active" class="form-control">
                   <option value="Today">Today</option>
                   <option value="This week">This week</option>
                   <option value="This month">This month</option>
@@ -464,15 +464,15 @@
               </div>
             </div>
           </div>
-          <div class="form-group custom-date" id="trainers-added-custom">
+          <div class="form-group custom-date" id="trainers-active-custom">
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_trainers_added" id="" class="form-control">
+                <input type="date" name="from_date_trainers_active" id="" class="form-control">
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_trainers_added" id="" class="form-control">
+                <input type="date" name="to_date_trainers_active" id="" class="form-control">
               </div>
             </div>
           </div>
@@ -486,7 +486,7 @@
   </div>
 
    <!-- total trainers delete -->
-   <div class="modal fade" role="dialog" id="trainers-deleted">
+   <div class="modal fade" role="dialog" id="trainers-inactive">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
       <form action="./trainers/trainer_deleted.php" method="post">
@@ -530,20 +530,22 @@
     </div>
   </div>
 
-  <!--  trainers active -->
-  <div class="modal fade" role="dialog" id="trainers-active">
+ 
+
+    <!-- list of promos -->
+    <div class="modal fade" role="dialog" id="promos-list">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form action="./trainers/trainer_active.php" method="post">
+      <form action="./promos/promo_list.php" method="post">
         <div class="modal-header">
-          <h4 class="modal-title">Generate report for active trainers</h4>
+          <h4 class="modal-title">Generate report for list of promos</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
             <div class="row">
               <div class="col-sm-6">
                 <label for="">Time span</label>
-                <select id="trainers-active-select" name="timespan_trainers_active" class="form-control">
+                <select id="promos-list-select" name="timespan_promos_list" class="form-control">
                   <option value="Today">Today</option>
                   <option value="This week">This week</option>
                   <option value="This month">This month</option>
@@ -552,17 +554,78 @@
                   <option value="Custom">Custom</option>
                 </select>
               </div>
+              <div class="col-sm-6">
+                  <label for="">Promo status</label>
+                  <select name="status" class="form-control">
+                    <option value="Active">Active</option>
+                    <option value="Expired">Expired</option>
+                    <option value="Deleted">Deleted</option>
+                  </select>
+                </div>
             </div>
           </div>
-          <div class="form-group custom-date" id="trainers-active-custom">
+          <div class="form-group custom-date" id="promos-list-custom">
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_trainers_active" id="" class="form-control">
+                <input type="date" name="from_date_promos_list" id="" class="form-control">
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_trainers_active" id="" class="form-control">
+                <input type="date" name="to_date_promos_list" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- list of permanent promos -->
+  <div class="modal fade" role="dialog" id="promos-permanent">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+      <form action="./promos/promo_permanent.php" method="post">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for Permanent Promos</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="promos-permanent-select" name="timespan_promos_permanent" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                  <label for="">Promo status</label>
+                  <select name="status" class="form-control">
+                    <option value="Active">Active</option>
+                    <option value="Expired">Expired</option>
+                    <option value="Deleted">Deleted</option>
+                  </select>
+                </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="promos-permanent-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="from_date_promos_permanent" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="to_date_promos_permanent" id="" class="form-control">
               </div>
             </div>
           </div>
@@ -576,21 +639,20 @@
   </div>
 
   
-  <!--  trainers inactive -->
-  <div class="modal fade" role="dialog" id="trainers-inactive">
+  <!-- list of seasonal promos -->
+  <div class="modal fade" role="dialog" id="promos-seasonal">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form action="./trainers/trainer_inactive.php" method="post">
+      <form action="./promos/promo_seasonal.php" method="post">
         <div class="modal-header">
-          <h4 class="modal-title">Generate report for inactive trainers</h4>
+          <h4 class="modal-title">Generate report for Seasonal Promos</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
             <div class="row">
-              
               <div class="col-sm-6">
                 <label for="">Time span</label>
-                <select id="trainers-inactive-select" name="timespan_trainers_inactive" class="form-control">
+                <select id="promos-seasonal-select" name="timespan_promos_seasonal" class="form-control">
                   <option value="Today">Today</option>
                   <option value="This week">This week</option>
                   <option value="This month">This month</option>
@@ -599,17 +661,25 @@
                   <option value="Custom">Custom</option>
                 </select>
               </div>
+              <div class="col-sm-6">
+                  <label for="">Promo status</label>
+                  <select name="status" class="form-control">
+                    <option value="Active">Active</option>
+                    <option value="Expired">Expired</option>
+                    <option value="Deleted">Deleted</option>
+                  </select>
+                </div>
             </div>
           </div>
-          <div class="form-group custom-date" id="trainers-inactive-custom">
+          <div class="form-group custom-date" id="promos-seasonal-custom">
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_trainers_inactive" id="" class="form-control">
+                <input type="date" name="from_date_promos_seasonal" id="" class="form-control">
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_trainers_inactive" id="" class="form-control">
+                <input type="date" name="to_date_promos_seasonal" id="" class="form-control">
               </div>
             </div>
           </div>
@@ -664,26 +734,8 @@
       $("#deleted-members-custom").css("display", "none");
     }
   });
+//-------------------------- TRAINERS -----------------------------
 
-//modal custom for add trainers 
-  $("#trainers-added-select").on("change", function() {
-    let select = $("#trainers-added-select");
-    if(select.val() == "Custom") {
-      $("#trainers-added-custom").css("display", "block");
-    } else {
-      $("#trainers-added-custom").css("display", "none");
-    }
-  });
-
-  //modal custom for delete trainers
-  $("#trainers-deleted-select").on("change", function() {
-    let select = $("#trainers-deleted-select");
-    if(select.val() == "Custom") {
-      $("#trainers-deleted-custom").css("display", "block");
-    } else {
-      $("#trainers-deleted-custom").css("display", "none");
-    }
-  });
     //modal custom for active trainers
     $("#trainers-active-select").on("change", function() {
     let select = $("#trainers-active-select");
@@ -703,6 +755,36 @@
     }
   });
   
+  //-------------------------- PROMOS -----------------------------
+
+   //modal custom for list of promos
+   $("#promos-list-select").on("change", function() {
+    let select = $("#promos-list-select");
+    if(select.val() == "Custom") {
+      $("#promos-list-custom").css("display", "block");
+    } else {
+      $("#promos-list-custom").css("display", "none");
+    }
+  });
+  
+   //modal custom for permanent of promos
+   $("#promos-permanent-select").on("change", function() {
+    let select = $("#promos-permanent-select");
+    if(select.val() == "Custom") {
+      $("#promos-permanent-custom").css("display", "block");
+    } else {
+      $("#promos-permanent-custom").css("display", "none");
+    }
+  });
+   //modal custom for seasonal of promos
+   $("#promos-seasonal-select").on("change", function() {
+    let select = $("#promos-seasonal-select");
+    if(select.val() == "Custom") {
+      $("#promos-seasonal-custom").css("display", "block");
+    } else {
+      $("#promos-seasonal-custom").css("display", "none");
+    }
+  });
   </script>
 </body>
 </html>

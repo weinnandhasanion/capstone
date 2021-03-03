@@ -7,6 +7,9 @@
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.13
 
+CREATE DATABASE gym;
+USE gym;
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -798,7 +801,8 @@ ALTER TABLE `paymentlog`
 -- Constraints for table `program`
 --
 ALTER TABLE `program`
-  ADD CONSTRAINT `program_admin_fk` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`);
+  ADD CONSTRAINT `program_admin_fk` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
+  ADD CONSTRAINT `program_admin_fk` FOREIGN KEY (`trainer_id`) REFERENCES `trainer` (`trainer_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
