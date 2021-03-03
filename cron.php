@@ -50,4 +50,18 @@ function checkNotifs($id, $conn, $notifId) {
 
 // Checking if paid CRON job
 
+// Checking promo availability CRON job
+$date = date("Y-m-d");
+
+$promoSql = "UPDATE promo SET status = 'Expired'
+              WHERE promo_ending_date < '$date'
+              AND NOT promo_ending_date = '1970-01-01'";
+$promoQuery = mysqli_query($conn, $promoSql);
+
+$memberPromoSql = "UPDATE memberpromos AS mp 
+                    INNER JOIN promo AS p
+                    ON mp.promo_id = p.promo_id
+                    SET mp.status = 'Expired'
+                    WHERE p.status = 'Expired'";
+$memberPromoQuery = mysqli_query($conn, $memberPromoSql);
 ?>

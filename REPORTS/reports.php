@@ -133,7 +133,7 @@
         <i class="fas fa-eye mr-2"></i>
         List of members who have activated their mobile account
       </button>
-      <button class="btn btn-orange btn-sm">
+      <button class="btn btn-orange btn-sm" onclick="getMembersPromo()">
         <i class="fas fa-eye mr-2"></i>
        List of members who availed a promo
       </button>
@@ -242,7 +242,7 @@
       <div class="modal-content">
         <form action="./members/members_added.php" method="post">
           <div class="modal-header">
-            <h4 class="modal-title">Generate report for total members added</h4>
+            <h4 class="modal-title">Generate report for members</h4>
           </div>
           <div class="modal-body">
             <div class="form-group">
@@ -256,7 +256,7 @@
                   </select>
                 </div>
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date registered</label>
                   <select id="members-added-select" name="timespan" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -421,9 +421,20 @@
                     <option value="Both">Both</option>
                   </select>
                 </div>
+                <div class="col-sm-6">
+                  <label for="">Date activated</label>
+                  <select id="activated-members-select" name="timespan" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
               </div>
             </div>
-            <div class="form-group custom-date" id="deleted-members-custom">
+            <div class="form-group custom-date" id="activated-members-custom">
               <div class="row">
                 <div class="col-sm-6">
                   <label for="">From Date</label>
@@ -761,6 +772,10 @@
     req.send(); 
   }
 
+  function getMembersPromo () {
+    window.location.href = "./members/members_promo.php";
+  }
+
 //modal custom for members
   $("#members-added-select").on("change", function() {
     let select = $("#members-added-select");
@@ -779,6 +794,16 @@
       $("#deleted-members-custom").css("display", "none");
     }
   });
+
+  $("#activated-members-select").on("change", function() {
+    let select = $("#activated-members-select");
+    if(select.val() == "Custom") {
+      $("#activated-members-custom").css("display", "block");
+    } else {
+      $("#activated-members-custom").css("display", "none");
+    }
+  });
+
 //-------------------------- TRAINERS -----------------------------
     //modal custom for active and inactive trainers
     $("#trainers-list-select").on("change", function() {
