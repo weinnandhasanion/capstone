@@ -814,12 +814,26 @@
     }
 
     function addNewMember(el) {
-      let promoId = el.parentNode.getAttribute("data-id");
-      let memberId = el.getAttribute("data-id");
+      var promoId = el.parentNode.getAttribute("data-id");
+      var memberId = el.getAttribute("data-id");
 
       let x = confirm("Do you want this member to avail this promo?");
       if(x) {
-        window.location.href = `./add_member.php?promo_id=${promoId}&member_id=${memberId}`;
+        $.get(`./promo_check.php?member_id=${memberId}&promo_id=${promoId}`, function(res) {
+          res = JSON.parse(res);
+
+          console.log(res);
+          if(res.status == 0) {
+            alert(res.msg);
+          } else if(res.status == 2) {
+            var x = confirm("This member has an existing permanent promo (" + res.promo + "). Availing a new promo will remove this member's current permanent promo. Proceed?");
+            if(x) {
+              window.location.href = `./add_member.php?memberId=${memberId}&promoId=${promoId}&status=2`;
+            }
+          } else {
+            window.location.href = `./add_member.php?memberId=${memberId}&promoId=${promoId}&status=1`;
+          }
+        });
       }
     }
 

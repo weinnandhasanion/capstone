@@ -133,7 +133,7 @@
         <i class="fas fa-eye mr-2"></i>
         List of members who have activated their mobile account
       </button>
-      <button class="btn btn-orange btn-sm">
+      <button class="btn btn-orange btn-sm" onclick="getMembersPromo()">
         <i class="fas fa-eye mr-2"></i>
        List of members who availed a promo
       </button>
@@ -640,6 +640,10 @@
       }
     req.open('GET', '/PROJECT/logout.php?id=' + id, true);
     req.send(); 
+  }
+
+  function getMembersPromo () {
+    window.location.href = "./members/members_promo.php";
   }
 
 //modal custom for members
