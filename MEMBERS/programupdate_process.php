@@ -7,8 +7,6 @@ if($_SESSION['admin_id']){
     $session_admin_id = $_SESSION['admin_id'];
 }
 
-
-
 //----------------------------------------------------------------------------------- UPDATE
 $id = $_REQUEST['id'];
 $program_name = $_POST['program_name'];
