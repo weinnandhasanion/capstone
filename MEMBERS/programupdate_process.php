@@ -1,14 +1,57 @@
 <?php 
 session_start();
 require('connect.php');
-
 date_default_timezone_set('Asia/Manila');
 
 if($_SESSION['admin_id']){
     $session_admin_id = $_SESSION['admin_id'];
 }
 
-  
+
+
+//----------------------------------------------------------------------------------- UPDATE
+$id = $_REQUEST['id'];
+$program_name = $_POST['program_name'];
+$program_description = $_POST['program_description'];  
+
+$upper1day1 = $_POST['upper-1-day-1'];
+$upper2day1 = $_POST['upper-2-day-1']; 
+$upper3day1 = $_POST['upper-3-day-1']; 
+$lower1day1 = $_POST['lower-1-day-1'];
+$lower2day1 = $_POST['lower-2-day-1']; 
+$lower3day1 = $_POST['lower-3-day-1'];  
+$abdominalday1 = $_POST['abdominal-day-1']; 
+
+$upper1day2 = $_POST['upper-1-day-2'];
+$upper2day2 = $_POST['upper-2-day-2']; 
+$upper3day2 = $_POST['upper-3-day-2']; 
+$lower1day2 = $_POST['lower-1-day-2'];
+$lower2day2 = $_POST['lower-2-day-2']; 
+$lower3day2 = $_POST['lower-3-day-2'];  
+$abdominalday2 = $_POST['abdominal-day-2']; 
+
+$upper1day3 = $_POST['upper-1-day-3'];
+$upper2day3 = $_POST['upper-2-day-3']; 
+$upper3day3 = $_POST['upper-3-day-3']; 
+$lower1day3 = $_POST['lower-1-day-3'];
+$lower2day3 = $_POST['lower-2-day-3']; 
+$lower3day3 = $_POST['lower-3-day-3'];  
+$abdominalday3 = $_POST['abdominal-day-3']; 
+
+    $sql_update = "UPDATE program 
+    SET program_name = '$program_name', program_description = '$program_description',
+    upper_1_day_1 = '$upper1day1', upper_2_day_1 = '$upper2day1', upper_3_day_1 = '$upper3day1',
+    lower_1_day_1 = '$lower1day1', lower_2_day_1 = '$lower2day1', lower_3_day_1 = '$lower3day1', abdominal_day_1 = '$abdominalday1',
+    upper_1_day_2 = '$upper1day2', upper_2_day_2 = '$upper2day2', upper_3_day_2 = '$upper3day2',
+    lower_1_day_2 = '$lower1day2', lower_2_day_2 = '$lower2day2', lower_3_day_2 = '$lower3day2', abdominal_day_2 = '$abdominalday2',
+    upper_1_day_3 = '$upper1day3', upper_2_day_3 = '$upper2day3', upper_3_day_3 = '$upper3day3',
+    lower_1_day_3 = '$lower1day3', lower_2_day_3 = '$lower2day3', lower_3_day_3 = '$lower3day3', abdominal_day_3 = '$abdominalday3'
+    WHERE program_id =" . intval($id) . ""; 
+    mysqli_query($conn, $sql_update);
+
+   
+//--------------------------------------------------------------------------
+            
 
     //this is for puting login_id in the array
     $data_logtrail = array();
@@ -35,22 +78,6 @@ if($progs1) {
 
     $program_id = $data_program[0];
 }
-
-
-//-----------------------------------------------------------------------------------
-$program_name= $_POST['program_name'];
-$program_description= $_POST['program_description'];
-
-    $sql_name = "UPDATE program SET program_name = '$program_name'
-    WHERE program_id = '$_POST[program_id]'"; 
-    $prog_name = mysqli_query($conn, $sql_name);
-
-    $sql_description = "UPDATE program SET  program_description = '$program_description'
-    WHERE program_id = '$_POST[program_id]'";
-    $prog_description = mysqli_query($conn, $sql_description);
-
-      
-            
             // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
             $ad= "SELECT * FROM admin WHERE admin_id = $session_admin_id";
             $query_runad = mysqli_query($conn, $ad);
@@ -82,21 +109,4 @@ $program_description= $_POST['program_description'];
                     `description`, `identity`,`time`)
                      VALUES ( '$program_id_new','$login_id_new','$admin_id', '$program_name','$description','$identity', '$timeNow')";
                      mysqli_query($conn, $sql1);
-
-            echo ("<script LANGUAGE='JavaScript'>
-            window.alert('program  is updated.');
-            window.location.href='/PROJECT/MEMBERS/members.php';
-            </script>");
-     
-
-           
-        }else{
-            echo "failure to register";
-			header('Location: /PROJECT/MEMBERS/members.php?failure to register');
-        }
-
-  
-    
-
-    
 ?>

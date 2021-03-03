@@ -148,6 +148,10 @@
         </li>
         <li class="breadcrumb-item active">Trainers</li>
       </ol>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-list">
+        <i class="fas fa-eye mr-2"></i>
+        list of trainers
+      </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-active">
         <i class="fas fa-eye mr-2"></i>
         list of active trainers
@@ -440,7 +444,52 @@
     </div>
   </div>
 
-  <!-- total trainers added -->
+<!-- list of trainers active and inactive -->
+<div class="modal fade" role="dialog" id="trainers-list">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+      <form action="./trainers/trainer_added.php" method="post">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for total trainers</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="trainers-added-select" name="timespan_trainers_list" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="trainers-list-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="from_date_trainers_list" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="to_date_trainers_list" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- total trainers active -->
   <div class="modal fade" role="dialog" id="trainers-active">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
@@ -485,11 +534,11 @@
     </div>
   </div>
 
-   <!-- total trainers delete -->
+   <!-- total trainers inactive -->
    <div class="modal fade" role="dialog" id="trainers-inactive">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form action="./trainers/trainer_deleted.php" method="post">
+      <form action="./trainers/trainer_inactive.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for total trainers deleted</h4>
         </div>
@@ -498,7 +547,7 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">Time span</label>
-                <select id="trainers-deleted-select"  name="timespan_trainers_deleted" class="form-control">
+                <select id="trainers-inactive-select"  name="timespan_trainers_inactive" class="form-control">
                   <option value="Today">Today</option>
                   <option value="This week">This week</option>
                   <option value="This month">This month</option>
@@ -509,15 +558,15 @@
               </div>
             </div>
           </div>
-          <div class="form-group custom-date" id="trainers-deleted-custom">
+          <div class="form-group custom-date" id="trainers-inactive-custom">
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_trainers_deleted" id="" class="form-control">
+                <input type="date" name="from_date_trainers_inactive" id="" class="form-control">
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_trainers_deleted" id="" class="form-control">
+                <input type="date" name="to_date_trainers_inactive" id="" class="form-control">
               </div>
             </div>
           </div>
@@ -731,7 +780,15 @@
     }
   });
 //-------------------------- TRAINERS -----------------------------
-
+    //modal custom for active and inactive trainers
+    $("#trainers-list-select").on("change", function() {
+    let select = $("#trainers-list-select");
+    if(select.val() == "Custom") {
+      $("#trainers-list-custom").css("display", "block");
+    } else {
+      $("#trainers-list-custom").css("display", "none");
+    }
+  });
     //modal custom for active trainers
     $("#trainers-active-select").on("change", function() {
     let select = $("#trainers-active-select");

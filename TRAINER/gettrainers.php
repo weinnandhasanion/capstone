@@ -2,7 +2,7 @@
 require "./connect.php";
 
 if(isset($_GET)) {
-  $sql = "SELECT * FROM trainer WHERE acc_status = 'able' ORDER BY trainer_id DESC";
+  $sql = "SELECT * FROM trainer WHERE trainer_status = 'active' ORDER BY trainer_id DESC";
   $res = mysqli_query($conn, $sql);
 
   if($res) {

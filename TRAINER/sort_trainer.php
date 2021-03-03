@@ -6,7 +6,7 @@ $type = $_REQUEST["type"];
 
 switch($type) {
   case "active":
-    $sql = "SELECT * FROM trainer WHERE trainer_status = 'active' AND acc_status = 'able' ORDER BY trainer_id DESC";
+    $sql = "SELECT * FROM trainer WHERE trainer_status = 'active' ORDER BY trainer_id DESC";
     $res = mysqli_query($conn, $sql);
     if($res) {
       $data = array();
@@ -20,7 +20,7 @@ switch($type) {
     }
     break;
   case "inactive":
-    $sql = "SELECT * FROM trainer WHERE trainer_status = 'inactive' AND acc_status = 'able' ORDER BY trainer_id DESC";
+    $sql = "SELECT * FROM trainer WHERE trainer_status = 'inactive'  ORDER BY trainer_id DESC";
     $res = mysqli_query($conn, $sql);
     if($res) {
       $data = array();
@@ -34,7 +34,7 @@ switch($type) {
     }
     break;
   case "both":
-    $sql = "SELECT * FROM trainer WHERE acc_status = 'able'  ORDER BY trainer_id DESC";
+    $sql = "SELECT * FROM trainer  WHERE trainer_status != 'deleted'   ORDER BY trainer_id DESC";
     $res = mysqli_query($conn, $sql);
     if($res) {
       $data = array();
