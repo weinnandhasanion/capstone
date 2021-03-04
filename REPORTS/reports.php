@@ -236,7 +236,7 @@
   <div class="modal fade" role="dialog" id="members-added">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-        <form action="./members/members_added.php" method="post">
+        <form target="_blank" action="./members/members_added.php" method="post">
           <div class="modal-header">
             <h4 class="modal-title">Generate report for members</h4>
           </div>
@@ -289,7 +289,7 @@
   <div class="modal fade" role="dialog" id="paid-members">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-        <form action="./members/paid_members.php" method="post">
+        <form target="_blank" action="./members/paid_members.php" method="post">
           <div class="modal-header">
             <h4 class="modal-title">Generate report for members who are paid</h4>
           </div>
@@ -319,7 +319,7 @@
   <div class="modal fade" role="dialog" id="unpaid-members">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-        <form action="./members/unpaid_members.php" method="post">
+        <form target="_blank" action="./members/unpaid_members.php" method="post">
           <div class="modal-header">
             <h4 class="modal-title">Generate report for members who are not paid</h4>
           </div>
@@ -349,7 +349,7 @@
   <div class="modal fade" role="dialog" id="deleted-members">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-        <form action="./members/deleted_members.php" method="post">
+        <form target="_blank" action="./members/deleted_members.php" method="post">
           <div class="modal-header">
             <h4 class="modal-title">Generate report for deleted members</h4>
           </div>
@@ -402,21 +402,13 @@
   <div class="modal fade" role="dialog" id="activated-members">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-        <form action="./members/activated_members.php" method="post">
+        <form target="_blank" action="./members/activated_members.php" method="post">
           <div class="modal-header">
             <h4 class="modal-title">Generate report for activated members</h4>
           </div>
           <div class="modal-body">
             <div class="form-group">
               <div class="row">
-                <div class="col-sm-6">
-                  <label for="">Member type</label>
-                  <select name="member_type" class="form-control">
-                    <option value="Regular">Regular</option>
-                    <option value="Walk-in">Walk-in</option>
-                    <option value="Both">Both</option>
-                  </select>
-                </div>
                 <div class="col-sm-6">
                   <label for="">Date activated</label>
                   <select id="activated-members-select" name="timespan" class="form-control">
@@ -455,7 +447,7 @@
   <div class="modal fade" role="dialog" id="trainers-active">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form action="./trainers/trainer_active.php" method="post">
+      <form target="_blank" action="./trainers/trainer_active.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for total trainers added</h4>
         </div>
@@ -500,7 +492,7 @@
    <div class="modal fade" role="dialog" id="trainers-inactive">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form action="./trainers/trainer_deleted.php" method="post">
+      <form target="_blank" action="./trainers/trainer_deleted.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for total trainers deleted</h4>
         </div>
@@ -547,7 +539,7 @@
     <div class="modal fade" role="dialog" id="promos-list">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form action="./promos/promo_list.php" method="post">
+      <form target="_blank" action="./promos/promo_list.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for list of promos</h4>
         </div>
@@ -600,7 +592,7 @@
   <div class="modal fade" role="dialog" id="promos-permanent">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form action="./promos/promo_permanent.php" method="post">
+      <form target="_blank" action="./promos/promo_permanent.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for Permanent Promos</h4>
         </div>
@@ -654,7 +646,7 @@
   <div class="modal fade" role="dialog" id="promos-seasonal">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form action="./promos/promo_seasonal.php" method="post">
+      <form target="_blank" action="./promos/promo_seasonal.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for Seasonal Promos</h4>
         </div>

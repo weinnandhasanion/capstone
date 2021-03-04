@@ -13,6 +13,7 @@ if($timespan == "Custom") {
 }
 
 if($memberType == "Both") {
+  $reportTitle = "List of members";
   if($timespan == "Custom") {
     $reportText = "Generating reports for members added from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
     $sql = "SELECT * FROM member
@@ -60,6 +61,7 @@ if($memberType == "Both") {
     $res = mysqli_query($conn, $sql);
   }
 } else {
+  $reportTitle = "List of ".strtolower($memberType)." members";
   if($timespan == "Custom") {
     $reportText = "Generating reports for members added from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
     $sql = "SELECT * FROM member WHERE member_type = '$memberType' 
@@ -111,54 +113,29 @@ if($memberType == "Both") {
     $res = mysqli_query($conn, $sql);
   }
 }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <p><?= $reportText ?></p>
-  <?php 
-  if($res) {
-    if(mysqli_num_rows($res) > 0) {
-  ?>
-  <table>
-    <thead>
-      <tr>
-        <th>Member ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Member Type</th>
-        <th>Date Registered</th>
-      </tr>
-    </thead>
-    <tbody>
-    <?php 
-      while($row = mysqli_fetch_assoc($res)) {
-      ?>
-        <tr>
-          <td><?= $row["member_id"] ?></td>
-          <td><?= $row["first_name"] ?></td>
-          <td><?= $row["last_name"] ?></td>
-          <td><?= $row["member_type"] ?></td>
-          <td><?= date("F d, Y", strtotime($row["date_registered"])) ?></td>
-        </tr>
-      <?php
-      }
-    ?>
-    </tbody>
-  </table>
-  <?php 
-    } else {
-      echo "Empty";
-    }
-  } else {
-    echo mysqli_error($conn);
+
+$data = array();
+if($res) {
+  while($row = mysqli_fetch_assoc($res)) {
+    $row["name"] = $row["first_name"]." ".$row["last_name"];
+    $row["date_registered"] = date("M d, Y", strtotime($row["date_registered"]));
+    $data[] = $row;
   }
-  ?>
-</body>
-</html>
+}
+$labels = array("Member ID", "Name", "Member Type", "Date Registered");
+$rowLabels = array("member_id", "name", "member_type", "date_registered");
+
+$object = (object) [
+  'data' => $data,
+  'rowLabels' => $rowLabels,
+  'labels' => $labels,
+  'toDate' => $toDate,
+  'fromDate' => $fromDate,
+  'reportTitle' => $reportTitle,
+  'fileName' => "ReportMembersList_".date("MdY")
+];
+
+$_SESSION["reports"] = $object;
+header("Location: ./../print_reports.php");
+exit;
+?>
