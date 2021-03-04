@@ -13,6 +13,7 @@ if($timespan == "Custom") {
 }
 
 if($promo_status == "Active"){
+  $reportTitle = "List of Active Permanent Promos";
   if($timespan == "Custom") {
     $reportText = "Generating reports for active permanent promo  from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
     $sql = "SELECT * FROM promo
@@ -65,6 +66,7 @@ if($promo_status == "Active"){
     $res = mysqli_query($conn, $sql);
   }
 }else if($promo_status == "Expired"){
+  $reportTitle = "List of Expired Permanent Promos";
     if($timespan == "Custom") {
         $reportText = "Generating reports for Expired permanent promo from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
         $sql = "SELECT * FROM promo
@@ -117,6 +119,7 @@ if($promo_status == "Active"){
         $res = mysqli_query($conn, $sql);
       }
 }else if($promo_status == "Deleted"){
+  $reportTitle = "List of Deleted Permanent Promos";
     if($timespan == "Custom") {
         $reportText = "Generating reports for Deleted permanent promo from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
         $sql = "SELECT * FROM promo
@@ -170,57 +173,61 @@ if($promo_status == "Active"){
       }
 }
 
+if($_POST["status"] == "Active" || $_POST["status"] == "Expired"){
+  $data = array();
+  if($res) {
+    while($row = mysqli_fetch_assoc($res)) {
+      $row["date_added"] = date("M d, Y", strtotime($row["date_added"]));
+      $row["promo_starting_date"] = date("M d, Y", strtotime($row["promo_starting_date"]));
+      $row["promo_ending_date"] = date("M d, Y", strtotime($row["promo_ending_date"]));
+      $row["date_deleted"] = date("M d, Y", strtotime($row["date_deleted"]));
+      $data[] = $row;
+    }
+  }
+
+  $labels = array("Promo ID", "Promo Name", "Promo Type", "Starting Date","Ending Date","Amount");
+  $rowLabels = array("promo_id", "promo_name", "promo_type", "promo_starting_date","promo_ending_date","amount");
+
+  $object = (object) [
+    'data' => $data,
+    'rowLabels' => $rowLabels,
+    'labels' => $labels,
+    'toDate' => $toDate,
+    'fromDate' => $fromDate,
+    'reportTitle' => $reportTitle,
+    'fileName' => "ReportPromoList_".date("MdY")
+  ];
+
+}else if($_POST["status"] == "Deleted"){
+
+  $data = array();
+  if($res) {
+    while($row = mysqli_fetch_assoc($res)) {
+      $row["date_added"] = date("M d, Y", strtotime($row["date_added"]));
+      $row["promo_starting_date"] = date("M d, Y", strtotime($row["promo_starting_date"]));
+      $row["promo_ending_date"] = date("M d, Y", strtotime($row["promo_ending_date"]));
+      $row["date_deleted"] = date("M d, Y", strtotime($row["date_deleted"]));
+      $data[] = $row;
+    }
+  }
+  
+  $labels = array("Promo ID", "Promo Name", "Promo Type", "Starting Date","Ending Date","Amount","Date Deleted");
+  $rowLabels = array("promo_id", "promo_name", "promo_type", "promo_starting_date","promo_ending_date","amount","date_deleted");
+  
+  $object = (object) [
+    'data' => $data,
+    'rowLabels' => $rowLabels,
+    'labels' => $labels,
+    'toDate' => $toDate,
+    'fromDate' => $fromDate,
+    'reportTitle' => $reportTitle,
+    'fileName' => "ReportPromoList_".date("MdY")
+  ];
+
+}
+
+$_SESSION["reports"] = $object;
+header("Location: ./../print_reports.php");
+exit;
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <p><?= $reportText ?></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Promo ID</th>
-        <th>Promo Name</th>
-        <th>Promo Type</th>
-        <th>Amount</th>
-        <th>Promo Description</th>
-        <th>Date Registered</th>
-        <th>Date Started</th>
-        <th>Date Ended</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php 
-      if($res) {
-        if(mysqli_num_rows($res) > 0) {
-          while($row = mysqli_fetch_assoc($res)) {
-            ?>
-            <tr>
-              <td><?= $row["promo_id"] ?></td>
-              <td><?= $row["promo_name"] ?></td>
-              <td><?= $row["promo_type"] ?></td>
-              <td><?= $row["amount"] ?></td>
-              <td><?= $row["promo_description"] ?></td>
-              <td><?= date("F d, Y", strtotime($row["date_added"])) ?></td>
-              <td><?= date("F d, Y", strtotime($row["promo_starting_date"])) ?></td>
-              <td><?= date("F d, Y", strtotime($row["promo_ending_date"])) ?></td>
-            </tr>
-            <?php
-            }
-        } else {
-          echo "Empty";
-        }
-      } else {
-        echo mysqli_error($conn);
-      }
-      ?>
-    </tbody>
-  </table>
-</body>
-</html>

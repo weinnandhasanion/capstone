@@ -14,7 +14,7 @@ if($timespan == "Custom") {
 
 
 
-
+$reportTitle = "List of inactive Trainers";
   if($timespan == "Custom") {
     $reportText = "Generating reports for inactive trainers from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
     $sql = "SELECT * FROM trainer
@@ -63,49 +63,29 @@ if($timespan == "Custom") {
   }
 
 
+  $data = array();
+  if($res) {
+    while($row = mysqli_fetch_assoc($res)) {
+      $row["name"] = $row["first_name"]." ".$row["last_name"];
+      $row["date_hired"] = date("M d, Y", strtotime($row["date_hired"]));
+      $data[] = $row;
+    }
+  }
+  $labels = array("Trainer ID", "Name", "Email", "Date Registered");
+  $rowLabels = array("trainer_id", "name", "email", "date_hired");
+  
+  $object = (object) [
+    'data' => $data,
+    'rowLabels' => $rowLabels,
+    'labels' => $labels,
+    'toDate' => $toDate,
+    'fromDate' => $fromDate,
+    'reportTitle' => $reportTitle,
+    'fileName' => "ReportTrainersInactive_".date("MdY")
+  ];
+  
+  $_SESSION["reports"] = $object;
+  header("Location: ./../print_reports.php");
+  exit;
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <p><?= $reportText ?></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Trainer ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Date Registered</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php 
-      if($res) {
-        if(mysqli_num_rows($res) > 0) {
-          while($row = mysqli_fetch_assoc($res)) {
-            ?>
-            <tr>
-              <td><?= $row["trainer_id"] ?></td>
-              <td><?= $row["first_name"] ?></td>
-              <td><?= $row["last_name"] ?></td>
-              <td><?= date("F d, Y", strtotime($row["date_hired"])) ?></td>
-            </tr>
-            <?php
-            }
-        } else {
-          echo "Empty";
-        }
-      } else {
-        echo mysqli_error($conn);
-      }
-      ?>
-    </tbody>
-  </table>
-</body>
-</html>

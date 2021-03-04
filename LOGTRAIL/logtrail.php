@@ -424,7 +424,7 @@
 
 
     
-       // Pagination sa trainers
+       // Pagination sa logtrail
   $("#footer").pagination({
     dataSource: function(done) {
       $.get("./getlogtrail.php", function(res) {
@@ -465,45 +465,6 @@
 
 
   
-       // Pagination sa trainers
-       $("#footer-modal").pagination({
-    dataSource: function(done) {
-      $.get("./getlogtrail.php", function(res) {
-        console.log(res);
-        done(JSON.parse(res));
-      });
-    },
-    pageSize: 5,
-    showPrevious: false,
-    showNext: false,
-    callback: function(data) {
-      $("#logtrail-tbody").empty();
-      if(data.length > 0) {
-        $("#no-data-div-logtrail").css("display", "none");
-        data.forEach(row => {
-          let html = `<tr>
-            <td>${row.login_id}</td>
-            <td>${row.admin_id}</td>
-            <td>${row.fullname}</td>
-            <td>${row.date_login}</td>
-            <td>${row.time_login}</td>
-            <td>${row.time_logout}</td>
-            <td>
-            <span data-toggle="tooltip" data-placement="top" title="View doings">
-                  <i style="cursor: pointer; color:brown; font-size: 25px;" 
-                    data-toggle="modal" data-target="#view_member"
-                    class=" fa fa-eye mx-2 get_id" data-id = "${row.login_id}"
-                    onclick="member(this)"></i>
-            </span></td>
-          <tr>`;
-          $("#logtrail-tbody").append(html);
-        });
-      } else {
-        $("#no-data-div-logtrail").css("display", "flex");
-      }
-    }
-  });
-
 
 
 
