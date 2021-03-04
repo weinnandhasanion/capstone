@@ -130,7 +130,7 @@ $rowLabels = $toPrint->rowLabels;
 print = () => {
   let elem = document.getElementById('to-print');
   var opt = {
-    margin: 0.5,
+    margin: [0.5, 0.5, 1, 0.5],
     filename: "<?= $toPrint->fileName ?>",
     pagebreak: { mode: 'avoid_all' },
     image: { type: 'jpeg', quality: 0.98 },
@@ -143,7 +143,7 @@ print = () => {
     	pdf.setPage(i);
       pdf.setFontSize(10);
       pdf.setTextColor("black");
-      pdf.text(`${i}`, (pdf.internal.pageSize.getWidth()/2), (pdf.internal.pageSize.getHeight()-0.3));
+      pdf.text(`${i}`, (pdf.internal.pageSize.getWidth()/2), (pdf.internal.pageSize.getHeight()-0.5));
     }
   }).save();
 }
