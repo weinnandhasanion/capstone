@@ -1287,7 +1287,7 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Program Description</label>
-                  <textarea name="program_description_update" style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc_update" placeholder="Enter program desciption here"></textarea>
+                  <textarea name="program_description" style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc_update" placeholder="Enter program desciption here"></textarea>
                 </div>
               </div>
             </div>
@@ -2534,8 +2534,8 @@
     let req = new XMLHttpRequest();
     req.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
         display(JSON.parse(this.responseText));
+        console.log(JSON.parse(this.responseText));
       }
     }
     req.open('GET', 'viewprogram_update.php?id=' + id, true);
@@ -2546,7 +2546,7 @@
       var stringDate = digitDate.toDateString(digitDate);
 
       document.getElementById("prgram_name_update").value = row.program_name;
-      document.getElementById("trainer_name_update").value = row.trainer_name;
+      document.getElementById("trainer_name_update").value = row.first_name +  ' ' + row.last_name;
       document.getElementById("program_desc_update").value = row.program_description;
       document.getElementById("upper-1-day-1_update").value = row.upper_1_day_1;
       document.getElementById("upper-2-day-1_update").value = row.upper_2_day_1;

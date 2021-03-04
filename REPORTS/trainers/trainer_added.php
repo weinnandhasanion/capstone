@@ -3,10 +3,10 @@ require "./../connect.php";
 session_start();
 
 
-$timespan = $_POST["timespan_trainers_added"];
+$timespan = $_POST["timespan_trainers_list"];
 if($timespan == "Custom") {
-  $fromDate = date("Y-m-d", strtotime($_POST["from_date_trainers_added"]));
-  $toDate = date("Y-m-d", strtotime($_POST["to_date_trainers_added"]));
+  $fromDate = date("Y-m-d", strtotime($_POST["from_date_trainers_list"]));
+  $toDate = date("Y-m-d", strtotime($_POST["to_date_trainers_list"]));
 } else {
   $fromDate = NULL;
   $toDate = NULL;
@@ -14,13 +14,13 @@ if($timespan == "Custom") {
 
 
   if($timespan == "Custom") {
-    $reportText = "Generating reports for trainers added from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
+    $reportText = "Generating reports for trainers  from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
     $sql = "SELECT * FROM trainer
             WHERE date_hired >= '$fromDate' 
             AND date_hired <= '$toDate'";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "Today") {
-    $reportText = "Generating reports for trainers added today, ".date("F d, Y")."...";
+    $reportText = "Generating reports for trainers  today, ".date("F d, Y")."...";
     $today = date("Y-m-d");
     $sql = "SELECT * FROM trainer
             WHERE date_hired = '$today'";
@@ -28,7 +28,7 @@ if($timespan == "Custom") {
   } else if($timespan == "This week") {
     $today = date("Y-m-d");
     $lastWeek = date("Y-m-d", strtotime($today. "- 7 days"));
-    $reportText = "Generating reports for trainers added this week (".date("F d, Y", strtotime($lastWeek))." to ".date("F d, Y").")...";
+    $reportText = "Generating reports for trainers  this week (".date("F d, Y", strtotime($lastWeek))." to ".date("F d, Y").")...";
     $sql = "SELECT * FROM trainer
             WHERE date_hired >= '$lastWeek'
             AND date_hired <= '$today'";
@@ -36,7 +36,7 @@ if($timespan == "Custom") {
   } else if($timespan == "This month") {
     $monthStart = date("Y-m-01");
     $monthEnd = date("Y-m-t");
-    $reportText = "Generating reports for trainers added this month of ".date("F")."...";
+    $reportText = "Generating reports for trainers  this month of ".date("F")."...";
     $sql = "SELECT * FROM trainer
             WHERE date_hired >= '$monthStart'
             AND date_hired <= '$monthEnd'";
@@ -44,13 +44,13 @@ if($timespan == "Custom") {
   } else if($timespan == "This year") {
     $yearStart = date("Y-01-01");
     $yearEnd = date("Y-12-31");
-    $reportText = "Generating reports for trainers added this year (".date("Y").")...";
+    $reportText = "Generating reports for trainers  this year (".date("Y").")...";
     $sql = "SELECT * FROM trainer
             WHERE date_hired >= '$yearStart'
             AND date_hired <= '$yearEnd'";
     $res = mysqli_query($conn, $sql);
   } else {
-    $reportText = "Generating reports for trainers added since all of time...";
+    $reportText = "Generating reports for trainers  since all of time...";
     $sql = "SELECT * FROM trainer";
     $res = mysqli_query($conn, $sql);
   }

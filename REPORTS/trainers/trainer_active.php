@@ -17,7 +17,6 @@ if($timespan == "Custom") {
     $sql = "SELECT * FROM trainer
             WHERE date_hired >= '$fromDate' 
             AND date_hired <= '$toDate'
-            AND acc_status = 'able'
             AND  trainer_status = 'active'";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "Today") {
@@ -25,8 +24,7 @@ if($timespan == "Custom") {
     $today = date("Y-m-d");
     $sql = "SELECT * FROM trainer
             WHERE date_hired = '$today' AND
-            trainer_status = 'active'AND
-            acc_status = 'able'";
+            trainer_status = 'active'";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This week") {
     $today = date("Y-m-d");
@@ -35,8 +33,7 @@ if($timespan == "Custom") {
     $sql = "SELECT * FROM trainer
             WHERE date_hired >= '$lastWeek'
             AND date_hired <= '$today'
-            AND trainer_status = 'active'
-            AND acc_status = 'able'";
+            AND trainer_status = 'active'";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This month") {
     $monthStart = date("Y-m-01");
@@ -45,8 +42,7 @@ if($timespan == "Custom") {
     $sql = "SELECT * FROM trainer
             WHERE date_hired >= '$monthStart'
             AND date_hired <= '$monthEnd'
-            AND trainer_status = 'active'
-            AND acc_status = 'able'";
+            AND trainer_status = 'active'";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This year") {
     $yearStart = date("Y-01-01");
@@ -55,13 +51,11 @@ if($timespan == "Custom") {
     $sql = "SELECT * FROM trainer
             WHERE date_hired >= '$yearStart'
             AND date_hired <= '$yearEnd'
-            AND trainer_status = 'active'
-            AND acc_status = 'able'";
+            AND trainer_status = 'active'";
     $res = mysqli_query($conn, $sql);
   } else {
     $reportText = "Generating reports for active trainers  since all of time...";
-    $sql = "SELECT * FROM trainer WHERE   trainer_status = 'active'
-    AND acc_status = 'able'";
+    $sql = "SELECT * FROM trainer WHERE   trainer_status = 'active'";
     $res = mysqli_query($conn, $sql);
   }
 

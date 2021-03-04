@@ -260,7 +260,6 @@
                   <th>ID</th>
                   <th>First name</th>
                   <th>Last name</th>
-                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -396,15 +395,15 @@
                     <tr style="text-align:center;">
                      
                       <th>fullname</th>
-                      <th>Date Added</th>
-                      <th>date deleted</th>
+                      <th>Date deleted</th>
+                      <th>Time deleted</th>
                       <th>action</th>
                     </tr>
                   </thead>
                   <tbody id='deletetbody'>
                   <?php
             /* code for display data */
-            $sql = "SELECT * FROM trainer WHERE acc_status = 'disable'";
+            $sql = "SELECT * FROM trainer WHERE trainer_status = 'deleted'";
             $result = mysqli_query($conn, $sql);
             $resultCheck = mysqli_num_rows($result);
 
@@ -419,8 +418,8 @@
 
                 <tr>
                   <td><?php echo $row["first_name"],  $row["last_name"] ?></td>
-                  <td><?php echo $string_date_hired?></td>
                   <td><?php echo $string_date_deleted?></td>
+                  <td><?php echo $row["time_deleted"] ?></td>
                   <td>
                     <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
                       title="Recover <?php echo $row["last_name"]?>" class="fas fa-undo mx-2"
@@ -485,35 +484,25 @@
           </div>
           <div class="form-group">
             <div class="form-row">
-              <div class="col-sm-6">
+              <div class="col-sm-9">
                 <label>E-mail</label>
                 <input name="trainer_email" type="text" id="view_email" disabled class="form-control">
               </div>
               <div class="col-sm-3">
-                <label>Status</label>
+                <label>Trainer Status</label>
                 <input name="trainer_status" type="text" id="trainerStatus" disabled class="form-control"> 
-              </div>
-              <div class="col-sm-3">
-                <label>Account Status</label>
-                <input name="trainer_acc_status" type="text" class="form-control" id="view_accStat" disabled>
-              </div>
-             
-              <div class="col-sm-2 ">
-              <br>
-                <label>Gender</label>
-                <input name="trainer_gender" type="text" class="form-control" id="view_sex" disabled>
-              </div>
-              <div class="col-sm-2">
-              <br>
-              <label>Position</label>
-                <input name="trainer_position" type="text" id="trainerPosition" disabled class="form-control">
               </div>
               <div class="col-sm-4 train">
               <br>
                 <label>Birthdate</label>
                 <input name="trainer_birthdate" type="text" disabled class="form-control" id="view_birthdate">
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-3">
+              <br>
+                 <label>Gender</label>
+                <input name="trainer_gender" type="text" class="form-control" id="view_sex" disabled>
+              </div>
+              <div class="col-sm-5">
               <br>
               <label>Contact</label>
               <input name="trainer_phone" type="text" id="view_phone" disabled class=" form-control">
@@ -652,7 +641,6 @@
             <td>${row.trainer_id}</td>
             <td>${row.last_name}</td>
             <td>${row.first_name}</td>
-            <td>${row.trainer_position}</td>
             <td>
                     <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
                     <i style="cursor: pointer; color:brown; font-size: 25px;"data-toggle="modal" data-target="#view"
@@ -690,7 +678,6 @@
             <td>${row.trainer_id}</td>
             <td>${row.last_name}</td>
             <td>${row.first_name}</td>
-            <td>${row.trainer_position}</td>
             <td>
                     <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
                     <i style="cursor: pointer; color:brown; font-size: 25px;"data-toggle="modal" data-target="#view"
@@ -728,7 +715,6 @@
             <td>${row.trainer_id}</td>
             <td>${row.last_name}</td>
             <td>${row.first_name}</td>
-            <td>${row.trainer_position}</td>
             <td>
                     <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
                     <i style="cursor: pointer; color:brown; font-size: 25px;"data-toggle="modal" data-target="#view"
@@ -795,14 +781,12 @@ $(function () {
         document.getElementById("trainerStatus").value = row.trainer_status;
         document.getElementById("view_lname").value = row.last_name;
         document.getElementById("view_fname").value = row.first_name;
-        document.getElementById("trainerPosition").value = row.trainer_position;
         document.getElementById("view_email").value = row.email;
         document.getElementById("view_phone").value = row.phone;
         document.getElementById("view_birthdate").value = string_birthdate;
         document.getElementById("view_address").value = row.address;
         document.getElementById("view_sex").value = row.gender;
         document.getElementById("view_dateHired").value = string_date_hired;
-        document.getElementById("view_accStat").value = row.acc_status;
       }
     }
 
@@ -914,7 +898,6 @@ $(function () {
             <td>${row.trainer_id}</td>
             <td>${row.last_name}</td>
             <td>${row.first_name}</td>
-            <td>${row.trainer_status}</td>
             <td>
                     <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
                     <i style="cursor: pointer; color:brown; font-size: 25px;"data-toggle="modal" data-target="#view"
@@ -974,8 +957,6 @@ $(function () {
             <td>${row.trainer_id}</td>
             <td>${row.last_name}</td>
             <td>${row.first_name}</td>
-            <td>${row.trainer_status}</td>
-            <td>${row.trainer_position}</td>
             <td>
                     <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
                     <i style="cursor: pointer; color:brown; font-size: 25px;"data-toggle="modal" data-target="#view"

@@ -8,8 +8,9 @@ if($_SESSION['admin_id']){
 
 $id = $_REQUEST['id'];
 $date_deleted = date("Y-m-d");
+$time_deleted = date("h:i A");
 
-$ox = "UPDATE trainer SET acc_status = 'disable', date_deleted = '$date_deleted'
+$ox = "UPDATE trainer SET trainer_status = 'deleted', date_deleted = '$date_deleted', time_deleted = '$time_deleted'
 WHERE trainer_id = " . intval($id) . "";     
 
 if(mysqli_query($conn, $ox))
