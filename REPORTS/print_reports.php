@@ -17,6 +17,7 @@ $toDate = $toPrint->toDate;
 $fromDate = $toPrint->fromDate;
 $rowLabels = $toPrint->rowLabels;
 
+$totalSales = 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,6 +95,9 @@ $rowLabels = $toPrint->rowLabels;
     <tbody>
       <?php 
       foreach($data as $row) {
+        if(property_exists($toPrint, "displayTotalSales")) {
+          $totalSales += intval($row["payment_amount"]);
+        }
       ?>
       <tr>
         <?php 
@@ -109,7 +113,17 @@ $rowLabels = $toPrint->rowLabels;
       ?>
     </tbody>
   </table>
+  <?php 
+  if(property_exists($toPrint, "displayTotalSales")) {
+  ?>
+  <p>Total sales: P<?= $totalSales ?>.00</p>
+  <?php
+  } else {
+  ?>
   <p class="mb-5">Data count: <?= count($data) ?></p>
+  <?php
+  }
+  ?>
   <?php
   } else {
   ?>
@@ -137,6 +151,7 @@ print = () => {
     html2canvas: { scale: 3 },
     jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait', putTotalPages: "{total_pages_count_string}" }
   };
+  
   html2pdf().from(elem).set(opt).toPdf().get('pdf').then(function (pdf) {
     var totalPages = pdf.internal.getNumberOfPages();
     for (i = 1; i <= totalPages; i++) {

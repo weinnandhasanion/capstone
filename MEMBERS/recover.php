@@ -9,7 +9,7 @@ if($_SESSION['admin_id']){
     }
 
     
-$ox = "UPDATE member SET acc_status = 'active'
+$ox = "UPDATE member SET acc_status = 'active', date_deleted = NULL
 WHERE member_id = " . intval($id) . "";     
 
 if(mysqli_query($conn, $ox))

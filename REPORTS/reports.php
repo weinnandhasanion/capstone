@@ -121,9 +121,13 @@
         <i class="fas fa-eye mr-2"></i>
         List of members
       </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#paid-members">
+      <button class="btn btn-orange btn-sm" onclick="getPaidMembers()">
         <i class="fas fa-eye mr-2"></i>
         List of members with ongoing subscription
+      </button>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#expired-members">
+        <i class="fas fa-eye mr-2"></i>
+        List of members with expired subscription
       </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#unpaid-members">
         <i class="fas fa-eye mr-2"></i>
@@ -133,7 +137,7 @@
         <i class="fas fa-eye mr-2"></i>
         List of members who have activated their mobile account
       </button>
-      <button class="btn btn-orange btn-sm" onclick="getMembersPromo()">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#member-promos">
         <i class="fas fa-eye mr-2"></i>
        List of members who availed a promo
       </button>
@@ -217,19 +221,19 @@
         </li>
         <li class="breadcrumb-item active">Payments</li>
       </ol>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#total-sales">
         <i class="fas fa-eye mr-2"></i>
         total sales
       </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#monthly-payments">
         <i class="fas fa-eye mr-2"></i>
         list of monthly payments
       </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#annual-payments">
         <i class="fas fa-eye mr-2"></i>
         list of annual payments
       </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-added">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#walkin-payments">
         <i class="fas fa-eye mr-2"></i>
         list of walk-in payments
       </button>
@@ -289,54 +293,47 @@
     </div>
   </div>
 
-  <!-- total paid members -->
-  <div class="modal fade" role="dialog" id="paid-members">
-    <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <form target="_blank" action="./members/paid_members.php" method="post">
-          <div class="modal-header">
-            <h4 class="modal-title">Generate report for members who are paid</h4>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <div class="row">
-                <div class="col-sm-6">
-                  <label for="">Member type</label>
-                  <select name="member_type" class="form-control">
-                    <option value="Regular">Regular</option>
-                    <option value="Walk-in">Walk-in</option>
-                    <option value="Both">Both</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-sm btn-outline-orange">Generate report</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <!-- total unpaid members -->
   <div class="modal fade" role="dialog" id="unpaid-members">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-        <form target="_blank" action="./members/unpaid_members.php" method="post">
+        <form target="_blank" action="./members/inactive_members.php" method="post">
           <div class="modal-header">
-            <h4 class="modal-title">Generate report for members who are not paid</h4>
+            <h4 class="modal-title">Generate report for members who are already inactive</h4>
           </div>
           <div class="modal-body">
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Member type</label>
-                  <select name="member_type" class="form-control">
-                    <option value="Regular">Regular</option>
-                    <option value="Walk-in">Walk-in</option>
-                    <option value="Both">Both</option>
+                  <label for="">Member Status</label>
+                  <select name="status" id="" class="form-control">
+                    <option value="Expired">Expired (Membership)</option>
+                    <option value="Deleted">Deleted</option>
+                    <option value="Both" selected>Both</option>
                   </select>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Date Inactive</label>
+                  <select id="inactive-members-select" name="timespan" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group custom-date" id="inactive-members-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date" id="" class="form-control">
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date" id="" class="form-control">
                 </div>
               </div>
             </div>
@@ -349,27 +346,19 @@
     </div>
   </div>
 
-  <!-- total deleted members -->
-  <div class="modal fade" role="dialog" id="deleted-members">
+  <!-- list of expired members -->
+  <div class="modal fade" role="dialog" id="expired-members">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-        <form target="_blank" action="./members/deleted_members.php" method="post">
+        <form target="_blank" action="./members/expired_members.php" method="post">
           <div class="modal-header">
-            <h4 class="modal-title">Generate report for deleted members</h4>
+            <h4 class="modal-title">Generate report for members with expired subscription</h4>
           </div>
           <div class="modal-body">
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Member type</label>
-                  <select name="member_type" class="form-control">
-                    <option value="Regular">Regular</option>
-                    <option value="Walk-in">Walk-in</option>
-                    <option value="Both">Both</option>
-                  </select>
-                </div>
-                <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date Expired</label>
                   <select id="deleted-members-select" name="timespan" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -422,6 +411,55 @@
                     <option value="This year">This year</option>
                     <option value="All-time">All-time</option>
                     <option value="Custom">Custom</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group custom-date" id="activated-members-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date" id="" class="form-control">
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date" id="" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- list of members who availed promo -->
+  <div class="modal fade" role="dialog" id="member-promos">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <form target="_blank" action="./members/members_promo.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for members who availed a promo</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Promo</label>
+                  <select name="promo" class="form-control">
+                    <?php 
+                    $sql = "SELECT * FROM promo";
+                    $query = mysqli_query($conn, $sql);
+                    while($row = mysqli_fetch_assoc($query)) {
+                    ?>
+                    <option value="<?= $row["promo_id"] ?>"><?= $row["promo_name"] ?></option>
+                    <?php
+                    }
+                    ?>
+                    <option value="All" selected>All promos</option>
                   </select>
                 </div>
               </div>
@@ -743,6 +781,186 @@
       </div>
     </div>
   </div>
+
+  <!-- total sales -->
+  <div class="modal fade" role="dialog" id="total-sales">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+      <form target="_blank" action="./payments/total_sales.php" method="post">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for total sales</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="total-sales-select" name="timespan" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="total-sales-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="from_date" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="to_date" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- list of monthly payments -->
+  <div class="modal fade" role="dialog" id="monthly-payments">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+      <form target="_blank" action="./payments/monthly_payments.php" method="post">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for monthly payments</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="monthly-payments-select" name="timespan" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="monthly-payments-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="from_date" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="to_date" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- list of annual payments -->
+  <div class="modal fade" role="dialog" id="annual-payments">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+      <form target="_blank" action="./payments/annual_payments.php" method="post">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for annual payments</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="annual-payments-select" name="timespan" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="annual-payments-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="from_date" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="to_date" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+   <!-- list of walkin payments -->
+   <div class="modal fade" role="dialog" id="walkin-payments">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+      <form target="_blank" action="./payments/walkin_payments.php" method="post">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for walkin payments</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="walkin-payments-select" name="timespan" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="walkin-payments-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="from_date" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="to_date" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
   
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/popper.min.js"></script>
@@ -765,7 +983,15 @@
   }
 
   function getMembersPromo () {
-    window.location.href = "./members/members_promo.php";
+    window.open("./members/members_promo.php", "_blank");
+  }
+
+  function getPaidMembers () {
+    window.open("./members/paid_members.php", "_blank");
+  }
+
+  function getExpiredMembers () {
+    window.open("./members/expired_members.php", "_blank");
   }
 
 //modal custom for members
@@ -787,12 +1013,58 @@
     }
   });
 
+  $("#inactive-members-select").on("change", function() {
+    let select = $("#inactive-members-select");
+    if(select.val() == "Custom") {
+      $("#inactive-members-custom").css("display", "block");
+    } else {
+      $("#inactive-members-custom").css("display", "none");
+    }
+  });
+
   $("#activated-members-select").on("change", function() {
     let select = $("#activated-members-select");
     if(select.val() == "Custom") {
       $("#activated-members-custom").css("display", "block");
     } else {
       $("#activated-members-custom").css("display", "none");
+    }
+  });
+
+  // PAYMENTS
+  $("#total-sales-select").on("change", function() {
+    let select = $("#total-sales-select");
+    if(select.val() == "Custom") {
+      $("#total-sales-custom").css("display", "block");
+    } else {
+      $("#total-sales-custom").css("display", "none");
+    }
+  });
+
+  $("#monthly-payments-select").on("change", function() {
+    let select = $("#monthly-payments-select");
+    if(select.val() == "Custom") {
+      $("#monthly-payments-custom").css("display", "block");
+    } else {
+      $("#monthly-payments-custom").css("display", "none");
+    }
+  });
+
+  $("#annual-payments-select").on("change", function() {
+    let select = $("#annual-payments-select");
+    if(select.val() == "Custom") {
+      $("#annual-payments-custom").css("display", "block");
+    } else {
+      $("#annual-payments-custom").css("display", "none");
+    }
+  });
+
+  $("#walkin-payments-select").on("change", function() {
+    let select = $("#annual-payments-select");
+    if(select.val() == "Custom") {
+      $("#walkin-payments-custom").css("display", "block");
+    } else {
+      $("#walkin-payments-custom").css("display", "none");
     }
   });
 

@@ -1225,7 +1225,8 @@
               <tbody id='deletetbody'>
                 <?php
             /* code for display data */
-            $sql = "SELECT * FROM member WHERE acc_status = 'inactive'";
+            $sql = "SELECT * FROM member WHERE acc_status = 'inactive'
+                    AND date_deleted IS NOT NULL";
             $result = mysqli_query($conn, $sql);
             $resultCheck = mysqli_num_rows($result);
 
