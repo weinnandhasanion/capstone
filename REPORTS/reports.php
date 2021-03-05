@@ -179,15 +179,15 @@
         </li>
         <li class="breadcrumb-item active">Inventory</li>
       </ol>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#inventory-list">
         <i class="fas fa-eye mr-2"></i>
         list of equipments
       </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#inventory-working">
         <i class="fas fa-eye mr-2"></i>
         list of working equipments
       </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#">
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#inventory-damage">
         <i class="fas fa-eye mr-2"></i>
         list of damaged equipments
       </button>
@@ -1011,6 +1011,161 @@
     </div>
   </div>
   
+  
+   <!-- list of inventory -->
+   <div class="modal fade" role="dialog" id="inventory-list">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+      <form target="_blank" action="./inventory/inventory_list.php" method="post">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for list of inventory</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="inventory-list-select" name="timespan_inventory_list" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="inventory-list-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="from_date_inventory_list" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="to_date_inventory_list" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  
+   <!-- working  inventory -->
+   <div class="modal fade" role="dialog" id="inventory-working">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+      <form target="_blank" action="./inventory/inventory_working.php" method="post">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for working inventory</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="inventory-working-select" name="timespan_inventory_working" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                  <label for="">Category</label>
+                  <select name="inventory_category_working" id="" class="form-control">
+                    <option value="Cardio Equipment">Cardio Equipment</option>
+                    <option value="Weight Equipment">Weight Equipment</option>
+                    <option value="Both" selected>Both</option>
+                  </select>
+                </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="inventory-working-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="from_date_inventory_working" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="to_date_inventory_working" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+   <!-- Damage  inventory -->
+   <div class="modal fade" role="dialog" id="inventory-damage">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+      <form target="_blank" action="./inventory/inventory_damage.php" method="post">
+        <div class="modal-header">
+          <h4 class="modal-title">Generate report for damage inventory</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Time span</label>
+                <select id="inventory-damage-select" name="timespan_inventory_damage" class="form-control">
+                  <option value="Today">Today</option>
+                  <option value="This week">This week</option>
+                  <option value="This month">This month</option>
+                  <option value="This year">This year</option>
+                  <option value="All-time">All-time</option>
+                  <option value="Custom">Custom</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                  <label for="">Category</label>
+                  <select name="inventory_category_damage" id="" class="form-control">
+                    <option value="Cardio Equipment">Cardio Equipment</option>
+                    <option value="Weight Equipment">Weight Equipment</option>
+                    <option value="Both" selected>Both</option>
+                  </select>
+                </div>
+            </div>
+          </div>
+          <div class="form-group custom-date" id="inventory-damage-custom">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">From Date</label>
+                <input type="date" name="from_date_inventory_damage" id="" class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">To Date</label>
+                <input type="date" name="to_date_inventory_damage" id="" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/popper.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -1183,6 +1338,34 @@
       $("#promos-seasonal-custom").css("display", "block");
     } else {
       $("#promos-seasonal-custom").css("display", "none");
+    }
+  });
+   //-------------------------- INVENTORY -----------------------------
+    //modal custom for list of inventory
+    $("#inventory-list-select").on("change", function() {
+    let select = $("#inventory-list-select");
+    if(select.val() == "Custom") {
+      $("#inventory-list-custom").css("display", "block");
+    } else {
+      $("#inventory-list-custom").css("display", "none");
+    }
+  });
+  //modal custom for working of inventory
+  $("#inventory-working-select").on("change", function() {
+    let select = $("#inventory-working-select");
+    if(select.val() == "Custom") {
+      $("#inventory-working-custom").css("display", "block");
+    } else {
+      $("#inventory-working-custom").css("display", "none");
+    }
+  });
+    //modal custom for damage of inventory
+    $("#inventory-damage-select").on("change", function() {
+    let select = $("#inventory-damage-select");
+    if(select.val() == "Custom") {
+      $("#inventory-damage-custom").css("display", "block");
+    } else {
+      $("#inventory-damage-custom").css("display", "none");
     }
   });
   </script>
