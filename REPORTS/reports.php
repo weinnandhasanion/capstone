@@ -455,7 +455,7 @@
                   <label for="">Promo</label>
                   <select name="promo" class="form-control">
                     <?php 
-                    $sql = "SELECT * FROM promo";
+                    $sql = "SELECT * FROM promo WHERE status = 'Active'";
                     $query = mysqli_query($conn, $sql);
                     while($row = mysqli_fetch_assoc($query)) {
                     ?>
