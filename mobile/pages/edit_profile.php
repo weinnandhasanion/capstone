@@ -520,12 +520,16 @@
         var bmonth = bdate.getMonth() + 1;
         var bday = bdate.getDate();
         var today = new Date();
+        var res;
         
-        if(bdate < today && (today.getFullYear() - byear) >= 15) {
-          return true;
+        if(bdate < today && (today.getFullYear() - byear) >= 15 && (today.getFullYear() - byear) <= 90) {
+          res = true; 
         } else {
-          return false;
+          res = false;
         }
+
+        console.log(res);
+        return res;
       }
 
       $("#save-changes-btn").click(function() {
@@ -567,7 +571,7 @@
           phoneInvalid.hide();
         }
 
-        if(!validateBirthdate(birthdateDef.trim())) {
+        if(!validateBirthdate(birthdateDef)) {
           birthdateInvalid.show();
         } else {
           birthdateInvalid.hide();
