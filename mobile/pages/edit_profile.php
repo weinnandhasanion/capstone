@@ -447,30 +447,59 @@
 
       $(".edit").on("change", function() {
         if($("#username-edit").val() != user || $("#email-edit").val() != email || $("#phone-edit").val() != phone || $("#birthdate-edit").val() != newBdate || $("#address-edit").val() != address) {
-          $("#save-changes-btn").removeClass("btn-disabled").addClass("btn-red").attr("disabled", "");
+          $("#save-changes-btn").removeClass("btn-disabled").addClass("btn-red").removeAttr("disabled");
         } else if($("#username-edit").val() == user && $("#email-edit").val() == email && $("#phone-edit").val() == phone && $("#birthdate-edit").val() == newBdate && $("#address-edit").val() == address){
           $("#save-changes-btn").removeClass("btn-red").addClass("btn-disabled").attr("disabled", "disabled");
         }
       });
 
+      $("#username-edit").on("change", function () {
+        $("#invalid-username").hide();
+      });
+
+      $("#email-edit").on("change", function () {
+        $("#invalid-email").hide();
+      });
+
+      $("#birthdate-edit").on("change", function () {
+        $("#invalid-birthdate").hide();
+      });
+
+      $("#phone-edit").on("change", function () {
+        $("#invalid-phone").hide();
+      });
+
       function validateUsername(val) {
         var tmp;
-        $.ajax({
-          async: false,
-          url: "./edit_profile.php",
-          type: "json",
-          method: "post",
-          data: {
-            user: val
-          }, 
-          success: function(res) {
-            if(res == 0) {
-              tmp = false;
-            } else {
-              tmp = true;
-            }
+
+        if(val.indexOf(' ') > 0) {
+          tmp = {
+            isValid: false,
+            message: "Username must not contain whitespace"
           }
-        });
+        } else {
+          $.ajax({
+            async: false,
+            url: "./edit_profile.php",
+            type: "json",
+            method: "post",
+            data: {
+              user: val
+            }, 
+            success: function(res) {
+              if(res == 0) {
+                tmp = {
+                  isValid: false,
+                  message: "Username is already taken"
+                }
+              } else {
+                tmp = {
+                  isValid: true
+                }
+              }
+            }
+          });
+        }
 
         return tmp;
       }
@@ -500,6 +529,8 @@
       }
 
       $("#save-changes-btn").click(function() {
+        $("#change-success").hide();
+
         var usernameDef = $("#username-default").text();
         var usernameInvalid = $("#invalid-username");
         var emailDef = $("#email-default").text();
@@ -511,8 +542,15 @@
 
         // validateUsername(usernameDef)
 
-        if(!validateUsername(usernameDef)) {
-          usernameInvalid.show();
+        // if(!validateUsername(usernameDef)) {
+        //   usernameInvalid.show();
+        // } else {
+        //   usernameInvalid.hide();
+        // }
+
+        let valUser = validateUsername(usernameDef);
+        if(!valUser.isValid) {
+          usernameInvalid.text(valUser.message).show();
         } else {
           usernameInvalid.hide();
         }
@@ -535,7 +573,7 @@
           birthdateInvalid.hide();
         }
 
-        if(validateUsername(usernameDef) && validateEmail(emailDef) && validatePhone(phoneDef) && validateBirthdate(birthdateDef)) {
+        if(valUser.isValid && validateEmail(emailDef) && validatePhone(phoneDef) && validateBirthdate(birthdateDef)) {
           var d = new Date(birthdateDef.trim())
           var bdate = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 
@@ -553,6 +591,13 @@
               if(res == 1) {
                 $("#change-success").show();
                 $("#change-error").hide();
+                $("#save-changes-btn").removeClass("btn-red").addClass("btn-disabled").attr("disabled", "disabled");
+
+                user = usernameDef;
+                email = emailDef;
+                phone = phoneDef;
+                newBdate = bdate;
+                address = $("#address-default").text();
               } else {
                 $("#change-success").hide();
                 $("#change-error").show();

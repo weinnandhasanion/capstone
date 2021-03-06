@@ -103,6 +103,7 @@
           <input type="file" name="file" id="choose-file" onchange="readURL(this)">
           <button class="btn btn-disabled" type="submit" disabled="disabled" id="save-changes">Save changes</button>
         </form>
+        <small class="text-red" id="error" style="display: none">Please choose a proper file type (.jpeg, .png).</small>
     </div>
   </main>
 
@@ -131,14 +132,19 @@
 
     function readURL(input) {
       if(input.files && input.files[0]) {
-        var reader = new FileReader();
+        if(input.files[0].type.match('image.*')) {
+          var reader = new FileReader();
 
-        reader.onload = function(e) {
-          $("#profile_pic").attr("src", reader.result);
+          reader.onload = function(e) {
+            $("#profile_pic").attr("src", reader.result);
+          }
+
+          reader.readAsDataURL(input.files[0]);
+          $("#error").css("display", "none");
+          $("#save-changes").removeAttr("disabled").removeClass("btn-disabled");
+        } else {
+          $("#error").css("display", "block");
         }
-
-        reader.readAsDataURL(input.files[0]);
-        $("#save-changes").removeAttr("disabled").removeClass("btn-disabled");
       }
     }
   </script>

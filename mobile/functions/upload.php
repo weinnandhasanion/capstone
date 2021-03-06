@@ -110,7 +110,7 @@ $row = mysqli_fetch_assoc($result);
 <body>
   <main>
     <div class="menu">
-      <a href="./../pages/profile.php"><i class="material-icons">keyboard_backspace</i></a>
+      <a href="./../pages/edit_profile.php"><i class="material-icons">keyboard_backspace</i></a>
       <h2>Change Profile Photo</h2>
     </div>
     <div class="icon-div">
