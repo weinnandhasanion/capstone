@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="./../css/profile.css">
   <link rel="stylesheet" href="./../css/sidebar.css">
   <link rel="stylesheet" href="./../css/loader.css">
+  <link rel="stylesheet" href="./../css/mediaquery.css">
   <link rel="icon" href="./../img/gym_logo.png">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -43,8 +44,8 @@
     }
 
     .img-cont {
-      height: 22vw;
-      width: 22vw;
+      height: 100px;
+      width: 100px;
       border: none;
       border-radius: 100%;
       object-fit: cover;
@@ -54,7 +55,7 @@
     }
 
     .img-cont img {
-      height: 22vw;
+      height: 100px;
       min-height: 100%;
       min-width: 100%;
       object-fit: cover;
@@ -122,7 +123,10 @@
   </div>
 
   <div class="sidebar" id="sidebar">
-    <i class="material-icons" style="font-size: 32px" id="back">keyboard_backspace</i>
+    <div>
+      <i class="material-icons v-hidden" style="font-size: 32px" id="back">keyboard_backspace</i>
+      <img src="./../../logo.png" style="width: 32px; height: 32px; margin-left: 70px" alt="">
+    </div>
     <div class="items">
       <a href="#">
         <span class="active">
@@ -173,7 +177,7 @@
   </div>
   <main>
     <div class="menu">
-      <i class="material-icons" style="font-size: 32px;" id="menu">menu</i>
+      <i class="material-icons d-none" style="font-size: 32px;" id="menu">menu</i>
       <h2>Profile</h2>
     </div>
     <div class="profile-cont">
@@ -280,133 +284,131 @@
       $("#loader").css("display", "none");
     });
 
-    window.onload = () => {
-      $.ajax({
-        url: "./../functions/subscription_details.php",
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-          if(data.apaid && data.mpaid) {
-            $("#paid").text("Your subscription is currently ongoing.");
-            $("#iconpaid").text("Subscription ongoing");
+    $.ajax({
+      url: "./../functions/subscription_details.php",
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) {
+        if(data.apaid && data.mpaid) {
+          $("#paid").text("Your subscription is currently ongoing.");
+          $("#iconpaid").text("Subscription ongoing");
+        } else {
+          $("#paid").text("Your subscription is currently due");
+          $("#iconpaid").text("Subscription due");
+        }
+        if(data.mpaid) {
+          $("#mpaid").text("Paid");
+          if(data.mstart != "No payment") {
+            $("#mstart").text(`Last payment: ${data.mstart}`);
           } else {
-            $("#paid").text("Your subscription is currently due");
-            $("#iconpaid").text("Subscription due");
-          }
-          if(data.mpaid) {
-            $("#mpaid").text("Paid");
-            if(data.mstart != "No payment") {
-              $("#mstart").text(`Last payment: ${data.mstart}`);
-            } else {
-              $("#mstart").text(data.mstart);
-            }
-
-            if(data.mend != "No payment") {
-              $("#mend").text(`Expires on: ${data.mend}`);
-            } else {
-              $("#mend").text("");
-            }
-          } else {
-            $("#mpaid").text("Due");
-            if(data.mstart != "No payment") {
-              $("#mstart").text(`Last payment: ${data.mstart}`);
-            } else {
-              $("#mstart").text(data.mstart);
-            }
-            
-            if(data.mend != "No payment") {
-              $("#mend").text(`Expired on: ${data.mend}`);
-            } else {
-              $("#mend").text("");
-            }
+            $("#mstart").text(data.mstart);
           }
 
-          if(data.apaid) {
-            $("#apaid").text("Paid");
-            if(data.astart != "No payment") {
-              $("#astart").text(`Last payment: ${data.astart}`);
-            } else {
-              $("#astart").text(data.astart);
-            }
-            if(data.aend != "No payment") {
-              $("#aend").text(`Expires on: ${data.aend}`);
-            } else {
-              $("#aend").text("");
-            }
+          if(data.mend != "No payment") {
+            $("#mend").text(`Expires on: ${data.mend}`);
           } else {
-            $("#apaid").text("Due");
-            if(data.astart != "No payment") {
-              $("#astart").text(`Last payment: ${data.astart}`);
-            } else {
-              $("#astart").text(data.astart);
-            }
-            if(data.aend != "No payment") {
-              $("#aend").text(`Expired on: ${data.aend}`);
-            } else {
-              $("#aend").text("");
-            }
+            $("#mend").text("");
+          }
+        } else {
+          $("#mpaid").text("Due");
+          if(data.mstart != "No payment") {
+            $("#mstart").text(`Last payment: ${data.mstart}`);
+          } else {
+            $("#mstart").text(data.mstart);
+          }
+          
+          if(data.mend != "No payment") {
+            $("#mend").text(`Expired on: ${data.mend}`);
+          } else {
+            $("#mend").text("");
           }
         }
-      });
 
-      $("#confirm-logout").on("click", function() {
-        $.ajax({
-          url: "./../functions/logout_process.php",
-          type: "json",
-          method: "post",
-          success: function() {
-            window.location.reload();
+        if(data.apaid) {
+          $("#apaid").text("Paid");
+          if(data.astart != "No payment") {
+            $("#astart").text(`Last payment: ${data.astart}`);
+          } else {
+            $("#astart").text(data.astart);
           }
-        });
-      });
-
-      $("#edit-profile").click(function() {
-        window.location.href = "./edit_profile.php";
-      });
-
-      let subBtn = document.getElementById('subscription-btn');
-      let subModal = document.getElementById('subscription-modal');
-      
-      // subscription modal
-      subBtn.onclick = () => {
-        subModal.style.display = 'flex';
-        document.addEventListener('click', (e) => {
-          if(e.target == subModal) {
-            subModal.style.display = 'none';
+          if(data.aend != "No payment") {
+            $("#aend").text(`Expires on: ${data.aend}`);
+          } else {
+            $("#aend").text("");
           }
-        });
-      }
-
-      let qrBtn = document.getElementById('qr-btn');
-      let qrModal = document.getElementById('qr-modal');
-
-      // qr modal
-      qrBtn.onclick = () => {
-        qrModal.style.display = 'flex';
-        document.addEventListener('click', (e) => {
-          if(e.target == qrModal) {
-            qrModal.style.display = 'none';
+        } else {
+          $("#apaid").text("Due");
+          if(data.astart != "No payment") {
+            $("#astart").text(`Last payment: ${data.astart}`);
+          } else {
+            $("#astart").text(data.astart);
           }
-        });
+          if(data.aend != "No payment") {
+            $("#aend").text(`Expired on: ${data.aend}`);
+          } else {
+            $("#aend").text("");
+          }
+        }
       }
+    });
 
-      let downloadBtn = document.getElementById('download-btn');
-      let qr = document.getElementById('qr-code');
+    $("#confirm-logout").on("click", function() {
+      $.ajax({
+        url: "./../functions/logout_process.php",
+        type: "json",
+        method: "post",
+        success: function() {
+          window.location.reload();
+        }
+      });
+    });
 
-      downloadBtn.onclick = () => {
-        let img = qr.lastChild;
-        let path = img.src;
-        let fileName = 'qr-code';
+    $("#edit-profile").click(function() {
+      window.location.href = "./edit_profile.php";
+    });
 
-        saveAs(path, fileName);
-      }
-
-      closeModal = (elem) => {
-        elem.style.display = 'none';
-      }
-
-      new QRCode(document.getElementById("qr-code"), "./../functions/check_if_paid_qr.php?id=<?php echo $_SESSION["member_id"] ?>");
+    let subBtn = document.getElementById('subscription-btn');
+    let subModal = document.getElementById('subscription-modal');
+    
+    // subscription modal
+    subBtn.onclick = () => {
+      subModal.style.display = 'flex';
+      document.addEventListener('click', (e) => {
+        if(e.target == subModal) {
+          subModal.style.display = 'none';
+        }
+      });
     }
+
+    let qrBtn = document.getElementById('qr-btn');
+    let qrModal = document.getElementById('qr-modal');
+
+    // qr modal
+    qrBtn.onclick = () => {
+      qrModal.style.display = 'flex';
+      document.addEventListener('click', (e) => {
+        if(e.target == qrModal) {
+          qrModal.style.display = 'none';
+        }
+      });
+    }
+
+    let downloadBtn = document.getElementById('download-btn');
+    let qr = document.getElementById('qr-code');
+
+    downloadBtn.onclick = () => {
+      let img = qr.lastChild;
+      let path = img.src;
+      let fileName = 'qr-code';
+
+      saveAs(path, fileName);
+    }
+
+    closeModal = (elem) => {
+      elem.style.display = 'none';
+    }
+
+    new QRCode(document.getElementById("qr-code"), "./../functions/check_if_paid_qr.php?id=<?php echo $_SESSION["member_id"] ?>");
   </script>
 </body>
 </html>

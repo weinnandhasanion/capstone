@@ -79,6 +79,7 @@ if($annualHasValue) {
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./../css/default.css">
   <link rel="stylesheet" href="./../css/loader.css">
+  <link rel="stylesheet" href="./../css/mediaquery.css">
   <link rel="icon" href="./../img/gym_logo.png">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -140,8 +141,10 @@ if($annualHasValue) {
     </div>
   </div>
   <div class="sidebar" id="sidebar">
-    <i class="material-icons" style="font-size: 32px" id="back">keyboard_backspace</i>
-    <div class="items">
+      <div>
+        <i class="material-icons v-hidden" style="font-size: 32px" id="back">keyboard_backspace</i>
+        <img src="./../../logo.png" style="width: 32px; height: 32px; margin-left: 70px" alt="">
+      </div>    <div class="items">
       <a href="./profile.php">
         <span>
           <i class="material-icons">account_circle</i>
@@ -191,7 +194,7 @@ if($annualHasValue) {
   </div>
   <main>
     <div class="menu">
-      <i class="material-icons" style="font-size: 32px;" id="menu">menu</i>
+      <i class="material-icons d-none" style="font-size: 32px;" id="menu">menu</i>
       <h2>Pay</h2>
     </div>
     <div class="icon-div">
