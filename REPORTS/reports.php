@@ -154,7 +154,7 @@
       </ol>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-list">
         <i class="fas fa-eye mr-2"></i>
-        list of trainers
+        list of  trainers
       </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-active">
         <i class="fas fa-eye mr-2"></i>
@@ -179,13 +179,14 @@
         </li>
         <li class="breadcrumb-item active">Inventory</li>
       </ol>
-      <button class="btn btn-black btn-sm"  data-toggle="modal" data-target="#inventory-overall">
-        <i class="fas fa-eye mr-2"></i>
-        overall equipment report
-      </button>
+
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#inventory-list">
         <i class="fas fa-eye mr-2"></i>
         list of equipments
+      </button>
+      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#inventory-working">
+        <i class="fas fa-eye mr-2"></i>
+        list of both working and damage equipments
       </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#inventory-working">
         <i class="fas fa-eye mr-2"></i>
@@ -493,13 +494,13 @@
     </div>
   </div>
 
-<!-- list of trainers active and inactive -->
+<!-- list of trainers -->
 <div class="modal fade" role="dialog" id="trainers-list">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form action="./trainers/trainer_added.php" method="post">
+      <form target="_blank" action="./trainers/trainer_added.php" method="post">
         <div class="modal-header">
-          <h4 class="modal-title">Generate report for total trainers</h4>
+          <h4 class="modal-title">Generate report for list of trainers</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
@@ -515,6 +516,14 @@
                   <option value="Custom">Custom</option>
                 </select>
               </div>
+              <div class="col-sm-6">
+                  <label for="">Trainer status</label>
+                  <select name="trainers_list_status" class="form-control">
+                    <option value="active">Active</option>
+                    <option value="inactive">inactive</option>
+                    <option value="deleted">Deleted</option>
+                  </select>
+                </div>
             </div>
           </div>
           <div class="form-group custom-date" id="trainers-list-custom">
@@ -544,7 +553,7 @@
       <div class="modal-content">
       <form target="_blank" action="./trainers/trainer_active.php" method="post">
         <div class="modal-header">
-          <h4 class="modal-title">Generate report for total trainers added</h4>
+          <h4 class="modal-title">Generate report for active trainers</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
@@ -589,7 +598,7 @@
       <div class="modal-content">
       <form target="_blank" action="./trainers/trainer_inactive.php" method="post">
         <div class="modal-header">
-          <h4 class="modal-title">Generate report for total trainers inactive</h4>
+          <h4 class="modal-title">Generate report for inactive trainers</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
@@ -634,7 +643,7 @@
       <div class="modal-content">
       <form target="_blank" action="./trainers/trainer_deleted.php" method="post">
         <div class="modal-header">
-          <h4 class="modal-title">Generate report for total trainers deleted</h4>
+          <h4 class="modal-title">Generate report for deleted trainers</h4>
         </div>
         <div class="modal-body">
           <div class="form-group">
@@ -703,6 +712,14 @@
                     <option value="Active">Active</option>
                     <option value="Expired">Expired</option>
                     <option value="Deleted">Deleted</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">Promo Type</label>
+                  <select name="type" class="form-control">
+                    <option value="Seasonal">Seasonal</option>
+                    <option value="Permanent">Permanent</option>
+                    <option value="Both">Both</option>
                   </select>
                 </div>
             </div>
@@ -1016,58 +1033,7 @@
   </div>
   
   
-   <!-- overall inventory -->
-   <div class="modal fade" role="dialog" id="inventory-overall">
-    <div class="modal-dialog modal-md">
-      <div class="modal-content">
-      <form target="_blank" action="./inventory/inventory_overall.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for inventory</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="inventory-overall-select" name="timespan_inventory_overall" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
-              </div>
-              <div class="col-sm-6">
-                  <label for="">Category</label>
-                  <select name="inventory_category_overall" id="" class="form-control">
-                    <option value="Cardio Equipment">Cardio Equipment</option>
-                    <option value="Weight Equipment">Weight Equipment</option>
-                    <option value="Both" selected>Both</option>
-                  </select>
-                </div>
-            </div>
-          </div>
-          <div class="form-group custom-date" id="inventory-overall-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date_inventory_overall" id="" class="form-control">
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date_inventory_overall" id="" class="form-control">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
+  
   
    <!-- list of inventory -->
    <div class="modal fade" role="dialog" id="inventory-list">
@@ -1091,6 +1057,14 @@
                   <option value="Custom">Custom</option>
                 </select>
               </div>
+              <div class="col-sm-6">
+                  <label for="">Category</label>
+                  <select name="inventory_category_list" id="" class="form-control">
+                    <option value="Cardio Equipment">Cardio Equipment</option>
+                    <option value="Weight Equipment">Weight Equipment</option>
+                    <option value="Both" selected>Both</option>
+                  </select>
+                </div>
             </div>
           </div>
           <div class="form-group custom-date" id="inventory-list-custom">
@@ -1425,15 +1399,7 @@
       $("#inventory-damage-custom").css("display", "none");
     }
   });
-  //modal custom for overall inventory
-  $("#inventory-overall-select").on("change", function() {
-    let select = $("#inventory-overall-select");
-    if(select.val() == "Custom") {
-      $("#inventory-overall-custom").css("display", "block");
-    } else {
-      $("#inventory-overall-custom").css("display", "none");
-    }
-  });
+ 
   </script>
 </body>
 </html>

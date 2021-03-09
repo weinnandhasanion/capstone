@@ -465,6 +465,8 @@ CREATE TABLE `program` (
   `program_status` enum('active','inactive') NOT NULL DEFAULT 'active',
   `date_added` date DEFAULT NULL,
   `time_added` time NOT NULL,
+  `date_deleted` date DEFAULT NULL,
+  `time_deleted` time NOT NULL,
   `upper_1_day_1` int(11) DEFAULT NULL,
   `upper_2_day_1` int(11) DEFAULT NULL,
   `upper_3_day_1` int(11) DEFAULT NULL,

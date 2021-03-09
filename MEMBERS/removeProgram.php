@@ -7,6 +7,32 @@ if($_SESSION['admin_id']){
     $session_admin_id = $_SESSION['admin_id'];
 }
 
+
+
+$id = $_REQUEST['id'];
+$date_deleted = date("Y-m-d");
+$time_deleted = date("h:i a");
+
+$ox = "UPDATE program SET program_status = 'inactive', date_deleted = '$date_deleted', time_deleted = '$time_deleted'  
+WHERE program_id = " . intval($id) . "";     
+
+if(mysqli_query($conn, $ox))
+        json_encode('success');
+else
+        echo mysqli_error($conn), 'NOT UPDATED';    
+
+
+
+
+
+
+
+
+
+
+
+
+        
   
 
     //this is for puting login_id in the array
@@ -35,19 +61,6 @@ if($progs1) {
     $program_id = $data_program[0];
 }
 
-
-
-$id = $_REQUEST['id'];
-$date_deleted = date("Y-m-d");
-$time_deleted = date("h:i a");
-
-$ox = "UPDATE program SET program_status = 'remove', date_deleted = '$date_deleted', time_deleted = '$time_deleted'  
-WHERE program_id = " . intval($id) . "";     
-
-if(mysqli_query($conn, $ox))
-        json_encode('success');
-else
-        echo mysqli_error($conn), 'NOT UPDATED';    
 
            // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
            $ad= "SELECT * FROM admin WHERE admin_id = $session_admin_id";

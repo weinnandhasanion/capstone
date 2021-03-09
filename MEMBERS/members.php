@@ -501,7 +501,7 @@
               <tbody id='deletetbody'>
                 <?php
             /* code for display data */
-            $sql = "SELECT * FROM program WHERE program_status = 'remove'";
+            $sql = "SELECT * FROM program WHERE program_status = 'inactive'";
             $result = mysqli_query($conn, $sql);
             $resultCheck = mysqli_num_rows($result);
 
