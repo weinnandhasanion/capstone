@@ -253,19 +253,19 @@
           <p>Username</p>
           <div class="field-value">
             <p class="fw-500" id="username-default"><?php echo $row["username"] ?></p>
-            <input type="text" id="username-edit">
+            <input type="text" id="username-edit" class="edit">
           </div>
           <small class="text-red" style="display: none" id="invalid-username">Invalid username</small>
           <p>Email</p>
           <div class="field-value">
             <p class="fw-500" id="email-default"><?php echo $row["email"] ?></p>
-            <input type="text" id="email-edit">
+            <input type="text" id="email-edit" class="edit">
           </div>
           <small class="text-red" style="display: none" id="invalid-email">Invalid email</small>
           <p>Phone</p>
           <div class="field-value">
             <p class="fw-500" id="phone-default"><?php echo $row["phone"] ?></p>
-            <input type="text" id="phone-edit">
+            <input type="text" id="phone-edit" class="edit">
           </div>
           <small class="text-red" style="display: none" id="invalid-phone">Invalid phone number</small>
           <p>Birthdate</p>
@@ -276,18 +276,18 @@
                 echo date_format($date, "F d, Y"); 
               ?>
             </p>
-            <input type="date" id="birthdate-edit">
+            <input type="date" id="birthdate-edit" class="edit">
           </div>
           <small class="text-red" style="display: none" id="invalid-birthdate">Invalid birthdate</small>
           <p>Address</p>
           <div class="field-value">
             <p class="fw-500" id="address-default"><?php echo $row["address"] ?></p>
-            <input type="text" id="address-edit">
+            <input type="text" id="address-edit" class="edit">
           </div>
           <small class="text-red" style="display: none" id="invalid-address">Invalid address</small>
         </div>
         <small class="text-disabled"><i>NOTE: Click on values to edit</i></small>
-        <button class="btn btn-reg btn-red edit-details-btn" id="save-changes-btn">Save changes</button>
+        <button class="btn btn-reg btn-disabled edit-details-btn" id="save-changes-btn" disabled>Save changes</button>
         <br>
         <small class="text-green" style="display: none" id="change-success">Profile updated successfully</small>
         <br>
@@ -319,6 +319,22 @@
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script>
     $(document).ready(function() {
+      var user = $("#username-default").text();
+      var email = $("#email-default").text();
+      var phone = $("#phone-default").text();
+      var bdate = $("#birthdate-default").text();
+      var d = new Date(bdate);
+      var day = ("0" + d.getDate()).slice(-2);
+      var month = ("0" + (d.getMonth() + 1)).slice(-2);
+      var newBdate = `${d.getFullYear()}-${month}-${day}`;
+      var address = $("#address-default").text();
+
+      $("#username-edit").val(user);
+      $("#email-edit").val(email);
+      $("#phone-edit").val(phone);
+      $("#birthdate-edit").val(newBdate);
+      $("#address-edit").val(address);
+
       // Edit profile details
       $("#change-user-pass-btn").click(function() {
         $("#edit-details").hide();
@@ -329,7 +345,7 @@
         var defaultVal = $("#username-default").text();
 
         $("#username-default").hide();
-        $("#username-edit").val(defaultVal).show().focus();
+        $("#username-edit").show().focus();
 
         $("#username-edit").on("blur", function(evt) {
           var val = $("#username-edit").val();
@@ -348,7 +364,7 @@
         var defaultVal = $("#email-default").text();
 
         $("#email-default").hide();
-        $("#email-edit").val(defaultVal).show().focus();
+        $("#email-edit").show().focus();
 
         $("#email-edit").on("blur", function(evt) {
           var val = $("#email-edit").val();
@@ -368,7 +384,7 @@
         var defaultVal = $("#phone-default").text();
 
         $("#phone-default").hide();
-        $("#phone-edit").val(defaultVal).show().focus();
+        $("#phone-edit").show().focus();
 
         $("#phone-edit").on("blur", function(evt) {
           var val = $("#phone-edit").val();
@@ -414,7 +430,7 @@
         var defaultVal = $("#address-default").text();
 
         $("#address-default").hide();
-        $("#address-edit").val(defaultVal).show().focus();
+        $("#address-edit").show().focus();
 
         $("#address-edit").on("blur", function(evt) {
           var val = $("#address-edit").val();
@@ -429,24 +445,61 @@
         });
       });
 
+      $(".edit").on("change", function() {
+        if($("#username-edit").val() != user || $("#email-edit").val() != email || $("#phone-edit").val() != phone || $("#birthdate-edit").val() != newBdate || $("#address-edit").val() != address) {
+          $("#save-changes-btn").removeClass("btn-disabled").addClass("btn-red").removeAttr("disabled");
+        } else if($("#username-edit").val() == user && $("#email-edit").val() == email && $("#phone-edit").val() == phone && $("#birthdate-edit").val() == newBdate && $("#address-edit").val() == address){
+          $("#save-changes-btn").removeClass("btn-red").addClass("btn-disabled").attr("disabled", "disabled");
+        }
+      });
+
+      $("#username-edit").on("change", function () {
+        $("#invalid-username").hide();
+      });
+
+      $("#email-edit").on("change", function () {
+        $("#invalid-email").hide();
+      });
+
+      $("#birthdate-edit").on("change", function () {
+        $("#invalid-birthdate").hide();
+      });
+
+      $("#phone-edit").on("change", function () {
+        $("#invalid-phone").hide();
+      });
+
       function validateUsername(val) {
         var tmp;
-        $.ajax({
-          async: false,
-          url: "./edit_profile.php",
-          type: "json",
-          method: "post",
-          data: {
-            user: val
-          }, 
-          success: function(res) {
-            if(res == 0) {
-              tmp = false;
-            } else {
-              tmp = true;
-            }
+
+        if(val.indexOf(' ') > 0) {
+          tmp = {
+            isValid: false,
+            message: "Username must not contain whitespace"
           }
-        });
+        } else {
+          $.ajax({
+            async: false,
+            url: "./edit_profile.php",
+            type: "json",
+            method: "post",
+            data: {
+              user: val
+            }, 
+            success: function(res) {
+              if(res == 0) {
+                tmp = {
+                  isValid: false,
+                  message: "Username is already taken"
+                }
+              } else {
+                tmp = {
+                  isValid: true
+                }
+              }
+            }
+          });
+        }
 
         return tmp;
       }
@@ -467,15 +520,21 @@
         var bmonth = bdate.getMonth() + 1;
         var bday = bdate.getDate();
         var today = new Date();
+        var res;
         
-        if(bdate < today && (today.getFullYear() - byear) >= 15) {
-          return true;
+        if(bdate < today && (today.getFullYear() - byear) >= 15 && (today.getFullYear() - byear) <= 90) {
+          res = true; 
         } else {
-          return false;
+          res = false;
         }
+
+        console.log(res);
+        return res;
       }
 
       $("#save-changes-btn").click(function() {
+        $("#change-success").hide();
+
         var usernameDef = $("#username-default").text();
         var usernameInvalid = $("#invalid-username");
         var emailDef = $("#email-default").text();
@@ -487,8 +546,15 @@
 
         // validateUsername(usernameDef)
 
-        if(!validateUsername(usernameDef)) {
-          usernameInvalid.show();
+        // if(!validateUsername(usernameDef)) {
+        //   usernameInvalid.show();
+        // } else {
+        //   usernameInvalid.hide();
+        // }
+
+        let valUser = validateUsername(usernameDef);
+        if(!valUser.isValid) {
+          usernameInvalid.text(valUser.message).show();
         } else {
           usernameInvalid.hide();
         }
@@ -505,13 +571,13 @@
           phoneInvalid.hide();
         }
 
-        if(!validateBirthdate(birthdateDef.trim())) {
+        if(!validateBirthdate(birthdateDef)) {
           birthdateInvalid.show();
         } else {
           birthdateInvalid.hide();
         }
 
-        if(validateUsername(usernameDef) && validateEmail(emailDef) && validatePhone(phoneDef) && validateBirthdate(birthdateDef)) {
+        if(valUser.isValid && validateEmail(emailDef) && validatePhone(phoneDef) && validateBirthdate(birthdateDef)) {
           var d = new Date(birthdateDef.trim())
           var bdate = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 
@@ -529,6 +595,13 @@
               if(res == 1) {
                 $("#change-success").show();
                 $("#change-error").hide();
+                $("#save-changes-btn").removeClass("btn-red").addClass("btn-disabled").attr("disabled", "disabled");
+
+                user = usernameDef;
+                email = emailDef;
+                phone = phoneDef;
+                newBdate = bdate;
+                address = $("#address-default").text();
               } else {
                 $("#change-success").hide();
                 $("#change-error").show();

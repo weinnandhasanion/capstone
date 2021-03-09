@@ -1,0 +1,17 @@
+@media screen and (max-width: 940px) {
+  .sidebar {
+      transform: translateX(-120%);
+  }
+
+  .v-hidden {
+    visibility: visible !important;
+  }
+
+  .d-none {
+    display: block !important;
+  }
+
+  main {
+    margin-left: 0;
+  }
+}

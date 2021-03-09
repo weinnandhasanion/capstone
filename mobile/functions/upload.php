@@ -8,36 +8,34 @@ $target_file = $target_dir . basename($_FILES["file"]["name"]);
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 // Check if image file is a actual image or fake image
-if(isset($_POST["submit"])) {
-  $check = getimagesize($_FILES["file"]["tmp_name"]);
-  if($check !== false) {
-    echo "File is an image - " . $check["mime"] . ".";
-    $uploadOk = 1;
-  } else {
-    echo "File is not an image.";
-    $uploadOk = 0;
-  }
+
+$check = getimagesize($_FILES["file"]["tmp_name"]);
+if($check !== false) {
+  $uploadOk = 1;
+} else {
+  $uploadOk = 0;
 }
 
 if ($uploadOk == 0) {
-  $message = "Sorry, your file was not uploaded.";
+  $message = "Error in uploading file. Please choose a proper file type (.jpeg, .png).";
 // if everything is ok, try to upload file
 } else {
   if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
     $message = "New profile picture successfully uploaded!";
+
+    $sql = "UPDATE member
+            SET image_pathname = '".$_FILES["file"]["name"]."'
+            WHERE member_id = '".$_SESSION["member_id"]."'";
+    $result = mysqli_query($con, $sql);
+
+    if(!$result) {
+      echo "Error: ". mysqli_error($con);
+    }
   } else {
     $message = "Sorry, there was an error uploading your file.";
   }
 }
 
-$sql = "UPDATE member
-        SET image_pathname = '".$_FILES["file"]["name"]."'
-        WHERE member_id = '".$_SESSION["member_id"]."'";
-$result = mysqli_query($con, $sql);
-
-if(!$result) {
-  echo "Error: ". mysqli_error($con);
-}
 
 if(!isset($_SESSION["member_id"])) {
   header("Location: ./../index.php");
@@ -69,7 +67,6 @@ $row = mysqli_fetch_assoc($result);
     }
 
     .main-cont p {
-      color: #117600;
       font-size: 1.5em;
     }
 
@@ -113,7 +110,7 @@ $row = mysqli_fetch_assoc($result);
 <body>
   <main>
     <div class="menu">
-      <a href="./../pages/profile.php"><i class="material-icons">keyboard_backspace</i></a>
+      <a href="./../pages/edit_profile.php"><i class="material-icons">keyboard_backspace</i></a>
       <h2>Change Profile Photo</h2>
     </div>
     <div class="icon-div">
@@ -132,7 +129,19 @@ $row = mysqli_fetch_assoc($result);
       </div>
     </div>    
     <div class="main-cont">
-      <p>
+      <p
+      <?php 
+      if($uploadOk == 0) {
+      ?>
+      class="text-red"
+      <?php
+      } else {
+      ?>
+      class="text-green"
+      <?php
+      }
+      ?>
+      >
         <?php echo $message ?>
       </p>
     </div>

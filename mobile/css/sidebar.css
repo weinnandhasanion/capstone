@@ -120,6 +120,14 @@ p, h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
 }
 
+.v-hidden {
+  visibility: hidden !important;
+}
+
+.d-none {
+  display: none !important;
+}
+
 .modal {
   height: 100vh;
   width: 100vw;
@@ -197,9 +205,7 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 .sidebar {
-  -webkit-transform: translateX(-120%);
-          transform: translateX(-120%);
-  width: 80vw;
+  width: 300px;
   background: white;
   height: 100vh;
   padding: 20px;

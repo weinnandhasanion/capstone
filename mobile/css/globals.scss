@@ -16,6 +16,11 @@ html, body {
   color: $primary;
 }
 
+main {
+  transition: .3s;
+  margin-left: 300px;
+}
+
 // fonts
 $poppins: 'Poppins', sans-serif;
 a {
@@ -107,6 +112,14 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 .fw-bold {
   font-weight: bold;
+}
+
+.v-hidden {
+  visibility: hidden !important;
+}
+
+.d-none {
+  display: none !important;
 }
 
 // modals
