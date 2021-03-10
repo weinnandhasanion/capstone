@@ -416,6 +416,22 @@
             <td>${row.description}</td>
             <td>${row.time}</td>
           </tr>`;
+          } else if(row.identity === 'inventory'){
+            var html = `<tr>
+            <td>${row.inventory_id}</td>
+            <td>${row.identity}</td>
+            <td>${row.user_fname} </td>
+            <td>${row.description}</td>
+            <td>${row.time}</td>
+          </tr>`;
+          }else if(row.identity === 'promo'){
+            var html = `<tr>
+            <td>${row.promo_id}</td>
+            <td>${row.identity}</td>
+            <td>${row.user_fname} </td>
+            <td>${row.description}</td>
+            <td>${row.time}</td>
+          </tr>`;
           }
           tbody.innerHTML += html;
         });

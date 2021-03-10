@@ -125,6 +125,8 @@ CREATE TABLE `logtrail_doing` (
   `member_id` int(100) DEFAULT NULL,
   `program_id` int(11) DEFAULT NULL,
   `trainer_id` int(100) DEFAULT NULL,
+  `inventory_id` int(100) DEFAULT NULL,
+  `promo_id` int(100) DEFAULT NULL,
   `user_fname` varchar(100) DEFAULT NULL,
   `user_lname` varchar(100) DEFAULT NULL,
   `description` varchar(200) DEFAULT NULL,
@@ -636,7 +638,9 @@ ALTER TABLE `logtrail_doing`
   ADD KEY `logtrail_doing_2` (`login_id`),
   ADD KEY `logtrail_doing_3` (`member_id`),
   ADD KEY `logtrail_doing_4` (`trainer_id`),
-  ADD KEY `logtrail_doing_ibfk_5` (`program_id`);
+  ADD KEY `logtrail_doing_5` (`inventory_id`),
+  ADD KEY `logtrail_doing_6` (`promo_id`),
+  ADD KEY `logtrail_doing_ibfk_7` (`program_id`);
 
 --
 -- Indexes for table `member`
@@ -717,19 +721,20 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `inventory_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2014;
+  MODIFY `inventory_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT= 1;
 
 --
 -- AUTO_INCREMENT for table `logtrail`
 --
 ALTER TABLE `logtrail`
-  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3131;
+  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
 --
 -- AUTO_INCREMENT for table `logtrail_doing`
 --
 ALTER TABLE `logtrail_doing`
-  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20201051;
+  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  
 
 --
 -- AUTO_INCREMENT for table `member`
@@ -759,19 +764,19 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `paymentlog`
 --
 ALTER TABLE `paymentlog`
-  MODIFY `payment_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `payment_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `program`
 --
 ALTER TABLE `program`
-  MODIFY `program_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `program_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `promo`
 --
 ALTER TABLE `promo`
-  MODIFY `promo_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202114;
+  MODIFY `promo_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `routines`
@@ -783,7 +788,7 @@ ALTER TABLE `routines`
 -- AUTO_INCREMENT for table `trainer`
 --
 ALTER TABLE `trainer`
-  MODIFY `trainer_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1515;
+  MODIFY `trainer_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- Constraints for dumped tables
@@ -803,7 +808,9 @@ ALTER TABLE `logtrail_doing`
   ADD CONSTRAINT `logtrail_doing_ibfk_2` FOREIGN KEY (`login_id`) REFERENCES `logtrail` (`login_id`),
   ADD CONSTRAINT `logtrail_doing_ibfk_3` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
   ADD CONSTRAINT `logtrail_doing_ibfk_4` FOREIGN KEY (`trainer_id`) REFERENCES `trainer` (`trainer_id`),
-  ADD CONSTRAINT `logtrail_doing_ibfk_5` FOREIGN KEY (`program_id`) REFERENCES `program` (`program_id`);
+  ADD CONSTRAINT `logtrail_doing_ibfk_5` FOREIGN KEY (`inventory_id`) REFERENCES `inventory` (`inventory_id`),
+  ADD CONSTRAINT `logtrail_doing_ibfk_6` FOREIGN KEY (`promo_id`) REFERENCES `promo` (`promo_id`),
+  ADD CONSTRAINT `logtrail_doing_ibfk_7` FOREIGN KEY (`program_id`) REFERENCES `program` (`program_id`);
 
 --
 -- Constraints for table `member`
