@@ -38,8 +38,9 @@ if($progs1) {
 
 $id = $_REQUEST['id'];
 
-$ox = "UPDATE program SET program_status = 'active'
+$ox = "UPDATE program SET program_status = 'active', date_deleted = null, time_deleted = null 
 WHERE program_id = " . intval($id) . "";     
+   
 
 if(mysqli_query($conn, $ox))
         json_encode('success');

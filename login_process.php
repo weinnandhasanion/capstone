@@ -26,8 +26,11 @@ $pass  = $_POST['password'];
                 
                 
         }else{
-            echo "failed";
-            header('Location: index.php?account does not exist');
+            
+            header('Location: ./index_admin.php?account does not exist');
+
+          
+            
         }
     }else{
         echo "ACCOUNT DOESN'T EXIST";
