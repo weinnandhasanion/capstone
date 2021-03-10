@@ -10,6 +10,12 @@ html, body {
   color: #2c2c2c;
 }
 
+main {
+  -webkit-transition: .3s;
+  transition: .3s;
+  margin-left: 300px;
+}
+
 a {
   text-decoration: none;
   color: #2c2c2c;
@@ -205,6 +211,8 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 .sidebar {
+  -webkit-transition: .3s;
+  transition: .3s;
   width: 300px;
   background: white;
   height: 100vh;

@@ -38,6 +38,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./../css/profile.css">
   <link rel="stylesheet" href="./../css/sidebar.css">
+  <link rel="stylesheet" href="./../css/mediaquery.css">
   <link rel="icon" href="./../img/gym_logo.png">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -79,8 +80,8 @@
     }
 
     .img-cont {
-      height: 25vw !important;
-      width: 25vw !important;
+      height: 100px !important;
+      width: 100px !important;
       border: none !important;
       object-fit: cover !important;
       overflow: hidden !important;
@@ -90,7 +91,7 @@
     }
 
     .img-cont img {
-      height: 25vw;
+      height: 100px;
       min-height: 100%;
       min-width: 100%;
       object-fit: cover;
@@ -98,8 +99,8 @@
 
     .profile-mask {
       clip-path: circle(50.0% at 50% 50%);
-      height: 25vw;
-      width: 25vw;
+      height: 100px;
+      width: 100px;
       position: absolute;
       border-radius: 50%;
       top: 0;
@@ -157,10 +158,6 @@
       margin: 10px 0 0 0  !important;
     }
 
-    .edit-details-btn, .pass-btn {
-      width: 50%;
-    }
-
     .change-pass-div {
       margin-top: 5px;
     }
@@ -168,11 +165,18 @@
     .form-field .form-input {
       width: 50%;
     }
+
+    .mb-5 {
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
   <div class="sidebar" id="sidebar">
-    <i class="material-icons" style="font-size: 32px" id="back">keyboard_backspace</i>
+    <div>
+      <i class="material-icons v-hidden" style="font-size: 32px" id="back">keyboard_backspace</i>
+      <img src="./../../logo.png" style="width: 32px; height: 32px; margin-left: 70px" alt="">
+    </div>
     <div class="items">
       <a href="#">
         <span class="active">
@@ -244,49 +248,59 @@
             ?>
           </div>
           <div class="profile-mask" id="change-photo">
-            <input type="file" name="file" id="">
             <i class="material-icons">add</i>
             <small>Click to change photo</small>
           </div>
         </div>
         <div class="edit-field">
-          <p>Username</p>
-          <div class="field-value">
-            <p class="fw-500" id="username-default"><?php echo $row["username"] ?></p>
-            <input type="text" id="username-edit" class="edit">
+          <div class="mb-5">
+            <p>Username:</p>
+            <div class="field-value">
+              <p class="fw-500" id="username-default"><?php echo $row["username"] ?></p>
+              <input type="text" id="username-edit" class="edit">
+            </div>
+            <small class="text-red" style="display: none" id="invalid-username">Invalid username</small>
           </div>
-          <small class="text-red" style="display: none" id="invalid-username">Invalid username</small>
-          <p>Email</p>
-          <div class="field-value">
-            <p class="fw-500" id="email-default"><?php echo $row["email"] ?></p>
-            <input type="text" id="email-edit" class="edit">
+          <div class="mb-5">
+            <p>Email:</p>
+            <div class="field-value">
+              <p class="fw-500" id="email-default"><?php echo $row["email"] ?></p>
+              <input type="text" id="email-edit" class="edit">
+            </div>
+            <small class="text-red" style="display: none" id="invalid-email">Invalid email</small>
           </div>
-          <small class="text-red" style="display: none" id="invalid-email">Invalid email</small>
-          <p>Phone</p>
-          <div class="field-value">
-            <p class="fw-500" id="phone-default"><?php echo $row["phone"] ?></p>
-            <input type="text" id="phone-edit" class="edit">
+          <div class="mb-5">
+            <p>Phone:</p>
+            <div class="field-value">
+              <p class="fw-500" id="phone-default"><?php echo $row["phone"] ?></p>
+              <input type="text" id="phone-edit" class="edit">
+            </div>
+            <small class="text-red" style="display: none" id="invalid-phone">Invalid phone number</small>
           </div>
-          <small class="text-red" style="display: none" id="invalid-phone">Invalid phone number</small>
-          <p>Birthdate</p>
-          <div class="field-value">
-            <p class="fw-500" id="birthdate-default">
-              <?php 
-                $date = date_create($row["birthdate"]);
-                echo date_format($date, "F d, Y"); 
-              ?>
-            </p>
-            <input type="date" id="birthdate-edit" class="edit">
+          <div class="mb-5">
+            <p>Birthdate:</p>
+            <div class="field-value">
+              <p class="fw-500" id="birthdate-default">
+                <?php 
+                  $date = date_create($row["birthdate"]);
+                  echo date_format($date, "F d, Y"); 
+                ?>
+              </p>
+              <input type="date" id="birthdate-edit" class="edit">
+            </div>
+            <small class="text-red" style="display: none" id="invalid-birthdate">Invalid birthdate</small>
           </div>
-          <small class="text-red" style="display: none" id="invalid-birthdate">Invalid birthdate</small>
-          <p>Address</p>
-          <div class="field-value">
-            <p class="fw-500" id="address-default"><?php echo $row["address"] ?></p>
-            <input type="text" id="address-edit" class="edit">
+          <div class="mb-5">
+            <p>Address:</p>
+            <div class="field-value">
+              <p class="fw-500" id="address-default"><?php echo $row["address"] ?></p>
+              <input type="text" id="address-edit" class="edit">
+            </div>
+            <small class="text-red" style="display: none" id="invalid-address">Invalid address</small>
           </div>
-          <small class="text-red" style="display: none" id="invalid-address">Invalid address</small>
         </div>
         <small class="text-disabled"><i>NOTE: Click on values to edit</i></small>
+        <br>
         <button class="btn btn-reg btn-disabled edit-details-btn" id="save-changes-btn" disabled>Save changes</button>
         <br>
         <small class="text-green" style="display: none" id="change-success">Profile updated successfully</small>

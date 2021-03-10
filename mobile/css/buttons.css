@@ -10,6 +10,12 @@ html, body {
   color: #2c2c2c;
 }
 
+main {
+  -webkit-transition: .3s;
+  transition: .3s;
+  margin-left: 300px;
+}
+
 a {
   text-decoration: none;
   color: #2c2c2c;

@@ -10,6 +10,12 @@ html, body {
   color: #2c2c2c;
 }
 
+main {
+  -webkit-transition: .3s;
+  transition: .3s;
+  margin-left: 300px;
+}
+
 a {
   text-decoration: none;
   color: #2c2c2c;
@@ -118,6 +124,14 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .fw-bold {
   font-weight: bold;
+}
+
+.v-hidden {
+  visibility: hidden !important;
+}
+
+.d-none {
+  display: none !important;
 }
 
 .modal {
@@ -220,6 +234,15 @@ p, h1, h2, h3, h4, h5, h6 {
   color: #2c2c2c;
 }
 
+.form-field .form-input:focus {
+  border-bottom: 2px solid;
+  outline: none !important;
+}
+
+.form-field .form-input:focus + label {
+  font-weight: 700;
+}
+
 .form-field label {
   color: black;
   -webkit-transition: .3s;
@@ -237,6 +260,12 @@ html, body {
   background: linear-gradient(to bottom right, #f53939, #a0a0a0);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: #2c2c2c;
+}
+
+main {
+  -webkit-transition: .3s;
+  transition: .3s;
+  margin-left: 300px;
 }
 
 a {
@@ -347,6 +376,14 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .fw-bold {
   font-weight: bold;
+}
+
+.v-hidden {
+  visibility: hidden !important;
+}
+
+.d-none {
+  display: none !important;
 }
 
 .modal {
@@ -426,12 +463,14 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 .btn {
-  margin: 50px 0 25px 0;
-  padding: 5px;
+  margin: 20px 0 20px 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
   font-family: "Poppins", sans-serif;
   border: 0;
   border-radius: 50px;
-  width: 100%;
   background: #2c2c2c;
   color: white;
   font-size: 1rem;
@@ -454,7 +493,6 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .btn.btn-reg {
   letter-spacing: 0;
-  padding: 3px;
   font-weight: normal !important;
 }
 
@@ -471,12 +509,6 @@ p, h1, h2, h3, h4, h5, h6 {
   color: #A0A0A0;
 }
 
-@media only screen and (max-width: 768px) {
-  .btn {
-    margin: 20px 0 20px 0;
-  }
-}
-
 html, body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -487,6 +519,12 @@ html, body {
   background: linear-gradient(to bottom right, #f53939, #a0a0a0);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: #2c2c2c;
+}
+
+main {
+  -webkit-transition: .3s;
+  transition: .3s;
+  margin-left: 300px;
 }
 
 a {
@@ -597,6 +635,14 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .fw-bold {
   font-weight: bold;
+}
+
+.v-hidden {
+  visibility: hidden !important;
+}
+
+.d-none {
+  display: none !important;
 }
 
 .modal {

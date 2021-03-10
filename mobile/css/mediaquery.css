@@ -1,4 +1,4 @@
-@media screen and (max-width: 940px) {
+@media screen and (max-width: 768px) {
   .sidebar {
     -webkit-transform: translateX(-120%);
             transform: translateX(-120%);
