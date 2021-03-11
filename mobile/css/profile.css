@@ -1197,6 +1197,8 @@ p, h1, h2, h3, h4, h5, h6 {
 }
 
 .sidebar {
+  -webkit-transition: .3s;
+  transition: .3s;
   width: 300px;
   background: white;
   height: 100vh;
