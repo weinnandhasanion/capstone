@@ -35,8 +35,8 @@
 			</div> <br><br><br>
 			<!-- login process -->
 			<form action="login_process.php" method="post">
-				<input name="username" type="email" required="" placeholder="Email Address" class="input"><br>
-				<input name="password" type="password" required="" placeholder="Password"  class="input" data-type="password"><br>
+				<input name="username" type="email" required placeholder="Email Address" class="input"><br>
+				<input name="password" type="password" required placeholder="Password"  class="input" data-type="password"><br>
 				<input type="submit" value="Let me in">
 			</form>
 		</div>
@@ -55,10 +55,10 @@
 			</div> <br><br><br>
 			<!-- registration process -->
 			<form action="register_process.php" method="post">
-				<input name="first_name" type="text"   required=""  class="input" placeholder="Enter First name">
-				<input name="last_name" id="lastname" type="text"   required=""  class="input" placeholder="Enter Last name"><br><br>	
-				<input name="username" type="email"  required=""  class="input" placeholder="Enter your Email address"><br>
-				<input name="password" type="password"   required=""  class="input" placeholder="Create your password"><br>
+				<input name="first_name" type="text"   required  class="input" placeholder="Enter First name">
+				<input name="last_name" id="lastname" type="text"   required  class="input" placeholder="Enter Last name"><br><br>	
+				<input name="username" type="email"  required  class="input" placeholder="Enter your Email address"><br>
+				<input name="password" type="password"   required  class="input" placeholder="Create your password"><br>
 				<input  type="submit" value="Register">
 			</form>	
 		</div>

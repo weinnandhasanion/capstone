@@ -21,10 +21,42 @@ $sql = "UPDATE member SET email = '$email', address = '$address', phone = '$phon
         WHERE member_id = '$id'"; 
 $sql_update = mysqli_query($conn, $sql);
 
-if (preg_match($phoneregex, $phone, $match)) 
-{
+$exist = "SELECT * FROM member WHERE member_id != '$id' AND email = '$email'";
+$existEmail = mysqli_query($conn, $exist);
+
+$exist = "SELECT * FROM member WHERE member_id != '$id' AND phone = '$phone'";
+$existPhone = mysqli_query($conn, $exist);
+
+
+
+if (preg_match($phoneregex, $phone, $match)) {
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Phone has letters.. pelase check ur inputs.');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+}else if($email == ""){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Email address is empty');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+}else if(mysqli_num_rows($existEmail)>0){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Email is already Taken');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+}else if($phone == ""){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Contact number is empty');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+}else if(mysqli_num_rows($existPhone)>0){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Phone is already Taken');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+}else if($address == ""){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Address is empty');
         window.location.href='/PROJECT/MEMBERS/members.php';
         </script>");
 }else if($sql_update){
@@ -32,7 +64,7 @@ if (preg_match($phoneregex, $phone, $match))
         window.alert('Update successfully');
         window.location.href='/PROJECT/MEMBERS/members.php';
         </script>");
-}else {
+}else{
     echo ("<script LANGUAGE='JavaScript'>
                 window.alert('Failed to update');
                 window.location.href='/PROJECT/MEMBERS/members.php';
@@ -46,6 +78,10 @@ if($member_type == "Walk-in"){
 }
 
 
+
+
+
+//------------------------------LOGTRAIL DOING NANI
 
 //this is for puting member_id in the array
 $data = array();

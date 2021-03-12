@@ -936,13 +936,14 @@
                 </div>
                 <div class="col-sm-6">
                   <label>Amount</label>
-                  <input type="text" name="payment_amount" class="form-control" placeholder="₱50.00" readonly
+                  <input type="text" name="payment_amount" class="form-control" value = "50" readonly
                     id="walkinpayment-amount">
                 </div>
               </div>
             </div>
             <div class="d-flex justify-content-center">
-              <small><a href="#" class="text-darkgrey"><span id="walkinshowCalc">Show Calculator</span></a></small>
+              <a href="#" class="text-darkgrey"><span id="walkinshowCalc"
+                    style="position:relative;right:100px;">Show Calculator</span>
             </div>
             <div id="walkincalculator" class="form-group" style="display: none">
               <div class="form-row">
@@ -1695,12 +1696,14 @@
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Program Name</label>
-                  <input name="program_name" required="" type="text" id="prgram_name" class="form-control mb-1"
-                    placeholder="Enter program name here">
+                  <input name="program_name" required type="text" id="prgram_name" class="form-control mb-1"
+                    placeholder="Enter program name here" onblur="checkIfValid(this)">
+                    <small class="validation text-danger" id="prgram_name-empty">Please fill out this field</small>
+                    <small class="validation text-danger" id="prgram_name-invalid">Invalid input</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Trainer_assign</label>
-                  <select style="width: 230px;" name="trainer_id" id="trainer_name" class="form-control">
+                  <select style="width: 230px;" required name="trainer_id" id="trainer_name" class="form-control" oninput="checkIfValid(this)" onblur="checkIfValid(this)">
                     <option value="" selected disabled>Select here...</option>
                     <?php
                     $sql = "SELECT * FROM trainer";
@@ -1714,6 +1717,7 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="trainer_name-empty">Please fill out this field</small>
                 </div>
               </div>
             </div>
@@ -1721,7 +1725,8 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Program Description</label>
-                  <textarea name="program_description" style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc" placeholder="Enter program desciption here"></textarea>
+                  <textarea name="program_description" oninput="checkIfValid(this)" onblur="checkIfValid(this)" required style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc" placeholder="Enter program desciption here"></textarea>
+                  <small class="validation text-danger" id="program_desc-empty">Please fill out this field</small>
                 </div>
               </div>
             </div>
@@ -1730,7 +1735,7 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
-                  <select name="upper-1-day-1" id="upper-1-day-1" class="form-control">
+                  <select name="upper-1-day-1"  id="upper-1-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control" >
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1744,10 +1749,11 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="upper-1-day-1-empty">Please fill out this field</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 2</label>
-                  <select name="upper-2-day-1" id="upper-2-day-1" class="form-control">
+                  <select name="upper-2-day-1" id="upper-2-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control" >
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1761,10 +1767,11 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="upper-2-day-1-empty">Please fill out this field</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 3</label>
-                  <select name="upper-3-day-1" id="upper-3-day-1" class="form-control">
+                  <select name="upper-3-day-1" id="upper-3-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1778,12 +1785,13 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="upper-3-day-1-empty">Please fill out this field</small>
                 </div>
               </div>
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Lower Body 1</label>
-                  <select name="lower-1-day-1" id="lower-1-day-1" class="form-control">
+                  <select name="lower-1-day-1" id="lower-1-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1797,10 +1805,11 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="lower-1-day-1-empty">Please fill out this field</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 2</label>
-                  <select name="lower-2-day-1" id="lower-2-day-1" class="form-control">
+                  <select name="lower-2-day-1" id="lower-2-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1814,10 +1823,11 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="lower-2-day-1-empty">Please fill out this field</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 3</label>
-                  <select name="lower-3-day-1" id="lower-3-day-1" class="form-control">
+                  <select name="lower-3-day-1" id="lower-3-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1831,12 +1841,13 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="lower-3-day-1-empty">Please fill out this field</small>
                 </div>
               </div>
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Abdominals</label>
-                  <select name="abdominal-day-1" id="abdominal-day-1" class="form-control">
+                  <select name="abdominal-day-1" id="abdominal-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
@@ -1850,13 +1861,14 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="abdominal-day-1-empty">Please fill out this field</small>
                 </div>
               </div>
               <h5>Day 2</h5>
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
-                  <select name="upper-1-day-2" id="upper-1-day-2" class="form-control">
+                  <select name="upper-1-day-2" id="upper-1-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1870,10 +1882,11 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="upper-1-day-2-empty">Please fill out this field</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 2</label>
-                  <select name="upper-2-day-2" id="upper-2-day-2" class="form-control">
+                  <select name="upper-2-day-2" id="upper-2-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1887,10 +1900,11 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="upper-2-day-2-empty">Please fill out this field</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 3</label>
-                  <select name="upper-3-day-2" id="upper-3-day-2" class="form-control">
+                  <select name="upper-3-day-2" id="upper-3-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1904,12 +1918,13 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="upper-3-day-2-empty">Please fill out this field</small>
                 </div>
               </div>
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Lower Body 1</label>
-                  <select name="lower-1-day-2" id="lower-1-day-2" class="form-control">
+                  <select name="lower-1-day-2" id="lower-1-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1923,10 +1938,11 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="lower-1-day-2-empty">Please fill out this field</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 2</label>
-                  <select name="lower-2-day-2" id="lower-2-day-2" class="form-control">
+                  <select name="lower-2-day-2" id="lower-2-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1940,10 +1956,11 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="lower-2-day-2-empty">Please fill out this field</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 3</label>
-                  <select name="lower-3-day-2" id="lower-3-day-2" class="form-control">
+                  <select name="lower-3-day-2" id="lower-3-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1957,12 +1974,13 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="lower-3-day-2-empty">Please fill out this field</small>
                 </div>
               </div>
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Abdominals</label>
-                  <select name="abdominal-day-2" id="abdominal-day-2" class="form-control">
+                  <select name="abdominal-day-2" id="abdominal-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
@@ -1976,13 +1994,14 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="abdominal-day-2-empty">Please fill out this field</small>
                 </div>
               </div>
               <h5>Day 3</h5>
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
-                  <select name="upper-1-day-3" id="upper-1-day-3" class="form-control">
+                  <select name="upper-1-day-3" id="upper-1-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1996,10 +2015,11 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="upper-1-day-3-empty">Please fill out this field</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 2</label>
-                  <select name="upper-2-day-3" id="upper-2-day-3" class="form-control">
+                  <select name="upper-2-day-3" id="upper-2-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -2013,10 +2033,11 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="upper-2-day-3-empty">Please fill out this field</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 3</label>
-                  <select name="upper-3-day-3" id="upper-3-day-3" class="form-control">
+                  <select name="upper-3-day-3" id="upper-3-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -2030,12 +2051,13 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="upper-3-day-3-empty">Please fill out this field</small>
                 </div>
               </div>
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Lower Body 1</label>
-                  <select name="lower-1-day-3" id="lower-1-day-3" class="form-control">
+                  <select name="lower-1-day-3" id="lower-1-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -2049,10 +2071,11 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="lower-1-day-3-empty">Please fill out this field</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 2</label>
-                  <select name="lower-2-day-3" id="lower-2-day-3" class="form-control">
+                  <select name="lower-2-day-3" id="lower-2-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -2066,10 +2089,11 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="lower-2-day-3-empty">Please fill out this field</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 3</label>
-                  <select name="lower-3-day-3" id="lower-3-day-3" class="form-control">
+                  <select name="lower-3-day-3" id="lower-3-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -2083,12 +2107,13 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="lower-3-day-3-empty">Please fill out this field</small>
                 </div>
               </div>
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Abdominals</label>
-                  <select name="abdominal-day-3" id="abdominal-day-3" class="form-control">
+                  <select name="abdominal-day-3" id="abdominal-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
@@ -2102,6 +2127,7 @@
                     }
                     ?>
                   </select>
+                  <small class="validation text-danger" id="abdominal-day-3-empty">Please fill out this field</small>
                 </div>
               </div>
             </div>
@@ -2902,82 +2928,45 @@
     }
   });
 
-  // Show/Hide Annual Payment Calculator
-  document.getElementById('showAnnualCalc').addEventListener('click', () => {
-    let calc = document.getElementById('calculator-annual');
-    if (calc.style.display == 'none') {
-      calc.style.display = 'block';
-      document.getElementById('showAnnualCalc').innerHTML =
-        '<span style="color:#DF3A01"> Hide Annual Calculator </span>';
-    } else {
-      calc.style.display = 'none';
-      document.getElementById('showAnnualCalc').innerHTML = 'Show Annual Calculator';
-    }
-  });
 
-  // Calculating Change for Annual
-  document.getElementById('enterCalc-annual').addEventListener('click', () => {
-    let cash = document.getElementById('payment-cash-annual');
-    let change = document.getElementById('payment-change-annual');
-    let amount200 = 200;
-
-    let val = parseInt(cash.value);
-
-    if (Number.isInteger(val) == true) {
-      if (val <= 0 || val >= 9999) {
-        alert('Please enter a valid amount!');
-      } else if (val < parseInt(amount200.value)) {
-        alert('Insufficient cash!');
-      } else {
-        let x = val;
-        let y = amount200;
-
-        change.value = `₱${x-y}.00`;
-      }
-    } else {
-      console.log(val)
-      alert('Please enter an appropriate amount!');
-    }
-  });
-
-
-  // Show/Hide walkin Payment Calculator
-  document.getElementById('walkinshowCalc').addEventListener('click', () => {
-    let calc = document.getElementById('walkincalculator');
-    if (calc.style.display == 'none') {
-      calc.style.display = 'block';
+   // Show/Hide walkin Payment Calculator
+   document.getElementById('walkinshowCalc').addEventListener('click', () => {
+    let walkincalc = document.getElementById('walkincalculator');
+    if (walkincalc.style.display == 'none') {
+      walkincalc.style.display = 'block';
       document.getElementById('walkinshowCalc').innerHTML =
         '<span style="color:#DF3A01"> Hide Calculator </span>';
     } else {
-      calc.style.display = 'none';
+      walkincalc.style.display = 'none';
       document.getElementById('walkinshowCalc').innerHTML = 'Show Calculator';
     }
   });
 
+  
   // Calculating Change
   document.getElementById('walkinenterCalc').addEventListener('click', () => {
     let cash = document.getElementById('walkinpayment-cash');
     let change = document.getElementById('walkinpayment-change');
-    let amount = 50;
-
+    
+    
     let val = parseInt(cash.value);
+    let amount = parseInt($("#walkinpayment-amount").val());
 
     if (Number.isInteger(val) == true) {
       if (val <= 0 || val >= 9999) {
         alert('Please enter a valid amount!');
-      } else if (val < parseInt(amount.value)) {
+      } else if (val < parseInt($("#walkinpayment-amount").val())) {
         alert('Insufficient cash!');
       } else {
-        let x = val;
-        let y = amount;
-
-        change.value = `₱${x-y}.00`;
+        change.value = `₱${val - amount}.00`;
+       
       }
     } else {
       console.log(val)
       alert('Please enter an appropriate amount!');
     }
   });
+
 
   function logout(el) {
     let id = el.getAttribute('data-id');
