@@ -55,10 +55,24 @@ if (preg_match($qtyregex, $inventory_qty, $match)) {
 else if(mysqli_num_rows($duplicate_name)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Inventory name is already Taken');
-    window.location.href='/PROJECT/TRAINER/trainers.php';
+    window.location.href='/PROJECT/INVENTORY/inventory.php';
     </script>");
-}
-else {
+}else if(strlen($inventory_name) > 20){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid inventory name. Maximum of 20 letters only');
+    window.location.href='/PROJECT/INVENTORY/inventory.php';
+    </script>");
+}else if($inventory_qty > 999){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid inventory quantity. Maximum of 999 only');
+    window.location.href='/PROJECT/INVENTORY/inventory.php';
+    </script>");
+}else if(strlen($inventory_description) > 100){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid inventory quantity. Maximum of 100 letters only');
+    window.location.href='/PROJECT/INVENTORY/inventory.php';
+    </script>");
+}else {  
 	$sql = "INSERT INTO `inventory` ( inventory_name,inventory_qty,inventory_category,inventory_description,date_added, image_pathname)
     VALUES ( '$inventory_name', '$inventory_qty', '$inventory_category', '$inventory_description', '$date_added', '" . $_FILES["image"]["name"] . "')";
 
@@ -68,12 +82,6 @@ else {
     window.alert('Successfully added inventory...');
     window.location.href='/PROJECT/INVENTORY/inventory.php';
     </script>");
-
-
-
-
-
-
 //-----------LOGTRAIL DOING
 
      //this is for puting member_id in the array

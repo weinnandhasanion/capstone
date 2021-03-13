@@ -161,6 +161,11 @@ $res = mysqli_query($conn, $sql);
   <!--Main layout-->
   <main class="pt-5 mx-lg-5">
     <div class="container-fluid mt-5" id="main-div">
+    <button class="btn btn-sm btn-outline-orange mb-3" id="viewDeleted" data-toggle="modal"
+        data-target="#deleteModal">
+        <i class="fas fa-trash mr-2"></i>
+        View Deleted Inventory
+      </button>
       <div class="card mb-4 wow fadeIn">
         <div class="card-body d-sm-flex justify-content-between">
           <h4 class="mb-1 mb-sm-1 pt-1">
@@ -180,7 +185,7 @@ $res = mysqli_query($conn, $sql);
       </div>
       <div class="row" id="inventory-cont">
         <?php
-        $sql = "SELECT * FROM inventory ORDER BY date_added DESC";
+        $sql = "SELECT * FROM inventory WHERE inventory_status = 'notdeleted' ORDER BY date_added DESC";
         $res = mysqli_query($conn, $sql);
         if ($res) {
           while ($row = mysqli_fetch_assoc($res)) {
@@ -200,8 +205,11 @@ $res = mysqli_query($conn, $sql);
                   <p class="card-text mt-2"><?php echo $row["inventory_description"] ?></p>
                 </div>
                 <div class="card-footer">
-                  <button onclick="viewDetails(this)" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">details</button>
-                  <button onclick="viewUpdate(this)" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">UPDATE</button>
+                  <button onclick="viewDetails(this)" style="width: 101px;" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">view</button>
+                  <button onclick="viewUpdate(this)" style="width: 101px;" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">update</button>
+                  <button class="btn btn-sm btn-orange" data-id="<?php echo $row["inventory_id"] ?>" onclick="deleted(this)" style="width: 219px;" data-toggle="tooltip" data-placement="top" title="<?php echo $row["inventory_name"] ?>">
+                  Delete inventory
+                  </button>
                 </div>
               </div>
             </div>
@@ -401,6 +409,88 @@ $res = mysqli_query($conn, $sql);
       </div>
     </div>
   </div>
+
+  
+  <!---------------------------------------------------- DELETED RECORD -------------------------------------->
+  <div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content" style="width: 700px;">
+
+        <div class="modal-header" style="background-color: #DF3A01; color: white;">
+          <h4 class="modal-title">Deleted Members</h4>
+          <form class="d-flex justify-content-center">
+            <input type="text" placeholder="Search deleted name" id="search-delete" class="form-control">
+          </form>
+        </div>
+
+        <div class="modal-body">
+
+          <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>
+            <table class='table table-hover'>
+              <thead>
+                <tr style="text-align:center;">
+
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Date Added</th>
+                  <th>Date deleted</th>
+                  <th>Time deleted</th>
+                  <th>action</th>
+                </tr>
+              </thead>
+              <tbody id='deletetbody'>
+                <?php
+            /* code for display data  AND date_deleted IS NOT NULL */
+            $sql = "SELECT * FROM inventory WHERE inventory_status = 'deleted'";
+            $result = mysqli_query($conn, $sql);
+            $resultCheck = mysqli_num_rows($result);
+
+            if($resultCheck > 0){
+              while($row = mysqli_fetch_assoc($result)){
+                $dateDeleted = new DateTime($row["date_deleted"]);
+                $resultDelete = $dateDeleted->format('F d Y');
+                $dateAdded = new DateTime( $row["date_added"]);
+                $resultAdded = $dateAdded->format('F d Y');
+                $timeDeleted = new DateTime( $row["time_deleted"]);
+                $time_Deleted = $timeDeleted->format('h:i A');
+                ?>
+                <tr>
+                  <td><?php echo $row["inventory_name"]?></td>
+                  <td><?php echo $row["inventory_category"]?></td>
+                  <td><?php echo $resultAdded?></td>
+                  <td><?php echo $resultDelete?></td>
+                  <td><?php echo $time_Deleted?></td>
+                  <td>
+                    <!-- <span data-toggle="tooltip" data-placement="top" title="View <?php// echo $row["last_name"]?>"">
+                    <i style="cursor: pointer; color:brown; font-size: 25px;"
+                    data-toggle="modal" data-target="#view"
+                    class=" fas fa-eye mx-2 get_id" data-id="
+                    <?php //echo $row['member_id'] ?>
+                    "onclick="displayDetails(this)"></i>
+                    </span> -->
+
+                    <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
+                      title="Recover <?php echo $row["inventory_name"]?>" class="fas fa-undo mx-2"
+                      data-id="<?php echo $row['inventory_id'] ?>" onclick="recover(this)"></i>
+                  </td>
+                </tr>
+                <?php
+              }
+             }
+             ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <button data-toggle="modal" data-target="#view-details" style="display: none" id="view-details-btn"></button>
   <button data-toggle="modal" data-target="#update" style="display: none" id="update-btn"></button>
@@ -627,6 +717,46 @@ $res = mysqli_query($conn, $sql);
         }
       });
     });
+
+    function deleted(el) {
+    let id = el.getAttribute('data-id');
+    console.log(id);
+
+    // AJAX Request
+    var r = confirm("Are you sure you want to delete this inventory?");
+    if (r == true) {
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          console.log((this.responseText));
+          alert("inventory successfully deleted!");
+          window.location.reload()
+        }
+      }
+      req.open('GET', 'delete.php?id=' + id, true);
+      req.send();
+    }
+  }
+
+  function recover(el) {
+    let id = el.getAttribute('data-id');
+    console.log(id);
+
+    // AJAX Request
+    var r = confirm("Are you sure you want to recover this inventory?");
+    if (r == true) {
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          console.log((this.responseText));
+          alert("Inventory successfully recover!");
+          window.location.reload()
+        }
+      }
+      req.open('GET', 'recover.php?id=' + id, true);
+      req.send();
+    }
+  }
   </script>
 </body>
 

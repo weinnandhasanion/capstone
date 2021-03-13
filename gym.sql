@@ -59,12 +59,14 @@ CREATE TABLE `inventory` (
   `inventory_damage` int(255) DEFAULT NULL,
   `inventory_working` int(255) DEFAULT NULL,
   `inventory_description` varchar(255) DEFAULT NULL,
+  `inventory_status` enum('notdeleted','deleted') NOT NULL,
   `date_deleted` date DEFAULT NULL,
+  `time_deleted` time DEFAULT NULL,
   `date_added` date DEFAULT NULL,
   `image_pathname` varchar(9999) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
+--  
 -- Dumping data for table `inventory`
 --
 

@@ -51,8 +51,7 @@ if($_FILES["image"]["size"] > 0) {
       window.alert('Invalid quantity, use only numbers...');
       window.location.href='/PROJECT/INVENTORY/inventory.php';
       </script>");
-  }
-else {
+  }else {
     // $sql = "INSERT INTO `inventory` ( inventory_name,inventory_qty,inventory_category,inventory_description,date_added, image_pathname)
     //   VALUES ( '$inventory_name', '$inventory_qty', '$inventory_category', '$inventory_description', '$date_added', '" . $_FILES["image"]["name"] . "')";
 
@@ -79,7 +78,26 @@ else {
       </script>");
     }
   }
-
+}else if(strlen($inventory_name) > 20){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid inventory name. Maximum of 20 letters only');
+  window.location.href='/PROJECT/INVENTORY/inventory.php';
+  </script>");
+}else if($inventory_qty > 999){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid inventory quantity. Maximum of 999 only');
+  window.location.href='/PROJECT/INVENTORY/inventory.php';
+  </script>");
+}else if($inventory_dmg > $inventory_qty){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid inventory damage. Maximum of $inventory_qty only');
+  window.location.href='/PROJECT/INVENTORY/inventory.php';
+  </script>");
+}else if(strlen($inventory_description) > 100){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid inventory quantity. Maximum of 100 letters only');
+  window.location.href='/PROJECT/INVENTORY/inventory.php';
+  </script>");
 } else {
   if (preg_match($qtyregex, $inventory_qty, $match)) {
     echo ("<script LANGUAGE='JavaScript'>
@@ -114,67 +132,69 @@ else {
   }
 }
 
-
-     
-     //this is for puting member_id in the array
-     $data = array();
-     $inventory_id;
-     $sql3 = "SELECT * FROM inventory ORDER BY inventory_id DESC";
-     $res3 = mysqli_query($conn, $sql3);
-     if($res3) {
-         while($row = mysqli_fetch_assoc($res3)) {
-             $data[] = $row["inventory_id"];
-         }
-
-         $inventory_id = $data[0];
-     }
-
-     //this is for puting login_id in the array
-     $data_logtrail = array();
-     $login_id;
-     $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
-     $logtrail = mysqli_query($conn, $log);
-     if($logtrail) {
-         while($rowrow = mysqli_fetch_assoc($logtrail)) {
-             $data_logtrail[] = $rowrow["login_id"];
-         }
-
-         $login_id = $data_logtrail[0];
-     }
-
-     // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
-     $ad= "SELECT * FROM admin WHERE admin_id = $session_admin_id";
-     $query_runad = mysqli_query($conn, $ad);
-     $rowed = mysqli_fetch_assoc($query_runad);
-
-     $admin_id = $rowed["admin_id"];
-
-     // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-     $ew = "SELECT * FROM inventory WHERE inventory_id = '$inventory_id'";
-     $query_runew = mysqli_query($conn, $ew);
-     $rowew = mysqli_fetch_assoc($query_runew);
-
-     $inventory_id_new = $rowew["inventory_id"];
-     $user_fname = $rowew["inventory_name"];
-     $description = "Update equipment";
-     //$description = $echo.' '.$fullname;
-     $identity = "inventory";
-     $timeNow = date("h:i A");  
+?>
 
 
-     // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-     $sql22 = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
-     $query_run22 = mysqli_query($conn, $sql22);
-     $rows22 = mysqli_fetch_assoc($query_run22);
+<?php
+//-------------------------LOGTRAIL DOING
 
-     $login_id_new = $rows22["login_id"];
+  //this is for puting member_id in the array
+  $data = array();
+  $inventory_id;
+  $sql3 = "SELECT * FROM inventory ORDER BY inventory_id DESC";
+  $res3 = mysqli_query($conn, $sql3);
+  if($res3) {
+      while($row = mysqli_fetch_assoc($res3)) {
+          $data[] = $row["inventory_id"];
+      }
 
-     $sql1 = "INSERT INTO `logtrail_doing` 
-	 ( `login_id`,`admin_id`,`inventory_id`,`user_fname`,`description`, `identity`,`time`)
-     VALUES 
-	 ( '$login_id_new','$admin_id', '$inventory_id_new', '$user_fname','$description','$identity', '$timeNow')";
-     mysqli_query($conn, $sql1);
+      $inventory_id = $data[0];
+  }
+
+  //this is for puting login_id in the array
+  $data_logtrail = array();
+  $login_id;
+  $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
+  $logtrail = mysqli_query($conn, $log);
+  if($logtrail) {
+      while($rowrow = mysqli_fetch_assoc($logtrail)) {
+          $data_logtrail[] = $rowrow["login_id"];
+      }
+
+      $login_id = $data_logtrail[0];
+  }
+
+  // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
+  $ad= "SELECT * FROM admin WHERE admin_id = $session_admin_id";
+  $query_runad = mysqli_query($conn, $ad);
+  $rowed = mysqli_fetch_assoc($query_runad);
+
+  $admin_id = $rowed["admin_id"];
+
+  // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
+  $ew = "SELECT * FROM inventory WHERE inventory_id = '$inventory_id'";
+  $query_runew = mysqli_query($conn, $ew);
+  $rowew = mysqli_fetch_assoc($query_runew);
+
+  $inventory_id_new = $rowew["inventory_id"];
+  $user_fname = $rowew["inventory_name"];
+  $description = "Update equipment";
+  //$description = $echo.' '.$fullname;
+  $identity = "inventory";
+  $timeNow = date("h:i A");  
 
 
+  // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
+  $sql22 = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
+  $query_run22 = mysqli_query($conn, $sql22);
+  $rows22 = mysqli_fetch_assoc($query_run22);
+
+  $login_id_new = $rows22["login_id"];
+
+  $sql1 = "INSERT INTO `logtrail_doing` 
+( `login_id`,`admin_id`,`inventory_id`,`user_fname`,`description`, `identity`,`time`)
+  VALUES 
+( '$login_id_new','$admin_id', '$inventory_id_new', '$user_fname','$description','$identity', '$timeNow')";
+  mysqli_query($conn, $sql1);
 
 ?>
