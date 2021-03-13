@@ -1218,6 +1218,7 @@
                 <tr style="text-align:center;">
 
                   <th>fullname</th>
+                  <th>From where</th>
                   <th>Date Added</th>
                   <th>date deleted</th>
                   <th>action</th>
@@ -1240,9 +1241,18 @@
                 ?>
                 <tr>
                   <td><?php echo $row["first_name"],  $row["last_name"] ?></td>
+                  <td><?php echo $row["member_type"]?></td>
                   <td><?php echo $resultAdded?></td>
                   <td><?php echo $resultDelete?></td>
                   <td>
+                    <!-- <span data-toggle="tooltip" data-placement="top" title="View <?php// echo $row["last_name"]?>"">
+                    <i style="cursor: pointer; color:brown; font-size: 25px;"
+                    data-toggle="modal" data-target="#view"
+                    class=" fas fa-eye mx-2 get_id" data-id="
+                    <?php //echo $row['member_id'] ?>
+                    "onclick="displayDetails(this)"></i>
+                    </span> -->
+
                     <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
                       title="Recover <?php echo $row["last_name"]?>" class="fas fa-undo mx-2"
                       data-id="<?php echo $row['member_id'] ?>" onclick="recover(this)"></i>

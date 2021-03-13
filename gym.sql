@@ -582,7 +582,7 @@ INSERT INTO `routines` (`routine_id`, `routine_name`, `routine_link`, `routine_t
 
 CREATE TABLE `trainer` (
   `trainer_id` int(100) NOT NULL,
-  `trainer_status` enum('active','inactive') NOT NULL,
+  `trainer_status` enum('active','inactive','deleted') NOT NULL,
   `trainer_position` enum('junior','senior') NOT NULL,
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
@@ -594,17 +594,17 @@ CREATE TABLE `trainer` (
   `birthdate` date DEFAULT NULL,
   `date_hired` date DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
-  `acc_status` enum('able','disable') NOT NULL
+  `time_deleted` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `trainer`
 --
 
-INSERT INTO `trainer` (`trainer_id`, `trainer_status`, `trainer_position`, `first_name`, `last_name`, `address`, `gender`, `phone`, `email`, `file`, `birthdate`, `date_hired`, `date_deleted`, `acc_status`) VALUES
-(1512, 'active', 'junior', 'George', 'Vasquez', '2nd floor G7 Suites', 'M', '09453216542', 'leeapple619@gmail.com', NULL, '1985-01-01', '2021-02-23', NULL, 'able'),
-(1513, 'active', 'junior', 'Greg', 'Ivor', 'Cebu City', 'M', '09994562154', 'greg@gmail.com', NULL, '1990-02-16', '2021-02-23', NULL, 'able'),
-(1514, 'active', 'junior', 'Reyland', 'Nazareth', 'Lapulapu City', 'M', '09164543211', 'reylandbogo@gmail.com', NULL, '1977-09-23', '2021-02-23', NULL, 'able');
+INSERT INTO `trainer` (`trainer_id`, `trainer_status`, `trainer_position`, `first_name`, `last_name`, `address`, `gender`, `phone`, `email`, `file`, `birthdate`, `date_hired`, `date_deleted`) VALUES
+(1512, 'active', 'junior', 'George', 'Vasquez', '2nd floor G7 Suites', 'M', '09453216542', 'leeapple619@gmail.com', NULL, '1985-01-01', '2021-02-23', NULL),
+(1513, 'active', 'junior', 'Greg', 'Ivor', 'Cebu City', 'M', '09994562154', 'greg@gmail.com', NULL, '1990-02-16', '2021-02-23', NULL),
+(1514, 'active', 'junior', 'Reyland', 'Nazareth', 'Lapulapu City', 'M', '09164543211', 'reylandbogo@gmail.com', NULL, '1977-09-23', '2021-02-23', NULL);
 
 --
 -- Indexes for dumped tables

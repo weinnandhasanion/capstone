@@ -73,12 +73,17 @@ else if(preg_match($Fnameregex, $first_name, $match)){
 //VALIDATION IF NAAY LETTERS ANG GI INPUT NMO SA CONTACT NUMBER.. IF WALA MO PROCEED SHA SA NEXT CHECKING
 else if (preg_match($phoneregex, $phone, $match)){
         echo ("<script LANGUAGE='JavaScript'>
-            window.alert('Phone has letters.. pelase check ur inputs.');
+            window.alert('Contact number has letters. Please check ur inputs.');
             window.location.href='/PROJECT/TRAINER/trainers.php';
             </script>");
 }
 // CHECK IF 11 DIGIT IMONG PHONE NUMBER IF DLE MO EXIT SHA SA ELSE
-else if(strlen($phone) == 11){
+else if(strlen($phone) != 11){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid contact number. Please make sure its 11 digits');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");
+}else{
      // QUERY 
      $sql = "INSERT INTO `trainer` ( `first_name`,`last_name`,`email`,
      `address`,`birthdate`,`phone`,`gender`,date_hired)
@@ -96,7 +101,13 @@ else if(strlen($phone) == 11){
                 header('Location: /PROJECT/TRAINER/trainers.php?failure to register');
             }
 
-            
+}
+?>
+
+
+
+<?php //---------------------LOGTRAIL DOING
+         
      //this is for puting member_id in the array
      $data = array();
      $trainer_id;
@@ -156,14 +167,4 @@ else if(strlen($phone) == 11){
      `description`, `identity`,`time`)
      VALUES ( '$login_id_new','$admin_id', '$trainer_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
      mysqli_query($conn, $sql1);
-   
-
-// EXIT IF DLE 11 DIGITS IMONG PHONE NUMBER
-}else{
-    echo ("<script LANGUAGE='JavaScript'>
-            window.alert('Invalid Phone number. Make sure it has 11 digits...');
-            window.location.href='/PROJECT/TRAINER/trainers.php';
-            </script>");
-    }      
-
-    ?>
+?>

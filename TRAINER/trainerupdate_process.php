@@ -22,11 +22,11 @@ $tan = "UPDATE trainer SET
                address = '$address' 
         WHERE trainer_id = '$_POST[trainer_id]'";
 //---- query validations
-$check_email = "SELECT * from trainer where email='$email'";
+$check_email = "SELECT * from trainer where trainer_id != '$_POST[trainer_id]' AND email='$email'";
 $duplicate_email = mysqli_query($conn, $check_email);
 
-$check_phone = "SELECT * from trainer where phone='$phone'";
-$duplicate_phone = mysqli_query($conn, $check_phone);
+$check_phone = "SELECT * from trainer where trainer_id != '$_POST[trainer_id]' AND phone = '$phone'";
+$duplicate_phone = mysqli_query($conn, $check_phone); 
 //--------------
 
 //VALIDATION IF NAAY LETTERS ANG GI INPUT NMO SA CONTACT NUMBER.. IF WALA MO PROCEED SHA SA NEXT CHECKING
@@ -34,11 +34,21 @@ $phoneregex = "/[a-zA-Z]/";
 if (preg_match($phoneregex, $phone, $match)) 
 {
         echo ("<script LANGUAGE='JavaScript'>
-        window.alert('Phone has letters.. pelase check ur inputs.');
+        window.alert('Contact number has letters. Please check ur inputs.');
         window.location.href='/PROJECT/TRAINER/trainers.php';
         </script>");
 
 // CHECK KUNG 11 NUMBERS IMO INPUT.. IF FALSE MO EXIT SA ELSE
+}else if(mysqli_num_rows($duplicate_phone)>0){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Contact number is already taken');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");
+}else if(mysqli_num_rows($duplicate_email)>0){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Email address is already taken');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");
 }else if(strlen($phone) == 11){
    //MAIN  CONDITION NI SA UPDATE
    $hubak = mysqli_query($conn, $tan);
