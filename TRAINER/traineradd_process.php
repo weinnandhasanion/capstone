@@ -40,11 +40,36 @@ if(preg_match($Lnameregex, $last_name, $match)){
     window.alert('Invalid last name. Please check make sure no numbers...');
     window.location.href='/PROJECT/TRAINER/trainers.php';
     </script>");
+}else if(strlen($last_name) > 20){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid last name. Maximum of 20 letters only');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");
+}else if(strlen($first_name) > 20){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid first name. Maximum of 20 letters only');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");
+}else if(strlen($address) > 60){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid address. Maximum of 60 letters only');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");
+}else if(strlen($address) < 5){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid address. Too short for address');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");
 }
 //VALIDATION IF EMAIL IS ALREADY TAKEN.. 
 else if(mysqli_num_rows($duplicate_email)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Email address is already Taken');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");
+}else if(strlen($email) > 40){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid email address. Maximum of 40 letters only');
     window.location.href='/PROJECT/TRAINER/trainers.php';
     </script>");
 }
@@ -78,11 +103,17 @@ else if (preg_match($phoneregex, $phone, $match)){
             </script>");
 }
 // CHECK IF 11 DIGIT IMONG PHONE NUMBER IF DLE MO EXIT SHA SA ELSE
-else if(strlen($phone) != 11){
+else if(strlen($phone) < 10){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid contact number. Please make sure its 11 digits');
     window.location.href='/PROJECT/TRAINER/trainers.php';
     </script>");
+}else if(strlen($phone) > 11){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid contact number. Too many numbers inputed');
+        window.location.href='/PROJECT/TRAINER/trainers.php';
+        </script>");
+        
 }else{
      // QUERY 
      $sql = "INSERT INTO `trainer` ( `first_name`,`last_name`,`email`,

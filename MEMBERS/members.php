@@ -1309,7 +1309,6 @@
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
                   <select name="upper-1-day-1" id="upper-1-day-1_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);

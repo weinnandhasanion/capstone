@@ -49,17 +49,33 @@ if (preg_match($phoneregex, $phone, $match))
     window.alert('Email address is already taken');
     window.location.href='/PROJECT/TRAINER/trainers.php';
     </script>");
-}else if(strlen($phone) == 11){
-   //MAIN  CONDITION NI SA UPDATE
-   $hubak = mysqli_query($conn, $tan);
-                
-       
-// EXIT IF FALSE ANG PHONE NUMBER
+}else if(strlen($phone) > 11){
+   echo ("<script LANGUAGE='JavaScript'>
+   window.alert('Invalid Phone number. Too many numbers inputed');
+   window.location.href='/PROJECT/TRAINER/trainers.php';
+   </script>");
+}else if(strlen($phone) < 10){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid Phone number. Lacking numbers input');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>"); 
+}else if(strlen($email) > 40){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid email address. Maximum of 40 letters only');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");      
+}else if(strlen($address) > 60){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid  address. Maximum of 60 letters only');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");       
+}else if(strlen($address) < 5){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid  address. Too short for address');
+    window.location.href='/PROJECT/TRAINER/trainers.php';
+    </script>");    
 }else{
-        echo ("<script LANGUAGE='JavaScript'>
-                window.alert('Invalid Phone number Please make sure it has 11 digits inputed');
-                window.location.href='/PROJECT/TRAINER/trainers.php';
-                </script>");
+    mysqli_query($conn, $tan);
 }       
 
 

@@ -82,6 +82,21 @@ if(preg_match($program_name_regex, $program_name, $match)){
     window.alert('Program name is already Taken');
     window.location.href='/PROJECT/MEMBERS/members.php';
     </script>");
+}else if(strlen($program_name) > 20){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid program name. Maximum of 20 letters only');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+}else if(strlen($program_description) > 60){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid program description. Maximum of 60 letters only');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+}else if(strlen($program_description) < 10){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid program description. Too short for a description');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
 //---------------DAY 1 EMPTY VALIDATION
 }else if($upper1day1 == ""){
     echo ("<script LANGUAGE='JavaScript'>

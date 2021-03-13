@@ -38,6 +38,11 @@ if (preg_match($phoneregex, $phone, $match)) {
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Email address is empty');
         window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>"); 
+}else if(strlen($email) > 40){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid email address. Maximum of 40 letters only');
+        window.location.href='/PROJECT/MEMBERS/members.php';
         </script>");
 }else if(mysqli_num_rows($existEmail)>0){
         echo ("<script LANGUAGE='JavaScript'>
@@ -47,6 +52,16 @@ if (preg_match($phoneregex, $phone, $match)) {
 }else if($phone == ""){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Contact number is empty');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+}else if(strlen($phone) <= 10){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid contact number. lacking numbers inputed');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+}else if(strlen($phone) > 11){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid contact number. morethan 11 numbers inputed');
         window.location.href='/PROJECT/MEMBERS/members.php';
         </script>");
 }else if(mysqli_num_rows($existPhone)>0){
@@ -59,6 +74,16 @@ if (preg_match($phoneregex, $phone, $match)) {
         window.alert('Address is empty');
         window.location.href='/PROJECT/MEMBERS/members.php';
         </script>");
+}else if(strlen($address) > 60){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid address. Maximum of 60 letters only');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+}else if(strlen($address) < 5){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid address. Too short for a address');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");    
 }else if($sql_update){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Update successfully');
