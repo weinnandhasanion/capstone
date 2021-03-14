@@ -150,6 +150,14 @@
       font-weight: 700;
     }
 
+    .form-disabled {
+      border-bottom: 2px solid #E5E5E5 !important;
+    }
+
+    .form-disabled + label {
+      color: #A0A0A0;
+    }
+
     #email-edit, #phone-edit, #birthdate-edit, #address-edit, #username-edit, #change-user-pass {
       display: none;
     }
@@ -314,10 +322,10 @@
             <input type="password" name="" id="current-password" class="form-input">
             <label for="">Current password</label>
             <small class="text-red" id="wrong-password"></small>
-            <input type="password" name="" id="new-password" class="form-input">
+            <input type="password" disabled name="" id="new-password" class="form-input form-disabled">
             <label for="">New password</label>
             <small class="text-red" id="error-msg"></small>
-            <input type="password" name="" id="confirm-password" class="form-input">
+            <input type="password" name="" id="confirm-password" class="form-input form-disabled">
             <label for="">Confirm password</label>
             <small class="text-red" id="confirm-error-msg"></small>
           </div>
@@ -558,14 +566,6 @@
         var birthdateDef = $("#birthdate-default").text();
         var birthdateInvalid = $("#invalid-birthdate");
 
-        // validateUsername(usernameDef)
-
-        // if(!validateUsername(usernameDef)) {
-        //   usernameInvalid.show();
-        // } else {
-        //   usernameInvalid.hide();
-        // }
-
         let valUser = validateUsername(usernameDef);
         if(!valUser.isValid) {
           usernameInvalid.text(valUser.message).show();
@@ -647,13 +647,14 @@
             },
             success: function(res) {
               if(res == 0) {
-                // $("#current-password").val("");
                 $("#wrong-password").text("Wrong password");
+                $("#new-password").addClass("form-disabled").attr("disabled", "disabled");
                 currentDone = false;
                 $("#pass-btn").removeClass("btn-red");
                 $("#pass-btn").addClass("btn-disabled");
               } else {
                 $("#wrong-password").text("");
+                $("#new-password").removeClass("form-disabled").removeAttr("disabled");
                 currentDone = true;
               }
             }
@@ -665,16 +666,25 @@
         var newPass = $("#new-password").val();
         var error = $("#error-msg");
         if(!$("#new-password").val() == "") {
-          if(newPass == $("#current-password").val()) {
-            error.text("New password must not be the same as current password");
-            newDone = false;
-          } else if(newPass.length < 5) {
-            error.text("Password must contain at least 5 characters");
-            newDone = false;
-          } else {
-            error.text("");
-            newDone = true;
-          }
+          $.get("./../functions/check_existing.php?pass=" + $("#new-password").val(), function (res) {
+            if(JSON.parse(res) == 0) {
+              error.text("New password must not be the same as current password");
+              $("#confirm-password").addClass("form-disabled").attr("disabled", "disabled");
+              newDone = false;
+            } else {
+              if(newPass.length < 5) {
+              error.text("Password must contain at least 5 characters");
+              $("#confirm-password").addClass("form-disabled").attr("disabled", "disabled");
+              newDone = false;
+              } else {
+                error.text("");
+                $("#confirm-password").removeClass("form-disabled").removeAttr("disabled");
+                newDone = true;
+              }
+            }
+          });
+        } else {
+          $("#confirm-password").addClass("form-disabled").attr("disabled", "disabled");
         }
       });
 
