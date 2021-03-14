@@ -114,6 +114,32 @@ if($annualHasValue) {
       width: 50%;
       text-align: right;
     }
+
+    #smart-button-container {
+      width: 100%;
+      max-width: 350px;
+      margin-top: 20px; 
+      z-index: 1
+    }
+
+    @media screen and (min-width: 768px) {
+      .main-cont {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .content {
+        max-width: 468px;
+      }
+
+      #smart-button-container {
+        width: 468px;
+        margin-top: 20px; 
+        z-index: 1
+      }
+    }
   </style>
 </head>
 <body>
@@ -296,7 +322,7 @@ if($annualHasValue) {
           </div>
         </div>
         <!-- <button class="btn btn-disabled fw-600">Pay P0.00</button> -->
-        <div id="smart-button-container" style="margin-top: 20px; width: 80vw; z-index: 1">
+        <div id="smart-button-container">
           <div style="text-align: center;">
             <div id="paypal-button-container"></div>
           </div>

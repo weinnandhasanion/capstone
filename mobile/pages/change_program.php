@@ -46,11 +46,13 @@ if($res) {
     }
 
     .main-cont {
-      min-width: 100vw;
       min-height: 80vh;
       word-wrap: break-word;
       overflow-wrap: break-word;
-
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: column;
     }
 
     .main-cont div {
@@ -59,6 +61,7 @@ if($res) {
     }
 
     .change-program-div {
+      width: 100%;
       margin-top: 30px;
       display: flex;
       justify-content: center;
@@ -79,7 +82,7 @@ if($res) {
       <img src="./../../logo.png" style="width: 32px; height: 32px; margin-left: 70px" alt="">
     </div>    <div class="items">
       <a href="#">
-        <span class="active">
+        <span>
           <i class="material-icons">account_circle</i>
           <h2>Profile</h2>
         </span>
@@ -103,7 +106,7 @@ if($res) {
         </span>
       </a>
       <a href="./program.php">
-        <span>
+        <span class="active">
           <i class="material-icons">settings</i>
           <h2>Program</h2>
         </span>
@@ -140,31 +143,57 @@ if($res) {
                   WHERE program_status = 'active'";
           $res = mysqli_query($con, $sql);
           if($res) {
+            $currentSql = "SELECT program_id FROM member WHERE member_id = '".$_SESSION["member_id"]."'";
+            $currentQry = mysqli_query($con, $currentSql);
+            $currentRow = mysqli_fetch_assoc($currentQry);
             while($row = mysqli_fetch_assoc($res)) {
           ?>
-          <option value="<?php echo $row["program_id"] ?>"><?php echo $row["program_name"] ?></option>
+          <option value="<?php echo $row["program_id"] ?>"
+          <?php 
+          if($currentRow["program_id"] == $row["program_id"]) {
+          ?>
+          selected
+          <?php
+          }
+          ?>
+          ><?php echo $row["program_name"] ?></option>
           <?php
             }
           }
           ?>
         </select>
       </div>
-      <button class="btn btn-reg btn-sm" id="update-program">Update program</button>
+      <button class="btn btn-reg btn-disabled btn-sm" disabled id="update-program">Update program</button>
       <small id="response" style="display: none"></small>
     </div>
   </main>
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script>
+    var program;
+
+    $.get("./../functions/current_program.php", function(res) {
+      program = JSON.parse(res);
+    });
+
     $("#update-program").click(function() {
       $.post("./../functions/edit_program.php", {id: $("#select-program").val()}, function(res) {
         if(res == 1) {
           $("#response").addClass("text-green").text("Successfully changed program!").css("display", "block");
+          $("#update-program").addClass("btn-disabled").attr("disabled", "disabled");
         } else {
           $("#response").addClass("text-red").text("Updating program failed.").css("display", "block");
         }
       });
-    })
+    });
+
+    $("#select-program").on("change", function() {
+      if($("#select-program").val() != program) {
+        $("#update-program").removeClass("btn-disabled").removeAttr("disabled");
+      } else {
+        $("#update-program").addClass("btn-disabled").attr("disabled", "disabled");
+      }
+    });
   </script>
 </body>
 </html>

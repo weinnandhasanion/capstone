@@ -149,7 +149,7 @@ session_start();
   </div>
   <main>
     <div class="menu">
-      <i class="material-icons" style="font-size: 32px;" id="menu">menu</i>
+      <i class="material-icons d-none" style="font-size: 32px;" id="menu">menu</i>
       <h2>Notifications</h2>
     </div>
     <div class="icon-div">

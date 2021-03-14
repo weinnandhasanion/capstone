@@ -34,7 +34,7 @@ if(!isset($_SESSION["member_id"])) {
     }
 
     .content button {
-      width: 80%;
+      max-width: 250px;
     }
 
     .content > select {
@@ -114,7 +114,7 @@ if(!isset($_SESSION["member_id"])) {
   </div>
   <main>
     <div class="menu">
-      <i class="material-icons" style="font-size: 32px;" id="menu">menu</i>
+      <i class="material-icons d-none" style="font-size: 32px;" id="menu">menu</i>
       <h2>Program</h2>
     </div>
     <div class="icon-div">

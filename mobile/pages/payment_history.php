@@ -199,7 +199,7 @@ if($res) {
     }
 
     .print-cont button {
-      width: 70%;
+      max-width: 250px;
     }
 
     .list-div {
@@ -228,6 +228,16 @@ if($res) {
       height: 100%;
       justify-content: center;
       align-items: center;
+    }
+
+    @media screen and (min-width: 768px) {
+      .main-cont {
+      padding: 0 !important;
+      }
+
+      .button-cont, .history-div, .print-cont {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -318,7 +328,7 @@ if($res) {
   </div>
   <main>
     <div class="menu">
-      <i class="material-icons" style="font-size: 32px;" id="menu">menu</i>
+      <i class="material-icons d-none" style="font-size: 32px;" id="menu">menu</i>
       <h2>Payment History</h2>
     </div>
     <div class="icon-div">
