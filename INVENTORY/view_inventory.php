@@ -4,7 +4,7 @@ session_start();
 
 $id = $_GET["id"];
 
-$sql = "SELECT * FROM inventory WHERE inventory_id = $id";
+$sql = "SELECT * FROM inventory WHERE inventory_id = $id ";
 $res = mysqli_query($conn, $sql);
 
 if($res) {

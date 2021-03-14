@@ -180,7 +180,7 @@
 
           ?> 
 
-        <a href="/PROJECT/index.php">
+        <a href="/PROJECT/index_admin.php">
           <button id="logoutBtn" type="button" class="btn btn-sm btn-danger"
           data-id="<?php echo $row['login_id'] ?>"
           onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
@@ -414,12 +414,15 @@
 
                 $digit_date_hired= new DateTime( $row["date_hired"]);
                 $string_date_hired= $digit_date_hired->format('F d Y');
+
+                $digit_time_deleted= new DateTime( $row["time_deleted"]);
+                $string_time_deleted = $digit_time_deleted->format('h:i A');
                 ?>
 
                 <tr>
-                  <td><?php echo $row["first_name"],  $row["last_name"] ?></td>
+                  <td><?php echo $row["first_name"], " ",  $row["last_name"] ?></td>
                   <td><?php echo $string_date_deleted?></td>
-                  <td><?php echo $row["time_deleted"] ?></td>
+                  <td><?php echo $string_time_deleted ?></td>
                   <td>
                     <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
                       title="Recover <?php echo $row["last_name"]?>" class="fas fa-undo mx-2"
@@ -547,7 +550,7 @@
             </div>
             <div class="col-sm-6">
               <label>Status</label>
-              <select name="trainer_status" id="update_status"  class="form-control">
+              <select name="trainer_status"  id="update_status"  class="form-control">
                 <option value="active">active</option>
                 <option value="inactive">inactive </option>
               </select>
@@ -558,11 +561,15 @@
           <div class="form-row">
             <div class="col-sm-6">
               <label>First Name</label>
-              <input name="first_name" type="text" id="update_fname" readonly class="form-control">
+              <input name="first_name" type="text" onblur="checkIfValid(this)" id="update_fname" readonly class="form-control">
+              <small class="validation text-danger" id="update_fname-empty">Please fill out this field</small>
+                <small class="validation text-danger" id="update_fname-invalid">Invalid input</small>
             </div>
             <div class="col-sm-6">
               <label>Last Name</label>
-              <input name="last_name" type="text" id="update_lname"  readonly  class="form-control">
+              <input name="last_name" type="text" onblur="checkIfValid(this)" id="update_lname"  readonly  class="form-control">
+              <small class="validation text-danger" id="update_lname-empty">Please fill out this field</small>
+                <small class="validation text-danger" id="update_lname-invalid">Invalid input</small>
             </div>
           </div>
         </div>
@@ -570,10 +577,10 @@
           <div class="form-row">
             <div class="col-sm-6">
               <label>Contact Number</label>
-              <input name="phone"   type="text" required="" id="update_phone" onblur="checkNumber(this)" class="form-control">
-              <small class="validation text-danger" id="update_phone-empty">Please fill out this field</small>
-              <small class="validation text-danger" id="update_phone-invalid">Invalid input</small>
-              <small class="validation text-danger" id="update_phone-length">Phone number must contain 11 digits</small>
+              <input name="phone"   type="text" required id="update_phone" onblur="checkNumber(this)" class="form-control">
+                  <small class="validation text-danger" id="update_phone-empty">Please fill out this field</small>
+                  <small class="validation text-danger" id="update_phone-invalid">Invalid input</small>
+                  <small class="validation text-danger" id="update_phone-length">Phone number must contain 11 digits</small>
             </div>
            
           </div>
@@ -582,7 +589,7 @@
           <div class="form-row">
           <div class="col-sm-12">
               <label>Email address</label>
-              <input name="email"  onblur="checkEmail(this)"  type="email" id="update_email"   class="form-control">
+              <input name="email"  required onblur="checkEmail(this)"  type="email" id="update_email"   class="form-control">
               <small class="validation text-danger" id="update_email-empty">Please fill out this field</small>
               <small class="validation text-danger" id="update_email-invalid">Invalid email</small>
             </div>
@@ -592,7 +599,7 @@
           <div class="form-row">
             <div class="col-sm-12">
             <label>Address</label>
-              <textarea name="address"  type="text"  required="" id="update_address" 
+              <textarea name="address" required  type="text"  required id="update_address" 
               oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control"
               style="height:80px;"></textarea>
               <small class="validation text-danger" id="update_address-empty">Please fill out this field</small>

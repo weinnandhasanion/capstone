@@ -39,11 +39,7 @@ $lower3day3 = $_POST['lower-3-day-3'];
 $abdominalday3 = $_POST['abdominal-day-3'];
 
 //REGEX
-
 $program_name_regex = "/[0-9]/";
-
-
-
 
  // INSERTING  ADMIN INFO 
  $sql0 = "SELECT * FROM admin WHERE admin_id = $session_admin_id";
@@ -53,13 +49,7 @@ $program_name_regex = "/[0-9]/";
  $admin_id = $rows["admin_id"];
  $timeNow = date("h:i A");
 
-if(preg_match($program_name_regex, $program_name, $match)){
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid program name. Please check, make sure no numbers...');
-    window.location.href='/PROJECT/MEMBERS/members.php';
-    </script>");
-}else{
-
+//----------------------------------- ARRAY 
 $data_trainer = array();
 $tra = "SELECT * FROM trainer ORDER BY trainer_id DESC";
 $trainers = mysqli_query($conn, $tra);
@@ -70,13 +60,152 @@ if($trainers) {
 
     $trainer_id_array = $data_trainer[0];
 }
-
 // INSERTING  trainer INFO
 $sql_trainer= "SELECT * FROM trainer WHERE trainer_id = $trainer_id_array";
 $query_trainer = mysqli_query($conn, $sql_trainer);
 $rowed_trainer = mysqli_fetch_assoc($query_trainer);
 
 $trainer_id = $rowed_trainer["trainer_id"];
+
+//--------------------------------------------
+
+$exist = "SELECT * FROM program WHERE   program_name = '$program_name'";
+$existProgramName = mysqli_query($conn, $exist);
+
+if(preg_match($program_name_regex, $program_name, $match)){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid program name. make sure no numbers');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if(mysqli_num_rows($existProgramName)>0){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Program name is already Taken');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if(strlen($program_name) > 20){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid program name. Maximum of 20 letters only');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+}else if(strlen($program_description) > 60){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid program description. Maximum of 60 letters only');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+}else if(strlen($program_description) < 10){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid program description. Too short for a description');
+        window.location.href='/PROJECT/MEMBERS/members.php';
+        </script>");
+//---------------DAY 1 EMPTY VALIDATION
+}else if($upper1day1 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 1 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($upper2day1 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 2 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($upper3day1 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($lower1day1 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($lower2day1 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($lower3day1 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($abdominalday1 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+//---------------DAY 2 EMPTY VALIDATION
+}else if($upper1day2 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 1 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($upper2day2 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 2 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($upper3day2 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($lower1day2 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($lower2day2 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($lower3day2 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($abdominalday2 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+//---------------DAY 3 EMPTY VALIDATION
+}else if($upper1day3 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 1 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($upper2day3 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 2 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($upper3day3 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($lower1day3 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($lower2day3 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($lower3day3 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if($abdominalday3 == ""){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Day 1 Upper Body 3 is empty');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else{
 
     $sql = "INSERT INTO `program`
     ( admin_id, trainer_id, program_name,program_description,date_added,time_added,

@@ -7,7 +7,7 @@ $type = $_GET["type"];
 $data = array();
 if($type == "cardio") {
   $sql = "SELECT * FROM inventory
-          WHERE inventory_category = 'Cardio Equipment'";
+          WHERE inventory_category = 'Cardio Equipment' AND inventory_status = 'notdeleted'";
   $res = mysqli_query($conn, $sql);
   if($res) {
     while($row = mysqli_fetch_assoc($res)) {
@@ -16,7 +16,7 @@ if($type == "cardio") {
   }
 } else if($type == "weights") {
   $sql = "SELECT * FROM inventory
-          WHERE inventory_category = 'Weight Equipment'";
+          WHERE inventory_category = 'Weight Equipment'  AND inventory_status = 'notdeleted'";
   $res = mysqli_query($conn, $sql);
   if($res) {
     while($row = mysqli_fetch_assoc($res)) {
@@ -24,7 +24,7 @@ if($type == "cardio") {
     }
   }
 } else {
-  $sql = "SELECT * FROM inventory";
+  $sql = "SELECT * FROM inventory WHERE inventory_status = 'notdeleted'";
   $res = mysqli_query($conn, $sql);
   if($res) {
     while($row = mysqli_fetch_assoc($res)) {

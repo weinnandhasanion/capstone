@@ -35,19 +35,33 @@ $duplicate_phone = mysqli_query($conn, $check_phone);
 
 //REGEX
 $phoneregex = "/[a-zA-Z]/";
-$Fnameregex = "/[0-9]/";
-$Lnameregex = "/[0-9]/";
+$FnameNumregex = "/[0-9]/";
+$LnameNumregex = "/[0-9]/";
 //VALIDATION IF NAAY NUMBERS ANG GI INPUT NMO SA LASTNAME..
- if(preg_match($Lnameregex, $last_name, $match)){
+ if(preg_match($LnameNumregex, $last_name, $match)){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid last name. Please check, make sure no numbers...');
     window.location.href='/PROJECT/MEMBERS/members.php';
     </script>");
 }
 //VALIDATION IF NAAY NUMBERS ANG GI INPUT NMO SA FIRSTNAME.. 
-else if(preg_match($Fnameregex, $first_name, $match)){
+else if(preg_match($FnameNumregex, $first_name, $match)){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid first name. Please check, make sure no numbers...');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}
+//VALIDATION IF 20 LENGTH RA ANG GI INPUT NMO SA FIRSTNAME.. 
+else if(strlen($first_name) > 20){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid first name. Maximum of 20 letters only');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}
+//VALIDATION IF 20 LENGTH RA ANG GI INPUT NMO SA LASTNAME.. 
+else if(strlen($last_name) > 20){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid last name. Maximum of 20 letters only');
     window.location.href='/PROJECT/MEMBERS/members.php';
     </script>");
 }
@@ -65,6 +79,27 @@ else if(mysqli_num_rows($duplicate_email)>0){
     window.location.href='/PROJECT/MEMBERS/members.php';
     </script>");
 }
+//VALIDATION IF 40 LENGTH RA ANG GI INPUT NMO SA EMAIL.. 
+else if(strlen($email) > 40){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid email address. Maximum of 40 letters only');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}
+//VALIDATION IF 60 LENGTH RA ANG GI INPUT NMO SA ADDRESS.. 
+else if(strlen($address) > 60){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid address. Maximum of 60 letters only');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}
+//VALIDATION IF 5 LENGTH RA ANG GI INPUT NMO SA ADDRESS.. 
+else if(strlen($address) < 5){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid address. Too short for a address');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}
 //VALIDATION IF CONTACT NUMBER IS ALREADY TAKEN.. 
 else if(mysqli_num_rows($duplicate_phone)>0){
     echo ("<script LANGUAGE='JavaScript'>
@@ -78,11 +113,17 @@ else if (preg_match($phoneregex, $phone, $match)){
         window.alert('Phone has letters.. pelase check ur inputs.');
         window.location.href='/PROJECT/MEMBERS/members.php';
         </script>");
-}
-// CHECK IF 11 DIGIT IMONG PHONE NUMBER IF DLE MO EXIT SHA SA ELSE
-else if(strlen($phone) == 11){
-
-
+}else if(strlen($phone) <= 10){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid contact number. lacking numbers inputed');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if(strlen($phone) > 11){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid contact number. morethan 11 numbers inputed');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else{
         $sql = "INSERT INTO `member` ( first_name,last_name,gender,birthdate,email,address,
         phone,member_type,date_registered,program_id )         
         VALUES ( '$first_name', '$last_name', '$gender', '$birthdate', '$email', 
@@ -165,14 +206,6 @@ else if(strlen($phone) == 11){
 
      echo ("<script LANGUAGE='JavaScript'>
     window.alert('Successfully Added a member');
-    window.location.href='/PROJECT/MEMBERS/members.php';
-    </script>");
-
-    
-// EXIT IF DLE 11 DIGITS IMONG PHONE NUMBER    
-}else{
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid Phone number. Make sure it has 11 digits...');
     window.location.href='/PROJECT/MEMBERS/members.php';
     </script>");
 }
