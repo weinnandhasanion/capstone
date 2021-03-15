@@ -243,7 +243,6 @@
         <div class='card-content'>
           <div class='card-header flexHeader'>
             <h3 class='card-title'>
-            
               ADMIN LOGTRAIL
             </h3>
             <div>
@@ -318,20 +317,10 @@
             <div id="no-data-div-logtrail-modal" class="no-data-div my-3 text-muted">
               No data!
             </div>
-            <div class="table-parent my-5" id="table-loader">
-              <div class="table-loader">
-                <div class="loader-spinner"></div>
-              </div>
-            </div>
           </div>
-          <div id="footer-mdoal" class="card-footer flex-this">
-            <small id="page"></small>
-            <nav aria-label="Page navigation example">
-              <ul class="pagination" id="pagination">
-
-              </ul>
-            </nav>
-          </div>
+          <div class="modal-footer d-flex justify-content-between flex-row-reverse" id="doing-footer">
+          <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
@@ -369,7 +358,7 @@
       }
     
 
-    function member(el) {
+      function member(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
@@ -447,14 +436,21 @@
     }
 
 
+
+  var logtrail;
+  $.get("./getlogtrail.php", function(res) {
+    logtrail = JSON.parse(res);
+  }).then(() => {
+    paginateLogtrail(logtrail);
+  });
+
     
        // Pagination sa logtrail
+function paginateLogtrail(data) {
   $("#footer").pagination({
     dataSource: function(done) {
-      $.get("./getlogtrail.php", function(res) {
-        console.log(res);
-        done(JSON.parse(res));
-      });
+      done(data);
+     
     },
     pageSize: 5,
     showPrevious: false,
@@ -484,6 +480,20 @@
       } else {
         $("#no-data-div-logtrail").css("display", "flex");
       }
+    }
+  });
+}
+
+// logtrail pagination after type sa search bar
+$("#search-admin").keyup(function() {
+    let val = $("#search-admin").val();
+    let data;
+
+    if (val != "") {
+      data = logtrail.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
+      paginateLogtrail(data);
+    } else {
+      paginateLogtrail(logtrail);
     }
   });
 
