@@ -13,21 +13,52 @@ $desc = $_POST["promo-description-update"];
 $type = $_POST["promo-type-update"];
 $startDate = date("Y-m-d", strtotime($_POST["promo-start-date-update"]));
 $endDate = date("Y-m-d", strtotime($_POST["promo-end-date-update"]));
+//REGEX
+$letterRegex = "/[a-zA-Z]/";
+$numberRegex = "/[0-9]/";
 
-$sql = "UPDATE promo
+$check_name = "SELECT * from promo where promo_name='$name' AND promo_id != '$id'";
+$duplicate_name = mysqli_query($conn, $check_name);
+
+if(preg_match($numberRegex, $name, $match)){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid promo name. Please check make sure no numbers');
+  window.location.href='./promos.php';
+  </script>");
+}else if(preg_match($letterRegex, $amount, $match)){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid amount. Please check make sure no letters');
+  window.location.href='./promos.php';
+  </script>");
+}else if(strlen($name) < 5){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid promo name. Promo name is too short');
+  window.location.href='./promos.php';
+  </script>");
+}else if(strlen($name) > 25){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid promo name. Maximum of 25 letters only');
+  window.location.href='./promos.php';
+  </script>");
+}else if(strlen($desc) > 60){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid description. Maximum of 60 letters only);
+  window.location.href='./promos.php';
+  </script>");
+}else if(mysqli_num_rows($duplicate_name)>0){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Promo name is already Taken');
+  window.location.href='./promos.php';
+  </script>");
+} else {
+  $sql = "UPDATE promo
         SET promo_name = '$name', amount = '$amount', promo_description = '$desc', promo_type = '$type', 
             promo_starting_date = '$startDate', promo_ending_date = '$endDate'
         WHERE promo_id = $id";
-$res = mysqli_query($conn, $sql);
-if($res) {
+  $res = mysqli_query($conn, $sql);
   echo "<script>
-    alert('Promo updated successfully!');
-    window.location.href = './promos.php';
-  </script>";
-} else {
-  echo "<script>
-    alert('Error: ".mysqli_error($conn)."');
-    window.location.href = './promos.php';
+  alert('Promo updated successfully!');
+  window.location.href = './promos.php';
   </script>";
 }
 ?>

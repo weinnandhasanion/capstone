@@ -408,7 +408,6 @@
                   <thead>
                     <tr>
                       <th>Full name</th>
-                      <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -564,6 +563,7 @@
               <thead>
                 <tr style="text-align:center;">
                   <th>ID</th>
+                  <th>From Where</th>
                   <th>Full Name</th>
                 </tr>
               </thead>
@@ -778,7 +778,7 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Email</label>
-                  <input type="email" name="email" class="form-control"  id="update_email"
+                  <input type="email" required name="email" class="form-control"  id="update_email"
                   onblur="checkEmail(this)">
                   <small class="validation text-danger" id="update_email-empty">Please fill out this field</small>
                   <small class="validation text-danger" id="update_email-invalid">Invalid email</small>
@@ -790,7 +790,7 @@
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Phone</label>
-                  <input type="text" name="phone" class="form-control"  id="update_phone"
+                  <input type="text" name="phone" required class="form-control"  id="update_phone"
                   onblur="checkNumber(this)">
                   <small class="validation text-danger" id="update_phone-empty">Please fill out this field</small>
                   <small class="validation text-danger" id="update_phone-invalid">Invalid input</small>
@@ -809,7 +809,7 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <center><label>Address</label></center>
-                  <input name="address"  id="update_address" type="text" class="form-control mb-1"
+                  <input name="address" required id="update_address" type="text" class="form-control mb-1"
                     id="address"  oninput="checkIfValid(this)" onblur="checkIfValidupdate(this)">
                   <small class="validation text-danger" id="update_address-empty">Please fill out this field</small>
                 </div>
@@ -1054,7 +1054,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Program</label>
-                  <select name="program_id" id="program" class="form-control">
+                  <select name="program_id" required id="program" class="form-control">
                     <option value="" selected disabled>Select here...</option>
                     <?php
                     $sql = "SELECT program_id, program_name FROM program";
@@ -1081,12 +1081,12 @@
   </div>
   </div>
 
-  <!---------------------------------------------------- View member modal -------------------------------------->
+  <!----------------------------------------------------  View regular member modal -------------------------------------->
   <div class="modal fade" id="view">
     <div class="modal-dialog">
       <div class="modal-content" style="width:800px;">
         <div class="modal-header" style="background-color: #DF3A01; color: white;">
-          <h4 class="modal-title">Member Information</h4>
+          <h4 class="modal-title">Regular Member Information</h4>
           <button type='button' class='close' id='close-paymentModal' data-dismiss='modal'>&times;</button>
         </div>
         <div class="modal-body">
@@ -1196,6 +1196,74 @@
     </div>
   </div>
 
+
+  
+  <!---------------------------------------------------- View walkin member modal -------------------------------------->
+  <div class="modal fade" id="viewwalkin">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width:800px;">
+        <div class="modal-header" style="background-color: #DF3A01; color: white;">
+          <h4 class="modal-title">Walk-in Member Information</h4>
+          <button type='button' class='close' id='close-paymentModal' data-dismiss='modal'>&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-4">
+                <label>Member ID</label>
+                <input name="member_id" type="text" id="viewwalkin_memberId" disabled class="form-control">
+              </div>
+              <div class="col-sm-4">
+                <label>Last name</label>
+                <input name="last_name" type="text" id="viewwalkin_lastname" disabled class="form-control">
+              </div>
+              <div class="col-sm-4">
+                <label>First name</label>
+                <input name="first_name" type="text" id="viewwalkin_firstname" disabled class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+            <div class="col-sm-4">
+                <label>Date Registered</label>
+                <input name="date_registered" type="text" class="form-control" id="viewwalkin_dateregistered" disabled>
+              </div>
+              <div class="col-sm-4">
+                <label>Birthdate</label>
+                <input name="birthdate" type="text" id="viewwalkin_birthdate" disabled class=" form-control">
+              </div>
+              <div class="col-sm-3 ">
+                <label>Contact Number</label>
+                <input name="phone" type="text" id="viewwalkin_phone" disabled class="form-control">
+              </div>
+              <div class="col-sm-1">
+                <label>Gender</label>
+                <input name="gender" type="text" class="form-control" id="viewwalkin_gender" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+            <div class="col-sm-12">
+                <label>E-mail</label>
+                <input name="email" type="text" id="viewwalkin_email" disabled class="form-control">
+              </div>
+            </div>
+          </div>  
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-12">
+                <label>Address</label>
+                <input name="address" type="text" class="form-control" id="viewwalkin_address" disabled>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!---------------------------------------------------- DELETED RECORD -------------------------------------->
   <div id="deleteModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -1219,16 +1287,16 @@
 
                   <th>fullname</th>
                   <th>From where</th>
-                  <th>Date Added</th>
-                  <th>date deleted</th>
-                  <th>action</th>
+                  <th>Time deleted</th>
+                  <th>Date deleted</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody id='deletetbody'>
                 <?php
             /* code for display data */
             $sql = "SELECT * FROM member WHERE acc_status = 'inactive'
-                    AND date_deleted IS NOT NULL";
+                    AND date_deleted IS NOT NULL AND time_deleted IS NOT NULL ORDER BY time_deleted DESC";
             $result = mysqli_query($conn, $sql);
             $resultCheck = mysqli_num_rows($result);
 
@@ -1236,8 +1304,8 @@
               while($row = mysqli_fetch_assoc($result)){
                 $dateDeleted = new DateTime($row["date_deleted"]);
                 $resultDelete = $dateDeleted->format('F d Y');
-                $dateAdded = new DateTime( $row["date_registered"]);
-                $resultAdded = $dateAdded->format('F d Y');
+                $dateAdded = new DateTime( $row["time_deleted"]);
+                $resultAdded = $dateAdded->format('h:i A');
                 ?>
                 <tr>
                   <td><?php echo $row["first_name"],  $row["last_name"] ?></td>
@@ -2358,12 +2426,11 @@
       data.forEach(row => {
         let html = `<tr>
           <td>${row.fullname}</td>
-          <td>${row.member_status}</td>
           <td>
             <span data-toggle="tooltip" data-placement="top" title="View ${row.last_name}">
               <i style="cursor: pointer; color:brown; font-size: 25px;" data-toggle="modal"
-                data-target="#view" class=" fas fa-eye mx-2 get_id" data-id='${row.member_id}'
-                onclick="displayDetails(this)"></i>
+                data-target="#viewwalkin" class=" fas fa-eye mx-2 get_id" data-id='${row.member_id}'
+                onclick="displayWalkinDetails(this)"></i>
             </span>
             <span data-toggle="tooltip" data-placement="top"
               title="Update ${row.last_name} to Regular">
@@ -2505,6 +2572,38 @@
       document.getElementById("view_username").value = checkUsername(row.username);
       document.getElementById("view_program").value = row.program_name;
       document.getElementById("view_dateHired").value = row.date_registered;
+    }
+  }
+
+
+  //------------------------------------------------------------------------------ VIEW JS
+  // View member Modal
+  function displayWalkinDetails(el) {
+    let id = el.getAttribute('data-id');
+    console.log(id);
+
+    // AJAX Request
+    let req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+        display(JSON.parse(this.responseText));
+      }
+    }
+    req.open('GET', 'viewmember.php?id=' + id, true);
+    req.send();
+
+    function display(row) {
+
+      document.getElementById("viewwalkin_memberId").value = row.member_id;
+      document.getElementById("viewwalkin_lastname").value = row.last_name;
+      document.getElementById("viewwalkin_firstname").value = row.first_name;
+      document.getElementById("viewwalkin_email").value = row.email;
+      document.getElementById("viewwalkin_phone").value = row.phone;
+      document.getElementById("viewwalkin_birthdate").value = row.birthdate;
+      document.getElementById("viewwalkin_address").value = row.address;
+      document.getElementById("viewwalkin_dateregistered").value = row.date_registered;
+      document.getElementById("viewwalkin_gender").value = row.gender;
     }
   }
 
@@ -3023,6 +3122,7 @@
       data.forEach(row => {
         var html = `<tr>
             <td>${row.member_id}</td>
+            <td>${row.member_type}</td>
             <td>${row.first_name} ${row.last_name}</td>
           </tr>`;
 

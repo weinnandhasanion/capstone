@@ -519,6 +519,7 @@
               <div class="col-sm-6">
                   <label for="">Trainer status</label>
                   <select name="trainers_list_status" class="form-control">
+                  <option value="all">All</option>
                     <option value="active">Active</option>
                     <option value="inactive">inactive</option>
                     <option value="deleted">Deleted</option>

@@ -208,7 +208,7 @@ $res = mysqli_query($conn, $sql);
                   <button onclick="viewDetails(this)" style="width: 101px;" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">view</button>
                   <button onclick="viewUpdate(this)" style="width: 101px;" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">update</button>
                   <button class="btn btn-sm btn-orange" data-id="<?php echo $row["inventory_id"] ?>" onclick="deleted(this)" style="width: 219px;" data-toggle="tooltip" data-placement="top" title="<?php echo $row["inventory_name"] ?>">
-                  Delete inventory
+                  Delete item
                   </button>
                 </div>
               </div>
@@ -360,8 +360,8 @@ $res = mysqli_query($conn, $sql);
               <div class="col-sm-6" style="position: relative; left: 35px;">
                 <label>Item name</label>
                 <input type="text" id="update-name" name="inventory_name" onblur="checkIfValid(this)" class="form-control" required="" placeholder="Item name">
-                <small class="validation text-danger" id="name-empty">Please fill out this field</small>
-                <small class="validation text-danger" id="name-invalid">Invalid input</small>
+                <small class="validation text-danger" id="update-name-empty">Please fill out this field</small>
+                <small class="validation text-danger" id="update-name-invalid">Invalid input</small>
               </div>
             </div>
             <div class="form-group">
@@ -369,9 +369,9 @@ $res = mysqli_query($conn, $sql);
                 <div class="col-sm-6">
                   <label>Quantity</label>
                   <input type="text" id="update-quantity" name="inventory_qty" onblur="checkNumber(this)" class="form-control" required="" placeholder="Quantity">
-                  <small class="validation text-danger" id="quantity-empty">Please fill out this field</small>
-                  <small class="validation text-danger" id="quantity-invalid">Invalid input</small>
-                  <small class="validation text-danger" id="quantity-length">number must contain 3 digits</small>
+                  <small class="validation text-danger" id="update-quantity-empty">Please fill out this field</small>
+                  <small class="validation text-danger" id="update-quantity-invalid">Invalid input</small>
+                  <small class="validation text-danger" id="update-quantity-length">number must contain 3 digits</small>
                 </div>
                 <div class="col-sm-6">
                   <label for="">No. of Items Working</label>
@@ -381,7 +381,9 @@ $res = mysqli_query($conn, $sql);
               <div class="form-row mt-3">
                 <div class="col-sm-6">
                   <label for="">No. of Items Damaged</label>
-                  <input type="number" name="inventory_dmg" class="form-control" id="update-damaged" min="0">
+                  <input type="number" required name="inventory_dmg" onblur="checkNumber(this)" class="form-control" id="update-damaged" min="0">
+                  <small  style="display:none"class="validation text-danger" id="update-damaged-empty">Please fill out this field</small>
+                  <small  style="display:none"class="validation text-danger" id="update-damaged-invalid">Invalid input</small>
                 </div>
                 <div class="col-sm-6 train">
                   <label>Category</label><br>
@@ -390,14 +392,14 @@ $res = mysqli_query($conn, $sql);
                     <option value="Cardio Equipment">Cardio Equipment</option>
                     <option value="Weight Equipment">Weight Equipment</option>
                   </select>
-                  <small class="validation text-danger" id="category-invalid">Invalid input</small>
+                  <small class="validation text-danger" id="update-category-invalid">Invalid input</small>
                 </div>
               </div>
               <div class="form-row mt-3">
                 <div class="col-sm-6 ">
                   <label>Description</label><br>
                   <textarea onblur="checkDescription(this)" rows="5" class="form-control" cols="100" class="form-control" id="update-description" name="inventory_description" required data-validation-required-message="Please enter description" placeholder="Enter description" maxlength="999" style="resize: none; height: 100px; width: 465px;"></textarea>
-                  <small class="validation text-danger" id="description-invalid">Invalid input</small>
+                  <small class="validation text-danger" id="update-description-invalid">Invalid input</small>
                 </div>
               </div>
             </div>

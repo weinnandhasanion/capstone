@@ -432,6 +432,14 @@
             <td>${row.description}</td>
             <td>${row.time}</td>
           </tr>`;
+          }else if(row.identity === 'report'){
+            var html = `<tr>
+            <td>N/A</td>
+            <td>${row.identity}</td>
+            <td>${row.user_fname}</td>
+            <td>${row.description}</td>
+            <td>${row.time}</td>
+          </tr>`;
           }
           tbody.innerHTML += html;
         });

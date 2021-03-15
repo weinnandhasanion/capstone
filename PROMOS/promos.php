@@ -205,7 +205,9 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Promo Name</label>
-                  <input name="promo-name" required="" type="text" id="promo-name" class="form-control mb-1"placeholder="Enter promo name here" onblur="checkIfValid(this)">
+                  <input  onblur="checkIfValid(this)" name="promo-name" required type="text" id="promo-name" class="form-control mb-1"placeholder="Enter promo name here" onblur="checkIfValid(this)">
+                  <small  style="display:none"class="validation text-danger" id="promo-name-empty">Please fill out this field</small>
+                  <small  style="display:none"class="validation text-danger" id="promo-name-invalid">Invalid input</small>
                 </div>
               </div>
             </div>
@@ -213,7 +215,9 @@
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Promo Discount</label>
-                  <input type="text" name="promo-amount" id="promo-amount" class="form-control mb-1" placeholder="Enter amount" />
+                  <input  type="text" required name="promo-amount" onblur="checkIfAmount(this)"  id="promo-amount" class="form-control mb-1" placeholder="Enter amount" />
+                  <small  style="display:none"class="validation text-danger" id="promo-amount-empty">Please fill out this field</small>
+                  <small  style="display:none"class="validation text-danger" id="promo-amount-invalid">Invalid input</small>
                 </div>
                 <div class="col-sm-6">
                   <label>Promo Type</label>
@@ -232,7 +236,7 @@
                 </div>
                 <div class="col-sm-6" id="add-end" style="display: none">
                   <label>Promo Ending Date</label>
-                  <input type="date" name="promo-end-date" id="promo-end-date" class="form-control mb-1" />
+                  <input type="date"  name="promo-end-date" id="promo-end-date" class="form-control mb-1" />
                 </div>
               </div>
             </div>
@@ -240,7 +244,8 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Promo Description</label>
-                  <textarea name="promo-description" id="promo-description" class="form-control" rows="3" placeholder="Enter description here"></textarea>
+                  <textarea oninput="checkIfValid(this)" onblur="checkIfValid(this)"name="promo-description" required id="promo-description" class="form-control" rows="3" placeholder="Enter description here"></textarea>
+                  <small style="display:none" class="validation text-danger" id="promo-description-empty">Please fill out this field</small>
                 </div>
               </div>
             </div>
@@ -328,20 +333,25 @@
 												</div>
 												<div class="col-sm-6">
 														<label for="promo-name-update">Promo Name</label>
-														<input type="text" id="promo-name-update" name="promo-name-update" class="form-control">
-												</div>
+														<input type="text" id="promo-name-update"  onblur="checkIfValid(this)" name="promo-name-update" class="form-control">
+                            <small style="display:none" class="validation text-danger" id="promo-name-update-empty">Please fill out this field</small>
+                            <small style="display:none" class="validation text-danger" id="promo-name-update-invalid">Invalid input</small>
+                        </div>
 										</div>
 										<div class="row mb-3">
 												<div class="col-sm-12">
 														<label for="promo-description-update">Promo Description</label>
-														<textarea name="promo-description-update" id="promo-description-update" rows="3" class="form-control"></textarea>
-												</div>
+														<textarea name="promo-description-update" oninput="checkIfValid(this)"onblur="checkIfValid(this)"id="promo-description-update" rows="3" class="form-control"></textarea>
+                            <small style="display:none" class="validation text-danger" id="promo-description-update-empty">Please fill out this field</small>
+                        </div>
 										</div>
 										<div class="row mb-3">
 												<div class="col-sm-6">
 														<label for="promo-amount-update">Promo Discount</label>
-														<input type="text" id="promo-amount-update" name="promo-amount-update" class="form-control">
-												</div>
+														<input type="text" id="promo-amount-update"  onblur="checkIfAmount(this)" name="promo-amount-update" class="form-control">
+                            <small  style="display:none"class="validation text-danger" id="promo-amount-update-empty">Please fill out this field</small>
+                            <small  style="display:none"class="validation text-danger" id="promo-amount-update-invalid">Invalid input</small>
+                        </div>
 												<div class="col-sm-6">
 														<label for="promo-type-update">Promo Type</label>
 														<select name="promo-type-update" id="promo-type-update" class="form-control">
@@ -498,6 +508,7 @@
   <script type="text/javascript" src="js/popper.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/mdb.min.js"></script>
+  <script type="text/javascript" src="validation.js"></script>
   <script>
     // View details modal
     function viewDetails(el) {

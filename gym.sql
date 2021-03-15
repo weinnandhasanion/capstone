@@ -216,6 +216,7 @@ CREATE TABLE `member` (
   `member_status` enum('Not Paid','Paid','Expired') NOT NULL,
   `date_registered` date DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
+  `time_deleted` time DEFAULT NULL,
   `date_activated` date DEFAULT NULL,
   `monthly_start` date DEFAULT NULL,
   `monthly_end` date DEFAULT NULL,

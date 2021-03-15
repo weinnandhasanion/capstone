@@ -33,6 +33,26 @@ require('connect.php');
 				    window.location.href='index_admin.php';
 			</script>");
 			return false;
+	}else if(strlen($fname) > 20){
+    			echo ("<script LANGUAGE='JavaScript'>
+    			window.alert('Invalid first name. Maximum of 20 letters only');
+    			window.location.href='index_admin.php';
+    			</script>");
+	}else if(strlen($lname) > 20){
+    			echo ("<script LANGUAGE='JavaScript'>
+    			window.alert('Invalid last name. Maximum of 20 letters only');
+    			window.location.href='index_admin.php';
+    			</script>");
+	}else if(strlen($pass) > 40){
+    			echo ("<script LANGUAGE='JavaScript'>
+    			window.alert('Invalid password. Maximum of 40 letters only');
+    			window.location.href='index_admin.php';
+    			</script>");
+	}else if(strlen($user) > 40){
+    			echo ("<script LANGUAGE='JavaScript'>
+    			window.alert('Invalid email address. Maximum of 40 letters only');
+    			window.location.href='index_admin.php';
+    			</script>");
     }else if (preg_match($fullnameRegex, $fname, $match)){
         echo ("<script LANGUAGE='JavaScript'>
             		window.alert('Your first name has numbers.. pelase check your inputs.');

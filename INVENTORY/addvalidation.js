@@ -20,6 +20,7 @@ checkValidityAll = () => {
    }
  }
 
+ 
 
   // quantity
 let phone = document.getElementById('quantity');

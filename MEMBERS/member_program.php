@@ -4,7 +4,7 @@ require('connect.php');
 
 $id = $_REQUEST['id'];
 $newID = intval($id) ;
-$sql = "SELECT * FROM `member` WHERE `program_id` = $newID ORDER BY program_id DESC ";
+$sql = "SELECT * FROM `member` WHERE `program_id` = $newID ORDER BY date_registered DESC ";
 $res = mysqli_query($conn, $sql);
 
 //$sql1 = "SELECT * FROM `program` WHERE `program_id` = $newID ORDER BY program_id DESC ";
