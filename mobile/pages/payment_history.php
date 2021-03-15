@@ -508,15 +508,18 @@ if($res) {
       });
 
       $("#print-btn").on("click", function () {
-        let divContents = $("#history-div").html();
-        let printWindow = window.open('', '', 'height=400,width=800');
-        printWindow.document.write('<html><head><title>Payment History</title>');
-        printWindow.document.write('<style>.deets{display:none;}hr{display:none;}.list-content{display:flex;width:50%;justify-content:space-between;}</style>');
-        printWindow.document.write('</head><body >');
-        printWindow.document.write(divContents);
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.print();
+        window.open("./print_history.php", "_blank");
+      });
+
+      $("#confirm-logout").on("click", function() {
+        $.ajax({
+          url: "./../functions/logout_process.php",
+          type: "json",
+          method: "post",
+          success: function() {
+            window.location.reload();
+          }
+        });
       });
     })
   </script>

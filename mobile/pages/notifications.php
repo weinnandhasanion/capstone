@@ -307,6 +307,17 @@ session_start();
         document.getElementById('notifs-modal').style.display = 'none';
         $("#avail-success").css("display", "none");
       }
+
+      $("#confirm-logout").on("click", function() {
+        $.ajax({
+          url: "./../functions/logout_process.php",
+          type: "json",
+          method: "post",
+          success: function() {
+            window.location.reload();
+          }
+        });
+      });
     }
   </script>
 

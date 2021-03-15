@@ -317,6 +317,17 @@ if(!isset($_SESSION["member_id"])) {
         modal.style.display = 'none';
         resModal.style.display = 'none';
       });
+
+      $("#confirm-logout").on("click", function() {
+        $.ajax({
+          url: "./../functions/logout_process.php",
+          type: "json",
+          method: "post",
+          success: function() {
+            window.location.reload();
+          }
+        });
+      });
     }
   </script>
 </body>
