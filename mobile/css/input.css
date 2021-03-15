@@ -243,6 +243,14 @@ p, h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
+.form-field .form-disabled {
+  border-bottom: 2px solid #E5E5E5 !important;
+}
+
+.form-field .form-disabled label {
+  color: #E5E5E5 !important;
+}
+
 .form-field label {
   color: black;
   -webkit-transition: .3s;

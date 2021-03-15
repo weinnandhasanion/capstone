@@ -18,6 +18,17 @@
   <title>California Fitness Gym - Members</title>
 
   <style>
+    @media screen and (min-width: 740px) {
+      main {
+        padding-left: 10vw;
+        padding-right: 10vw;
+      }
+
+      main .sign-in {
+        width: 50%;
+      }
+    }
+
     .modal-sm .form-field .form-input:focus {
       border-bottom: 2px solid;
       outline: none !important;

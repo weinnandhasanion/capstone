@@ -48,7 +48,7 @@ if(!isset($_SESSION["member_id"])) {
 
     .promo-list-div button {
       font-size: 15px;
-      width: 50%;
+      max-width: 250px;
       margin: 0 !important;
       margin-top: 10px !important;
     }
@@ -58,6 +58,26 @@ if(!isset($_SESSION["member_id"])) {
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    @media screen and (min-width: 768px) {
+      .promo-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .promo-list-div {
+        display: flex;
+        border-radius: 10px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        max-width: 468px;
+        margin-left: 0;
+        margin-bottom: 20px;
+      }
     }
   </style>
 </head>
@@ -150,7 +170,7 @@ if(!isset($_SESSION["member_id"])) {
   </div>
   <main>
     <div class="menu">
-      <i class="material-icons" style="font-size: 32px;" id="menu">menu</i>
+      <i class="material-icons d-none" style="font-size: 32px;" id="menu">menu</i>
       <h2>Promos</h2>
     </div>
     <div class="icon-div">
@@ -296,6 +316,17 @@ if(!isset($_SESSION["member_id"])) {
         } while(target);
         modal.style.display = 'none';
         resModal.style.display = 'none';
+      });
+
+      $("#confirm-logout").on("click", function() {
+        $.ajax({
+          url: "./../functions/logout_process.php",
+          type: "json",
+          method: "post",
+          success: function() {
+            window.location.reload();
+          }
+        });
       });
     }
   </script>

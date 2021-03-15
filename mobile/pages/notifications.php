@@ -149,7 +149,7 @@ session_start();
   </div>
   <main>
     <div class="menu">
-      <i class="material-icons" style="font-size: 32px;" id="menu">menu</i>
+      <i class="material-icons d-none" style="font-size: 32px;" id="menu">menu</i>
       <h2>Notifications</h2>
     </div>
     <div class="icon-div">
@@ -307,6 +307,17 @@ session_start();
         document.getElementById('notifs-modal').style.display = 'none';
         $("#avail-success").css("display", "none");
       }
+
+      $("#confirm-logout").on("click", function() {
+        $.ajax({
+          url: "./../functions/logout_process.php",
+          type: "json",
+          method: "post",
+          success: function() {
+            window.location.reload();
+          }
+        });
+      });
     }
   </script>
 

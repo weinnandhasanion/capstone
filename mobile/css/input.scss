@@ -26,6 +26,14 @@
     }
   }
 
+  .form-disabled {
+    border-bottom: 2px solid $disabled !important;
+
+    label {
+      color: $disabled !important;
+    }
+  }
+
   label {
     color: black;
     transition: .3s;

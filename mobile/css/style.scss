@@ -5,6 +5,7 @@
 }
 
 main {
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,6 +31,14 @@ main {
 
   .sign-in {
     width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+
+    button {
+      width: 150px;
+    }
   }
 
   .activate {
@@ -76,7 +85,7 @@ main {
       flex-direction: column;
 
       img {
-        height: 25vh;
+        height: 100px;
         margin-bottom: 1rem;
       }
   
@@ -90,6 +99,7 @@ main {
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-top: 0;
 
       div {
         margin-bottom: .5rem !important;
@@ -97,7 +107,6 @@ main {
 
       button {
         margin-top: 3rem !important;
-        width: 50% !important;
       }
     }
   
@@ -129,6 +138,7 @@ main {
   main {
     margin: auto;
     width: 100%;
+    padding: 25px;
 
     .logo {
       display: flex;
@@ -137,7 +147,7 @@ main {
       flex-direction: column;
   
       img {
-        height: 20vh;
+        height: 100px;
       }
   
       p {
@@ -149,9 +159,15 @@ main {
     }
 
     .sign-in {
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-top: 0;
+
+      .form-field {
+        width: 100%;
+      }
 
       div {
         margin-bottom: .5rem !important;

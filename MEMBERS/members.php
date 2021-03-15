@@ -2308,13 +2308,14 @@
     }
   });
 
-  // Function nga gitawag para mo render ug data sa regular table gamit pagination
-  function paginateRegular(data) {
-  //---tooltip---.//
-  $(function() {
+    //---tooltip---.//
+    $(function() {
     $('[data-toggle="tooltip"]').tooltip();
   });
   //--------------//
+
+  // Function nga gitawag para mo render ug data sa regular table gamit pagination
+  function paginateRegular(data) {
     $("#tbody").empty();
     if (data.length > 0) {
       $("#no-data-div").css("display", "none");
