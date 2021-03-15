@@ -19,17 +19,12 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>TRAINERS - California Fitness Gym</title>
 
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-  <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <!-- Material Design Bootstrap -->
   <link href="css/mdb.min.css" rel="stylesheet">
-  <!-- Your custom styles (optional) -->
   <link href="css/style.min.css" rel="stylesheet">
   <link rel="icon" href="../mobile/img/gym_logo.png">
   <link href="./../css/pagination.css" rel="stylesheet">
-
   <link href="css/theme-colors.css" rel="stylesheet">
   <style>
   body::-webkit-scrollbar {
@@ -625,16 +620,68 @@
   <script type="text/javascript" src="js/mdb.min.js"></script>
   <script type="text/javascript" src="validation.js"></script>
   <script src="./../js/pagination.js"></script>
-  <!--Google Maps-->
-  <script src="https://maps.google.com/maps/api/js"></script>
 
   <script>
-
+    var trainers;
+    $.get("./gettrainers.php", function(res) {
+      trainers = JSON.parse(res);
+    }).then(() => {
+      paginateTrainers(trainers);
+    });
+    
+    // Pagination sa trainers
+    function paginateTrainers(data) {
+      $("#footer").pagination({
+        dataSource: function(done) {
+          done(data);
+        },
+        pageSize: 5,
+        showPrevious: false,
+        showNext: false,
+        callback: function(data) {
+          $("#trainer-tbody").empty();
+          if(data.length > 0) {
+            $("#no-data-div-trainer").css("display", "none");
+            data.forEach(row => {
+              let html = `<tr>
+                <td>${row.trainer_id}</td>
+                <td>${row.last_name}</td>
+                <td>${row.first_name}</td>
+                <td>
+                  <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
+                  <i style="cursor: pointer; color:brown; font-size: 25px;"data-toggle="modal" data-target="#view"
+                    data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}"class=" fas fa-eye mx-2 get_id"
+                    data-id="${row.trainer_id}"
+                    onclick="displayDetails(this)"></i>
+                  </span>
+                  <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
+                  <i style="cursor: pointer; color:orange; font-size: 25px;"data-toggle="modal" data-target="#updateModal"
+                    data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}" class=" fas fa-pen mx-2"
+                    data-id="${row.trainer_id}"
+                    onclick="updateDetails(this)"></i>
+                  </span>
+                  <span data-toggle="tooltip" data-placement="top"
+                    title="Delete ${row.last_name}">
+                  <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-2"
+                    data-id="${row.trainer_id}"
+                    onclick="deleted(this)"></i></span>
+                </td>
+              <tr>`;
+              $("#trainer-tbody").append(html);
+            });
+          } else {
+            $("#no-data-div-trainer").css("display", "flex");
+          }
+        }
+      });
+    }
+   
     // Sorting
     let act = $("#sort-active");
     let inact = $("#sort-inactive");
     let both = $("#sort-both");
     var cont = $("#trainer-tbody");
+
     act.click(function() {
       inact.removeClass("btn-orange").addClass("btn-outline-orange");
       both.removeClass("btn-orange").addClass("btn-outline-orange");
@@ -642,36 +689,11 @@
 
       $.get("./sort_trainer.php?type=active", function(res) {
         data = JSON.parse(res);
-        cont.empty();
-        data.forEach(row => {
-          let html = `<tr>
-            <td>${row.trainer_id}</td>
-            <td>${row.last_name}</td>
-            <td>${row.first_name}</td>
-            <td>
-                    <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
-                    <i style="cursor: pointer; color:brown; font-size: 25px;"data-toggle="modal" data-target="#view"
-                      data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}"class=" fas fa-eye mx-2 get_id"
-                      data-id="${row.trainer_id}"
-                      onclick="displayDetails(this)"></i>
-                    </span>
-                    <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
-                    <i style="cursor: pointer; color:orange; font-size: 25px;"data-toggle="modal" data-target="#updateModal"
-                      data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}" class=" fas fa-pen mx-2"
-                      data-id="${row.trainer_id}"
-                      onclick="updateDetails(this)"></i>
-                    </span>
-                    <span data-toggle="tooltip" data-placement="top"
-                      title="Delete ${row.last_name}">
-                    <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-2"
-                      data-id="${row.trainer_id}"
-                      onclick="deleted(this)"></i></span>
-            </td>
-          <tr>`;
-          cont.append(html);
-        });
+      }).then(() => {
+        paginateTrainers(data);
       });
     });
+
     inact.click(function() {
       inact.addClass("btn-orange").removeClass("btn-outline-orange");
       both.removeClass("btn-orange").addClass("btn-outline-orange");
@@ -679,36 +701,11 @@
 
       $.get("./sort_trainer.php?type=inactive", function(res) {
         data = JSON.parse(res);
-        cont.empty();
-        data.forEach(row => {
-          let html = `<tr>
-            <td>${row.trainer_id}</td>
-            <td>${row.last_name}</td>
-            <td>${row.first_name}</td>
-            <td>
-                    <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
-                    <i style="cursor: pointer; color:brown; font-size: 25px;"data-toggle="modal" data-target="#view"
-                      data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}"class=" fas fa-eye mx-2 get_id"
-                      data-id="${row.trainer_id}"
-                      onclick="displayDetails(this)"></i>
-                    </span>
-                    <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
-                    <i style="cursor: pointer; color:orange; font-size: 25px;"data-toggle="modal" data-target="#updateModal"
-                      data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}" class=" fas fa-pen mx-2"
-                      data-id="${row.trainer_id}"
-                      onclick="updateDetails(this)"></i>
-                    </span>
-                    <span data-toggle="tooltip" data-placement="top"
-                      title="Delete ${row.last_name}">
-                    <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-2"
-                      data-id="${row.trainer_id}"
-                      onclick="deleted(this)"></i></span>
-            </td>
-          <tr>`;
-          cont.append(html);
-        });
+      }).then(() => {
+        paginateTrainers(data);
       });
     });
+    
     both.on("click", function() {
       inact.removeClass("btn-orange").addClass("btn-outline-orange");
       both.addClass("btn-orange").removeClass("btn-outline-orange");
@@ -716,36 +713,27 @@
 
       $.get("./sort_trainer.php?type=both", function(res) {
         data = JSON.parse(res);
-        cont.empty();
-        data.forEach(row => {
-          let html = `<tr>
-            <td>${row.trainer_id}</td>
-            <td>${row.last_name}</td>
-            <td>${row.first_name}</td>
-            <td>
-                    <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
-                    <i style="cursor: pointer; color:brown; font-size: 25px;"data-toggle="modal" data-target="#view"
-                      data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}"class=" fas fa-eye mx-2 get_id"
-                      data-id="${row.trainer_id}"
-                      onclick="displayDetails(this)"></i>
-                    </span>
-                    <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
-                    <i style="cursor: pointer; color:orange; font-size: 25px;"data-toggle="modal" data-target="#updateModal"
-                      data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}" class=" fas fa-pen mx-2"
-                      data-id="${row.trainer_id}"
-                      onclick="updateDetails(this)"></i>
-                    </span>
-                    <span data-toggle="tooltip" data-placement="top"
-                      title="Delete ${row.last_name}">
-                    <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-2"
-                      data-id="${row.trainer_id}"
-                      onclick="deleted(this)"></i></span>
-            </td>
-          <tr>`;
-          cont.append(html);
-        });
+      }).then(() => {
+        paginateTrainers(data);
       });
     });
+
+    // Regular members pagination after type sa search bar
+    $("#search-trainer").keyup(function() {
+      let val = $("#search-trainer").val();
+      let data;
+
+      if (val != "") {
+        inact.removeClass("btn-orange").addClass("btn-outline-orange");
+        both.removeClass("btn-orange").addClass("btn-outline-orange");
+        act.removeClass("btn-orange").addClass("btn-outline-orange");
+
+        data = trainers.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
+        paginateTrainers(data);
+      } else {
+        both.click();
+      }
+    });  
 
     // para mo sulod ang picture sa circle
     var loadFile = function(event) {
@@ -753,14 +741,12 @@
         image.src = URL.createObjectURL(event.target.files[0]);
     };
     
-// tool tip sa plus button
-$(function () {
+    // tool tip sa plus button
+    $(function () {
       $('[data-toggle="tooltip"]').tooltip();
     });
-    
-    
 
-     //------------------------------------------------------------------------------ VIEW JS 
+    //------------------------------------------------------------------------------ VIEW JS 
     // View Trainer Modal
     function displayDetails(el) {
       let id = el.getAttribute('data-id');
@@ -797,9 +783,8 @@ $(function () {
       }
     }
 
-
-     //------------------------------------------------------------------------------ UPDATE JS 
-     function updateDetails(el) {
+    //------------------------------------------------------------------------------ UPDATE JS 
+    function updateDetails(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
@@ -826,8 +811,8 @@ $(function () {
     }
 
 
-     //------------------------------------------------------------------------------ DELETE JS 
-     function deleted(el) {
+    //------------------------------------------------------------------------------ DELETE JS 
+    function deleted(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
@@ -841,14 +826,14 @@ $(function () {
           alert("Trainer successfully deleted!");
           window.location.reload()
         }
-       }
+      }
       req.open('GET', 'delete.php?id=' + id, true);
       req.send(); 
       }
-     }
+    }
 
-      //------------------------------------------------------------------------------ RECOVER JS 
-      function recover(el) {
+    //------------------------------------------------------------------------------ RECOVER JS 
+    function recover(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
@@ -862,152 +847,28 @@ $(function () {
           alert("Trainer successfully recover!");
           window.location.reload()
         }
-       }
+      }
       req.open('GET', 'recover.php?id=' + id, true);
       req.send(); 
       }
-     }
+    }
 
-     function logout(el) {
+    function logout(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
       // AJAX Request
-     
+      
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200 ) {
           console.log((this.responseText));
           
         }
-       }
+        }
       req.open('GET', '/PROJECT/logout.php?id=' + id, true);
       req.send(); 
-      }
-    
-       // Pagination sa trainers
-  $("#footer").pagination({
-    dataSource: function(done) {
-      $.get("./gettrainers.php", function(res) {
-        console.log(res);
-        done(JSON.parse(res));
-      });
-    },
-    pageSize: 5,
-    showPrevious: false,
-    showNext: false,
-    callback: function(data) {
-      $("#trainer-tbody").empty();
-      if(data.length > 0) {
-        $("#no-data-div-trainer").css("display", "none");
-        data.forEach(row => {
-          let html = `<tr>
-            <td>${row.trainer_id}</td>
-            <td>${row.last_name}</td>
-            <td>${row.first_name}</td>
-            <td>
-                    <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
-                    <i style="cursor: pointer; color:brown; font-size: 25px;"data-toggle="modal" data-target="#view"
-                      data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}"class=" fas fa-eye mx-2 get_id"
-                      data-id="${row.trainer_id}"
-                      onclick="displayDetails(this)"></i>
-                    </span>
-                    <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
-                    <i style="cursor: pointer; color:orange; font-size: 25px;"data-toggle="modal" data-target="#updateModal"
-                      data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}" class=" fas fa-pen mx-2"
-                      data-id="${row.trainer_id}"
-                      onclick="updateDetails(this)"></i>
-                    </span>
-                    <span data-toggle="tooltip" data-placement="top"
-                      title="Delete ${row.last_name}">
-                    <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-2"
-                      data-id="${row.trainer_id}"
-                      onclick="deleted(this)"></i></span>
-            </td>
-          <tr>`;
-          $("#trainer-tbody").append(html);
-        });
-      } else {
-        $("#no-data-div-trainer").css("display", "flex");
-      }
     }
-  });
-
-   // Regular members pagination after type sa search bar
-   $("#search-trainer").keyup(function() {
-    let val = $("#search-trainer").val();
-    let results;
-    let data;
-    $.get("./gettrainers.php", function(res) {
-    // Gibutang nimo sa regs ang tanan members nga regular
-    results = JSON.parse(res);
-  });
-
-
-    if (val != "") {
-      $("#footer").pagination({
-        dataSource: function(done) {
-          data = results.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
-          done(data);
-
-        },
-        pageSize: 5,
-        showPrevious: false,
-        showNext: false,
-        callback: function(data) {
-         
-          $("#trainer-tbody").empty();
-      if(data.length > 0) {
-        $("#no-data-div-trainer").css("display", "none");
-        data.forEach(row => {
-          let html = `<tr>
-            <td>${row.trainer_id}</td>
-            <td>${row.last_name}</td>
-            <td>${row.first_name}</td>
-            <td>
-                    <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
-                    <i style="cursor: pointer; color:brown; font-size: 25px;"data-toggle="modal" data-target="#view"
-                      data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}"class=" fas fa-eye mx-2 get_id"
-                      data-id="${row.trainer_id}"
-                      onclick="displayDetails(this)"></i>
-                    </span>
-                    <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
-                    <i style="cursor: pointer; color:orange; font-size: 25px;"data-toggle="modal" data-target="#updateModal"
-                      data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}" class=" fas fa-pen mx-2"
-                      data-id="${row.trainer_id}"
-                      onclick="updateDetails(this)"></i>
-                    </span>
-                    <span data-toggle="tooltip" data-placement="top"
-                      title="Delete ${row.last_name}">
-                    <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-2"
-                      data-id="${row.trainer_id}"
-                      onclick="deleted(this)"></i></span>
-            </td>
-          <tr>`;
-          $("#trainer-tbody").append(html);
-        });
-      } else {
-        $("#no-data-div-trainer").css("display", "flex");
-      }
-
-
-        }
-      });
-    } else {
-      $("#regular-pagination").pagination({
-        dataSource: function(done) {
-          done(regs);
-        },
-        pageSize: 5,
-        showPrevious: false,
-        showNext: false,
-        callback: function(data) {
-          paginateRegular(data);
-        }
-      });
-    }
-  });
-           
   </script>
 </body>
 </html>
