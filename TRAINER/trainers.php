@@ -9,7 +9,6 @@
 	$sql = "select * from admin where admin_id =".$id."";
 	$res = mysqli_query($conn, $sql);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -370,78 +369,42 @@
 <!----------------------------------------------------------------------------------------------------------->
   <!---------------------------------------------------- DELETED RECORD -------------------------------------->
 <div id="deleteModal" class="modal fade" role="dialog">
-        <div class="modal-dialog" >
-      
-          <!-- Modal content-->
-          <div class="modal-content" style="width: 700px;">
-    
-            <div class="modal-header" style="background-color:#EB460D;color:white;">
-              <h4 class="modal-title" >Deleted Trainers</h4>
-              <form class="d-flex justify-content-center">
-                <input type="text" placeholder="Search deleted name" id="search-delete" class="form-control">
-              </form>
-            </div>  
-            
-            <div class="modal-body">
-    
-              <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>  
-                <table class='table table-hover'>
-                  <thead>
-                    <tr style="text-align:center;">
-                     
-                      <th>fullname</th>
-                      <th>Date deleted</th>
-                      <th>Time deleted</th>
-                      <th>action</th>
-                    </tr>
-                  </thead>
-                  <tbody id='deletetbody'>
-                  <?php
-            /* code for display data */
-            $sql = "SELECT * FROM trainer WHERE trainer_status = 'deleted'";
-            $result = mysqli_query($conn, $sql);
-            $resultCheck = mysqli_num_rows($result);
+  <div class="modal-dialog" >
+    <!-- Modal content-->
+    <div class="modal-content" style="width: 700px;">
+      <div class="modal-header" style="background-color:#EB460D;color:white;">
+        <h4 class="modal-title" >Deleted Trainers</h4>
+        <form class="d-flex justify-content-center">
+          <input type="text" placeholder="Search deleted name" id="search-deleted" class="form-control">
+        </form>
+      </div>  
+      <div class="modal-body">
+        <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>  
+          <table class='table table-hover'>
+            <thead>
+              <tr style="text-align:center;">
+                <th>Full name</th>
+                <th>Date deleted</th>
+                <th>Time deleted</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id='deletetbody'>
 
-            if($resultCheck > 0){
-              while($row = mysqli_fetch_assoc($result)){
-                $digit_date_deleted= new DateTime( $row["date_deleted"]);
-                $string_date_deleted = $digit_date_deleted->format('F d Y');
-
-                $digit_date_hired= new DateTime( $row["date_hired"]);
-                $string_date_hired= $digit_date_hired->format('F d Y');
-
-                $digit_time_deleted= new DateTime( $row["time_deleted"]);
-                $string_time_deleted = $digit_time_deleted->format('h:i A');
-                ?>
-
-                <tr>
-                  <td><?php echo $row["first_name"], " ",  $row["last_name"] ?></td>
-                  <td><?php echo $string_date_deleted?></td>
-                  <td><?php echo $string_time_deleted ?></td>
-                  <td>
-                    <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
-                      title="Recover <?php echo $row["last_name"]?>" class="fas fa-undo mx-2"
-                      data-id="<?php echo $row['trainer_id'] ?>"
-                      onclick="recover(this)"></i>
-                  </td>
-                </tr>
-
-                <?php
-              }
-             } 
-             ?>
-                  </tbody>
-                </table> 
-            </div>
-    
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-      
+            </tbody>
+          </table>
+          <div id="no-data-div-deleted" class="no-data-div my-3 text-muted">
+            No data!
+          </div> 
         </div>
       </div>
+      <div class="modal-footer d-flex justify-content-between flex-row-reverse" id="deleted-footer">
+        <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 <!----------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------->
 <!----------------------------------------------------------------------------------------------------------->
@@ -622,11 +585,17 @@
   <script src="./../js/pagination.js"></script>
 
   <script>
-    var trainers;
+    var trainers, deleted;
     $.get("./gettrainers.php", function(res) {
       trainers = JSON.parse(res);
     }).then(() => {
       paginateTrainers(trainers);
+    });
+
+    $.get("./deleted_trainers.php", function(res) {
+      deleted = JSON.parse(res);
+    }).then(() => {
+      paginateDeleted(deleted);
     });
     
     // Pagination sa trainers
@@ -664,7 +633,7 @@
                     title="Delete ${row.last_name}">
                   <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-2"
                     data-id="${row.trainer_id}"
-                    onclick="deleted(this)"></i></span>
+                    onclick="deleteTrainer(this)"></i></span>
                 </td>
               <tr>`;
               $("#trainer-tbody").append(html);
@@ -734,6 +703,53 @@
         both.click();
       }
     });  
+
+    // search sa deleted
+    $("#search-deleted").keyup(function() {
+      let val = $("#search-deleted").val();
+      let data;
+
+      if (val != "") {
+        data = deleted.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
+        paginateDeleted(data);
+      } else {
+        paginateDeleted(deleted);
+      }
+    });
+
+    // Rendering sa deleted trainers
+    function paginateDeleted(data) {
+      $("#deleted-footer").pagination({
+        dataSource: function(done) {
+          done(data);
+        },
+        pageSize: 5,
+        showPrevious: false,
+        showNext: false,
+        callback: function(data) {
+          $("#deletetbody").empty();
+          if(data.length > 0) {
+            $("#no-data-div-deleted").css("display", "none");
+            data.forEach(row => {
+              let html = ` <tr>
+                <td>${row.fullname}</td>
+                <td>${row.date}</td>
+                <td>${row.time}</td>
+                <td>
+                  <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
+                    title="Recover ${row.fullname}" class="fas fa-undo mx-2"
+                    data-id="${row.trainer_id}"
+                    onclick="recover(this)"></i>
+                </td>
+              </tr>`;
+              $("#deletetbody").append(html);
+            });
+          } else {
+            $("#no-data-div-deleted").css("display", "flex");
+          }
+        }
+      });
+    }
 
     // para mo sulod ang picture sa circle
     var loadFile = function(event) {
@@ -810,25 +826,24 @@
       }
     }
 
-
     //------------------------------------------------------------------------------ DELETE JS 
-    function deleted(el) {
+    function deleteTrainer(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
       // AJAX Request
       var r = confirm("Are you sure you want to delete this trainer?");
       if(r == true){
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200 ) {
-          console.log((this.responseText));
-          alert("Trainer successfully deleted!");
-          window.location.reload()
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = function() {
+          if(this.readyState == 4 && this.status == 200 ) {
+            console.log((this.responseText));
+            alert("Trainer successfully deleted!");
+            window.location.reload()
+          }
         }
-      }
-      req.open('GET', 'delete.php?id=' + id, true);
-      req.send(); 
+        req.open('GET', 'delete.php?id=' + id, true);
+        req.send(); 
       }
     }
 
