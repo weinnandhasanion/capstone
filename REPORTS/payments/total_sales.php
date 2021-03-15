@@ -72,6 +72,7 @@ $object = (object) [
   'toDate' => $toDate,
   'fromDate' => $fromDate,
   'reportTitle' => "List of payments and total sales",
+  'timespan' => $timespan,
   'fileName' => "ReportTotalSales_".date("MdY"),
   'displayTotalSales' => true
 ];

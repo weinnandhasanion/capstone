@@ -89,6 +89,7 @@ $object = (object) [
   'toDate' => $toDate,
   'fromDate' => $fromDate,
   'reportTitle' => $reportTitle,
+  'timespan' => $timespan,
   'fileName' => "ReportMembersActivatedMobile_".date("MdY")
 ];
 

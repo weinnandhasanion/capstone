@@ -158,6 +158,7 @@ $object = (object) [
   'labels' => $labels,
   'toDate' => $toDate,
   'fromDate' => $fromDate,
+  'timespan' => $timespan,
   'reportTitle' => $reportTitle,
   'fileName' => "ReportInactiveSubscriptionList_".date("MdY")
 ];

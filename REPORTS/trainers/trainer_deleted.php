@@ -83,6 +83,7 @@ $reportTitle = "List of Deleted Trainers";
     'labels' => $labels,
     'toDate' => $toDate,
     'fromDate' => $fromDate,
+    'timespan' => $timespan,
     'reportTitle' => $reportTitle,
     'fileName' => "ReportTrainersDeleted_".date("MdY")
   ];

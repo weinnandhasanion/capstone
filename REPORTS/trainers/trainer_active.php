@@ -83,6 +83,7 @@ $reportTitle = "List of active Trainers";
     'toDate' => $toDate,
     'fromDate' => $fromDate,
     'reportTitle' => $reportTitle,
+    'timespan' => $timespan,
     'fileName' => "ReportTrainersActive_".date("MdY")
   ];
   
