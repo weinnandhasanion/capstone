@@ -438,7 +438,6 @@
         });
       }
     }
-  
 
   var logtrail;
   $.get("./getlogtrail.php", function(res) {

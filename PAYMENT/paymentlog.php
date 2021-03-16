@@ -232,7 +232,7 @@
                   </select>
             <div>
               <div class="d-flex justify-content-center">
-                <input type="text" placeholder="Search name here..." class="form-control" id="search-member">
+                <input type="text" placeholder="Search name here..." class="form-control" id="search-paymentlog">
               </div>
             </div>
           </div>
@@ -442,15 +442,20 @@
             
       }
     }
+    var paymentlog;
+  $.get("./getpaymentlog.php", function(res) {
+    paymentlog = JSON.parse(res);
+  }).then(() => {
+    paginatePayment(paymentlog);
+  });
+
 
        // Pagination sa paymentlog
+  function paginatePayment(data) {
     $("#footer").pagination({
-    dataSource: function(done) {
-      $.get("./getpaymentlog.php", function(res) {
-        console.log(res);
-        done(JSON.parse(res));
-      });
-    },
+      dataSource: function(done) {
+        done(data);
+      },
     pageSize: 5,
     showPrevious: false,
     showNext: false,
@@ -482,6 +487,20 @@
       }
     }
   });  
+  } 
+
+  $("#search-paymentlog").keyup(function() {
+    let val = $("#search-paymentlog").val();
+    let data;
+
+    if (val != "") {
+
+      data = paymentlog.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
+      paginatePayment(data);
+    } else {
+      paginatePayment(paymentlog);
+    }
+  });
   </script>
 </body>
 
