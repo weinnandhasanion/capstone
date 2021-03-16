@@ -64,7 +64,14 @@ $totalSales = 0;
       <p>Date generated: <?= date("F d, Y") ?></p>
       <p>Time generated: <?= date("h:i A") ?></p>
     </span>
-    <p>Report description: <?= $toPrint->reportTitle ?></p>
+    <p>Report description: <?= $toPrint->reportTitle ?> 
+    <?php 
+    if(empty($toPrint->timespan)) {
+      echo "";
+    } else {
+      echo ($toPrint->timespan == "Custom") ? "" : "($toPrint->timespan)";
+    }
+    ?></p>
     <span class="d-flex justify-content-between">
       <?php 
       if($toDate != NULL) {

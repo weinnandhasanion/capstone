@@ -177,6 +177,7 @@ $reportTitle = "List of working weight equipment";
       'toDate' => $toDate,
       'fromDate' => $fromDate,
       'reportTitle' => $reportTitle,
+      'timespan' => $timespan,
       'fileName' => "ReportInventoryWorking_".date("MdY")
     ];
 

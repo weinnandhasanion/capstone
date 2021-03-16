@@ -80,6 +80,7 @@ $object = (object) [
   'fromDate' => $fromDate,
   'reportTitle' => "List of Walk-in payments",
   'fileName' => "ReportWalkinPayments_".date("MdY"),
+  'timespan' => $timespan,
   'displayTotalSales' => true
 ];
 

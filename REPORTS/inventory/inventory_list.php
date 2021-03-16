@@ -176,6 +176,7 @@ $object = (object) [
   'toDate' => $toDate,
   'fromDate' => $fromDate,
   'reportTitle' => $reportTitle,
+  'timespan' => $timespan,
   'fileName' => "ReportInventoryList_".date("MdY")
 ];
 

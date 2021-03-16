@@ -78,6 +78,7 @@ $object = (object) [
   'toDate' => $toDate,
   'fromDate' => $fromDate,
   'reportTitle' => "List of monthly subscription payments",
+  'timespan' => $timespan,
   'fileName' => "ReportMonthlyPayments_".date("MdY"),
   'displayTotalSales' => true
 ];

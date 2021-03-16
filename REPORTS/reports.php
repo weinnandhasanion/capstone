@@ -253,7 +253,7 @@
   <div class="modal fade" role="dialog" id="members-added">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-        <form target="_blank" action="./members/members_added.php" method="post">
+        <form id="members-added-form" target="_blank" action="./members/members_added.php" method="post">
           <div class="modal-header">
             <h4 class="modal-title">Generate report for members</h4>
           </div>
@@ -285,17 +285,19 @@
               <div class="row">
                 <div class="col-sm-6">
                   <label for="">From Date</label>
-                  <input type="date" name="from_date" id="" class="form-control">
+                  <input type="date" name="from_date" id="members-added-from" class="form-control">
+                  <small class="d-none text-red" id="members-added-from-error"></small>
                 </div>
                 <div class="col-sm-6">
                   <label for="">To Date</label>
-                  <input type="date" name="to_date" id="" class="form-control">
+                  <input type="date" name="to_date" id="members-added-to" class="form-control">
+                  <small class="d-none text-red" id="members-added-to-error"></small>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-sm btn-outline-orange">Generate report</button>
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="members-added">Generate report</button>
           </div>
         </form>
       </div>
@@ -306,7 +308,7 @@
   <div class="modal fade" role="dialog" id="unpaid-members">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-        <form target="_blank" action="./members/inactive_members.php" method="post">
+        <form id="inactive-members-form" target="_blank" action="./members/inactive_members.php" method="post">
           <div class="modal-header">
             <h4 class="modal-title">Generate report for members who are already inactive</h4>
           </div>
@@ -338,17 +340,19 @@
               <div class="row">
                 <div class="col-sm-6">
                   <label for="">From Date</label>
-                  <input type="date" name="from_date" id="" class="form-control">
+                  <input type="date" name="from_date" id="inactive-members-from" class="form-control">
+                  <small class="d-none text-red" id="inactive-members-from-error"></small>
                 </div>
                 <div class="col-sm-6">
                   <label for="">To Date</label>
-                  <input type="date" name="to_date" id="" class="form-control">
+                  <input type="date" name="to_date" id="inactive-members-to" class="form-control">
+                  <small class="d-none text-red" id="inactive-members-to-error"></small>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-sm btn-outline-orange">Generate report</button>
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="inactive-members">Generate report</button>
           </div>
         </form>
       </div>
@@ -359,7 +363,7 @@
   <div class="modal fade" role="dialog" id="expired-members">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-        <form target="_blank" action="./members/expired_members.php" method="post">
+        <form id="deleted-members-form" target="_blank" action="./members/expired_members.php" method="post">
           <div class="modal-header">
             <h4 class="modal-title">Generate report for members with expired subscription</h4>
           </div>
@@ -383,17 +387,19 @@
               <div class="row">
                 <div class="col-sm-6">
                   <label for="">From Date</label>
-                  <input type="date" name="from_date" id="" class="form-control">
+                  <input type="date" name="from_date" id="deleted-members-from" class="form-control">
+                  <small class="d-none text-red" id="deleted-members-from-error"></small>
                 </div>
                 <div class="col-sm-6">
                   <label for="">To Date</label>
-                  <input type="date" name="to_date" id="" class="form-control">
+                  <input type="date" name="to_date" id="deleted-members-to" class="form-control">
+                  <small class="d-none text-red" id="deleted-members-to-error"></small>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-sm btn-outline-orange">Generate report</button>
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="deleted-members">Generate report</button>
           </div>
         </form>
       </div>
@@ -404,7 +410,7 @@
   <div class="modal fade" role="dialog" id="activated-members">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-        <form target="_blank" action="./members/activated_members.php" method="post">
+        <form id="activated-members-form" target="_blank" action="./members/activated_members.php" method="post">
           <div class="modal-header">
             <h4 class="modal-title">Generate report for activated members</h4>
           </div>
@@ -428,17 +434,19 @@
               <div class="row">
                 <div class="col-sm-6">
                   <label for="">From Date</label>
-                  <input type="date" name="from_date" id="" class="form-control">
+                  <input type="date" name="from_date" id="activated-members-from" class="form-control">
+                  <small class="d-none text-red" id="activated-members-from-error"></small>
                 </div>
                 <div class="col-sm-6">
                   <label for="">To Date</label>
-                  <input type="date" name="to_date" id="" class="form-control">
+                  <input type="date" name="to_date" id="activated-members-to" class="form-control">
+                  <small class="d-none text-red" id="activated-members-to-error"></small>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-sm btn-outline-orange">Generate report</button>
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="activated-members">Generate report</button>
           </div>
         </form>
       </div>
@@ -477,17 +485,17 @@
               <div class="row">
                 <div class="col-sm-6">
                   <label for="">From Date</label>
-                  <input type="date" name="from_date" id="" class="form-control">
+                  <input type="date" name="from_date" class="form-control">
                 </div>
                 <div class="col-sm-6">
                   <label for="">To Date</label>
-                  <input type="date" name="to_date" id="" class="form-control">
+                  <input type="date" name="to_date" class="form-control">
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-sm btn-outline-orange">Generate report</button>
+            <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
           </div>
         </form>
       </div>
@@ -541,7 +549,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -586,7 +594,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -631,7 +639,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -676,7 +684,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -739,7 +747,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -792,7 +800,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -846,7 +854,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -891,7 +899,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -936,7 +944,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -981,7 +989,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -1026,7 +1034,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -1082,7 +1090,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -1136,7 +1144,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -1190,7 +1198,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
         </div>
         </form>
       </div>
@@ -1400,7 +1408,71 @@
       $("#inventory-damage-custom").css("display", "none");
     }
   });
- 
+
+  // Validation
+  $(".generate-btn").click(function() {
+    let id = $(this).attr("id") ? $(this).attr("id") : null;
+    
+    if(id != null) {
+      let select = $(`#${id}-select`).val();
+      let form = $(`#${id}-form`);
+      if(select == "Custom") {
+        validateDates(id, form);
+        event.preventDefault();
+      }
+    }
+  });
+
+  function validateDates(id, form) {
+    let from = $(`#${id}-from`).val();
+    let to = $(`#${id}-to`).val();
+    let today = Date.parse(new Date(new Date(new Date(new Date().setHours(8)).setMinutes(0)).setSeconds(0)));
+    let fromTrue, toTrue;
+
+    if(!from) {
+      $(`#${id}-from-error`).text("Please enter a valid date").removeClass("d-none");
+      fromTrue = false;
+    } else {
+      from = Date.parse(from);
+      
+      if(from <= 0) {
+        $(`#${id}-from-error`).text("Please enter a valid date").removeClass("d-none");
+        fromTrue = false;
+      } else if(from > today) {
+        $(`#${id}-from-error`).text("Date must not be greater than current date").removeClass("d-none");
+        fromTrue = false;
+      } else {
+        $(`#${id}-from-error`).addClass("d-none");
+        fromTrue = true;
+      }
+    }
+
+    if(!to) {
+      $(`#${id}-to-error`).text("Please enter a valid date").removeClass("d-none");
+      toTrue = false;
+    } else {
+      to = Date.parse(to);
+
+      if(to <= 0) {
+        $(`#${id}-to-error`).text("Please enter a valid date").removeClass("d-none");
+        toTrue = false;
+      } else if(to > today) {
+        $(`#${id}-to-error`).text("Date must not be greater than current date").removeClass("d-none");
+        toTrue = false;
+      } else if(typeof(from) == "number" && to < from && from < today) {
+        $(`#${id}-to-error`).text("Date must not be less than from date").removeClass("d-none");
+        toTrue = false;
+      } else if(typeof(from) == "number" && to == from && from < today) {
+        $(`#${id}-to-error`).text("Date must not be equal to from date").removeClass("d-none");
+        toTrue = false;
+      } else {
+        $(`#${id}-to-error`).addClass("d-none");
+        toTrue = true;
+      }
+    }
+
+    fromTrue && toTrue ? form.submit() : null;
+  }
   </script>
 </body>
 </html>

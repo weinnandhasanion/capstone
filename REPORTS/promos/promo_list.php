@@ -509,6 +509,7 @@ if($_POST["status"] == "Active" || $_POST["status"] == "Expired"){
     'toDate' => $toDate,
     'fromDate' => $fromDate,
     'reportTitle' => $reportTitle,
+    'timespan' => $timespan,
     'fileName' => "ReportPromoList_".date("MdY")
   ];
 

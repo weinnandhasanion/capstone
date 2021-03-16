@@ -80,6 +80,7 @@ $object = (object) [
   'labels' => $labels,
   'toDate' => $toDate,
   'fromDate' => $fromDate,
+  'timespan' => $timespan,
   'reportTitle' => $reportTitle,
   'fileName' => "ReportExpiredSubscriptionList_".date("MdY")
 ];

@@ -227,6 +227,7 @@ $rowLabels = array("name","gender", "phone","email", "date_hired");
     'toDate' => $toDate,
     'fromDate' => $fromDate,
     'reportTitle' => $reportTitle,
+    'timespan' => $timespan,
     'fileName' => "ReportTrainerList_".date("MdY")
   ];
 

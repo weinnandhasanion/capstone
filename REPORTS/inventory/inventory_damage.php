@@ -179,6 +179,7 @@ $reportTitle = "List of Damage Weight Equipment";
       'toDate' => $toDate,
       'fromDate' => $fromDate,
       'reportTitle' => $reportTitle,
+      'timespan' => $timespan,
       'fileName' => "ReportInventoryDamage_".date("MdY")
     ];
   
