@@ -292,15 +292,19 @@
   
 
    <!------------------------------------------------- modal----------------------------------------->
-<div class="modal fade" id="view_member">
-    <div class="modal-dialog" >
+< <div id="view_member" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
       <div class="modal-content" style="width: 700px;">
-        <div class="modal-header" style="background-color: #DF3A01; color: white;">
-              <h4 class="modal-title">Admin Doing</h4>
-              <button type='button' class='close' id='close-paymentModal' data-dismiss='modal'>&times;</button>
-            </div>  
+        <div class="modal-header" style="background-color:#EB460D;color:white;">
+          <h4 class="modal-title">Deleted Trainers</h4>
+          <form class="d-flex justify-content-center">
+            <input type="text" placeholder="Search deleted name" id="search-deleted" class="form-control">
+          </form>
+        </div>
         <div class="modal-body">
-          <table class='table table-hover' >
+          <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>
+            <table class='table table-hover'>
               <thead>
                 <tr>
                   <th> ID</th>
@@ -311,21 +315,21 @@
                 </tr>
               </thead>
               <tbody id="modal-tbody">
-              
+
               </tbody>
-              </table>
+            </table>
             <div id="no-data-div-logtrail-modal" class="no-data-div my-3 text-muted">
               No data!
             </div>
           </div>
-          <div class="modal-footer d-flex justify-content-between flex-row-reverse" id="doing-footer">
+        </div>
+        <div class="modal-footer d-flex justify-content-between flex-row-reverse" id="doing-footer">
           <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
         </div>
       </div>
+
     </div>
   </div>
-</div>
-
   
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/popper.min.js"></script>
@@ -434,8 +438,7 @@
         });
       }
     }
-
-
+  
 
   var logtrail;
   $.get("./getlogtrail.php", function(res) {
