@@ -17,10 +17,6 @@ $member_type = $_POST['member_type'];
 $address= $_POST['address'];
 $phoneregex = "/[a-zA-Z]/";
 
-$sql = "UPDATE member SET email = '$email', address = '$address', phone = '$phone', member_type = '$member_type'
-        WHERE member_id = '$id'"; 
-$sql_update = mysqli_query($conn, $sql);
-
 $exist = "SELECT * FROM member WHERE member_id != '$id' AND email = '$email'";
 $existEmail = mysqli_query($conn, $exist);
 
@@ -46,7 +42,7 @@ if (preg_match($phoneregex, $phone, $match)) {
         </script>");
 }else if(mysqli_num_rows($existEmail)>0){
         echo ("<script LANGUAGE='JavaScript'>
-        window.alert('Email is already Taken');
+        window.alert('Email is already taken');
         window.location.href='/PROJECT/MEMBERS/members.php';
         </script>");
 }else if($phone == ""){
@@ -90,23 +86,10 @@ if (preg_match($phoneregex, $phone, $match)) {
         window.location.href='/PROJECT/MEMBERS/members.php';
         </script>");
 }else{
-    echo ("<script LANGUAGE='JavaScript'>
-                window.alert('Failed to update');
-                window.location.href='/PROJECT/MEMBERS/members.php';
-                </script>");
-}
-
-if($member_type == "Walk-in"){
-        $sql1 = "UPDATE member SET  username = null
+        $sql = "UPDATE member SET email = '$email', address = '$address', phone = '$phone', member_type = '$member_type'
         WHERE member_id = '$id'"; 
-        mysqli_query($conn, $sql1);
-}
-
-
-
-
-
-//------------------------------LOGTRAIL DOING NANI
+        $sql_update = mysqli_query($conn, $sql);
+        //------------------------------LOGTRAIL DOING NANI
 
 //this is for puting member_id in the array
 $data = array();
@@ -167,5 +150,17 @@ $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_
 `description`, `identity`,`time`)
 VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
 mysqli_query($conn, $sql1);
+
+    echo ("<script LANGUAGE='JavaScript'>
+                window.alert('Member updated successfully!');
+                window.location.href='/PROJECT/MEMBERS/members.php';
+                </script>");
+}
+
+if($member_type == "Walk-in"){
+        $sql1 = "UPDATE member SET  username = null
+        WHERE member_id = '$id'"; 
+        mysqli_query($conn, $sql1);
+}
 
     ?>
