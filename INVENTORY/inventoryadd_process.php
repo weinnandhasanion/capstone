@@ -126,7 +126,7 @@ else if(mysqli_num_rows($duplicate_name)>0){
      $user_fname = $rowew["inventory_name"];
      $description = "Added new equipment";
      //$description = $echo.' '.$fullname;
-     $identity = "inventory";
+     $identity = "Inventory";
      $timeNow = date("h:i A");  
 
 

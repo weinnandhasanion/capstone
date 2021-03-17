@@ -22,19 +22,6 @@ if($_SESSION['admin_id']){
         $login_id = $data_logtrail[0];
     }
 
-    //this is for puting login_id in the array
-$data_program = array();
-$program_id;
-$progs = "SELECT * FROM program ORDER BY program_id DESC";
-$progs1 = mysqli_query($conn, $progs);
-if($progs1) {
-    while($prog11 = mysqli_fetch_assoc($progs1)) {
-        $data_program[] = $prog11["program_id"];
-    }
-
-    $program_id = $data_program[0];
-}
-
 
 $id = $_REQUEST['id'];
 
@@ -64,11 +51,11 @@ else
         
         
         // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-        $sql222 = "SELECT * FROM program WHERE program_id = '$program_id'";
+        $sql222 = "SELECT * FROM program WHERE program_id = '$id'";
         $query_run222 = mysqli_query($conn, $sql222);
         $rows222 = mysqli_fetch_assoc($query_run222);
 
-        $identity = "program";
+        $identity = "Programs";
         $timeNow = date("h:i A");
         $program_id_new = $rows222["program_id"];
         $program_name = $rows222["program_name"];   

@@ -139,7 +139,7 @@
           </div>
         </div>
         <div class="col-sm-4">
-          <div class="row mb-3">
+          <div class="row mb-2">
             <div class="card">
               <h5 class="card-header">Member Types</h5>
               <div class="card-body chart-cont">
@@ -148,10 +148,10 @@
               <div class="card-footer"></div>
             </div>
           </div>
-          <div class="row">
+          <div class="row mb-2">
             <div class="card">
               <h5 class="card-header">Available Programs</h5>
-              <div class="card-body table-responsive p-0">
+              <div class="card-body table-responsive p-0" style="max-height: 223px">
                 <table class="table table-hover">
                   <thead>
                     <tr>
@@ -165,7 +165,8 @@
                       $programSql = "SELECT p.program_id, p.program_name, t.first_name, t.last_name
                                     FROM program AS p
                                     INNER JOIN trainer AS t
-                                    ON p.trainer_id = t.trainer_id";
+                                    ON p.trainer_id = t.trainer_id
+                                    WHERE p.program_status = 'active'";
                       $programQuery = mysqli_query($conn, $programSql);
 
                       if($programQuery) {
@@ -192,6 +193,15 @@
               <div class="card-footer"></div>
             </div>
           </div>
+          <div class="row">
+            <div class="card">
+              <h5 class="card-header">Working vs Damaged Equipments</h5>
+              <div class="card-body chart-cont">
+                <canvas id="inventory-chart"></canvas>
+              </div>  
+              <div class="card-footer"></div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -212,7 +222,7 @@
   <script type="text/javascript" src="js/mdb.min.js"></script>
 
   <script>
-    var totalMembers, newMembers, memTypes, promoNames, promoMembers;
+    var totalMembers, newMembers, memTypes, promoNames, promoMembers, inventory;
     $.get("./get_dashboard_data.php", function(res) {
       data = JSON.parse(res);
       totalMembers = data.total;
@@ -220,6 +230,7 @@
       memTypes = data.types;
       promoNames = data.promos;
       promoMembers = data.promoMems;
+      inventory = data.inventory;
     });
 
     window.onload = () => {
@@ -274,6 +285,21 @@
                   data: promoMembers,
                   backgroundColor: ['rgb(255, 102, 0)', 'rgb(128, 128, 128)',
                   'rgb(204, 153, 0)', 'rgb(204, 51, 0)']
+                },
+              ]
+          },
+          options: {}
+      });
+
+      var items = document.getElementById('inventory-chart').getContext('2d');
+      new Chart(items, {
+          type: 'doughnut',
+          data: {
+              labels: ["Working", "Damaged"],
+              datasets: [
+                {
+                  data: inventory,
+                  backgroundColor: ['rgb(204, 153, 0)', 'rgb(204, 51, 0)']
                 },
               ]
           },

@@ -36,11 +36,15 @@ $promoNames = array();
 $promoMembers = array();
 getPromos();
 
+$inventory = array();
+getInventory();
+
 $res->total = $arrTotal;
 $res->new = $newTotal;
 $res->types = $typeArr;
 $res->promos = $promoNames;
 $res->promoMems = $promoMembers;
+$res->inventory = $inventory;
 
 echo json_encode($res);
 
@@ -117,6 +121,19 @@ function getPromoMembers($id, $conn) {
   if($res) {
     $row = mysqli_fetch_assoc($res);
     array_push($promoMembers, $row["total"]);
+  }
+}
+
+function getInventory() {
+  global $conn, $inventory;
+
+  $sql = "SELECT SUM(inventory_damage) AS damaged, (SUM(inventory_qty) - SUM(inventory_damage)) AS working FROM inventory";
+  $res = mysqli_query($conn, $sql);
+
+  if($res) {
+    $row = mysqli_fetch_assoc($res);
+    $inventory[0] = $row["working"];
+    $inventory[1] = $row["damaged"];
   }
 }
 ?>

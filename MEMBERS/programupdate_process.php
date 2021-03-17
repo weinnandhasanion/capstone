@@ -65,19 +65,6 @@ if($query) {
         $login_id = $data_logtrail[0];
     }
 
-    //this is for puting login_id in the array
-    $data_program = array();
-    $program_id;
-    $progs = "SELECT * FROM program ORDER BY program_id DESC";
-    $progs1 = mysqli_query($conn, $progs);
-    if($progs1) {
-        while($prog11 = mysqli_fetch_assoc($progs1)) {
-            $data_program[] = $prog11["program_id"];
-        }
-
-        $program_id = $data_program[0];
-    }
-
     // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
     $ad= "SELECT * FROM admin WHERE admin_id = $session_admin_id";
     $query_runad = mysqli_query($conn, $ad);
@@ -95,19 +82,19 @@ if($query) {
     
     
     // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-    $sql222 = "SELECT * FROM program WHERE program_id = '$program_id'";
+    $sql222 = "SELECT * FROM program WHERE program_id = '$id'";
     $query_run222 = mysqli_query($conn, $sql222);
     $rows222 = mysqli_fetch_assoc($query_run222);
     
     $program_id_new = $rows222["program_id"];
     $program_name = $rows222["program_name"];  
     $description = "Updated the program";
-    $identity = "program";
+    $identity = "Programs";
     $timeNow = date("h:i A");
     
     $sql1 = "INSERT INTO `logtrail_doing` ( `program_id`, `login_id`,`admin_id`,`user_fname`,
             `description`, `identity`,`time`)
-            VALUES ( '$program_id_new','$login_id_new','$admin_id', '$program_name','$description','$identity', '$timeNow')";
+            VALUES ( '$id','$login_id_new','$admin_id', '$program_name','$description','$identity', '$timeNow')";
             mysqli_query($conn, $sql1);
 
     echo "<script>

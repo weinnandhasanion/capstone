@@ -193,7 +193,7 @@ else if (preg_match($phoneregex, $phone, $match)){
      $login_id_new = $rows3["login_id"];
      $regular_description = "Added a regular member ";
      $Walkin_description = "Added a walk-in member ";
-     $identity = "member";
+     $identity = "Members";
      $timeNow = date("h:i A");
  
      // INSERTING program INFO FOR THE LOGTRAIL DOING

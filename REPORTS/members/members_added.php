@@ -173,7 +173,7 @@ $last_name = $rows1["last_name"];
 $admin_id = $rows1["admin_id"];
 
 $description = "Generated a report for list of members";
-$identity = "report";
+$identity = "Reports";
 $timeNow = date("h:i A");
 $user_fname = "list of members";
 

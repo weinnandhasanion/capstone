@@ -364,7 +364,7 @@
                 <tr>
                   <th>Last name</th>
                   <th>First name</th>
-                  <th>Activation Code</th>
+                  <th>Member ID</th>
                   <th>Status</th>
                   <th>Action</th>
                 </tr>
@@ -1276,7 +1276,7 @@
         <div class="modal-header" style="background-color: #DF3A01; color: white;">
           <h4 class="modal-title">Deleted Members</h4>
           <form class="d-flex justify-content-center">
-            <input type="text" placeholder="Search deleted name" id="search-delete" class="form-control">
+            <input type="text" placeholder="Search deleted name" id="search-deleted-members" class="form-control">
           </form>
         </div>
 
@@ -1287,56 +1287,23 @@
               <thead>
                 <tr style="text-align:center;">
 
-                  <th>fullname</th>
-                  <th>From where</th>
+                  <th>Full name</th>
+                  <th>Member type</th>
                   <th>Time deleted</th>
                   <th>Date deleted</th>
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody id='deletetbody'>
-                <?php
-            /* code for display data */
-            $sql = "SELECT * FROM member WHERE acc_status = 'inactive'
-                    AND date_deleted IS NOT NULL AND time_deleted IS NOT NULL ORDER BY time_deleted DESC";
-            $result = mysqli_query($conn, $sql);
-            $resultCheck = mysqli_num_rows($result);
+              <tbody id='deletetbody-members'>
 
-            if($resultCheck > 0){
-              while($row = mysqli_fetch_assoc($result)){
-                $dateDeleted = new DateTime($row["date_deleted"]);
-                $resultDelete = $dateDeleted->format('F d Y');
-                $dateAdded = new DateTime( $row["time_deleted"]);
-                $resultAdded = $dateAdded->format('h:i A');
-                ?>
-                <tr>
-                  <td><?php echo $row["first_name"],  $row["last_name"] ?></td>
-                  <td><?php echo $row["member_type"]?></td>
-                  <td><?php echo $resultAdded?></td>
-                  <td><?php echo $resultDelete?></td>
-                  <td>
-                    <!-- <span data-toggle="tooltip" data-placement="top" title="View <?php// echo $row["last_name"]?>"">
-                    <i style="cursor: pointer; color:brown; font-size: 25px;"
-                    data-toggle="modal" data-target="#view"
-                    class=" fas fa-eye mx-2 get_id" data-id="
-                    <?php //echo $row['member_id'] ?>
-                    "onclick="displayDetails(this)"></i>
-                    </span> -->
-
-                    <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
-                      title="Recover <?php echo $row["last_name"]?>" class="fas fa-undo mx-2"
-                      data-id="<?php echo $row['member_id'] ?>" onclick="recover(this)"></i>
-                  </td>
-                </tr>
-                <?php
-              }
-             }
-             ?>
               </tbody>
+              <div id="no-data-div-deleted-members" class="no-data-div my-3 text-muted">
+                No data to show.
+              </div>
             </table>
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer d-flex justify-content-between row-reverse" id="deleted-member-footer">
           <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -2255,7 +2222,7 @@
     }
   }
   
-  var regs, walks, programs;
+  var regs, walks, programs, deletedMembers, deletedPrograms;
   
   $.get("./members.php?type=regular", function(res) {
     // Gibutang nimo sa regs ang tanan members nga regular
@@ -2265,6 +2232,12 @@
   $.get("./members.php?type=walkin", function(res) {
     // Gibutang nimo sa walks ang tanan members nga walk-in
     walks = JSON.parse(res);
+  });
+
+  $.get("./get_deleted_members.php", function(res) {
+    deletedMembers = JSON.parse(res);
+  }).then(() => {
+    paginateDeletedMembers(deletedMembers);
   });
 
   // Regular members pagination after load sa page
@@ -2519,6 +2492,41 @@
       }
     }
   });
+
+  function paginateDeletedMembers(data) {
+    $("#deleted-member-footer").pagination({
+      dataSource: function(done) {
+        console.log(data);
+        done(data);
+      },
+      pageSize: 5,
+      showPrevious: false,
+      showNext: false,
+      callback: function(data) {
+        console.log(data);
+        $("#deletetbody-members").empty();
+        if(data.length > 0) {
+          $("#no-data-div-deleted-members").css("display", "none");
+          data.forEach(row => {
+            let html = `<tr>
+              <td>${row.first_name} ${row.last_name}</td>
+              <td>${row.member_type}</td>
+              <td>${row.time_deleted}</td>
+              <td>${row.date_deleted}</td>
+              <td>
+                <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
+                  title="Recover ${row.last_name}" class="fas fa-undo mx-2"
+                  data-id="${row.member_id}" onclick="recover(this)"></i>
+              </td>
+            </tr>`;
+            $("#deletetbody-members").append(html);
+          });
+        } else {
+          $("#no-data-div-deleted-members").css("display", "flex");
+        }
+      }
+    });
+  }
 
   //checkbox only one check
   $(document).ready(function() {

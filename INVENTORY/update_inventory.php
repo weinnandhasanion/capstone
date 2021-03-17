@@ -172,7 +172,7 @@ if($_FILES["image"]["size"] > 0) {
   $admin_id = $rowed["admin_id"];
 
   // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-  $ew = "SELECT * FROM inventory WHERE inventory_id = '$inventory_id'";
+  $ew = "SELECT * FROM inventory WHERE inventory_id = '$id'";
   $query_runew = mysqli_query($conn, $ew);
   $rowew = mysqli_fetch_assoc($query_runew);
 
@@ -180,7 +180,7 @@ if($_FILES["image"]["size"] > 0) {
   $user_fname = $rowew["inventory_name"];
   $description = "Update equipment";
   //$description = $echo.' '.$fullname;
-  $identity = "inventory";
+  $identity = "Inventory";
   $timeNow = date("h:i A");  
 
 

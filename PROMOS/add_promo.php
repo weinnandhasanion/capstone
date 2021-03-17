@@ -111,7 +111,7 @@ if(preg_match($numberRegex, $name, $match)){
      $user_fname = $rowew["promo_name"];
      $description = "Added new promo";
      //$description = $echo.' '.$fullname;
-     $identity = "promo";
+     $identity = "Promos";
      $timeNow = date("h:i A");  
 
 

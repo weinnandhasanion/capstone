@@ -50,7 +50,7 @@ else
  $admin_id = $rowed["admin_id"];
 
  // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
- $ew = "SELECT * FROM trainer WHERE trainer_id = '$trainer_id'";
+ $ew = "SELECT * FROM trainer WHERE trainer_id = '$id'";
  $query_runew = mysqli_query($conn, $ew);
  $rowew = mysqli_fetch_assoc($query_runew);
 
@@ -58,7 +58,7 @@ else
  $user_fname = $rowew["first_name"];
  $user_lname = $rowew["last_name"];
  $description = "Recovered a trainer";
- $identity = "trainer";
+ $identity = "Trainers";
  $timeNow = date("h:i A");
 
  // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING

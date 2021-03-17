@@ -79,11 +79,11 @@ if($progs1) {
            
            
            // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-           $sql222 = "SELECT * FROM program WHERE program_id = '$program_id'";
+           $sql222 = "SELECT * FROM program WHERE program_id = '$id'";
            $query_run222 = mysqli_query($conn, $sql222);
            $rows222 = mysqli_fetch_assoc($query_run222);
 
-           $identity = "program";
+           $identity = "Programs";
            $timeNow = date("h:i A");
            $program_id_new = $rows222["program_id"];
            $program_name = $rows222["program_name"];   

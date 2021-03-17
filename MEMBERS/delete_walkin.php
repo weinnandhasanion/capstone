@@ -9,23 +9,10 @@ if($_SESSION['admin_id']){
     
 $id = $_REQUEST['id'];
 $date_deleted = date("Y-m-d");
+$time_deleted = date("H:i:s");
 
-$ox = "UPDATE member SET acc_status = 'inactive',date_deleted = '$date_deleted' 
+$ox = "UPDATE member SET acc_status = 'inactive', date_deleted = '$date_deleted', time_deleted = '$time_deleted'
 WHERE member_id = " . intval($id) . "";     
-
-
-        //this is for puting member_id in the array
-        $data = array();
-        $member_id;
-        $sql3 = "SELECT * FROM member ORDER BY member_id DESC";
-        $res3 = mysqli_query($conn, $sql3);
-        if($res3) {
-            while($row = mysqli_fetch_assoc($res3)) {
-                $data[] = $row["member_id"];
-            }
-    
-            $member_id = $data[0];
-        }
     
         //this is for puting login_id in the array
         $data_logtrail = array();
@@ -49,16 +36,15 @@ WHERE member_id = " . intval($id) . "";
     $last_name = $rows1["last_name"];
     $admin_id = $rows1["admin_id"];
     // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-    $sql2 = "SELECT first_name,last_name,member_id FROM member WHERE member_id = '$member_id'";
+    $sql2 = "SELECT first_name,last_name,member_id FROM member WHERE member_id = '$id'";
     $query_run2 = mysqli_query($conn, $sql2);
     $rows2 = mysqli_fetch_assoc($query_run2);
  
-    $member_id_new = $rows2["member_id"];
     $user_fname = $rows2["first_name"];
     $user_lname = $rows2["last_name"];
     $first_name = $rows["first_name"];
     $description = "Deleted an account from walk-in table";
-    $identity = "member";
+    $identity = "Members";
     $timeNow = date("h:i A");
 
     // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
@@ -70,7 +56,7 @@ WHERE member_id = " . intval($id) . "";
 
     $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
     `description`, `identity`,`time`)
-    VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
+    VALUES ( '$login_id_new','$admin_id', '$id', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
     mysqli_query($conn, $sql1);
             
 

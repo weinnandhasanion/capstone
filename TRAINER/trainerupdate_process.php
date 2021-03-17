@@ -12,6 +12,7 @@ $trainer_status= $_POST['trainer_status'];
 $phone= $_POST['phone'];
 $email= $_POST['email'];
 $address= $_POST['address'];
+$id = $_POST["trainer_id"];
 
 
 // MAIN QUERY NA MO UPDATE SA TANAN
@@ -20,7 +21,7 @@ $tan = "UPDATE trainer SET
                phone = '$phone',
                email = '$email',
                address = '$address' 
-        WHERE trainer_id = '$_POST[trainer_id]'";
+        WHERE trainer_id = '$id'";
 //---- query validations
 $check_email = "SELECT * from trainer where trainer_id != '$_POST[trainer_id]' AND email='$email'";
 $duplicate_email = mysqli_query($conn, $check_email);
@@ -116,14 +117,14 @@ if (preg_match($phoneregex, $phone, $match))
  $admin_id = $rowed["admin_id"];
 
  // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
- $ew = "SELECT * FROM trainer WHERE trainer_id = '$trainer_id'";
+ $ew = "SELECT * FROM trainer WHERE trainer_id = '$id'";
  $query_runew = mysqli_query($conn, $ew);
  $rowew = mysqli_fetch_assoc($query_runew);
 
  $trainer_id_new = $rowew["trainer_id"];
  $user_fname = $rowew["first_name"];
  $user_lname = $rowew["last_name"];
- $identity = "trainer";
+ $identity = "Trainers";
  $timeNow = date("h:i A");
 
  // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING

@@ -143,7 +143,7 @@ $rows1 = mysqli_fetch_assoc($query_run);
 $last_name = $rows1["last_name"];
 $admin_id = $rows1["admin_id"];
 // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-$sql2 = "SELECT first_name,last_name,member_id FROM member WHERE member_id = '$member_id'";
+$sql2 = "SELECT first_name,last_name,member_id FROM member WHERE member_id = '$id'";
 $query_run2 = mysqli_query($conn, $sql2);
 $rows2 = mysqli_fetch_assoc($query_run2);
 
@@ -152,7 +152,7 @@ $user_fname = $rows2["first_name"];
 $user_lname = $rows2["last_name"];
 $first_name = $rows["first_name"];
 $description = "Updated a member";
-$identity = "member";
+$identity = "Members";
 $timeNow = date("h:i A");
 
 

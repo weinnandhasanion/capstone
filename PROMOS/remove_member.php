@@ -5,8 +5,6 @@ date_default_timezone_set('Asia/Manila');
 if($_SESSION['admin_id']){
         $session_admin_id = $_SESSION['admin_id'];
     }
-
-$promoId = $_REQUEST["promo_id"];
 $memberId = $_REQUEST["member_id"];
 
 $sql = "UPDATE memberpromos 
@@ -79,7 +77,7 @@ if($res) {
      $admin_id = $rowed["admin_id"];
 
      // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-     $ew = "SELECT * FROM promo WHERE promo_id = '$promo_id'";
+     $ew = "SELECT * FROM promo WHERE promo_id = '$promoId'";
      $query_runew = mysqli_query($conn, $ew);
      $rowew = mysqli_fetch_assoc($query_runew);
 
@@ -87,7 +85,7 @@ if($res) {
      $promo_name = $rowew["promo_name"];
      $description = "Remove a member from $promo_name promo";
      //$description = $echo.' '.$fullname;
-     $identity = "promo";
+     $identity = "Promos";
      $timeNow = date("h:i A");  
 
 
@@ -99,7 +97,7 @@ if($res) {
      $login_id_new = $rows22["login_id"];
 
        // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-       $sql22q = "SELECT * FROM member WHERE member_id = '$member_id_okay'";
+       $sql22q = "SELECT * FROM member WHERE member_id = '$memberId'";
        $query_run22q = mysqli_query($conn, $sql22q);
        $rows22q = mysqli_fetch_assoc($query_run22q);
   

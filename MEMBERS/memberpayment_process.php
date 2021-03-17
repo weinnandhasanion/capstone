@@ -129,7 +129,7 @@ else if($payment_description == 'Monthly Subscription'){
         $admin_id = $rowed["admin_id"];
 
         // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-        $ew = "SELECT * FROM member WHERE member_id = '$member_id'";
+        $ew = "SELECT * FROM member WHERE member_id = '$id'";
         $query_runew = mysqli_query($conn, $ew);
         $rowew = mysqli_fetch_assoc($query_runew);
 
@@ -137,7 +137,7 @@ else if($payment_description == 'Monthly Subscription'){
         $user_fname = $rowew["first_name"];
         $user_lname = $rowew["last_name"];
         $description = "Paid Monthly Subscription";
-        $identity = "member";
+        $identity = "Members";
         $timeNow = date("h:i A");
 
         // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING

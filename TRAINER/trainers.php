@@ -612,6 +612,7 @@
       showPrevious: false,
       showNext: false,
       callback: function(data) {
+        console.log(data);
         $("#trainer-tbody").empty();
         if (data.length > 0) {
           $("#no-data-div-trainer").css("display", "none");

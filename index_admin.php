@@ -1,3 +1,10 @@
+<?php 
+session_start();
+if(isset($_SESSION["admin_id"])) {
+	header("Location: ./DASHBOARD/dashboard.php");
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +38,7 @@
 			<div class="btn-group" role="group" aria-label="Basic example" 
 				 style="position: relative; left: 152px; top: 30px; cursor: pointer; width: 203px;">
 			  <button type="button" id="sort-active" class="btn btn-sm btn-white">Sign In</button>
-              <button type="button" onclick="register()" id="sort-inactive" class="btn btn-sm btn-outline-white">Sign Up</button>
+				<button type="button" onclick="register()" id="sort-inactive" class="btn btn-sm btn-outline-white">Sign Up</button>
 			</div> <br><br><br>
 			<!-- login process -->
 			<form action="login_process.php" method="post">
@@ -51,7 +58,7 @@
 			<div class="btn-group" role="group" aria-label="Basic example" 
 				 style="position: relative; left: 152px; top: 30px; cursor: pointer; width: 203px;">
 			  <button type="button" id="sort-active" onclick="login()" class="btn btn-sm btn-outline-white">Sign In</button>
-              <button type="button" id="sort-inactive"class="btn btn-sm btn-white">Sign Up</button>
+				<button type="button" id="sort-inactive"class="btn btn-sm btn-white">Sign Up</button>
 			</div> <br><br><br>
 			<!-- registration process -->
 			<form action="register_process.php" method="post">
@@ -69,24 +76,17 @@
 	function register(){
 		var x = document.getElementById("signup");
 		var y = document.getElementById("signin");
-		if(x.style.display === "none"){
-			x.style.display = "block";
-			y.style.display = "none";
-		}else{
-			x.style.display = "none";
-			y.style.display = "block";
-		}
+
+		x.style.display = "block";
+		y.style.display = "none";
 	}
+
 	function login(){
 		var x = document.getElementById("signup");
 		var y = document.getElementById("signin");
-		if(x.style.display === "none"){
-			x.style.display = "block";
-			y.style.display = "none";
-		}else{
-			x.style.display = "none";
-			y.style.display = "block";
-		}
+
+		x.style.display = "none";
+		y.style.display = "block";
 	}
 </script>
 </html>

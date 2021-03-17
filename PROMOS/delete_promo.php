@@ -64,7 +64,7 @@ if($res) {
      $admin_id = $rowed["admin_id"];
 
      // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-     $ew = "SELECT * FROM promo WHERE promo_id = '$promo_id'";
+     $ew = "SELECT * FROM promo WHERE promo_id = '$id'";
      $query_runew = mysqli_query($conn, $ew);
      $rowew = mysqli_fetch_assoc($query_runew);
 
@@ -72,7 +72,7 @@ if($res) {
      $user_fname = $rowew["promo_name"];
      $description = "Deleted a promo";
      //$description = $echo.' '.$fullname;
-     $identity = "promo";
+     $identity = "Promos";
      $timeNow = date("h:i A");  
 
 

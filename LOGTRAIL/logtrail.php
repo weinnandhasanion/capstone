@@ -309,8 +309,8 @@
                 <tr>
                   <th> ID</th>
                   <th>Module</th>
-                  <th>name</th>
-                  <th>Admin Doing</th>
+                  <th>Action</th>
+                  <th>Name</th>
                   <th>Time</th>
                 </tr>
               </thead>
@@ -385,52 +385,52 @@
         let data = JSON.parse(res);
         tbody.innerHTML = "";
         data.forEach(row => {
-          if(row.identity === 'member'){
+          if(row.identity === 'Members' || row.identity === 'member'){
           var html = `<tr>
             <td>${row.member_id}</td>
             <td>${row.identity}</td>
-            <td>${row.user_fname} ${row.user_lname}</td>
             <td>${row.description}</td>
+            <td>${row.user_fname} ${row.user_lname}</td>
             <td>${row.time}</td>
           </tr>`;
-          }else if(row.identity === 'trainer'){
+          }else if(row.identity === 'Trainers' || row.identity === 'trainer'){
             var html = `<tr>
             <td>${row.trainer_id}</td>
             <td>${row.identity}</td>
-            <td>${row.user_fname} ${row.user_lname}</td>
             <td>${row.description}</td>
+            <td>${row.user_fname} ${row.user_lname}</td>
             <td>${row.time}</td>
           </tr>`;
-          }else if(row.identity === 'program'){
+          }else if(row.identity === 'Programs' || row.identity === 'program'){
             var html = `<tr>
             <td>${row.program_id}</td>
             <td>${row.identity}</td>
-            <td>${row.user_fname} </td>
             <td>${row.description}</td>
+            <td>${row.user_fname} ${row.user_lname}</td>
             <td>${row.time}</td>
           </tr>`;
-          } else if(row.identity === 'inventory'){
+          } else if(row.identity === 'Inventory' || row.identity === 'inventory'){
             var html = `<tr>
             <td>${row.inventory_id}</td>
             <td>${row.identity}</td>
-            <td>${row.user_fname} </td>
             <td>${row.description}</td>
+            <td>${row.user_fname}</td>
             <td>${row.time}</td>
           </tr>`;
-          }else if(row.identity === 'promo'){
+          }else if(row.identity === 'Promos' || row.identity === 'promo'){
             var html = `<tr>
             <td>${row.promo_id}</td>
             <td>${row.identity}</td>
-            <td>${row.user_fname} </td>
             <td>${row.description}</td>
+            <td>${row.user_fname} </td>
             <td>${row.time}</td>
           </tr>`;
-          }else if(row.identity === 'report'){
+          }else if(row.identity === 'Reports' || row.identity === 'report'){
             var html = `<tr>
             <td>N/A</td>
             <td>${row.identity}</td>
-            <td>${row.user_fname}</td>
             <td>${row.description}</td>
+            <td>${row.user_fname}</td>
             <td>${row.time}</td>
           </tr>`;
           }

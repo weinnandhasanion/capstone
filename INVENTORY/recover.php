@@ -55,14 +55,14 @@ $rows1 = mysqli_fetch_assoc($query_run);
 $last_name = $rows1["last_name"];
 $admin_id = $rows1["admin_id"];
 // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-$sql2 = "SELECT * FROM inventory WHERE inventory_id = '$inventory_id'";
+$sql2 = "SELECT * FROM inventory WHERE inventory_id = '$id'";
 $query_run2 = mysqli_query($conn, $sql2);
 $rows2 = mysqli_fetch_assoc($query_run2);
 
 $inventory_id_new = $rows2["inventory_id"];
 $user_fname = $rows2["inventory_name"];
 $description = "Recover an inventory";
-$identity = "inventory";
+$identity = "Inventory";
 $timeNow = date("h:i A");
 
 // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING

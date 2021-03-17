@@ -23,20 +23,6 @@ if(mysqli_query($conn, $ox))
 else
         echo mysqli_error($conn), 'NOT UPDATED';    
 
-
-//this is for puting member_id in the array
-$data = array();
-$member_id;
-$sql3 = "SELECT * FROM member ORDER BY member_id DESC";
-$res3 = mysqli_query($conn, $sql3);
-if($res3) {
-    while($row = mysqli_fetch_assoc($res3)) {
-        $data[] = $row["member_id"];
-    }
-
-    $member_id = $data[0];
-}
-
 //this is for puting login_id in the array
 $data_logtrail = array();
 $login_id;
@@ -59,7 +45,7 @@ $rows1 = mysqli_fetch_assoc($query_run);
 $last_name = $rows1["last_name"];
 $admin_id = $rows1["admin_id"];
 // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-$sql2 = "SELECT first_name,last_name,member_id FROM member WHERE member_id = '$member_id'";
+$sql2 = "SELECT first_name,last_name,member_id FROM member WHERE member_id = '$id'";
 $query_run2 = mysqli_query($conn, $sql2);
 $rows2 = mysqli_fetch_assoc($query_run2);
 
@@ -68,7 +54,7 @@ $user_fname = $rows2["first_name"];
 $user_lname = $rows2["last_name"];
 $first_name = $rows["first_name"];
 $description = "Activated the account";
-$identity = "member";
+$identity = "Members";
 $timeNow = date("h:i A");
 
 // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING

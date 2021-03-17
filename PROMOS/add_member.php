@@ -44,32 +44,6 @@ if($res) {
 
 //-----------LOGTRAIL DOING
 
-     //this is for puting promo_id in the array
-     $data = array();
-     $promo_id;
-     $sql3 = "SELECT * FROM promo ORDER BY promo_id DESC";
-     $res3 = mysqli_query($conn, $sql3);
-     if($res3) {
-         while($row = mysqli_fetch_assoc($res3)) {
-             $data[] = $row["promo_id"];
-         }
-
-         $promo_id = $data[0];
-     }
-
-     //this is for puting promo_id in the array
-     $data = array();
-     $sql3q = "SELECT * FROM member ORDER BY member_id DESC";
-     $res3a = mysqli_query($conn, $sql3q);
-     if($res3a) {
-         while($rowq = mysqli_fetch_assoc($res3a)) {
-             $data[] = $rowq["member_id"];
-         }
-
-         $member_id_okay = $data[0];
-     }
-
-
      //this is for puting login_id in the array
      $data_logtrail = array();
      $login_id;
@@ -91,14 +65,14 @@ if($res) {
      $admin_id = $rowed["admin_id"];
 
      // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-     $ew = "SELECT * FROM promo WHERE promo_id = '$promo_id'";
+     $ew = "SELECT * FROM promo WHERE promo_id = '$promoId'";
      $query_runew = mysqli_query($conn, $ew);
      $rowew = mysqli_fetch_assoc($query_runew);
 
      $promo_id_new = $rowew["promo_id"];
-     $description = "Added a member from promo";
+     $description = "Added a member to ".$rowew["promo_name"];
      //$description = $echo.' '.$fullname;
-     $identity = "promo";
+     $identity = "Promos";
      $timeNow = date("h:i A");  
 
 
@@ -110,7 +84,7 @@ if($res) {
      $login_id_new = $rows22["login_id"];
 
        // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-       $sql22q = "SELECT * FROM member WHERE member_id = '$member_id_okay'";
+       $sql22q = "SELECT * FROM member WHERE member_id = '$memberId'";
        $query_run22q = mysqli_query($conn, $sql22q);
        $rows22q = mysqli_fetch_assoc($query_run22q);
   
@@ -122,7 +96,7 @@ if($res) {
      $sql1 = "INSERT INTO `logtrail_doing` 
 	 ( `login_id`,`admin_id`,`promo_id`,`user_fname`,`description`, `identity`,`time`)
      VALUES 
-	 ( '$login_id_new','$admin_id', '$promo_id_new', '$fullname','$description','$identity', '$timeNow')";
+	 ( '$login_id_new','$admin_id', '$promoId', '$fullname','$description','$identity', '$timeNow')";
      mysqli_query($conn, $sql1);
 
 

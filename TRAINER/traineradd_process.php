@@ -183,7 +183,7 @@ else if(strlen($phone) < 10){
      $fullname = $user_fname.' '.$user_lname;
      $description = "Added a trainer";
      //$description = $echo.' '.$fullname;
-     $identity = "trainer";
+     $identity = "Trainers";
      $timeNow = date("h:i A");  
 
 

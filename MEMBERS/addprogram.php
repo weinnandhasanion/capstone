@@ -281,7 +281,7 @@ $program_id_new = $rows222["program_id"];
 $program_name = $rows222["program_name"];   
 $description = "Added a new program";
 //$description = $echo.' '.$program_name;
-$identity = "program";
+$identity = "Programs";
 $timeNow = date("h:i A");
 
 $sql1 = "INSERT INTO `logtrail_doing` ( `program_id`, `login_id`,`admin_id`,`user_fname`,
