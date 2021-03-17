@@ -55,13 +55,13 @@ require('connect.php');
     			</script>");
     }else if (preg_match($fullnameRegex, $fname, $match)){
         echo ("<script LANGUAGE='JavaScript'>
-            		window.alert('Your first name has numbers.. pelase check your inputs.');
+            		window.alert('Your first name has numbers.. please check your inputs.');
             		window.location.href='index_admin.php';
             </script>");
 			return false;
 	}else if (preg_match($fullnameRegex, $lname, $match)){
         echo ("<script LANGUAGE='JavaScript'>
-           			window.alert('Your last name has numbers.. pelase check your inputs.');
+           			window.alert('Your last name has numbers.. please check your inputs.');
             		window.location.href='index_admin.php';
             </script>");
 			return false;

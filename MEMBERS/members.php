@@ -2,9 +2,11 @@
 	session_start();
     require('connect.php');
 
-	if($_SESSION['admin_id']){
+	if(isset($_SESSION['admin_id'])){
 		$id = $_SESSION['admin_id'];
-	}
+	} else {
+    header("Location: ./../index_admin.php");
+  }
 
 	$sql = "select * from admin where admin_id =".$id."";
 	$res = mysqli_query($conn, $sql);
@@ -281,7 +283,7 @@
               $row = $data[0];
             }
           ?>
-          <a href="./../index_admin.php">
+          <a href="#">
             <button id="logoutBtn" type="button" class="btn btn-sm btn-danger" data-id="<?php echo $row['login_id'] ?>"
               onclick="logout(this)" >LOGOUT</button>
           </a>
@@ -588,7 +590,7 @@
     <div class="modal-dialog">
 
       <!-- Modal content-->
-      <div class="modal-content" style="width: 870px; right: 50px;">
+      <div class="modal-content" style="width: 900px; right: 50px;">
 
         <div class="modal-header" style="background-color: #DF3A01; color: white;">
           <h4 class="modal-title">Program Information</h4>
@@ -610,11 +612,11 @@
                     <input name="program_status" id="info_stat" type="text" readonly class="form-control">
                   </div>
                   <div class="col-sm-3">
-                    <label>Date and Time added</label>
+                    <label>Date and time added</label>
                     <input name="date_added" id="info_datetime" type="text" readonly class="form-control">
                   </div>
                   <div class="col-sm-3">
-                    <label>Trainer Name</label>
+                    <label>Trainer Assigned</label>
                     <input name="first_name" id="info_trainer" type="text" readonly class="form-control">
                   </div>
                 </div>
@@ -1346,20 +1348,34 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <form action="programupdate_process.php" method="post">
+          <input type="hidden" name="id" id="program-id-hidden">
           <div class="modal-header" style="background-color: #DF3A01; color: white;">
             <h4 class="modal-title">Update Program</h4>
           </div>
           <div class="modal-body">
-            <div class="form-group">
+          <div class="form-group">
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Program Name</label>
                   <input name="program_name" required="" type="text" id="prgram_name_update" class="form-control mb-1"
                     placeholder="Enter program name here">
                 </div>
-                <div class="col-sm-4">
-                  <label>Trainer assign</label>    
-                    <input name="" id="trainer_name_update" type="text" readonly class="form-control">
+                <div class="col-sm-6">
+                  <label>Trainer assigned</label>    
+                  <select class="form-control" name="trainer_id" id="trainer_name_update">
+                  <?php 
+                  $trainerSql = "SELECT * FROM trainer";
+                  $trainerQuery = mysqli_query($conn, $trainerSql);
+
+                  if($trainerQuery) {
+                    while($row = mysqli_fetch_assoc($trainerQuery)) {
+                  ?>
+                  <option value="<?= $row["trainer_id"] ?>"><?= $row["first_name"]." ".$row["last_name"] ?></option>
+                  <?php 
+                    }
+                  }
+                  ?>
+                  </select>
                 </div>
               </div>
             </div>
@@ -2631,7 +2647,7 @@
 
       document.getElementById("info_name").value = row.program_name;
       document.getElementById("info_datetime").value = row.dateandtime_added;
-      document.getElementById("info_trainer").value = row.first_name + '' + row.last_name;
+      document.getElementById("info_trainer").value = row.first_name + ' ' + row.last_name;
       document.getElementById("info_stat").value = row.program_status;
       document.getElementById("info_description").value = row.program_description;
       document.getElementById("day1upper1").value = row.upper_1_day_1;
@@ -2679,8 +2695,9 @@
       var digitDate = new Date(row.date_added);
       var stringDate = digitDate.toDateString(digitDate);
 
+      $("#program-id-hidden").val(row.program_id);
       document.getElementById("prgram_name_update").value = row.program_name;
-      document.getElementById("trainer_name_update").value = row.first_name +  ' ' + row.last_name;
+      document.getElementById("trainer_name_update").value = row.trainer_id;
       document.getElementById("program_desc_update").value = row.program_description;
       document.getElementById("upper-1-day-1_update").value = row.upper_1_day_1;
       document.getElementById("upper-2-day-1_update").value = row.upper_2_day_1;
@@ -2697,7 +2714,7 @@
       document.getElementById("lower-3-day-2_update").value = row.lower_3_day_2;
       document.getElementById("abdominal-day-2_update").value = row.abdominal_day_2;
       document.getElementById("upper-1-day-3_update").value = row.upper_1_day_3;
-      document.getElementById("upper-2-day-3_update").value = row.uupper_2_day_3;
+      document.getElementById("upper-2-day-3_update").value = row.upper_2_day_3;
       document.getElementById("upper-3-day-3_update").value = row.upper_3_day_3;
       document.getElementById("lower-1-day-3_update").value = row.lower_1_day_3;
       document.getElementById("lower-2-day-3_update").value = row.lower_2_day_3;
@@ -2815,33 +2832,6 @@
 
       req.open('GET', 'update_walkin_member.php?id=' + id, true);
       req.send();
-
-    }
-  }
-
-
-  //---------------------------------------------------------------------------UPDATE program JS
-  // update program  Modal
-  function updateProgram(el) {
-    let id = el.getAttribute('data-id');
-    console.log(id);
-
-    // AJAX Request
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        display(JSON.parse(this.responseText));
-        console.log(JSON.parse(this.responseText));
-      }
-    }
-    req.open('GET', 'updateprogram.php?id=' + id, true);
-    req.send();
-
-    function display(row) {
-
-      document.getElementById("program_id").value = row.program_id;
-      document.getElementById("program_name").value = row.program_name;
-      document.getElementById("program_description").value = row.program_description;
 
     }
   }
@@ -3085,10 +3075,10 @@
     req.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         console.log((this.responseText));
-
+        window.location.href = "./../logout_process.php";
       }
     }
-    req.open('GET', '/PROJECT/logout.php?id=' + id, true);
+    req.open('GET', './../logout.php?id=' + id, true);
     req.send();
   }
 

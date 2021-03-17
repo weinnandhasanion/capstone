@@ -22,7 +22,7 @@ $pass  = $_POST['password'];
         if(password_verify($pass, $row['password'])){
             $_SESSION['admin_id'] = $row['admin_id'];
             echo "Success";
-            header('Location: /PROJECT/DASHBOARD/dashboard.php?success');
+            header('Location: ./DASHBOARD/dashboard.php?success');
                 $id = $_SESSION['admin_id'];
                 $sql1 =  "INSERT INTO logtrail(admin_id,first_name,last_name,dateandtime_login)
                 VALUES('".$row["admin_id"]."','".$row["first_name"]."','".$row["last_name"]."','".date("Y-m-d H:i:s")."')";

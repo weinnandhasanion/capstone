@@ -2,9 +2,11 @@
 	session_start();
     require('connect.php');
 
-	if($_SESSION['admin_id']){
+	if(isset($_SESSION['admin_id'])){
 		$id = $_SESSION['admin_id'];
-	}
+	} else {
+    header("Location: ./../index_admin.php");
+  }
 	
 	$sql = "select * from admin where admin_id =".$id."";
 	$res = mysqli_query($conn, $sql);
@@ -70,7 +72,7 @@
             }
           ?> 
 
-        <a href="./../index_admin.php">
+        <a href="#">
           <button id="logoutBtn" type="button" class="btn btn-sm btn-danger"
           data-id="<?php echo $row['login_id'] ?>"
           onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
@@ -277,23 +279,23 @@
           },
           options: {}
       });
+    }
 
-      function logout(el) {
-        let id = el.getAttribute('data-id');
-        console.log(id);
+    function logout(el) {
+      let id = el.getAttribute('data-id');
+      console.log(id);
 
-        // AJAX Request
-      
-        let req = new XMLHttpRequest();
-        req.onreadystatechange = function() {
-          if(this.readyState == 4 && this.status == 200 ) {
-            console.log((this.responseText));
-            
-          }
+      // AJAX Request
+    
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200 ) {
+          console.log((this.responseText));
+          window.location.href = "./../logout_process.php";
         }
-        req.open('GET', '/PROJECT/logout.php?id=' + id, true);
-        req.send(); 
       }
+      req.open('GET', './../logout.php?id=' + id, true);
+      req.send(); 
     }
     
   </script> 
