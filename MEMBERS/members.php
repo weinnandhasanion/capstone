@@ -1281,12 +1281,10 @@
         </div>
 
         <div class="modal-body">
-
           <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>
             <table class='table table-hover'>
               <thead>
                 <tr style="text-align:center;">
-
                   <th>Full name</th>
                   <th>Member type</th>
                   <th>Time deleted</th>
@@ -1297,13 +1295,13 @@
               <tbody id='deletetbody-members'>
 
               </tbody>
-              <div id="no-data-div-deleted-members" class="no-data-div my-3 text-muted">
-                No data to show.
-              </div>
             </table>
+            <div id="no-data-div-deleted-members" class="no-data-div my-3 text-muted">
+              No data to show.
+            </div>
           </div>
         </div>
-        <div class="modal-footer d-flex justify-content-between row-reverse" id="deleted-member-footer">
+        <div class="modal-footer d-flex justify-content-between flex-row-reverse" id="deleted-member-footer">
           <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -2496,14 +2494,12 @@
   function paginateDeletedMembers(data) {
     $("#deleted-member-footer").pagination({
       dataSource: function(done) {
-        console.log(data);
         done(data);
       },
       pageSize: 5,
       showPrevious: false,
       showNext: false,
       callback: function(data) {
-        console.log(data);
         $("#deletetbody-members").empty();
         if(data.length > 0) {
           $("#no-data-div-deleted-members").css("display", "none");
@@ -2527,6 +2523,17 @@
       }
     });
   }
+
+  $("#search-deleted-members").on("keyup", function() {
+    let val = $("#search-deleted-members").val();
+
+    if(val != "") {
+      data = deletedMembers.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
+      paginateDeletedMembers(data);
+    } else {
+      paginateDeletedMembers(deletedMembers);
+    }
+  });
 
   //checkbox only one check
   $(document).ready(function() {
