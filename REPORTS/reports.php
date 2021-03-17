@@ -506,7 +506,7 @@
 <div class="modal fade" role="dialog" id="trainers-list">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./trainers/trainer_added.php" method="post">
+      <form id="trainers-list-form" target="_blank" action="./trainers/trainer_added.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for list of trainers</h4>
         </div>
@@ -526,7 +526,7 @@
               </div>
               <div class="col-sm-6">
                   <label for="">Trainer status</label>
-                  <select name="trainers_list_status" class="form-control">
+                  <select name="trainers-list_status" class="form-control">
                   <option value="all">All</option>
                     <option value="active">Active</option>
                     <option value="inactive">inactive</option>
@@ -539,17 +539,19 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_trainers_list" id="" class="form-control">
+                <input type="date" name="from_date_trainers_list" id="trainers-list-from" class="form-control">
+                <small class="d-none text-red" id="trainers-list-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_trainers_list" id="" class="form-control">
+                <input type="date" name="to_date_trainers_list" id="trainers-list-to" class="form-control">
+                <small class="d-none text-red" id="trainers-list-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn" id="trainers-list">Generate report</button>
         </div>
         </form>
       </div>
@@ -560,7 +562,7 @@
   <div class="modal fade" role="dialog" id="trainers-active">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./trainers/trainer_active.php" method="post">
+      <form id="trainers-active-form" target="_blank" action="./trainers/trainer_active.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for active trainers</h4>
         </div>
@@ -584,19 +586,22 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_trainers_active" id="" class="form-control">
+                <input type="date" name="from_date_trainers_active" id="trainers-active-from" class="form-control">
+                <small class="d-none text-red" id="trainers-active-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_trainers_active" id="" class="form-control">
+                <input type="date" name="to_date_trainers_active" id="trainers-active-to" class="form-control">
+                <small class="d-none text-red" id="trainers-active-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn" id="trainers-active">Generate report</button>
         </div>
         </form>
+        
       </div>
     </div>
   </div>
@@ -605,7 +610,7 @@
    <div class="modal fade" role="dialog" id="trainers-inactive">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./trainers/trainer_inactive.php" method="post">
+      <form id="trainers-inactive-form" target="_blank" action="./trainers/trainer_inactive.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for inactive trainers</h4>
         </div>
@@ -629,17 +634,19 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_trainers_inactive" id="" class="form-control">
+                <input type="date" name="from_date_trainers_inactive" id="trainers-inactive-from" class="form-control">
+                <small class="d-none text-red" id="trainers-inactive-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_trainers_inactive" id="" class="form-control">
+                <input type="date" name="to_date_trainers_inactive" id="trainers-inactive-to" class="form-control">
+                <small class="d-none text-red" id="trainers-inactive-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn" id="trainers-inactive">Generate report</button>
         </div>
         </form>
       </div>
@@ -650,7 +657,7 @@
   <div class="modal fade" role="dialog" id="trainers-deleted">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./trainers/trainer_deleted.php" method="post">
+      <form id="trainers-deleted-form" target="_blank" action="./trainers/trainer_deleted.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for deleted trainers</h4>
         </div>
@@ -674,17 +681,19 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_trainers_deleted" id="" class="form-control">
+                <input type="date" name="from_date_trainers_deleted" id="trainers-deleted-from" class="form-control">
+                <small class="d-none text-red" id="trainers-deleted-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_trainers_deleted" id="" class="form-control">
+                <input type="date" name="to_date_trainers_deleted" id="trainers-deleted-to" class="form-control">
+                <small class="d-none text-red" id="trainers-deleted-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn" id="trainers-deleted">Generate report</button>
         </div>
         </form>
       </div>
@@ -697,7 +706,7 @@
     <div class="modal fade" role="dialog" id="promos-list">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./promos/promo_list.php" method="post">
+      <form id="promos-list-from" target="_blank" action="./promos/promo_list.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for list of promos</h4>
         </div>
@@ -737,17 +746,19 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_promos_list" id="" class="form-control">
+                <input type="date" name="from_date_promos_list" id="promos-list-from" class="form-control">
+                <small class="d-none text-red" id="promos-list-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_promos_list" id="" class="form-control">
+                <input type="date" name="to_date_promos_list" id="promos-list-to" class="form-control">
+                <small class="d-none text-red" id="promos-list-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn" id="promos-list">Generate report</button>
         </div>
         </form>
       </div>
@@ -758,7 +769,7 @@
   <div class="modal fade" role="dialog" id="promos-permanent">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./promos/promo_permanent.php" method="post">
+      <form id="promos-permanent-form" target="_blank" action="./promos/promo_permanent.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for Permanent Promos</h4>
         </div>
@@ -790,17 +801,19 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_promos_permanent" id="" class="form-control">
+                <input type="date" name="from_date_promos_permanent" id="promos-permanent-from" class="form-control">
+                <small class="d-none text-red" id="promos-permanent-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_promos_permanent" id="" class="form-control">
+                <input type="date" name="to_date_promos_permanent" id="promos-permanent-to" class="form-control">
+                <small class="d-none text-red" id="promos-permanent-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn" id="promos-permanent">Generate report</button>
         </div>
         </form>
       </div>
@@ -812,7 +825,7 @@
   <div class="modal fade" role="dialog" id="promos-seasonal">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./promos/promo_seasonal.php" method="post">
+      <form id="promos-seasonal-form" target="_blank" action="./promos/promo_seasonal.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for Seasonal Promos</h4>
         </div>
@@ -844,17 +857,19 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_promos_seasonal" id="" class="form-control">
+                <input type="date" name="from_date_promos_seasonal" id="promos-seasonal-from" class="form-control">
+                <small class="d-none text-red" id="promos-seasonal-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_promos_seasonal" id="" class="form-control">
+                <input type="date" name="to_date_promos_seasonal" id="promos-seasonal-to" class="form-control">
+                <small class="d-none text-red" id="promos-seasonal-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn" id="promos-seasonal">Generate report</button>
         </div>
         </form>
       </div>
@@ -865,7 +880,7 @@
   <div class="modal fade" role="dialog" id="total-sales">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./payments/total_sales.php" method="post">
+      <form id="total-sales-form" target="_blank" action="./payments/total_sales.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for total sales</h4>
         </div>
@@ -889,17 +904,19 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date" id="" class="form-control">
+                <input type="date" name="from_date" id="total-sales-from" class="form-control">
+                <small class="d-none text-red" id="total-sales-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date" id="" class="form-control">
+                <input type="date" name="to_date" id="total-sales-to" class="form-control">
+                <small class="d-none text-red" id="total-sales-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn" id="total-sales">Generate report</button>
         </div>
         </form>
       </div>
@@ -910,7 +927,7 @@
   <div class="modal fade" role="dialog" id="monthly-payments">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./payments/monthly_payments.php" method="post">
+      <form id="monthly-payments-form" target="_blank" action="./payments/monthly_payments.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for monthly payments</h4>
         </div>
@@ -934,17 +951,19 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date" id="" class="form-control">
+                <input type="date" name="from_date" id="monthly-payments-from" class="form-control">
+                <small class="d-none text-red" id="monthly-payments-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date" id="" class="form-control">
+                <input type="date" name="to_date" id="monthly-payments-to" class="form-control">
+                <small class="d-none text-red" id="monthly-payments-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn"id="monthly-payments">Generate report</button>
         </div>
         </form>
       </div>
@@ -955,7 +974,7 @@
   <div class="modal fade" role="dialog" id="annual-payments">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./payments/annual_payments.php" method="post">
+      <form id="annual-payments-form" target="_blank" action="./payments/annual_payments.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for annual payments</h4>
         </div>
@@ -979,17 +998,19 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date" id="" class="form-control">
+                <input type="date" name="from_date" id="annual-payments-from" class="form-control">
+                <small class="d-none text-red" id="annual-payments-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date" id="" class="form-control">
+                <input type="date" name="to_date" id="annual-payments-to" class="form-control">
+                <small class="d-none text-red" id="annual-payments-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn" id="annual-payments">Generate report</button>
         </div>
         </form>
       </div>
@@ -1000,7 +1021,7 @@
    <div class="modal fade" role="dialog" id="walkin-payments">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./payments/walkin_payments.php" method="post">
+      <form id="walkin-payments-form" target="_blank" action="./payments/walkin_payments.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for walkin payments</h4>
         </div>
@@ -1024,17 +1045,19 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date" id="" class="form-control">
+                <input type="date" name="from_date" id="walkin-payments-from" class="form-control">
+                <small class="d-none text-red" id="walkin-payments-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date" id="" class="form-control">
+                <input type="date" name="to_date" id="walkin-payments-to" class="form-control">
+                <small class="d-none text-red" id="walkin-payments-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn" id="walkin-payments">Generate report</button>
         </div>
         </form>
       </div>
@@ -1048,7 +1071,7 @@
    <div class="modal fade" role="dialog" id="inventory-list">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./inventory/inventory_list.php" method="post">
+      <form id="inventory-list-form" target="_blank" action="./inventory/inventory_list.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for list of inventory</h4>
         </div>
@@ -1080,17 +1103,19 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_inventory_list" id="" class="form-control">
+                <input type="date" name="from_date_inventory_list" id="inventory-list-from" class="form-control">
+                <small class="d-none text-red" id="inventory-list-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_inventory_list" id="" class="form-control">
+                <input type="date" name="to_date_inventory_list" id="inventory-list-to" class="form-control">
+                <small class="d-none text-red" id="inventory-list-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn" id="inventory-list">Generate report</button>
         </div>
         </form>
       </div>
@@ -1102,7 +1127,7 @@
    <div class="modal fade" role="dialog" id="inventory-working">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./inventory/inventory_working.php" method="post">
+      <form id="inventory-working-form" target="_blank" action="./inventory/inventory_working.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for working inventory</h4>
         </div>
@@ -1134,17 +1159,19 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_inventory_working" id="" class="form-control">
+                <input type="date" name="from_date_inventory_working" id="inventory-working-from" class="form-control">
+                <small class="d-none text-red" id="inventory-working-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_inventory_working" id="" class="form-control">
+                <input type="date" name="to_date_inventory_working" id="inventory-working-to" class="form-control">
+                <small class="d-none text-red" id="inventory-working-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn" id="inventory-working">Generate report</button>
         </div>
         </form>
       </div>
@@ -1156,7 +1183,7 @@
    <div class="modal fade" role="dialog" id="inventory-damage">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form target="_blank" action="./inventory/inventory_damage.php" method="post">
+      <form id="inventory-damage-form" target="_blank" action="./inventory/inventory_damage.php" method="post">
         <div class="modal-header">
           <h4 class="modal-title">Generate report for damage inventory</h4>
         </div>
@@ -1188,17 +1215,19 @@
             <div class="row">
               <div class="col-sm-6">
                 <label for="">From Date</label>
-                <input type="date" name="from_date_inventory_damage" id="" class="form-control">
+                <input type="date" name="from_date_inventory_damage" id="inventory-damage-from" class="form-control">
+                <small class="d-none text-red" id="inventory-damage-from-error"></small>
               </div>
               <div class="col-sm-6">
                 <label for="">To Date</label>
-                <input type="date" name="to_date_inventory_damage" id="" class="form-control">
+                <input type="date" name="to_date_inventory_damage" id="inventory-damage-to" class="form-control">
+                <small class="d-none text-red" id="inventory-damage-to-error"></small>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn">Generate report</button>
+          <button class="btn btn-sm btn-outline-orange generate-btn" id="inventory-damage">Generate report</button>
         </div>
         </form>
       </div>
@@ -1304,7 +1333,7 @@
   });
 
   $("#walkin-payments-select").on("change", function() {
-    let select = $("#annual-payments-select");
+    let select = $("#walkin-payments-select");
     if(select.val() == "Custom") {
       $("#walkin-payments-custom").css("display", "block");
     } else {
