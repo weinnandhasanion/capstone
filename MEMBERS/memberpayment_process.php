@@ -215,7 +215,7 @@ else if($payment_description == 'Monthly Subscription'){
      $admin_id = $rowed["admin_id"];
 
      // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-     $ew = "SELECT * FROM member WHERE member_id = '$member_id'";
+     $ew = "SELECT * FROM member WHERE member_id = '$id'";
      $query_runew = mysqli_query($conn, $ew);
      $rowew = mysqli_fetch_assoc($query_runew);
 
@@ -223,7 +223,7 @@ else if($payment_description == 'Monthly Subscription'){
      $user_fname = $rowew["first_name"];
      $user_lname = $rowew["last_name"];
      $description = "Paid Annual Membership";
-     $identity = "member";
+     $identity = "Members";
      $timeNow = date("h:i A");
 
      // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
@@ -261,7 +261,7 @@ $kaubo = mysqli_fetch_assoc($sikwate);
 $member_fname = $kaubo["first_name"];
 $member_lname = $kaubo["last_name"];
 $member_id = $kaubo["member_id"];
-$identity = "member";
+$identity = "Members";
 
 $klint = "INSERT INTO `reports` ( `admin_id`,`admin_fname`,`admin_lname`,
 member_id, member_fname,member_lname,`description`,`identity`)
@@ -339,7 +339,7 @@ $query_run123 = mysqli_query($conn, $klint);
      $admin_id = $rowed["admin_id"];
 
      // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-     $ew = "SELECT * FROM member WHERE member_id = '$member_id'";
+     $ew = "SELECT * FROM member WHERE member_id = '$id'";
      $query_runew = mysqli_query($conn, $ew);
      $rowew = mysqli_fetch_assoc($query_runew);
 
@@ -347,7 +347,7 @@ $query_run123 = mysqli_query($conn, $klint);
      $user_fname = $rowew["first_name"];
      $user_lname = $rowew["last_name"];
      $description = "Paid both Annual Membership and Monthly Subscription";
-     $identity = "member";
+     $identity = "Members";
      $timeNow = date("h:i A");
 
      // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
@@ -423,7 +423,7 @@ $query_run123 = mysqli_query($conn, $klint);
      $admin_id = $rowed["admin_id"];
 
      // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-     $ew = "SELECT * FROM member WHERE member_id = '$member_id'";
+     $ew = "SELECT * FROM member WHERE member_id = '$id'";
      $query_runew = mysqli_query($conn, $ew);
      $rowew = mysqli_fetch_assoc($query_runew);
 
@@ -431,7 +431,7 @@ $query_run123 = mysqli_query($conn, $klint);
      $user_fname = $rowew["first_name"];
      $user_lname = $rowew["last_name"];
      $description = "Paid Walk-in";
-     $identity = "member";
+     $identity = "Members";
      $timeNow = date("h:i A");
 
      // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
