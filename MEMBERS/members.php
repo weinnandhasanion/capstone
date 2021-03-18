@@ -519,37 +519,31 @@
   <!----------------------------------------------------display program modal -------------------------------------->
   <div id="viewprogram" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
       <!-- Modal content-->
       <div class="modal-content" style="width: 700px;">
-
         <div class="modal-header" style="background-color: #DF3A01; color: white;">
-          <h4 class="modal-title"> Member Registered</h4>
-          <form class="d-flex justify-content-center">
-            <input type="text" placeholder="Search registered name" id="search-registered" class="form-control">
-          </form>
+          <h4 class="modal-title"> Members Registered</h4>
         </div>
-
         <div class="modal-body">
-
           <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>
             <table class='table table-hover'>
               <thead>
                 <tr style="text-align:center;">
                   <th>ID</th>
-                  <th>From Where</th>
+                  <th>Member Type</th>
                   <th>Full Name</th>
                 </tr>
               </thead>
-              <tbody id="modal-tbody">
-
+              <tbody id="member-program-tbody">
 
               </tbody>
             </table>
+            <div id="no-data-div-program-members" class="no-data-div my-5 text-muted">
+              No members for this program yet.
+            </div>
           </div>
-
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer d-flex flex-row-reverse justify-content-between" id="program-members-footer">
           <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -1031,7 +1025,7 @@
                   <select name="program_id" required id="program" class="form-control">
                     <option value="" selected disabled>Select here...</option>
                     <?php
-                    $sql = "SELECT program_id, program_name FROM program";
+                    $sql = "SELECT program_id, program_name FROM program WHERE program_status = 'active'";
                     $res = mysqli_query($conn, $sql);
                     if($res) {
                       while($row = mysqli_fetch_assoc($res)) {
@@ -3168,21 +3162,39 @@
     req.send();
   }
 
-
-
   function displayProgramMembers(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
+    var data;
+    
+    $.get("./member_program.php?id=" + id, function(res) {
+      data = JSON.parse(res);
+    }).then(() => {
+      $("#program-members-footer").pagination({
+        dataSource: function(done) {
+          done(data);
+        },
+        pageSize: 8,
+        showPrevious: false,
+        showNext: false,
+        callback: function(data) {
+          $("#member-program-tbody").empty();
+          if(data.length > 0) {
+            $("#no-data-div-program-members").css("display", "none");
+            data.forEach(row => {
+              let html = `<tr>
+                <td>${row.member_id}</td>
+                <td>${row.member_type}</td>
+                <td>${row.first_name} ${row.last_name}</td>
+              </tr>`;
 
-    // AJAX Request
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        display(this.responseText);
-      }
-    }
-    req.open('GET', 'member_program.php?id=' + id, true);
-    req.send();
+              $("#member-program-tbody").append(html);
+            });
+          } else {
+            $("#no-data-div-program-members").css("display", "flex");
+          }
+        }
+      });
+    });
   }
 
 
