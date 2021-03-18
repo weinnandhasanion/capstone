@@ -293,13 +293,13 @@
 
       var items = document.getElementById('inventory-chart').getContext('2d');
       new Chart(items, {
-          type: 'doughnut',
+          type: 'pie',
           data: {
               labels: ["Working", "Damaged"],
               datasets: [
                 {
                   data: inventory,
-                  backgroundColor: ['rgb(204, 153, 0)', 'rgb(204, 51, 0)']
+                  backgroundColor: ['#81B622', '#d9534f']
                 },
               ]
           },

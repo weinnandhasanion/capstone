@@ -176,9 +176,36 @@
                 <h6 class="card-subtitle text-muted font-weight-bold"><?php echo $row["promo_type"] ?></h6>
                 <p class="card-text mt-2"><?php echo $row["promo_description"] ?></p>
               </div>
-              <div class="card-footer">
+              <!-- <div class="card-footer">
                 <button onclick="viewDetails(this)" data-id="<?php echo $row["promo_id"] ?>" class="btn btn-sm btn-orange">details</button>
                 <button onclick="viewUpdate(this)" data-id="<?php echo $row["promo_id"] ?>" class="btn btn-sm btn-orange">UPDATE</button>
+              </div> -->
+              <div class="card-footer d-flex">
+                <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View <?= $row["promo_name"] ?>">
+                  <i style="cursor: pointer; color:white; font-size: 20px;"
+                  class="fas fa-eye mx-2 get_id" data-id = "<?php echo $row["promo_id"] ?>"
+                  onclick="viewDetails(this)"></i>
+                </div>
+                <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update <?= $row["promo_name"] ?>">
+                  <i style="cursor: pointer; color:white; font-size: 20px;"
+                  class="fas fa-pencil-alt mx-2" data-id="<?php echo $row["promo_id"] ?>"
+                  onclick="viewUpdate(this)"></i>
+                </div>
+                <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View members of <?= $row["promo_name"] ?>">
+                  <i style="cursor: pointer; color:white; font-size: 20px;" id="add-member-btn"
+                  class="fas fa-users mx-2" data-id="<?php echo $row["promo_id"] ?>" data-name="<?= $row["promo_name"] ?>"
+                  onclick="viewMembers(this)"></i>
+                </div>
+                <div class="d-flex justify-content-center align-items-center bg-success rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Add members to <?= $row["promo_name"] ?>">
+                  <i style="cursor: pointer; color:white; font-size: 20px;" id="add-member-btn"
+                  class="fas fa-user-plus mx-2" data-id="<?php echo $row["promo_id"] ?>"
+                  onclick="addMembers(this)"></i>
+                </div>
+                <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete <?= $row["promo_name"] ?>">
+                  <i style="cursor: pointer; color:white; font-size: 20px;"
+                  class="far fa-trash-alt mx-2" data-id="<?php echo $row["promo_id"] ?>"
+                  onclick="deletePromo(this)"></i>
+                </div>
               </div>
             </div>
           </div>
@@ -308,8 +335,6 @@
           </div>
         </div>
         <div class="modal-footer d-flex justify-content-between">
-          <button class='btn btn-sm btn-orange' onclick="viewMembers(this)" id="view-members-btn">View promo members</button>
-          <button class="btn btn-sm btn-red" onclick="deletePromo(this)" id="delete-promo-btn">Delete promo</button>
         </div>
       </div>
     </div>
@@ -391,9 +416,7 @@
         <div class="modal-body" id="members-modal">
         
         </div>
-        <div class="modal-footer d-flex justify-content-between">
-          <button class="btn btn-sm btn-orange" id="add-member-btn" onclick="addMembers(this)">Add members</button>
-        </div>
+        <div class="card-footer"></div>
       </div>
     </div>
   </div>
@@ -616,9 +639,32 @@
                 <h6 class="card-subtitle text-muted font-weight-bold">${row.promo_type}</h6>
                 <p class="card-text mt-2">${row.promo_description}</p>
               </div>
-              <div class="card-footer">
-                <button onclick="viewDetails(this)" data-id="${row.promo_id}" class="btn btn-sm btn-orange">details</button>
-                <button onclick="viewUpdate(this)" data-id="${row.promo_id}" class="btn btn-sm btn-orange">UPDATE</button>
+              <div class="card-footer d-flex">
+                <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;"
+                  class="fas fa-eye mx-2 get_id" data-id = "${row.promo_id}"
+                  onclick="viewDetails(this)"></i>
+                </div>
+                <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;"
+                  class="fas fa-pencil-alt mx-2" data-id="${row.promo_id}"
+                  onclick="viewUpdate(this)"></i>
+                </div>
+                <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View members of ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;" id="add-member-btn"
+                  class="fas fa-users mx-2" data-id="${row.promo_id}" data-name="${row.promo_name}"
+                  onclick="viewMembers(this)"></i>
+                </div>
+                <div class="d-flex justify-content-center align-items-center bg-success rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Add members to ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;" id="add-member-btn"
+                  class="fas fa-user-plus mx-2" data-id="${row.promo_id}"
+                  onclick="addMembers(this)"></i>
+                </div>
+                <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;"
+                  class="far fa-trash-alt mx-2" data-id="${row.promo_id}"
+                  onclick="deletePromo(this)"></i>
+                </div>
               </div>
             </div>
           </div>`;
@@ -642,9 +688,32 @@
                 <h6 class="card-subtitle text-muted font-weight-bold">${row.promo_type}</h6>
                 <p class="card-text mt-2">${row.promo_description}</p>
               </div>
-              <div class="card-footer">
-                <button onclick="viewDetails(this)" data-id="${row.promo_id}" class="btn btn-sm btn-orange">details</button>
-                <button onclick="viewUpdate(this)" data-id="${row.promo_id}" class="btn btn-sm btn-orange">UPDATE</button>
+              <div class="card-footer d-flex">
+                <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;"
+                  class="fas fa-eye mx-2 get_id" data-id = "${row.promo_id}"
+                  onclick="viewDetails(this)"></i>
+                </div>
+                <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;"
+                  class="fas fa-pencil-alt mx-2" data-id="${row.promo_id}"
+                  onclick="viewUpdate(this)"></i>
+                </div>
+                <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View members of ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;" id="add-member-btn"
+                  class="fas fa-users mx-2" data-id="${row.promo_id}" data-name="${row.promo_name}"
+                  onclick="viewMembers(this)"></i>
+                </div>
+                <div class="d-flex justify-content-center align-items-center bg-success rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Add members to ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;" id="add-member-btn"
+                  class="fas fa-user-plus mx-2" data-id="${row.promo_id}"
+                  onclick="addMembers(this)"></i>
+                </div>
+                <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;"
+                  class="far fa-trash-alt mx-2" data-id="${row.promo_id}"
+                  onclick="deletePromo(this)"></i>
+                </div>
               </div>
             </div>
           </div>`;
@@ -668,9 +737,32 @@
                 <h6 class="card-subtitle text-muted font-weight-bold">${row.promo_type}</h6>
                 <p class="card-text mt-2">${row.promo_description}</p>
               </div>
-              <div class="card-footer">
-                <button onclick="viewDetails(this)" data-id="${row.promo_id}" class="btn btn-sm btn-orange">details</button>
-                <button onclick="viewUpdate(this)" data-id="${row.promo_id}" class="btn btn-sm btn-orange">UPDATE</button>
+              <div class="card-footer d-flex">
+                <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;"
+                  class="fas fa-eye mx-2 get_id" data-id = "${row.promo_id}"
+                  onclick="viewDetails(this)"></i>
+                </div>
+                <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;"
+                  class="fas fa-pencil-alt mx-2" data-id="${row.promo_id}"
+                  onclick="viewUpdate(this)"></i>
+                </div>
+                <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View members of ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;" id="add-member-btn"
+                  class="fas fa-users mx-2" data-id="${row.promo_id}" data-name="${row.promo_name}"
+                  onclick="viewMembers(this)"></i>
+                </div>
+                <div class="d-flex justify-content-center align-items-center bg-success rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Add members to ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;" id="add-member-btn"
+                  class="fas fa-user-plus mx-2" data-id="${row.promo_id}"
+                  onclick="addMembers(this)"></i>
+                </div>
+                <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete ${row.promo_name}">
+                  <i style="cursor: pointer; color:white; font-size: 20px;"
+                  class="far fa-trash-alt mx-2" data-id="${row.promo_id}"
+                  onclick="deletePromo(this)"></i>
+                </div>
               </div>
             </div>
           </div>`;
@@ -1052,9 +1144,32 @@
                     <h6 class="card-subtitle text-muted font-weight-bold">${row.promo_type}</h6>
                     <p class="card-text mt-2">${row.promo_description}</p>
                   </div>
-                  <div class="card-footer">
-                    <button onclick="viewDetails(this)" data-id="${row.promo_id}" class="btn btn-sm btn-orange">details</button>
-                    <button onclick="viewUpdate(this)" data-id="${row.promo_id}" class="btn btn-sm btn-orange">UPDATE</button>
+                  <div class="card-footer d-flex">
+                    <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View ${row.promo_name}">
+                      <i style="cursor: pointer; color:white; font-size: 20px;"
+                      class="fas fa-eye mx-2 get_id" data-id = "${row.promo_id}"
+                      onclick="viewDetails(this)"></i>
+                    </div>
+                    <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update ${row.promo_name}">
+                      <i style="cursor: pointer; color:white; font-size: 20px;"
+                      class="fas fa-pencil-alt mx-2" data-id="${row.promo_id}"
+                      onclick="viewUpdate(this)"></i>
+                    </div>
+                    <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View members of ${row.promo_name}">
+                      <i style="cursor: pointer; color:white; font-size: 20px;" id="add-member-btn"
+                      class="fas fa-users mx-2" data-id="${row.promo_id}" data-name="${row.promo_name}"
+                      onclick="viewMembers(this)"></i>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center bg-success rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Add members to ${row.promo_name}">
+                      <i style="cursor: pointer; color:white; font-size: 20px;" id="add-member-btn"
+                      class="fas fa-user-plus mx-2" data-id="${row.promo_id}"
+                      onclick="addMembers(this)"></i>
+                    </div>
+                    <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete ${row.promo_name}">
+                      <i style="cursor: pointer; color:white; font-size: 20px;"
+                      class="far fa-trash-alt mx-2" data-id="${row.promo_id}"
+                      onclick="deletePromo(this)"></i>
+                    </div>
                   </div>
                 </div>
               </div>`;

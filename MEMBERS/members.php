@@ -481,7 +481,7 @@
         <div class="modal-header" style="background-color: #DF3A01; color: white;">
           <h4 class="modal-title">Deleted Program</h4>
           <form class="d-flex justify-content-center">
-            <input type="text" placeholder="Search deleted name" id="search-delete" class="form-control">
+            <input type="text" placeholder="Search deleted name" id="search-deleted-programs" class="form-control">
           </form>
         </div>
 
@@ -499,45 +499,17 @@
                   <th>action</th>
                 </tr>
               </thead>
-              <tbody id='deletetbody'>
-                <?php
-            /* code for display data */
-            $sql = "SELECT * FROM program WHERE program_status = 'inactive'";
-            $result = mysqli_query($conn, $sql);
-            $resultCheck = mysqli_num_rows($result);
-
-            if($resultCheck > 0){
-              while($row = mysqli_fetch_assoc($result)){
-                $dateDeleted = new DateTime($row["date_deleted"]);
-                $resultDelete = $dateDeleted->format('F d Y');
-
-                $dateAdded = new DateTime( $row["date_added"]);
-                $resultAdded = $dateAdded->format('F d Y');
-
-                ?>
-
-                <tr>
-                  <td><?php echo $row["program_name"]?></td>
-                  <td><?php echo $resultAdded?></td>
-                  <td><?php echo $resultDelete?></td>
-                  <td><?php echo $row["time_deleted"]?></td>
-                  <td>
-                    <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
-                      title="Recover <?php echo $row["program_name"]?>" class="fas fa-undo mx-2"
-                      data-id="<?php echo $row['program_id'] ?>" onclick="recoverProgram(this)"></i>
-                  </td>
-                </tr>
-
-                <?php
-              }
-             }
-             ?>
+              <tbody id='deletetbody-programs'>
+        
               </tbody>
             </table>
+            <div id="no-data-div-programs-deleted" class="no-data-div my-5 text-muted">
+              No data to show.
+            </div>
           </div>
 
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer d-flex justify-content-between flex-row-reverse" id="deleted-programs-footer">
           <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -2238,6 +2210,12 @@
     paginateDeletedMembers(deletedMembers);
   });
 
+  $.get("./get_deleted_programs.php", function(res) {
+    deletedPrograms = JSON.parse(res);
+  }).then(() => {
+    paginateDeletedPrograms(deletedPrograms);
+  });
+
   // Regular members pagination after load sa page
   $("#regular-pagination").pagination({
     className: 'paginationjs-small',
@@ -2532,6 +2510,50 @@
       paginateDeletedMembers(data);
     } else {
       paginateDeletedMembers(deletedMembers);
+    }
+  });
+
+  function paginateDeletedPrograms(data) {
+    $("#deleted-programs-footer").pagination({
+      dataSource: function(done) {
+        done(data);
+      },
+      pageSize: 5,
+      showPrevious: false,
+      showNext: false,
+      callback: function(data) {
+        $("#deletetbody-programs").empty();
+        if(data.length > 0) {
+          $("#no-data-div-programs-deleted").css("display", "none");
+          data.forEach(row => {
+            let html = `<tr>
+              <td>${row.program_name}</td>
+              <td>${row.date_added}</td>
+              <td>${row.date_deleted}</td>
+              <td>${row.time_deleted}</td>
+              <td>
+                <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
+                  title="Recover ${row.program_name}" class="fas fa-undo mx-2"
+                  data-id="${row.member_id}" onclick="recover(this)"></i>
+              </td>
+            </tr>`;
+            $("#deletetbody-programs").append(html);
+          });
+        } else {
+          $("#no-data-div-programs-deleted").css("display", "flex");
+        }
+      }
+    });
+  }
+
+  $("#search-deleted-programs").on("keyup", function() {
+    let val = $(this).val();
+
+    if(val != "") {
+      data = deletedPrograms.filter(row => row.program_name.toLowerCase().includes(val.toLowerCase()));
+      paginateDeletedPrograms(data);
+    } else {
+      paginateDeletedPrograms(deletedPrograms);
     }
   });
 
