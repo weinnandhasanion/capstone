@@ -21,52 +21,78 @@ $numberRegex = "/[0-9]/";
 $check_name = "SELECT * from promo where promo_name='$name'";
 $duplicate_name = mysqli_query($conn, $check_name);
 
-if(preg_match($numberRegex, $name, $match)){
+if(preg_match($letterRegex, $amount, $match)){
   echo ("<script LANGUAGE='JavaScript'>
-  window.alert('Invalid promo name. Please check make sure no numbers');
+  window.alert('Invalid amount. Please check make sure no letters.');
   window.location.href='./promos.php';
   </script>");
-}else if(preg_match($letterRegex, $amount, $match)){
+} else if(strlen($name) < 5){
   echo ("<script LANGUAGE='JavaScript'>
-  window.alert('Invalid amount. Please check make sure no letters');
+  window.alert('Invalid promo name. Promo name is too short.');
   window.location.href='./promos.php';
   </script>");
-}else if(strlen($name) < 5){
+} else if(strlen($name) > 25){
   echo ("<script LANGUAGE='JavaScript'>
-  window.alert('Invalid promo name. Promo name is too short');
+  window.alert('Invalid promo name. Maximum of 25 letters only.');
   window.location.href='./promos.php';
   </script>");
-}else if(strlen($name) > 25){
+} else if(strlen($description) > 60){
   echo ("<script LANGUAGE='JavaScript'>
-  window.alert('Invalid promo name. Maximum of 25 letters only');
+  window.alert('Invalid description. Maximum of 60 letters only.);
   window.location.href='./promos.php';
   </script>");
-}else if(strlen($description) > 60){
+} else if(mysqli_num_rows($duplicate_name)>0){
   echo ("<script LANGUAGE='JavaScript'>
-  window.alert('Invalid description. Maximum of 60 letters only);
+  window.alert('Promo name is already taken');
   window.location.href='./promos.php';
   </script>");
-}else if(mysqli_num_rows($duplicate_name)>0){
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Promo name is already Taken');
-    window.location.href='./promos.php';
-    </script>");
 } else {
-  $sql = "INSERT INTO promo (promo_name, promo_type, promo_description, date_added, promo_starting_date, promo_ending_date, amount)
-  VALUES ('$name', '$type', '$description', '$dateAdded', '$startDate', '$endDate', '$amount')";
-  $res = mysqli_query($conn, $sql);
+  $checkStart = checkExistingDates($startDate);
+  $checkEnd = checkExistingDates($endDate);
+  if($checkStart->doesExist) {
+    echo "<script>
+    alert('Starting date is in conflict with ". $checkStart->name ." schedule. Choose another starting date.');
+    window.location.href='./promos.php';
+    </script>";
+  } else if($checkEnd->doesExist) {
+    echo "<script>
+    alert('Ending date is in conflict with ". $checkEnd->name ." schedule. Choose another ending date.');
+    window.location.href='./promos.php';
+    </script>";
+  } else {
+    $sql = "INSERT INTO promo (promo_name, promo_type, promo_description, date_added, promo_starting_date, promo_ending_date, amount)
+    VALUES ('$name', '$type', '$description', '$dateAdded', '$startDate', '$endDate', '$amount')";
+    $res = mysqli_query($conn, $sql);
 
-  echo "<script>
-    window.alert('Promo successfully added!');
-    window.location.href = './promos.php';
-  </script>";
+    echo "<script>
+      window.alert('Promo successfully added!');
+      window.location.href = './promos.php';
+    </script>";
+  }
 }
-?>
 
+function checkExistingDates($date) {
+  global $conn;
 
+  $sql = "SELECT * FROM promo WHERE status = 'Active'";
+  $res = mysqli_query($conn, $sql);
+  $existing = false;
+  $name = "";
 
+  while($row = mysqli_fetch_assoc($res)) {
+    if(strtotime($date) > strtotime($row["promo_starting_date"]) && strtotime($date) < strtotime($row["promo_ending_date"])) {
+      $existing = true;
+      $name = $row["promo_name"];
+      break;
+    }
+  }
 
-<?php
+  return (object) [
+    "doesExist" => $existing,
+    "name" => $name
+  ];
+}
+
 //-----------LOGTRAIL DOING
 
      //this is for puting member_id in the array
