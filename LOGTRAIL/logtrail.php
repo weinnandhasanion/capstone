@@ -140,20 +140,6 @@
     flex-direction: column;
     border-radius: 25px;
   }
-
-  input[type=text],
-  input[type=date],
-  select {
-
-    height: 45px;
-  }
-  .train input[type=text]{
-    text-align: center;
-  }
-  input[type=text]{
-    text-align: center;
-  }
-
 </style>
 </head>
 
@@ -243,7 +229,7 @@
         <div class='card-content'>
           <div class='card-header flexHeader'>
             <h3 class='card-title'>
-              ADMIN LOGTRAIL
+              Admin Logtrail
             </h3>
             <div>
               <div class="d-flex justify-content-center">
@@ -297,8 +283,7 @@
       <!-- Modal content-->
       <div class="modal-content" style="width: 700px;">
         <div class="modal-header" style="background-color:#EB460D;color:white;">
-          <h4 class="modal-title">Admin Doing</h4>
-         
+          <h4 class="modal-title">Admin Action History</h4>
         </div>
         <div class="modal-body">
           <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>
@@ -362,79 +347,20 @@
 
       function member(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200) {
-          display(this.responseText);
+          let data = JSON.parse(this.responseText);
+          if(typeof(data) != "object") {
+            data = [];
+          }
+          paginateDoings(data);
         }
       }
       req.open('GET', 'viewmember.php?id=' + id, true);
       req.send();
-    }
-
-    function display(res) {
-      let tbody = document.getElementById('modal-tbody');
-      if(res == 0) {
-        tbody.innerHTML = "";
-      } else {
-        let data = JSON.parse(res);
-        tbody.innerHTML = "";
-        data.forEach(row => {
-          if(row.identity === 'Members' || row.identity === 'member'){
-          var html = `<tr>
-            <td>${row.member_id}</td>
-            <td>${row.identity}</td>
-            <td>${row.description}</td>
-            <td>${row.user_fname} ${row.user_lname}</td>
-            <td>${row.time}</td>
-          </tr>`;
-          }else if(row.identity === 'Trainers' || row.identity === 'trainer'){
-            var html = `<tr>
-            <td>${row.trainer_id}</td>
-            <td>${row.identity}</td>
-            <td>${row.description}</td>
-            <td>${row.user_fname} ${row.user_lname}</td>
-            <td>${row.time}</td>
-          </tr>`;
-          }else if(row.identity === 'Programs' || row.identity === 'program'){
-            var html = `<tr>
-            <td>${row.program_id}</td>
-            <td>${row.identity}</td>
-            <td>${row.description}</td>
-            <td>${row.user_fname} ${row.user_lname}</td>
-            <td>${row.time}</td>
-          </tr>`;
-          } else if(row.identity === 'Inventory' || row.identity === 'inventory'){
-            var html = `<tr>
-            <td>${row.inventory_id}</td>
-            <td>${row.identity}</td>
-            <td>${row.description}</td>
-            <td>${row.user_fname}</td>
-            <td>${row.time}</td>
-          </tr>`;
-          }else if(row.identity === 'Promos' || row.identity === 'promo'){
-            var html = `<tr>
-            <td>${row.promo_id}</td>
-            <td>${row.identity}</td>
-            <td>${row.description}</td>
-            <td>${row.user_fname} </td>
-            <td>${row.time}</td>
-          </tr>`;
-          }else if(row.identity === 'Reports' || row.identity === 'report'){
-            var html = `<tr>
-            <td>N/A</td>
-            <td>${row.identity}</td>
-            <td>${row.description}</td>
-            <td>${row.user_fname}</td>
-            <td>${row.time}</td>
-          </tr>`;
-          }
-          tbody.innerHTML += html;
-        });
-      }
     }
 
   var logtrail;
@@ -450,7 +376,6 @@ function paginateLogtrail(data) {
   $("#footer").pagination({
     dataSource: function(done) {
       done(data);
-     
     },
     pageSize: 5,
     showPrevious: false,
@@ -484,8 +409,79 @@ function paginateLogtrail(data) {
   });
 }
 
-// logtrail pagination after type sa search bar
-$("#search-admin").keyup(function() {
+  function paginateDoings(data) {
+    $("#doing-footer").pagination({
+      dataSource: function(done) {
+        done(data);
+      },
+      pageSize: 5,
+      showPrevious: false,
+      showNext: false,
+      callback: function(data) {
+        $("#modal-tbody").empty();
+        if(data.length > 0 ) {
+          $("#no-data-div-logtrail-modal").css("display", "none");
+          data.forEach(row => {
+            if(row.identity === 'Members' || row.identity === 'member'){
+              var html = `<tr>
+                <td>${row.member_id}</td>
+                <td>${row.identity}</td>
+                <td>${row.description}</td>
+                <td>${row.user_fname} ${row.user_lname}</td>
+                <td>${row.time}</td>
+              </tr>`;
+            } else if(row.identity === 'Trainers' || row.identity === 'trainer'){
+              var html = `<tr>
+                <td>${row.trainer_id}</td>
+                <td>${row.identity}</td>
+                <td>${row.description}</td>
+                <td>${row.user_fname} ${row.user_lname}</td>
+                <td>${row.time}</td>
+              </tr>`;
+            } else if(row.identity === 'Programs' || row.identity === 'program'){
+              var html = `<tr>
+                <td>${row.program_id}</td>
+                <td>${row.identity}</td>
+                <td>${row.description}</td>
+                <td>${row.user_fname} ${row.user_lname}</td>
+                <td>${row.time}</td>
+              </tr>`;
+            } else if(row.identity === 'Inventory' || row.identity === 'inventory'){
+              var html = `<tr>
+                <td>${row.inventory_id}</td>
+                <td>${row.identity}</td>
+                <td>${row.description}</td>
+                <td>${row.user_fname}</td>
+                <td>${row.time}</td>
+              </tr>`;
+            } else if(row.identity === 'Promos' || row.identity === 'promo'){
+              var html = `<tr>
+                <td>${row.promo_id}</td>
+                <td>${row.identity}</td>
+                <td>${row.description}</td>
+                <td>${row.user_fname} </td>
+                <td>${row.time}</td>
+              </tr>`;
+            }else if(row.identity === 'Reports' || row.identity === 'report'){
+              var html = `<tr>
+                <td>N/A</td>
+                <td>${row.identity}</td>
+                <td>${row.description}</td>
+                <td>${row.user_fname}</td>
+                <td>${row.time}</td>
+              </tr>`;
+            }
+            $("#modal-tbody").append(html);
+          });
+        } else {
+          $("#no-data-div-logtrail-modal").css("display", "flex");
+        }
+      }
+    });
+  }
+
+  // logtrail pagination after type sa search bar
+  $("#search-admin").keyup(function() {
     let val = $("#search-admin").val();
     let data;
 
@@ -496,12 +492,6 @@ $("#search-admin").keyup(function() {
       paginateLogtrail(logtrail);
     }
   });
-
-
-  
-
-
-
  </script>
 
 
