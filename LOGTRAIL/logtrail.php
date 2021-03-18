@@ -292,15 +292,13 @@
   
 
    <!------------------------------------------------- modal----------------------------------------->
-< <div id="view_member" class="modal fade" role="dialog">
+<div id="view_member" class="modal fade" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content" style="width: 700px;">
         <div class="modal-header" style="background-color:#EB460D;color:white;">
-          <h4 class="modal-title">Deleted Trainers</h4>
-          <form class="d-flex justify-content-center">
-            <input type="text" placeholder="Search deleted name" id="search-deleted" class="form-control">
-          </form>
+          <h4 class="modal-title">Admin Doing</h4>
+         
         </div>
         <div class="modal-body">
           <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>

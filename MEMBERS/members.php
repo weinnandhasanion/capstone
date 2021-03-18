@@ -1280,6 +1280,43 @@
     </div>
   </div>
 
+  <div id="payment_history" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content" style="width: 700px;">
+        <div class="modal-header" style="background-color:#EB460D;color:white;">
+          <h4 class="modal-title">Payment History</h4>
+         
+        </div>
+        <div class="modal-body">
+          <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>
+            <table class='table table-hover'>
+              <thead>
+                <tr>
+                  <th>Payment ID</th>
+                  <th>Payment Description</th>
+                  <th>Amount</th>
+                  <th>Date and Time of payment</th>
+                  <th>Payment Type</th>
+                </tr>
+              </thead>
+              <tbody id="modal-tbody-payment-history">
+
+              </tbody>
+            </table>
+            <div id="no-data-div-payment-history-modal" class="no-data-div my-3 text-muted">
+              No data!
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-between flex-row-reverse" id="payment-history-footer">
+          <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!---------------------------------------------------- UPDATE program modal -------------------------------------->
   <div class="modal fade" id="programUpdate">
     <div class="modal-dialog">
@@ -2271,11 +2308,11 @@
     }
   });
 
-    //---tooltip---.//
-    $(function() {
+  $(function() {
     $('[data-toggle="tooltip"]').tooltip();
   });
-  //--------------//
+   
+
 
   // Function nga gitawag para mo render ug data sa regular table gamit pagination
   function paginateRegular(data) {
@@ -2301,6 +2338,7 @@
           <td>${row.member_id}</td>
           <td>${row.member_status}</td>
           <td>
+        
             <span   data-toggle="tooltip" data-placement="top" title="View ${row.last_name}">
               <i style="cursor: pointer; color:brown; font-size: 25px;"
               data-toggle="modal" data-target="#view"
@@ -2317,8 +2355,14 @@
             <span data-toggle="tooltip" data-placement="top" title="pay ${row.last_name}">
               <i style="cursor: pointer; color:green; font-size: 25px;"
               data-toggle="modal" data-target="#regular_payment"
-              class="fas fa-money-bill-alt" data-id = '${row.member_id}'
+              class="fas fa-money-bill-alt mx-2" data-id = '${row.member_id}'
               onclick="regularpaymentDetails(this)"></i>
+            </span>
+            <span   data-toggle="tooltip" data-placement="top" title="payment history of ${row.last_name}">
+              <i style="cursor: pointer; color:#7B68EE; font-size: 27px;"
+              data-toggle="modal" data-target="#payment_history"
+              class=" fas fa-file-invoice-dollar mx-2 get_id" data-id = '${row.member_id}'
+              onclick="regularPaymentHistory(this)"></i>
             </span>
             <span  data-toggle="tooltip" data-placement="top" title="Delete ${row.last_name}">
               <i style="cursor: pointer; color:red; font-size: 25px;"
@@ -2332,6 +2376,11 @@
     } else {
       $("#no-data-div").css("display", "flex");
     }
+
+    $(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+
   }
 
   // Walkin pagination after load sa page
@@ -3156,6 +3205,43 @@
       });
     }
   }
+
+
+
+  function regularPaymentHistory(el) {
+      let id = el.getAttribute('data-id');
+      console.log(id);
+
+      // AJAX Request
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+          display(this.responseText);
+        }
+      }
+      req.open('GET', 'payment_history.php?id=' + id, true);
+      req.send();
+    }
+
+    function display(res) {
+      let tbody = document.getElementById('modal-tbody-payment-history');
+      if(res == 0) {
+        tbody.innerHTML = "";
+      } else {
+        let data = JSON.parse(res);
+        tbody.innerHTML = "";
+        data.forEach(row => {
+          var html = `<tr>
+            <td>${row.payment_id}</td>
+            <td>${row.payment_description}</td>
+            <td>${row.payment_amount}</td>
+            <td>${row.date_payment} ${row.time_payment}</td>
+            <td>${row.payment_type}</td>
+          </tr>`;
+          tbody.innerHTML += html;
+        });
+      }
+    }
   </script>
 
 </body>
