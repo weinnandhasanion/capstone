@@ -204,12 +204,24 @@ $res = mysqli_query($conn, $sql);
                   <h6 class="card-subtitle text-muted font-weight-bold"><?php echo $row["inventory_category"] ?></h6>
                   <p class="card-text mt-2"><?php echo $row["inventory_description"] ?></p>
                 </div>
-                <div class="card-footer">
-                  <button onclick="viewDetails(this)" style="width: 101px;" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">view</button>
-                  <button onclick="viewUpdate(this)" style="width: 101px;" data-id="<?php echo $row["inventory_id"] ?>" class="btn btn-sm btn-orange">update</button>
-                  <button class="btn btn-sm btn-orange" data-id="<?php echo $row["inventory_id"] ?>" onclick="deleted(this)" style="width: 219px;" data-toggle="tooltip" data-placement="top" title="<?php echo $row["inventory_name"] ?>">
-                  Delete item
-                  </button>
+                <div class="card-footer d-flex">
+                  <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View <?= $row["inventory_name"] ?>">
+                    <i style="cursor: pointer; color:white; font-size: 20px;"
+                    data-toggle="modal" data-target="#view"
+                    class=" fas fa-eye mx-2 get_id" data-id = "<?php echo $row["inventory_id"] ?>"
+                    onclick="viewDetails(this)"></i>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update <?= $row["inventory_name"] ?>">
+                    <i style="cursor: pointer; color:white; font-size: 20px;"
+                    class="fas fa-pencil-alt mx-2" data-id="<?php echo $row["inventory_id"] ?>"
+                    data-toggle="modal" data-target="#regular_update"
+                    onclick="viewUpdate(this)"></i>
+                  </div>
+                  <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete <?= $row["inventory_name"] ?>">
+                    <i style="cursor: pointer; color:white; font-size: 20px;"
+                    class=" far fa-trash-alt mx-2" data-id="<?php echo $row["inventory_id"] ?>"
+                    onclick="deleted(this)"></i>
+                  </div>
                 </div>
               </div>
             </div>
@@ -614,9 +626,24 @@ $res = mysqli_query($conn, $sql);
                   <h6 class="card-subtitle text-muted font-weight-bold">${row.inventory_category}</h6>
                   <p class="card-text mt-2">${row.inventory_description}</p>
                 </div>
-                <div class="card-footer">
-                  <button onclick="viewDetails(this)" data-id="${row.inventory_id}" class="btn btn-sm btn-orange">details</button>
-                  <button onclick="viewUpdate(this)" data-id="${row.inventory_id}" class="btn btn-sm btn-orange">UPDATE</button>
+                <div class="card-footer d-flex">
+                  <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View ${row.inventory_name}">
+                    <i style="cursor: pointer; color:white; font-size: 20px;"
+                    data-toggle="modal" data-target="#view"
+                    class=" fas fa-eye mx-2 get_id" data-id = "${row.inventory_id}"
+                    onclick="viewDetails(this)"></i>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update ${row.inventory_name}">
+                    <i style="cursor: pointer; color:white; font-size: 20px;"
+                    class="fas fa-pencil-alt mx-2" data-id="${row.inventory_id}"
+                    data-toggle="modal" data-target="#regular_update"
+                    onclick="viewUpdate(this)"></i>
+                  </div>
+                  <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete ${row.inventory_name}">
+                    <i style="cursor: pointer; color:white; font-size: 20px;"
+                    class=" far fa-trash-alt mx-2" data-id="${row.inventory_id}"
+                    onclick="deleted(this)"></i>
+                  </div>
                 </div>
               </div>
             </div>`;
@@ -641,9 +668,24 @@ $res = mysqli_query($conn, $sql);
                   <h6 class="card-subtitle text-muted font-weight-bold">${row.inventory_category}</h6>
                   <p class="card-text mt-2">${row.inventory_description}</p>
                 </div>
-                <div class="card-footer">
-                  <button onclick="viewDetails(this)" data-id="${row.inventory_id}" class="btn btn-sm btn-orange">details</button>
-                  <button onclick="viewUpdate(this)" data-id="${row.inventory_id}" class="btn btn-sm btn-orange">UPDATE</button>
+                <div class="card-footer d-flex">
+                  <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View ${row.inventory_name}">
+                    <i style="cursor: pointer; color:white; font-size: 20px;"
+                    data-toggle="modal" data-target="#view"
+                    class=" fas fa-eye mx-2 get_id" data-id = "${row.inventory_id}"
+                    onclick="viewDetails(this)"></i>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update ${row.inventory_name}">
+                    <i style="cursor: pointer; color:white; font-size: 20px;"
+                    class="fas fa-pencil-alt mx-2" data-id="${row.inventory_id}"
+                    data-toggle="modal" data-target="#regular_update"
+                    onclick="viewUpdate(this)"></i>
+                  </div>
+                  <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete ${row.inventory_name}">
+                    <i style="cursor: pointer; color:white; font-size: 20px;"
+                    class=" far fa-trash-alt mx-2" data-id="${row.inventory_id}"
+                    onclick="deleted(this)"></i>
+                  </div>
                 </div>
               </div>
             </div>`;
@@ -668,9 +710,24 @@ $res = mysqli_query($conn, $sql);
                   <h6 class="card-subtitle text-muted font-weight-bold">${row.inventory_category}</h6>
                   <p class="card-text mt-2">${row.inventory_description}</p>
                 </div>
-                <div class="card-footer">
-                  <button onclick="viewDetails(this)" data-id="${row.inventory_id}" class="btn btn-sm btn-orange">details</button>
-                  <button onclick="viewUpdate(this)" data-id="${row.inventory_id}" class="btn btn-sm btn-orange">UPDATE</button>
+                <div class="card-footer d-flex">
+                  <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View ${row.inventory_name}">
+                    <i style="cursor: pointer; color:white; font-size: 20px;"
+                    data-toggle="modal" data-target="#view"
+                    class=" fas fa-eye mx-2 get_id" data-id = "${row.inventory_id}"
+                    onclick="viewDetails(this)"></i>
+                  </div>
+                  <div class="d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update ${row.inventory_name}">
+                    <i style="cursor: pointer; color:white; font-size: 20px;"
+                    class="fas fa-pencil-alt mx-2" data-id="${row.inventory_id}"
+                    data-toggle="modal" data-target="#regular_update"
+                    onclick="viewUpdate(this)"></i>
+                  </div>
+                  <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete ${row.inventory_name}">
+                    <i style="cursor: pointer; color:white; font-size: 20px;"
+                    class=" far fa-trash-alt mx-2" data-id="${row.inventory_id}"
+                    onclick="deleted(this)"></i>
+                  </div>
                 </div>
               </div>
             </div>`;
@@ -705,9 +762,24 @@ $res = mysqli_query($conn, $sql);
                     <h6 class="card-subtitle text-muted font-weight-bold">${row.inventory_category}</h6>
                     <p class="card-text mt-2">${row.inventory_description}</p>
                   </div>
-                  <div class="card-footer">
-                    <button onclick="viewDetails(this)" data-id="${row.inventory_id}" class="btn btn-sm btn-orange">details</button>
-                    <button onclick="viewUpdate(this)" data-id="${row.inventory_id}" class="btn btn-sm btn-orange">UPDATE</button>
+                  <div class="card-footer d-flex">
+                    <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View ${row.inventory_name}">
+                      <i style="cursor: pointer; color:white; font-size: 20px;"
+                      data-toggle="modal" data-target="#view"
+                      class=" fas fa-eye mx-2 get_id" data-id = "${row.inventory_id}"
+                      onclick="viewDetails(this)"></i>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update ${row.inventory_name}">
+                      <i style="cursor: pointer; color:white; font-size: 20px;"
+                      class="fas fa-pencil-alt mx-2" data-id="${row.inventory_id}"
+                      data-toggle="modal" data-target="#regular_update"
+                      onclick="viewUpdate(this)"></i>
+                    </div>
+                    <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete ${row.inventory_name}">
+                      <i style="cursor: pointer; color:white; font-size: 20px;"
+                      class=" far fa-trash-alt mx-2" data-id="${row.inventory_id}"
+                      onclick="deleted(this)"></i>
+                    </div>
                   </div>
                 </div>
               </div>`;
