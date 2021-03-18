@@ -233,7 +233,7 @@
             <h3 class='card-title'>
               <span class="add-members" data-toggle="tooltip" data-placement="top" title="Add new trainer">
                 <i data-toggle="modal" data-target="#add" id="add-new-member-btn" class="fas fa-plus mr-2"></i></span>
-              TRAINERS
+              Trainers
             </h3>
             <div class="btn-group" role="group" aria-label="Basic example">
               <button type="button" id="sort-active" class="btn btn-sm btn-outline-orange">ACTIVE</button>

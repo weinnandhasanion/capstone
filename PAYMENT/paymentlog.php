@@ -221,7 +221,7 @@
       <div class='card'>
         <div class='card-content'>
           <div class='card-header flexHeader'>
-          <h3>PAYMENT LOG</h3>
+          <h3>Payment Log</h3>
           <select id="sortDate" class="form-control" style="width: 25%">
                     <option value="Today">Today</option>
                     <option value="Yesterday">Yesterday</option>
