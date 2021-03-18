@@ -54,6 +54,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/mdb.min.css" rel="stylesheet">
   <link href="css/style.min.css" rel="stylesheet">
+  <link href="./../css/pagination.css" rel="stylesheet">
   <link rel="icon" href="../mobile/img/gym_logo.png">
   <link href="css/theme-colors.css" rel="stylesheet">
 
@@ -413,10 +414,10 @@
           <h3 class="modal-title" id="member-modal-title"></h3>
           <button type='button' class='close' id="close-view-members" data-dismiss='modal'>&times;</button>
         </div>
-        <div class="modal-body" id="members-modal">
+        <div class="modal-body table-responsive p-0" id="members-modal">
         
         </div>
-        <div class="card-footer"></div>
+        <div class="modal-footer" id="view-members-footer"></div>
       </div>
     </div>
   </div>
@@ -532,6 +533,7 @@
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/mdb.min.js"></script>
   <script type="text/javascript" src="validation.js"></script>
+  <script src="./../js/pagination.js"></script>
   <script>
     // View details modal
     function viewDetails(el) {
@@ -782,45 +784,63 @@
 				let data = JSON.parse(res);
 				if(data === 0) {
 					$("#members-modal").empty();
-					$("#members-modal").text("No members for this promo.");
+					$("#members-modal").removeClass("p-0").addClass("p-3").text("No members for this promo.");
 				} else {
-          $("#members-modal").empty();
-					let html = `<table class='table table-hover'>
-              <thead>
-                <tr>
-                  <th>Last name</th>
-                  <th>First name</th>
-                  <th>Date Added</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody id='members-tbody'>
-            
-              </tbody>
-						</table>`;
-					$("#members-modal").append(html);
-					data.forEach(row => {
-						$.ajax({
-							url: "./get_member_details.php",
-							method: "POST",
-							type: "json",
-							data: {
-								member_id: row.member_id
-							},
-							success: function(res) {
-								let mem = JSON.parse(res);
-								let tbodyContent = `<tr>
-									<td>${mem.last_name}</td>
-									<td>${mem.first_name}</td>
-									<td>${row.date_added}</td>
-									<td data-id="${row.promo_id}">
-										<a href="#" class="text-red" data-id="${row.member_id}" onclick="removeMember(this)">Remove</a>
-									</td>
-								</tr>`;
-								$("#members-tbody").append(tbodyContent);
-							}
-						})
-					});
+          $("#members-modal").removeClass("p-3").addClass("p-0");
+          $("#view-members-footer").pagination({  
+            dataSource: function(done) {
+              done(data);
+            },
+            pageSize: 7,
+            showPrevious: false,
+            showNext: false,
+            callback: function(data) {
+              console.log(data);
+              $("#members-tbody").empty();
+              if (data.length > 0) {
+                $("#no-data-div-trainer").css("display", "none");
+                $("#members-modal").empty();
+                let html = `<table class='table table-hover'>
+                    <thead>
+                      <tr>
+                        <th>Last name</th>
+                        <th>First name</th>
+                        <th>Date Added</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id='members-tbody'>
+                  
+                    </tbody>
+                  </table>`;
+                $("#members-modal").append(html);
+                data.forEach(row => {
+                  $.ajax({
+                    url: "./get_member_details.php",
+                    method: "POST",
+                    type: "json",
+                    data: {
+                      member_id: row.member_id
+                    },
+                    success: function(res) {
+                      let mem = JSON.parse(res);
+                      let tbodyContent = `<tr>
+                        <td>${mem.last_name}</td>
+                        <td>${mem.first_name}</td>
+                        <td>${row.date_added}</td>
+                        <td data-id="${row.promo_id}">
+                          <a href="#" class="text-red" data-id="${row.member_id}" onclick="removeMember(this)">Remove</a>
+                        </td>
+                      </tr>`;
+                      $("#members-tbody").append(tbodyContent);
+                    }
+                  })
+                });
+              } else {
+                $("#no-data-div-trainer").css("display", "flex");
+              }
+            }
+          });
 				}
 
 				$("#close-payment-details").click();
