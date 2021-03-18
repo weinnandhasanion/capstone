@@ -2,7 +2,7 @@
 require "./connect.php";
 session_start();
 
-$sql = "SELECT * FROM promo WHERE status = 'Deleted' ORDER BY date_deleted DESC";
+$sql = "SELECT * FROM promo ORDER BY date_deleted DESC";
 $res = mysqli_query($conn, $sql);
 $data = array();
 if($res) {

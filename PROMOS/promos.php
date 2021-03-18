@@ -140,7 +140,7 @@
   </header>
   <main class="pt-5 mx-lg-5">
     <div class="container-fluid mt-5" id="main-div">
-      <button class="btn btn-sm btn-outline-orange mb-3" id="view-deleted-promos-btn" onclick="viewDeleted()">
+      <button class="btn btn-sm btn-outline-orange mb-3" data-toggle="modal" data-target="#view-deleted-expired" id="view-deleted-promos-btn">
         <i class="fas fa-eye mr-2"></i>
         View Deleted/Expired Promos
       </button>
@@ -177,10 +177,6 @@
                 <h6 class="card-subtitle text-muted font-weight-bold"><?php echo $row["promo_type"] ?></h6>
                 <p class="card-text mt-2"><?php echo $row["promo_description"] ?></p>
               </div>
-              <!-- <div class="card-footer">
-                <button onclick="viewDetails(this)" data-id="<?php echo $row["promo_id"] ?>" class="btn btn-sm btn-orange">details</button>
-                <button onclick="viewUpdate(this)" data-id="<?php echo $row["promo_id"] ?>" class="btn btn-sm btn-orange">UPDATE</button>
-              </div> -->
               <div class="card-footer d-flex">
                 <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View <?= $row["promo_name"] ?>">
                   <i style="cursor: pointer; color:white; font-size: 20px;"
@@ -454,10 +450,27 @@
             <button type="button" id="sort-expired" class="btn btn-sm btn-outline-orange">Expired</button>
           </div>
         </div>
-        <div class="modal-body d-flex justify-content-center" id="view-deleted-cont">
-
+        <div class="modal-body d-flex justify-content-center flex-column" id="view-deleted-cont">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Promo ID</th>
+                <th>Promo Name</th>
+                <th>Promo Type</th>
+                <th>Promo Status</th>
+                <th id="datedeleted">Date Deleted</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="view-deleted-tbody">
+            
+            </tbody>
+          </table>
+          <div class="no-data-div text-muted p-4 justify-content-center align-items-center" style="display: none; width: 100%" id="no-data-div">
+            No data to show.
+          </div>
         </div>
-        <div class="modal-footer"></div>
+        <div class="modal-footer" id="deleted-modal-footer"></div>
       </div>
     </div>
   </div>
@@ -508,7 +521,7 @@
                 <input name="promo-end-date" type="text" id="promo-end-date-deleted" disabled class="form-control">
               </div>
               <div class="col-sm-4">
-                <label for="promo-end-date">Date Deleted</label>
+                <label for="promo-end-date" id="datedeletedlabel">Date Deleted</label>
                 <input name="promo-date-deleted" type="text" id="promo-date-deleted" disabled class="form-control">
               </div>
             </div>
@@ -525,7 +538,7 @@
   <button id="view-update" data-toggle='modal' data-target='#update-promo' style="display: none"></button>
 	<button id='view-promo-members' data-target="#view-members" data-toggle="modal" style="display: none"></button>
   <button id='add-members-btn' data-target="#add-members" data-toggle="modal" style="display: none"></button>
-  <button id="view-deleted-btn" data-toggle="modal" data-target="#view-deleted-expired" style="display: none"></button>
+  <button id="view-deleted-btn"  style="display: none"></button>
   <button id="view-deleted-details" data-toggle="modal" data-target="#deleted-details" style="display: none"></button>
 
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
@@ -936,6 +949,103 @@
       });
     }
 
+    var promos, data;
+    $.get("./view_deleted.php", function(res) {
+      promos = JSON.parse(res);
+      if(typeof(promos) != "object") {
+        promos = [];
+      }
+
+      data = promos.filter(row => row.status == "Deleted");
+      paginateDeleted(data);
+    });
+
+    $("#sort-deleted").click(function() {
+      $(this).addClass("btn-orange").removeClass("btn-outline-orange");
+      $("#sort-expired").addClass("btn-outline-orange").removeClass("btn-orange");
+
+      data = promos.filter(row => row.status == "Deleted");
+      paginateDeleted(data);
+    });
+
+    $("#sort-expired").click(function() {
+      $(this).addClass("btn-orange").removeClass("btn-outline-orange");
+      $("#sort-deleted").addClass("btn-outline-orange").removeClass("btn-orange");
+
+      data = promos.filter(row => row.status == "Expired");
+      paginateExpired(data);
+    });
+
+    function paginateDeleted(data) {
+      $("#datedeleted").text("Date Deleted");
+      $("#deleted-modal-footer").pagination({
+        dataSource: function(done) {
+          done(data);
+        },
+        pageSize: 5,
+        showPrevious: false,
+        showNext: false,
+        callback: function(data) {
+          $("#view-deleted-tbody").empty();
+          if(data.length > 0) {
+            $("#no-data-div").css("display", "none");
+            data.forEach(row => {
+              let html = `<tr>
+                <td>${row.promo_id}</td>
+                <td>${row.promo_name}</td>
+                <td>${row.promo_type}</td>
+                <td>${row.status}</td>
+                <td>${row.date_deleted}</td>
+                <td>
+                  <a href="#" class="text-warning" data-id="${row.promo_id}" onclick="viewDeletedDetails(this)">Details</a>
+                  &#183;
+                  <a href="#" class="text-success" data-id="${row.promo_id}" onclick="restorePromo(this)">Restore</a>
+                </td>
+              </tr>`;
+
+              $("#view-deleted-tbody").append(html);
+            });
+          } else {
+            $("#no-data-div").css("display", "flex");
+          }
+        }
+      });
+    }
+
+    function paginateExpired(data) {
+      $("#datedeleted").text("Date Expired");
+      $("#deleted-modal-footer").pagination({
+        dataSource: function(done) {
+          done(data);
+        },
+        pageSize: 5,
+        showPrevious: false,
+        showNext: false,
+        callback: function(data) {
+          $("#view-deleted-tbody").empty();
+          if(data.length > 0) {
+            $("#no-data-div").css("display", "none");
+            data.forEach(row => {
+              let html = `<tr>
+                <td>${row.promo_id}</td>
+                <td>${row.promo_name}</td>
+                <td>${row.promo_type}</td>
+                <td>${row.status}</td>
+                <td>${row.date_deleted}</td>
+                <td>
+                  <a href="#" class="text-warning" data-id="${row.promo_id}" onclick="viewDeletedDetails(this)">Details</a>
+                </td>
+              </tr>`;
+
+              $("#view-deleted-tbody").append(html);
+            });
+          } else {
+            $("#no-data-div").css("display", "flex");
+          }
+        }
+      });
+    }
+
     function addNewMember(el) {
       var promoId = el.parentNode.getAttribute("data-id");
       var memberId = el.getAttribute("data-id");
@@ -960,142 +1070,7 @@
       }
     }
 
-    // Viewing deleted promos
-    function viewDeleted() {
-      $.get("./view_deleted.php", function(res) {
-        let data = JSON.parse(res);
-        let sorted;
 
-        if(data === 0) {
-          $("#view-deleted-cont").text("No data to show.");
-        } else {
-          $("#view-deleted-cont").empty();
-          let html = `<table class='table table-hover'>
-              <thead>
-                <tr>
-                  <th>Promo ID</th>
-                  <th>Promo Name</th>
-                  <th>Promo Type</th>
-                  <th>Status</th>
-                  <th>Date Deleted</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody id='view-deleted-tbody'>
-            
-              </tbody>
-            </table>`;
-          $("#view-deleted-cont").append(html);
-          let cont = $("#view-deleted-tbody");
-
-          data.forEach(row => {
-            let newHTML = `<tr>
-                <td>${row.promo_id}</td>
-                <td>${row.promo_name}</td>
-                <td>${row.promo_type}</td>
-                <td>${row.status}</td>
-                <td>${row.date_deleted}</td>
-                <td>
-                  <a href="#" class="text-warning" data-id="${row.promo_id}" onclick="viewDeletedDetails(this)">Details</a>
-                  &#183;
-                  <a href="#" class="text-success" data-id="${row.promo_id}" onclick="restorePromo(this)">Restore</a>
-                </td>
-              </tr>`;
-            cont.append(newHTML);
-          });
-        }
-
-        $("#view-deleted-btn").click();
-
-        $("#sort-deleted").click(function() {
-          $("#sort-deleted").removeClass("btn-outline-orange").addClass("btn-orange");
-          $("#sort-expired").addClass("btn-outline-orange").removeClass("btn-orange");
-
-          sorted = data.filter(row => row.status == "Deleted");
-          $("#view-deleted-cont").empty();
-          if(sorted.length > 0) {
-            let html = `<table class='table table-hover'>
-                <thead>
-                  <tr>
-                    <th>Promo ID</th>
-                    <th>Promo Name</th>
-                    <th>Promo Type</th>
-                    <th>Status</th>
-                    <th>Date Deleted</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id='view-deleted-tbody'>
-              
-                </tbody>
-              </table>`;
-            $("#view-deleted-cont").append(html);
-            let cont = $("#view-deleted-tbody");
-
-            sorted.forEach(row => {
-              let newHTML = `<tr>
-                  <td>${row.promo_id}</td>
-                  <td>${row.promo_name}</td>
-                  <td>${row.promo_type}</td>
-                  <td>${row.status}</td>
-                  <td>${row.date_deleted}</td>
-                  <td>
-                    <a href="#" class="text-warning" data-id="${row.promo_id}" onclick="viewDeletedDetails(this)">Details</a>
-                    &#183;
-                    <a href="#" class="text-success" data-id="${row.promo_id}" onclick="restorePromo(this)">Restore</a>
-                  </td>
-                </tr>`;
-              cont.append(newHTML);
-            });
-          } else {
-            $("#view-deleted-cont").text("No data to show.");
-          }
-        });
-
-        $("#sort-expired").click(function() {
-          $("#sort-expired").removeClass("btn-outline-orange").addClass("btn-orange");
-          $("#sort-deleted").addClass("btn-outline-orange").removeClass("btn-orange");
-
-          sorted = data.filter(row => row.status == "Expired");
-          $("#view-deleted-cont").empty();
-          if(sorted.length > 0) {
-            let html = `<table class='table table-hover'>
-                <thead>
-                  <tr>
-                    <th>Promo ID</th>
-                    <th>Promo Name</th>
-                    <th>Promo Type</th>
-                    <th>Status</th>
-                    <th>Date Expired</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id='view-deleted-tbody'>
-              
-                </tbody>
-              </table>`;
-            $("#view-deleted-cont").append(html);
-            let cont = $("#view-deleted-tbody");
-
-            sorted.forEach(row => {
-              let newHTML = `<tr>
-                  <td>${row.promo_id}</td>
-                  <td>${row.promo_name}</td>
-                  <td>${row.promo_type}</td>
-                  <td>${row.status}</td>
-                  <td>${row.date_deleted}</td>
-                  <td>
-                    <a href="#" class="text-warning" data-id="${row.promo_id}" onclick="viewDeletedDetails(this)">Details</a>
-                  </td>
-                </tr>`;
-              cont.append(newHTML);
-            });
-          } else {
-            $("#view-deleted-cont").text("No data to show.");
-          }
-        });
-      });
-    }
 
     function viewDeletedDetails(el) {
       let id = el.getAttribute("data-id");
@@ -1120,16 +1095,24 @@
           $("#promo-start-date-deleted").val(data.promo_starting_date);
           $("#promo-end-date-deleted").val(data.promo_ending_date);
         }
+
+        if(data.status == "Deleted") {
+          $("#datedeletedlabel").text("Date Deleted");
+        } else {
+          $("#datedeletedlabel").text("Date Expired");
+        }
+
         $("#promo-date-deleted").val(data.date_deleted);     
         
         $("#close-view-deleted").click();
         $("#view-deleted-details").click();
 
-        $("#deleted-details").on("hidden.bs.modal", function() {
-          $("#view-deleted-promos-btn").click();
-        });
       });
     }
+
+    $("#deleted-details").on("hidden.bs.modal", function() {
+      $("#view-deleted-promos-btn").click();
+    });
 
     function restorePromo(el) {
       let id = el.getAttribute('data-id');
