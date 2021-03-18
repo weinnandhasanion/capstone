@@ -116,7 +116,6 @@
         justify-content: center;
         height: 375px;
         width: 100%;
-        position: absolute; 
       }
 
       .loader-spinner {
@@ -224,11 +223,11 @@
           <div class='card-header flexHeader'>
           <h3>PAYMENT LOG</h3>
           <select id="sortDate" class="form-control" style="width: 25%">
-                    <option value="Today" selected>Today</option>
+                    <option value="Today">Today</option>
                     <option value="Yesterday">Yesterday</option>
                     <option value="Last 7 days">Last 7 days</option>
                     <option value="Last 30 days">Last 30 days</option>
-                    <option value="All-time">All-time</option>
+                    <option value="All-time" selected>All-time</option>
                   </select>
             <div>
               <div class="d-flex justify-content-center">
@@ -238,28 +237,28 @@
           </div>
           <div class='card-body card-bodyzz table-responsive p-0'>
           <table class="table">
-                    <thead>
-                      <tr>
-                        <th>payment ID</th>
-                        <th>Name</th>
-                        <th>Amount</th>
-                        <th>Payment Description</th>
-                        <th>Date and Time of payment</th>
-                        <th>Payment Type</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody id ="paymentlog-tbody">
-                   
-                    </tbody>
-                  </table>
-            <div id="no-data-div-paymentlog" class="no-data-div my-3 text-muted">
-              No data!
-            </div>
+            <thead>
+              <tr>
+                <th>payment ID</th>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Payment Description</th>
+                <th>Date and Time of payment</th>
+                <th>Payment Type</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id ="paymentlog-tbody">
+            
+            </tbody>
+          </table>
             <div class="table-parent my-5" id="table-loader">
               <div class="table-loader">
                 <div class="loader-spinner"></div>
               </div>
+            </div>
+            <div id="no-data-div-paymentlog" class="no-data-div my-3 text-muted">
+              No data!
             </div>
           </div>
           <div id="footer" class="card-footer flex-this">
@@ -443,7 +442,7 @@
       }
     }
     var paymentlog;
-  $.get("./getpaymentlog.php", function(res) {
+  $.get("./getpaymentlog.php?sort=alltime", function(res) {
     paymentlog = JSON.parse(res);
   }).then(() => {
     paginatePayment(paymentlog);
@@ -490,6 +489,7 @@
   } 
 
   $("#search-paymentlog").keyup(function() {
+    $("#sortDate").val("All-time");
     let val = $("#search-paymentlog").val();
     let data;
 
@@ -500,6 +500,29 @@
     } else {
       paginatePayment(paymentlog);
     }
+  });
+
+  $("#sortDate").on("change", function() {
+    let val = $(this).val();
+    let sort, data;
+
+    if(val == "Today") {
+      sort = "today";
+    } else if(val == "Yesterday") {
+      sort = "yesterday";
+    } else if(val == "Last 7 days") {
+      sort = "lastweek";
+    } else if(val == "Last 30 days") {
+      sort = "lastmonth";
+    } else {
+      sort = "alltime";
+    }
+
+    $.get("./getpaymentlog.php?sort=" + sort, function(res) {
+      console.log(res);
+      let data = JSON.parse(res);
+      paginatePayment(data);
+    });
   });
   </script>
 </body>
