@@ -14,19 +14,6 @@ $sql = "UPDATE promo SET status = 'Deleted', date_deleted = '$date' WHERE promo_
 $res = mysqli_query($conn, $sql);
 
 if($res) {
-  echo "<script>
-    alert('Promo successfully deleted.');
-    window.location.href = './promos.php';
-  </script>";
-} else {
-  echo "<script>
-    alert('Error: ".mysqli_error($conn)."');
-    window.location.href = './promos.php';
-  </script>";
-}
-?>
-
-<?php
 
 //-----------LOGTRAIL DOING
 
@@ -88,6 +75,20 @@ if($res) {
      VALUES 
 	 ( '$login_id_new','$admin_id', '$promo_id_new', '$user_fname','$description','$identity', '$timeNow')";
      mysqli_query($conn, $sql1);
+
+  echo "<script>
+    alert('Promo successfully deleted.');
+    window.location.href = './promos.php';
+  </script>";
+} else {
+  echo "<script>
+    alert('Error: ".mysqli_error($conn)."');
+    window.location.href = './promos.php';
+  </script>";
+}
+?>
+
+<?php
 
 
 ?>
