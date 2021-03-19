@@ -71,9 +71,9 @@ CREATE TABLE `inventory` (
 --
 
 INSERT INTO `inventory` (`inventory_id`, `inventory_name`, `inventory_category`, `inventory_qty`, `inventory_damage`, `inventory_working`, `inventory_description`, `date_deleted`, `date_added`, `image_pathname`) VALUES
-(2010, '5 lb dumbbell', 'Weight Equipment', 10, 3, NULL, '5 pound dumbbells.', NULL, '2021-03-06', '5lbdumbell.jpg'),
-(2012, 'Treadmill', 'Cardio Equipment', 3, 1, NULL, 'Nordic TrackSeries T', NULL, '2021-03-06', '710XQC8XqpL._AC_SL1500_.jpg'),
-(2013, 'charot', 'Cardio Equipment', 5, 1, NULL, 'hi cagot', NULL, '2021-03-06', 'localhost_capstoneMobile_pages_pay.php(iPhone X).png');
+(2010, '5 lb dumbbell', 'Weight Equipment', 10, 3, 7, '5 pound dumbbells.', NULL, '2021-03-06', '5lbdumbell.jpg'),
+(2012, 'Treadmill', 'Cardio Equipment', 3, 1, 2, 'Nordic TrackSeries T', NULL, '2021-03-06', '710XQC8XqpL._AC_SL1500_.jpg'),
+(2013, 'charot', 'Cardio Equipment', 5, 1, 4, 'hi cagot', NULL, '2021-03-06', 'localhost_capstoneMobile_pages_pay.php(iPhone X).png');
 
 -- --------------------------------------------------------
 

@@ -186,10 +186,6 @@
       </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#inventory-working">
         <i class="fas fa-eye mr-2"></i>
-        list of both working and damage equipments
-      </button>
-      <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#inventory-working">
-        <i class="fas fa-eye mr-2"></i>
         list of working equipments
       </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#inventory-damage">
@@ -1122,6 +1118,7 @@
     </div>
   </div>
 
+
   
    <!-- working  inventory -->
    <div class="modal fade" role="dialog" id="inventory-working">
@@ -1428,6 +1425,7 @@
       $("#inventory-working-custom").css("display", "none");
     }
   });
+
     //modal custom for damage of inventory
     $("#inventory-damage-select").on("change", function() {
     let select = $("#inventory-damage-select");
