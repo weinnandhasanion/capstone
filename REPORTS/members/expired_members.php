@@ -31,6 +31,7 @@ if($timespan == "Custom") {
   $today = date("Y-m-d");
   $sql = "SELECT * FROM member WHERE member_status = 'Expired' AND member_type = 'Regular'
         AND monthly_end <= NOW()
+        AND monthly_end = '$today'
         AND annual_end > NOW()";
   $res = mysqli_query($conn, $sql);
 } else if($timespan == "This week") {
@@ -45,7 +46,7 @@ if($timespan == "Custom") {
         AND (monthly_end BETWEEN '$monthStart' AND NOW())
         AND annual_end > NOW()";
   $res = mysqli_query($conn, $sql);
-} else if($timespane == "This year") {
+} else if($timespan == "This year") {
   $yearStart = date("Y-01-01");
   $sql = "SELECT * FROM member WHERE member_status = 'Expired' AND member_type = 'Regular'
         AND (monthly_end BETWEEN '$yearStart' AND NOW())
