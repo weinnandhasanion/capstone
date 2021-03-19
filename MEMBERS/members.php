@@ -1285,7 +1285,7 @@
       <!-- Modal content-->
       <div class="modal-content" style="width: 700px;">
         <div class="modal-header" style="background-color:#EB460D;color:white;">
-          <h4 class="modal-title">Payment History</h4>
+          <h4 class="modal-title">Regular Payment History</h4>
          
         </div>
         <div class="modal-body">
@@ -1310,6 +1310,44 @@
           </div>
         </div>
         <div class="modal-footer d-flex justify-content-between flex-row-reverse" id="payment-history-footer">
+          <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div id="payment_history_walkin" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content" style="width: 700px;">
+        <div class="modal-header" style="background-color:#EB460D;color:white;">
+          <h4 class="modal-title">Walk-in Payment History</h4>
+         
+        </div>
+        <div class="modal-body">
+          <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>
+            <table class='table table-hover'>
+              <thead>
+                <tr>
+                  <th>Payment ID</th>
+                  <th>Payment Description</th>
+                  <th>Amount</th>
+                  <th>Date and Time of payment</th>
+                  <th>Payment Type</th>
+                </tr>
+              </thead>
+              <tbody id="modal-tbody-payment-history">
+
+              </tbody>
+            </table>
+            <div id="no-data-div-walkin-payment-history-modal" class="no-data-div my-3 text-muted">
+              No data!
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-between flex-row-reverse" id="payment-walkin-history-footer">
           <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
         </div>
       </div>
