@@ -78,9 +78,9 @@ if($_FILES["image"]["size"] > 0) {
       </script>");
     }
   }
-}else if(strlen($inventory_name) > 20){
+}else if(strlen($inventory_name) > 50){
   echo ("<script LANGUAGE='JavaScript'>
-  window.alert('Invalid inventory name. Maximum of 20 letters only');
+  window.alert('Invalid inventory name. Maximum of 50 letters only');
   window.location.href='/PROJECT/INVENTORY/inventory.php';
   </script>");
 }else if($inventory_qty > 999){
@@ -120,23 +120,7 @@ if($_FILES["image"]["size"] > 0) {
     $query_run = mysqli_query($conn, $sql);
 
     if($query_run) {
-      echo ("<script LANGUAGE='JavaScript'>
-      window.alert('Successfully updated item...');
-      window.location.href='/PROJECT/INVENTORY/inventory.php';
-      </script>");
-    } else {
-      echo ("<script LANGUAGE='JavaScript'>
-      window.alert('".mysqli_error($conn)."');
-      </script>");
-    }
-  }
-}
-
-?>
-
-
-<?php
-//-------------------------LOGTRAIL DOING
+      //-------------------------LOGTRAIL DOING
 
   //this is for puting member_id in the array
   $data = array();
@@ -196,5 +180,17 @@ if($_FILES["image"]["size"] > 0) {
   VALUES 
 ( '$login_id_new','$admin_id', '$inventory_id_new', '$user_fname','$description','$identity', '$timeNow')";
   mysqli_query($conn, $sql1);
+
+      echo ("<script LANGUAGE='JavaScript'>
+      window.alert('Successfully updated item...');
+      window.location.href='/PROJECT/INVENTORY/inventory.php';
+      </script>");
+    } else {
+      echo ("<script LANGUAGE='JavaScript'>
+      window.alert('".mysqli_error($conn)."');
+      </script>");
+    }
+  }
+}
 
 ?>

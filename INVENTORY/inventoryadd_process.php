@@ -57,9 +57,9 @@ else if(mysqli_num_rows($duplicate_name)>0){
     window.alert('Inventory name is already Taken');
     window.location.href='/PROJECT/INVENTORY/inventory.php';
     </script>");
-}else if(strlen($inventory_name) > 20){
+}else if(strlen($inventory_name) > 50){
     echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid inventory name. Maximum of 20 letters only');
+    window.alert('Invalid inventory name. Maximum of 50 letters only');
     window.location.href='/PROJECT/INVENTORY/inventory.php';
     </script>");
 }else if($inventory_qty > 999){

@@ -1101,19 +1101,19 @@
           <div class="form-group">
             <div class="form-row">
               <div class="col-sm-3 train">
-                <label>Start Sub Monthly Date</label>
+                <label>Monthly Subscription Start</label>
                 <input name="monthly_start" type="text" id="monthly_start" disabled class="form-control">
               </div>
               <div class="col-sm-3 train">
-                <label>End Sub Monthly Date</label>
+                <label>Monthly Subscription End</label>
                 <input name="monthly_end" id="monthly_end" type="text" class="form-control" id="" disabled>
               </div>
               <div class="col-sm-3 train">
-                <label>Start Sub Annual Date</label>
+                <label>Annual Membership Start</label>
                 <input name="annual_start" type="text" id="annual_start" disabled class="form-control">
               </div>
               <div class="col-sm-3 train">
-                <label>End Sub Annual Date</label>
+                <label>Annual Membership End</label>
                 <input name="annual_end" id="annual_end" type="text" class="form-control" id="" disabled>
               </div>
             </div>
@@ -2656,13 +2656,11 @@
   // View member Modal
   function displayDetails(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
 
     // AJAX Request
     let req = new XMLHttpRequest();
     req.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
         display(JSON.parse(this.responseText));
       }
     }
@@ -2719,13 +2717,11 @@
   // View member Modal
   function displayWalkinDetails(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
 
     // AJAX Request
     let req = new XMLHttpRequest();
     req.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
         display(JSON.parse(this.responseText));
       }
     }
@@ -2752,13 +2748,11 @@
   // View member Modal
   function displayProgramInformation(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
 
     // AJAX Request
     let req = new XMLHttpRequest();
     req.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
         display(JSON.parse(this.responseText));
       }
     }
@@ -2802,14 +2796,12 @@
   // View member Modal
   function displayUpdateProgramInformation(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
 
     // AJAX Request
     let req = new XMLHttpRequest();
     req.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         display(JSON.parse(this.responseText));
-        console.log(JSON.parse(this.responseText));
       }
     }
     req.open('GET', 'viewprogram_update.php?id=' + id, true);
@@ -2854,13 +2846,11 @@
   // PAYMENT VIEW member Modal
   function regularpaymentDetails(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
 
     // AJAX Request
     let req = new XMLHttpRequest();
     req.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText);
         display(JSON.parse(this.responseText)); 
       }
     }
@@ -2872,7 +2862,6 @@
       document.getElementById("member_lastname").value = row.last_name;
       document.getElementById("promo_availed").value = row.promo_name;
       document.getElementById("promo_discount").value = row.amount;
-      console.log(row);
       if(row.promo_name == "N/A") {
         $("#promo-form-group").css("display", "none");
         $("#promo-availed").val("N/A")
@@ -2886,14 +2875,12 @@
   // PAYMENT VIEW member Modal
   function walkinpaymentDetails(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
 
     // AJAX Request
     let req = new XMLHttpRequest();
     req.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         display(JSON.parse(this.responseText));
-        console.log(JSON.parse(this.responseText));
       }
     }
     req.open('GET', 'paymentmember.php?id=' + id, true);
@@ -2910,7 +2897,6 @@
   // update regular member Modal
   function updateDetailsRegular(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
 
     // AJAX Request
     
@@ -2919,7 +2905,6 @@
 
         if (this.readyState == 4 && this.status == 200) {
           display(JSON.parse(this.responseText));
-        console.log(JSON.parse(this.responseText));
         }
       }
 
@@ -2939,7 +2924,6 @@
   // update regular member Modal
   function updateDetailsWalkin(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
 
     // AJAX Request
     var r = confirm("Are you sure you want to update to Regular member?");
@@ -2948,7 +2932,6 @@
       req.onreadystatechange = function() {
 
         if (this.readyState == 4 && this.status == 200) {
-          console.log((this.responseText));
           alert("Member successfully update to Regular!");
           window.location.reload()
         }
@@ -2963,7 +2946,6 @@
   //------------------------------------------------------------------------------ DELETE JS
   function deleted(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
 
     // AJAX Request
     var r = confirm("Are you sure you want to delete this member from regular?");
@@ -2971,7 +2953,6 @@
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          console.log((this.responseText));
           alert("Member successfully deleted!");
           window.location.reload()
         }
@@ -2984,15 +2965,13 @@
   //---------------------------------------------------------------------WALK IN DELETE JS
   function deleted_walkin(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
-
+    
     // AJAX Request
     var r = confirm("Are you sure you want to delete this member from walk-in?");
     if (r == true) {
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          console.log((this.responseText));
           alert("Member successfully deleted!");
           window.location.reload()
         }
@@ -3005,9 +2984,7 @@
   //---------------------------------------------------------------------------Activate Account
   function activate_account(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
     let lastnameID = el.getAttribute('lastname-id');
-    console.log(lastnameID);
 
     // AJAX Request
     var r = confirm("Are you sure you want to activate this member account?");
@@ -3015,7 +2992,6 @@
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          console.log((this.responseText));
           alert("Account successfully activated!");
           window.location.reload()
         }
@@ -3027,9 +3003,7 @@
   //---------------------------------------------------------------------------Deactivate Account
   function deactivate_account(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
     let lastnameID = el.getAttribute('lastname-id');
-    console.log(lastnameID);
 
     // AJAX Request
     var r = confirm("Are you sure you want to Deactivate this member account?");
@@ -3037,7 +3011,6 @@
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          console.log((this.responseText));
           alert("Account successfully deactivated!");
           window.location.reload()
         }
@@ -3050,7 +3023,6 @@
   //------------------------------------------------------------------------REMOVE PROGRAM JS
   function removeProgram(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
 
     // AJAX Request
     var r = confirm("Are you sure you want to delete this Program?");
@@ -3058,7 +3030,6 @@
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          console.log((this.responseText));
           alert("Program successfully deleted!");
           window.location.reload()
         }
@@ -3073,7 +3044,6 @@
   //------------------------------------------------------------------------------ RECOVER JS
   function recover(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
 
     // AJAX Request
     var r = confirm("Are you sure you want to recover this member?");
@@ -3081,7 +3051,6 @@
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          console.log((this.responseText));
           alert("Member successfully recover!");
           window.location.reload()
         }
@@ -3094,7 +3063,6 @@
   //------------------------------------------------------------------------------ RECOVERPROGRAM JS
   function recoverProgram(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
 
     // AJAX Request
     var r = confirm("Are you sure you want to recover this program?");
@@ -3102,7 +3070,6 @@
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          console.log((this.responseText));
           alert("Program successfully recover!");
           window.location.reload()
         }
@@ -3144,7 +3111,6 @@
         change.value = `₱${val - amt}.00`;
       }
     } else {
-      console.log(val)
       alert('Please enter an appropriate amount!');
     }
   });
@@ -3183,7 +3149,6 @@
        
       }
     } else {
-      console.log(val)
       alert('Please enter an appropriate amount!');
     }
   });
@@ -3193,14 +3158,12 @@
 
   function logout(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
     
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if(this.readyState == 4 && this.status == 200 ) {
-          console.log((this.responseText));
           window.location.href = "./../logout_process.php";
         }
       }
@@ -3267,7 +3230,6 @@
 
   function regularPaymentHistory(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       let req = new XMLHttpRequest();
@@ -3278,9 +3240,8 @@
       }
       req.open('GET', 'payment_history.php?id=' + id, true);
       req.send();
-    }
 
-    function display(res) {
+      function display(res) {
       let tbody = document.getElementById('modal-tbody-payment-history');
       if(res == 0) {
         tbody.innerHTML = "";
@@ -3299,13 +3260,10 @@
         });
       }
     }
-
-
- 
+    }
 
     function walkinPaymentHistory(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       let req = new XMLHttpRequest();
@@ -3316,9 +3274,8 @@
       }
       req.open('GET', 'walkin_payment_history.php?id=' + id, true);
       req.send();
-    }
 
-    function display(res) {
+      function display(res) {
       let tbody = document.getElementById('modal-tbody-walkin-payment-history');
       if(res == 0) {
         tbody.innerHTML = "";
@@ -3337,6 +3294,9 @@
         });
       }
     }
+    }
+
+
   </script>
 
 </body>

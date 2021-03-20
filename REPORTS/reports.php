@@ -511,7 +511,7 @@
           <div class="form-group">
             <div class="row">
               <div class="col-sm-6">
-                <label for="">Time span</label>
+                <label for="">Date added</label>
                 <select id="trainers-list-select" name="timespan_trainers_list" class="form-control">
                   <option value="Today">Today</option>
                   <option value="This week">This week</option>
@@ -523,7 +523,7 @@
               </div>
               <div class="col-sm-6">
                   <label for="">Trainer status</label>
-                  <select name="trainers-list_status" class="form-control">
+                  <select name="trainers_list_status" class="form-control">
                   <option value="all">All</option>
                     <option value="active">Active</option>
                     <option value="inactive">inactive</option>

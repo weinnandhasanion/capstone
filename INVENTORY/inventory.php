@@ -66,7 +66,7 @@ $res = mysqli_query($conn, $sql);
     }
 
     .card-body.inventory {
-      min-height: 100px;
+      height: 200px;
     }
 
     body::-webkit-scrollbar {
@@ -184,7 +184,7 @@ $res = mysqli_query($conn, $sql);
       </div>
       <div class="row" id="inventory-cont">
         <?php
-        $sql = "SELECT * FROM inventory WHERE inventory_status = 'notdeleted' ORDER BY date_added DESC";
+        $sql = "SELECT * FROM inventory WHERE inventory_status = 'notdeleted' ORDER BY inventory_id DESC";
         $res = mysqli_query($conn, $sql);
         if ($res) {
           while ($row = mysqli_fetch_assoc($res)) {
