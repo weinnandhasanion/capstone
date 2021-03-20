@@ -36,7 +36,45 @@ $lower1day3 = $_POST['lower-1-day-3'];
 $lower2day3 = $_POST['lower-2-day-3']; 
 $lower3day3 = $_POST['lower-3-day-3'];  
 $abdominalday3 = $_POST['abdominal-day-3']; 
+$NumberRegex = "/[0-9]/";
 
+$exist = "SELECT * FROM program WHERE program_id != '$id' AND program_name = '$program_name'";
+$existProgramName = mysqli_query($conn, $exist);
+
+$exist1 = "SELECT * FROM program WHERE program_id != '$id' AND program_description = '$program_description'";
+$existProgramDescription = mysqli_query($conn, $exist1);
+
+if (preg_match($NumberRegex, $program_name, $match)) {
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Program name has numbers.. pelase check ur inputs.');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if(preg_match($NumberRegex, $program_description, $match)){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Program description has numbers.. pelase check ur inputs.');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if(mysqli_num_rows($existProgramName)>0){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Program name is already taken');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if(mysqli_num_rows($existProgramDescription)>0){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Program description is already taken');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if(strlen($program_name) > 20){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid program name. Maximum of 20 letters only');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else if(strlen($program_description) > 100){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid program name. Maximum of 100 letters only');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+}else{
     $sql_update = "UPDATE program 
     SET program_name = '$program_name', program_description = '$program_description', trainer_id = '$trainer_id',
     upper_1_day_1 = '$upper1day1', upper_2_day_1 = '$upper2day1', upper_3_day_1 = '$upper3day1',
@@ -47,7 +85,7 @@ $abdominalday3 = $_POST['abdominal-day-3'];
     lower_1_day_3 = '$lower1day3', lower_2_day_3 = '$lower2day3', lower_3_day_3 = '$lower3day3', abdominal_day_3 = '$abdominalday3'
     WHERE program_id =" . intval($id) . ""; 
     $query = mysqli_query($conn, $sql_update);
-
+}
    
 //--------------------------------------------------------------------------
             

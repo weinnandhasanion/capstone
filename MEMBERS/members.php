@@ -270,10 +270,9 @@
 		      ?>
         </h4>
         <div class="logout">
-          <?php
-            /* code for logout  */
+        <?php 
             $sql = "SELECT * FROM logtrail ORDER BY login_id DESC";
-            $result = mysqli_query($conn, $sql);
+            $result = mysqli_query($conn, $sql); 
             $data = array();
             if($result){
               while($rows = mysqli_fetch_assoc($result)){
@@ -282,11 +281,12 @@
 
               $row = $data[0];
             }
-          ?>
-          <a href="#">
-            <button id="logoutBtn" type="button" class="btn btn-sm btn-danger" data-id="<?php echo $row['login_id'] ?>"
-              onclick="logout(this)" >LOGOUT</button>
-          </a>
+          ?> 
+
+        <a href="#">
+          <button id="logoutBtn" type="button" class="btn btn-sm btn-danger"
+          data-id="<?php echo $row['login_id'] ?>"
+          onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
         </div>
       </div>
     </nav>
@@ -1369,7 +1369,7 @@
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Program Name</label>
-                  <input name="program_name" required="" type="text" id="prgram_name_update" class="form-control mb-1"
+                  <input name="program_name" required type="text" id="prgram_name_update" class="form-control mb-1"
                     placeholder="Enter program name here">
                 </div>
                 <div class="col-sm-6">
@@ -1395,7 +1395,7 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Program Description</label>
-                  <textarea name="program_description" style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc_update" placeholder="Enter program desciption here"></textarea>
+                  <textarea name="program_description" required style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc_update" placeholder="Enter program desciption here"></textarea>
                 </div>
               </div>
             </div>
@@ -1404,7 +1404,7 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
-                  <select name="upper-1-day-1" id="upper-1-day-1_update" class="form-control">
+                  <select name="upper-1-day-1" required id="upper-1-day-1_update" class="form-control">
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
@@ -1420,7 +1420,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 2</label>
-                  <select name="upper-2-day-1" id="upper-2-day-1_update" class="form-control">
+                  <select name="upper-2-day-1" required id="upper-2-day-1_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1437,7 +1437,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 3</label>
-                  <select name="upper-3-day-1" id="upper-3-day-1_update" class="form-control">
+                  <select name="upper-3-day-1" required id="upper-3-day-1_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1456,7 +1456,7 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Lower Body 1</label>
-                  <select name="lower-1-day-1" id="lower-1-day-1_update" class="form-control">
+                  <select name="lower-1-day-1" required id="lower-1-day-1_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1473,7 +1473,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 2</label>
-                  <select name="lower-2-day-1" id="lower-2-day-1_update" class="form-control">
+                  <select name="lower-2-day-1" required id="lower-2-day-1_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1490,7 +1490,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 3</label>
-                  <select name="lower-3-day-1" id="lower-3-day-1_update" class="form-control">
+                  <select name="lower-3-day-1" required id="lower-3-day-1_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1509,7 +1509,7 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Abdominals</label>
-                  <select name="abdominal-day-1" id="abdominal-day-1_update" class="form-control">
+                  <select name="abdominal-day-1" required id="abdominal-day-1_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
@@ -1529,7 +1529,7 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
-                  <select name="upper-1-day-2" id="upper-1-day-2_update" class="form-control">
+                  <select name="upper-1-day-2" required id="upper-1-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1546,7 +1546,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 2</label>
-                  <select name="upper-2-day-2" id="upper-2-day-2_update" class="form-control">
+                  <select name="upper-2-day-2" required id="upper-2-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1563,7 +1563,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 3</label>
-                  <select name="upper-3-day-2" id="upper-3-day-2_update" class="form-control">
+                  <select name="upper-3-day-2" required id="upper-3-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1582,7 +1582,7 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Lower Body 1</label>
-                  <select name="lower-1-day-2" id="lower-1-day-2_update" class="form-control">
+                  <select name="lower-1-day-2" required id="lower-1-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1599,7 +1599,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 2</label>
-                  <select name="lower-2-day-2" id="lower-2-day-2_update" class="form-control">
+                  <select name="lower-2-day-2" required id="lower-2-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1616,7 +1616,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 3</label>
-                  <select name="lower-3-day-2" id="lower-3-day-2_update" class="form-control">
+                  <select name="lower-3-day-2" required id="lower-3-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1635,7 +1635,7 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Abdominals</label>
-                  <select name="abdominal-day-2" id="abdominal-day-2_update" class="form-control">
+                  <select name="abdominal-day-2" required id="abdominal-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
@@ -1655,7 +1655,7 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
-                  <select name="upper-1-day-3" id="upper-1-day-3_update" class="form-control">
+                  <select name="upper-1-day-3" required id="upper-1-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1672,7 +1672,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 2</label>
-                  <select name="upper-2-day-3" id="upper-2-day-3_update" class="form-control">
+                  <select name="upper-2-day-3" required id="upper-2-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1689,7 +1689,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 3</label>
-                  <select name="upper-3-day-3" id="upper-3-day-3_update" class="form-control">
+                  <select name="upper-3-day-3" required id="upper-3-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1708,7 +1708,7 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Lower Body 1</label>
-                  <select name="lower-1-day-3" id="lower-1-day-3_update" class="form-control">
+                  <select name="lower-1-day-3" required id="lower-1-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1725,7 +1725,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 2</label>
-                  <select name="lower-2-day-3" id="lower-2-day-3_update" class="form-control">
+                  <select name="lower-2-day-3" required id="lower-2-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1742,7 +1742,7 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 3</label>
-                  <select name="lower-3-day-3" id="lower-3-day-3_update" class="form-control">
+                  <select name="lower-3-day-3" required id="lower-3-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1761,7 +1761,7 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Abdominals</label>
-                  <select name="abdominal-day-3" id="abdominal-day-3_update" class="form-control">
+                  <select name="abdominal-day-3" required id="abdominal-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
@@ -3195,23 +3195,24 @@
   });
 
 
+  
+
   function logout(el) {
-    let id = el.getAttribute('data-id');
-    console.log(id);
+      let id = el.getAttribute('data-id');
+      console.log(id);
 
-    // AJAX Request
-
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        console.log((this.responseText));
-        window.location.href = "./../logout_process.php";
+      // AJAX Request
+    
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200 ) {
+          console.log((this.responseText));
+          window.location.href = "./../logout_process.php";
+        }
       }
+      req.open('GET', './../logout.php?id=' + id, true);
+      req.send(); 
     }
-    req.open('GET', './../logout.php?id=' + id, true);
-    req.send();
-  }
-
 
 
   function displayProgramMembers(el) {

@@ -159,8 +159,7 @@
 		    ?>
         </h4>
         <div class="logout">
-          <?php 
-            /* code for logout  */
+        <?php 
             $sql = "SELECT * FROM logtrail ORDER BY login_id DESC";
             $result = mysqli_query($conn, $sql); 
             $data = array();
@@ -171,12 +170,12 @@
 
               $row = $data[0];
             }
+          ?> 
 
-          ?>
-
-          <a href="/PROJECT/index_admin.php">
-            <button id="logoutBtn" type="button" class="btn btn-sm btn-danger" data-id="<?php echo $row['login_id'] ?>"
-              onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
+        <a href="#">
+          <button id="logoutBtn" type="button" class="btn btn-sm btn-danger"
+          data-id="<?php echo $row['login_id'] ?>"
+          onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
         </div>
       </div>
     </nav>
@@ -874,21 +873,21 @@
   }
 
   function logout(el) {
-    let id = el.getAttribute('data-id');
-    console.log(id);
+      let id = el.getAttribute('data-id');
+      console.log(id);
 
-    // AJAX Request
-
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        console.log((this.responseText));
-
+      // AJAX Request
+    
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200 ) {
+          console.log((this.responseText));
+          window.location.href = "./../logout_process.php";
+        }
       }
+      req.open('GET', './../logout.php?id=' + id, true);
+      req.send(); 
     }
-    req.open('GET', '/PROJECT/logout.php?id=' + id, true);
-    req.send();
-  }
   </script>
 </body>
 
