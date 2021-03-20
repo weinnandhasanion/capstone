@@ -375,10 +375,12 @@ if($annualHasValue) {
               amount: details.purchase_units[0].amount.value,
               paymentDate: details.create_time,
               status: details.status,
-              items: details.purchase_units[0].items
+              items: details.purchase_units[0].items,
+              promo: ($("#promo-name").text().length > 0) ? $("#promo-name").text() : ""
             }
 
             if(data.status === "COMPLETED") {
+              console.log(data);
               $.ajax({
                 url: "./../functions/process_paypal.php",
                 type: "json",
@@ -443,7 +445,7 @@ if($annualHasValue) {
 
       let toPay = $("#to-pay");
       if(m == 'Due' && a == 'Paid') {
-        toPay.text(`P${mp - pd}.00`);
+        toPay.text(`P${(mp - pd)}.00`);
       } else if(m == 'Paid' && a == 'Due') {
         toPay.text(`P${ap}.00`);
       } else if(m == 'Due' && a == 'Due') {

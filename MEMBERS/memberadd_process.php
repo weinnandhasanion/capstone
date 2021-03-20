@@ -123,7 +123,17 @@ else if (preg_match($phoneregex, $phone, $match)){
     window.alert('Invalid contact number. morethan 11 numbers inputed');
     window.location.href='/PROJECT/MEMBERS/members.php';
     </script>");
-}else{
+}else if(!checkBirthdate($birthdate)) {
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid birthdate. You must be at least 15 years old to enter the gym!');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+} else if(!checkValidBdate($birthdate)) {
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid birthdate. Please enter a valid date.');
+    window.location.href='/PROJECT/MEMBERS/members.php';
+    </script>");
+} else {
         $sql = "INSERT INTO `member` ( first_name,last_name,gender,birthdate,email,address,
         phone,member_type,date_registered,program_id )         
         VALUES ( '$first_name', '$last_name', '$gender', '$birthdate', '$email', 
@@ -208,6 +218,25 @@ else if (preg_match($phoneregex, $phone, $match)){
     window.alert('Successfully Added a member');
     window.location.href='/PROJECT/MEMBERS/members.php';
     </script>");
+}
+
+function checkBirthdate($date) {
+    $today = date("Y-m-d");
+    $byear = intval(date("Y", strtotime($date)));
+    $year = intval(date("Y", strtotime($today)));
+
+    $x = ($year - $byear < 15) ? false : true;
+
+    return $x;
+}
+
+function checkValidBdate($date) {
+    $year = intval(date("Y", strtotime($date)));
+    $now = intval(date("Y"));
+
+    $x = ($year < 1910 || $year > $now) ? false : true;
+    
+    return $x;
 }
 
 

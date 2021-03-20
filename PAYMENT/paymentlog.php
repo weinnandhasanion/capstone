@@ -330,25 +330,17 @@
               </div>
             </div>
           </div>
-
-          <div class="form-group" id="online_payment_div">
+          <div class="form-group">
              <div class="form-row">
-              <div class="col-sm-8">
+              <div class="col-sm-6" id="online_payment_div">
                 <label>Online Payment ID</label>
                 <input type="text" disabled id="online_payment_id" class="form-control">
               </div>
-             </div>
-          </div>
-
-          <div class="form-group" id="promo-availed">
-            <div class="form-row">
-              <div class="col-sm-5">
+              <div class="col-sm-6" id="promo-availed-div">
                 <label>Promo Used</label>
                 <input type="text" disabled id="promo_availed" class="form-control">
               </div>
-            </div>
-          </div>
-
+             </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -415,18 +407,18 @@
         document.getElementById("first_name").value = row.first_name;
         document.getElementById("last_name").value = row.last_name;
         document.getElementById("payment_description").value = row.payment_description;
-        if(row.payment_description == "Monthly Subscription") {
-          $("#promo-availed").css("display", "block");
-          $("#promo_availed").val(row.promo_availed);
-        } else {
-          $("#promo-availed").css("display", "none");
-        }
         document.getElementById("payment_type").value = row.payment_type;
+        $("#promo_availed").val(row.promo_availed);
         if(document.getElementById("payment_type").value == "Online") {
           document.getElementById("online_payment_id").value = row.online_payment_id;
           document.getElementById("online_payment_div").style.display = "block";
         } else {
           document.getElementById("online_payment_div").style.display = "none";
+        }
+        if(row.promo_availed) {
+          $("#promo-availed-div").css("display", "block");
+        } else {
+          $("#promo-availed-div").css("display", "none");
         }
         document.getElementById("member_type").value = row.member_type;
         document.getElementById("new_date_payment").value = row.date_payment;

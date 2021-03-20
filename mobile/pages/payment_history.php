@@ -263,6 +263,7 @@ if($res) {
       <p>Member ID: <i id="pmt-member-id"></i></p>
       <p>Payment ID: <i id="pmt-id"></i></p>
       <p>Payment description: <i id="pmt-desc"></i></p>
+      <p id="promo-used" style="display:none">Promo used: <i id="pmt-promo"></i></p>
       <p>Amount: <i id="pmt-amount"></i></p>
       <p>Date and time of payment: <i id="pmt-date-time"></i></p>
       <p>Payment type: <i id="pmt-type"></i></p>
@@ -419,7 +420,13 @@ if($res) {
           $("#pmt-payer").html(`Payment for <b>${data.first_name} ${data.last_name}</b>`);
           $("#pmt-id").html(data.payment_id);
           $("#pmt-member-id").html(data.member_id);
-          $("#pmt-desc").html(data.payment_description)
+          $("#pmt-desc").html(data.payment_description);
+          if(data.payment_description == "Monthly Subscription") {
+            $("#promo-used").css("display", "block");
+            $("#pmt-promo").html(data.promo_availed)
+          } else {
+            $("#promo-used").css("display", "none");
+          }
           $("#pmt-amount").html(`P${data.payment_amount}.00`);
           $("#pmt-date-time").text(`${data.date_payment} ${data.time_payment}`);
           $("#pmt-type").text(data.payment_type);

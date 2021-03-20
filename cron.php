@@ -16,7 +16,9 @@ if($res) {
       sendNotif($row["member_id"], $dateNow, 2);
     } else if($row["monthly_end"] == date("Y-m-d", strtotime($dateNow." + 1 day"))) {
       sendNotif($row["member_id"], $dateNow, 3);
-    } else if($row["annual_end"] == date("Y-m-d", strtotime($dateNow." + 30 days"))) {
+    } 
+    
+    if($row["annual_end"] == date("Y-m-d", strtotime($dateNow." + 30 days"))) {
       sendNotif($row["member_id"], $dateNow, 6);
     } else if($row["annual_end"] == date("Y-m-d", strtotime($dateNow." + 7 days"))) {
       sendNotif($row["member_id"], $dateNow, 7);
@@ -24,6 +26,29 @@ if($res) {
   }
 } else {
   echo mysqli_error($conn);
+}
+
+// Checking if paid CRON job
+$today = date("Y-m-d");
+$memberSql = "UPDATE member SET member_status = 'Expired' WHERE (monthly_end < '$today' OR annual_end < '$today') AND member_status = 'Paid'";
+$memberQuery = mysqli_query($conn, $memberSql);
+
+$membersSql = "SELECT * FROM member WHERE member_status = 'Expired'";
+$membersQuery = mysqli_query($conn, $membersSql);
+if(mysqli_num_rows($membersQuery) > 0) {
+  while($row = mysqli_fetch_assoc($membersQuery)) {
+    if($today == date("Y-m-d", strtotime($row["monthly_end"]."+ 1 day"))) {
+      sendNotif($row["member_id"], $dateNow, 4);
+    }
+
+    if($today == date("Y-m-d", strtotime($row["annual_end"]."+ 1 day"))) {
+      sendNotif($row["member_id"], $dateNow, 5);
+    } else if($today == date("Y-m-d", strtotime($row["annual_end"]."+ 7 days")) && $today == date("Y-m-d", strtotime($row["monthly_end"]."+ 1 day"))) {
+      sendNotif($row["member_id"], $dateNow, 8);
+    } else if($today == date("Y-m-d", strtotime($row["annual_end"]."+ 15 days")) && $today == date("Y-m-d", strtotime($row["monthly_end"]."+ 1 day"))) {
+      makeInactive($row["member_id"]);
+    }
+  }
 }
 
 function sendNotif($id, $dateNow, $notifId) {
@@ -38,6 +63,13 @@ function sendNotif($id, $dateNow, $notifId) {
   }
 }
 
+function makeInactive($id) {
+  global $conn;
+
+  $sql = "UPDATE member SET member_status = 'inactive' WHERE member_id = '$id'";
+  mysqli_query($conn, $sql);
+}
+ 
 function checkNotifs($id, $conn, $notifId) {
   $date = date("Y-m-d");
   $sql = "SELECT * FROM member_notifs WHERE DATE(datetime_sent) = '$date' 
@@ -47,8 +79,6 @@ function checkNotifs($id, $conn, $notifId) {
 
   return $hasNotifs;
 }
-
-// Checking if paid CRON job
 
 // Checking promo availability CRON job
 $date = date("Y-m-d");

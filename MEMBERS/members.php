@@ -519,37 +519,31 @@
   <!----------------------------------------------------display program modal -------------------------------------->
   <div id="viewprogram" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
       <!-- Modal content-->
       <div class="modal-content" style="width: 700px;">
-
         <div class="modal-header" style="background-color: #DF3A01; color: white;">
-          <h4 class="modal-title"> Member Registered</h4>
-          <form class="d-flex justify-content-center">
-            <input type="text" placeholder="Search registered name" id="search-registered" class="form-control">
-          </form>
+          <h4 class="modal-title"> Members Registered</h4>
         </div>
-
         <div class="modal-body">
-
           <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>
             <table class='table table-hover'>
               <thead>
                 <tr style="text-align:center;">
                   <th>ID</th>
-                  <th>From Where</th>
+                  <th>Member Type</th>
                   <th>Full Name</th>
                 </tr>
               </thead>
-              <tbody id="modal-tbody">
-
+              <tbody id="member-program-tbody">
 
               </tbody>
             </table>
+            <div id="no-data-div-program-members" class="no-data-div my-5 text-muted">
+              No members for this program yet.
+            </div>
           </div>
-
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer d-flex flex-row-reverse justify-content-between" id="program-members-footer">
           <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -1031,7 +1025,7 @@
                   <select name="program_id" required id="program" class="form-control">
                     <option value="" selected disabled>Select here...</option>
                     <?php
-                    $sql = "SELECT program_id, program_name FROM program";
+                    $sql = "SELECT program_id, program_name FROM program WHERE program_status = 'active'";
                     $res = mysqli_query($conn, $sql);
                     if($res) {
                       while($row = mysqli_fetch_assoc($res)) {
@@ -2362,12 +2356,12 @@
         if (row.username) {
           span = `<span  data-toggle="tooltip" data-placement="top" title="Deactivate ${row.last_name} Account?">
                   <i style="cursor: pointer; color:#FF4500; font-size: 25px;"
-                  class="fa fa-lock mx-2" data-id="${row.member_id}"lastname-id="${row.last_name}"
+                  class="fa fa-lock mx-1" data-id="${row.member_id}"lastname-id="${row.last_name}"
                   onclick="deactivate_account(this)"></i></span>`;
         } else {
           span = `<span  data-toggle="tooltip" data-placement="top" title="Activate ${row.last_name} Account?">
                   <i style="cursor: pointer; color:#FF4500; font-size: 25px;"
-                  class="fa fa-key mx-2" data-id="${row.member_id}"lastname-id="${row.last_name}"
+                  class="fa fa-key mx-1" data-id="${row.member_id}"lastname-id="${row.last_name}"
                   onclick="activate_account(this)"></i></span>`;
         }
         let html = `<tr>
@@ -2380,31 +2374,31 @@
             <span   data-toggle="tooltip" data-placement="top" title="View ${row.last_name}">
               <i style="cursor: pointer; color:brown; font-size: 25px;"
               data-toggle="modal" data-target="#view"
-              class=" fas fa-eye mx-2 get_id" data-id = '${row.member_id}'
+              class=" fas fa-eye mx-1 get_id" data-id = '${row.member_id}'
               onclick="displayDetails(this)"></i>
             </span>
             ${span}
             <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name} to Walk-in">
               <i style="cursor: pointer; color:#C71585; font-size: 25px;"
-              class="fas fa-pencil-alt mx-2" data-id="${row.member_id}"
+              class="fas fa-pencil-alt mx-1" data-id="${row.member_id}"
               data-toggle="modal" data-target="#regular_update"
               onclick="updateDetailsRegular(this)"></i>
             </span>
             <span data-toggle="tooltip" data-placement="top" title="pay ${row.last_name}">
               <i style="cursor: pointer; color:green; font-size: 25px;"
               data-toggle="modal" data-target="#regular_payment"
-              class="fas fa-money-bill-alt mx-2" data-id = '${row.member_id}'
+              class="fas fa-money-bill-alt mx-1" data-id = '${row.member_id}'
               onclick="regularpaymentDetails(this)"></i>
             </span>
             <span   data-toggle="tooltip" data-placement="top" title="payment history of ${row.last_name}">
               <i style="cursor: pointer; color:#7B68EE; font-size: 27px;"
               data-toggle="modal" data-target="#payment_history"
-              class=" fas fa-file-invoice-dollar mx-2 get_id" data-id = '${row.member_id}'
+              class=" fas fa-file-invoice-dollar mx-1 get_id" data-id = '${row.member_id}'
               onclick="regularPaymentHistory(this)"></i>
             </span>
             <span  data-toggle="tooltip" data-placement="top" title="Delete ${row.last_name}">
               <i style="cursor: pointer; color:red; font-size: 25px;"
-              class=" far fa-trash-alt mx-2" data-id="${row.member_id}"
+              class=" far fa-trash-alt mx-1" data-id="${row.member_id}"
               onclick="deleted(this)"></i>
             </span>
           </td>
@@ -2480,19 +2474,19 @@
           <td>
             <span data-toggle="tooltip" data-placement="top" title="View ${row.last_name}">
               <i style="cursor: pointer; color:brown; font-size: 25px;" data-toggle="modal"
-                data-target="#viewwalkin" class=" fas fa-eye mx-2 get_id" data-id='${row.member_id}'
+                data-target="#viewwalkin" class=" fas fa-eye mx-1 get_id" data-id='${row.member_id}'
                 onclick="displayWalkinDetails(this)"></i>
             </span>
             <span data-toggle="tooltip" data-placement="top"
               title="Update ${row.last_name} to Regular">
               <i style="cursor: pointer; color:#C71585; font-size: 25px;" data-toggle="modal"
-                data-target="#update" class=" fas fa-pencil-alt mx-2"
+                data-target="#update" class=" fas fa-pencil-alt mx-1"
                 data-id="${row.member_id}" onclick="updateDetailsWalkin(this)"></i>
             </span>
             <span data-toggle="tooltip" data-placement="top" title="View ${row.last_name}">
               <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="modal"
                 data-target="#walkin_payment" onclick="walkinpaymentDetails(this)"
-                class="fas fa-money-bill-alt" data-id='${row.member_id}'></i>
+                class="fas fa-money-bill-alt mx-1" data-id='${row.member_id}'></i>
             </span>
             <span   data-toggle="tooltip" data-placement="top" title="payment history of ${row.last_name}">
               <i style="cursor: pointer; color:#7B68EE; font-size: 27px;"
@@ -2502,7 +2496,7 @@
             </span>
             <span data-toggle="tooltip" data-placement="top" title="Delete ${row.last_name}">
               <i style="cursor: pointer; color:red; font-size: 25px;" onclick="deleted_walkin(this)"
-                class=" far fa-trash-alt mx-2" data-id="${row.member_id}"></i>
+                class=" far fa-trash-alt mx-1" data-id="${row.member_id}"></i>
             </span>
           </td>
         </tr>`;
@@ -2534,22 +2528,22 @@
               <span data-toggle="tooltip" data-placement="top"
                 title="View ${row.program_name} members">
                 <i style="cursor: pointer; color:brown; font-size: 25px;" data-toggle="modal"
-                  data-target="#viewprogram" class=" far fa-user mx-2 get_id"
+                  data-target="#viewprogram" class=" far fa-user mx-1 get_id"
                   data-id='${row.program_id}' onclick="displayProgramMembers(this)"></i>
               </span>
               <span data-toggle="tooltip" data-placement="top" title="${row.program_name} info">
                 <i style="cursor: pointer; color:#C71585; font-size: 25px;"
-                  class="fas fa-pencil-alt mx-2 get_id" data-toggle="modal" data-target="#programUpdate"
+                  class="fas fa-pencil-alt mx-1 get_id" data-toggle="modal" data-target="#programUpdate"
                   data-id='${row.program_id}' onclick="displayUpdateProgramInformation(this)"></i>
               </span>
               <span data-toggle="tooltip" data-placement="top" title="${row.program_name} info">
                 <i style="cursor: pointer; color:#00c2c2; font-size: 25px;"
-                  class="fas fa-info-circle mx-2 get_id" data-toggle="modal" data-target="#viewinfo"
+                  class="fas fa-info-circle mx-1 get_id" data-toggle="modal" data-target="#viewinfo"
                   data-id='${row.program_id}' onclick="displayProgramInformation(this)"></i>
               </span>
               <span data-toggle="tooltip" data-placement="top"
                 title="Delete ${row.program_name}">
-                <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-2"
+                <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-1"
                   data-id="${row.program_id}" onclick="removeProgram(this)"></i>
               </span>
             </td>
@@ -2582,7 +2576,7 @@
               <td>${row.date_deleted}</td>
               <td>
                 <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
-                  title="Recover ${row.last_name}" class="fas fa-undo mx-2"
+                  title="Recover ${row.last_name}" class="fas fa-undo mx-1"
                   data-id="${row.member_id}" onclick="recover(this)"></i>
               </td>
             </tr>`;
@@ -2626,7 +2620,7 @@
               <td>${row.time_deleted}</td>
               <td>
                 <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
-                  title="Recover ${row.program_name}" class="fas fa-undo mx-2"
+                  title="Recover ${row.program_name}" class="fas fa-undo mx-1"
                   data-id="${row.member_id}" onclick="recover(this)"></i>
               </td>
             </tr>`;
@@ -3213,21 +3207,41 @@
       req.open('GET', './../logout.php?id=' + id, true);
       req.send(); 
     }
-
+    
 
   function displayProgramMembers(el) {
     let id = el.getAttribute('data-id');
-    console.log(id);
+    var data;
+    
+    $.get("./member_program.php?id=" + id, function(res) {
+      data = JSON.parse(res);
+    }).then(() => {
+      $("#program-members-footer").pagination({
+        dataSource: function(done) {
+          done(data);
+        },
+        pageSize: 8,
+        showPrevious: false,
+        showNext: false,
+        callback: function(data) {
+          $("#member-program-tbody").empty();
+          if(data.length > 0) {
+            $("#no-data-div-program-members").css("display", "none");
+            data.forEach(row => {
+              let html = `<tr>
+                <td>${row.member_id}</td>
+                <td>${row.member_type}</td>
+                <td>${row.first_name} ${row.last_name}</td>
+              </tr>`;
 
-    // AJAX Request
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        display(this.responseText);
-      }
-    }
-    req.open('GET', 'member_program.php?id=' + id, true);
-    req.send();
+              $("#member-program-tbody").append(html);
+            });
+          } else {
+            $("#no-data-div-program-members").css("display", "flex");
+          }
+        }
+      });
+    });
   }
 
 

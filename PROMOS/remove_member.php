@@ -13,23 +13,6 @@ $sql = "UPDATE memberpromos
 $res = mysqli_query($conn, $sql);
 
 if($res) {
-  echo "<script>
-    alert('Member successfully removed from promo.');
-    window.location.href = './promos.php';
-  </script>";
-} else {
-  echo "<script>
-    alert('Error: ".mysqli_error($conn)."');
-    window.location.href = './promos.php';
-  </script>";
-}
-?>
-
-
-<?php
-
-//-----------LOGTRAIL DOING
-
      //this is for puting promo_id in the array
      $data = array();
      $promo_id;
@@ -113,4 +96,14 @@ if($res) {
      mysqli_query($conn, $sql1);
 
 
+  echo "<script>
+    alert('Member successfully removed from promo.');
+    window.location.href = './promos.php';
+  </script>";
+} else {
+  echo "<script>
+    alert('Error: ".mysqli_error($conn)."');
+    window.location.href = './promos.php';
+  </script>";
+}
 ?>

@@ -123,6 +123,7 @@ $reportTitle = "List of Active seasonal Promos";
         $sql = "SELECT * FROM promo WHERE   status = 'Expired' AND promo_type = 'Seasonal'";
         $res = mysqli_query($conn, $sql);
       }
+      
 }else if($promo_status == "Deleted" AND $promo_type == "Seasonal"){
   $reportTitle = "List of Deleted Promos";
     if($timespan == "Custom") {
