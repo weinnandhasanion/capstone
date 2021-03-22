@@ -164,7 +164,7 @@ if(!isset($_SESSION["member_id"])) {
     $.get("./../functions/get_routines.php", function(res) {
       routines = JSON.parse(res);
       routines.unshift("");
-
+    }).then(() => {
       $("#upper1").html(`${routines[program.upper_1_day_1].routine_name} &#183; ${routines[program.upper_1_day_1].routine_reps} reps &#183; ${routines[program.upper_1_day_1].routine_sets} sets`);
       $("#upper2").html(`${routines[program.upper_2_day_1].routine_name} &#183; ${routines[program.upper_2_day_1].routine_reps} reps &#183; ${routines[program.upper_2_day_1].routine_sets} sets`);
       $("#upper3").html(`${routines[program.upper_3_day_1].routine_name} &#183; ${routines[program.upper_3_day_1].routine_reps} reps &#183; ${routines[program.upper_3_day_1].routine_sets} sets`);
@@ -172,6 +172,8 @@ if(!isset($_SESSION["member_id"])) {
       $("#lower2").html(`${routines[program.lower_2_day_1].routine_name} &#183; ${routines[program.lower_2_day_1].routine_reps} reps &#183; ${routines[program.lower_2_day_1].routine_sets} sets`);
       $("#lower3").html(`${routines[program.lower_3_day_1].routine_name} &#183; ${routines[program.lower_3_day_1].routine_reps} reps &#183; ${routines[program.lower_3_day_1].routine_sets} sets`);
       $("#abdominal").html(`${routines[program.abdominal_day_1].routine_name} &#183; ${routines[program.abdominal_day_1].routine_reps} reps &#183; ${routines[program.abdominal_day_1].routine_sets} set(s)`);
+
+      $("#loader").css("display", "none");
     });
 
     $("#programDay").change(function() {
@@ -213,14 +215,10 @@ if(!isset($_SESSION["member_id"])) {
         }
       });
     });
-    
+
     $("#change-program").click(function() {
       window.location.href = "./change_program.php";
     });
-
-    setTimeout(() => {
-      $("#loader").css("display", "none");
-    }, 500);
   </script>
 </body>
 </html>

@@ -418,9 +418,7 @@ if($annualHasValue) {
         $("#promo-name").text(data.promo_name);
         $("#promo-discount").text(data.amount)
       }
-    });
-    
-    window.onload = () => {
+    }).then(() => {
       $("#loader").css("display", "none");
       $("#confirm-logout").on("click", function() {
         $.ajax({
@@ -509,7 +507,9 @@ if($annualHasValue) {
           ]
         }
       };
-    }
+    });
+    
+  
   </script>
 </body>
 </html>
