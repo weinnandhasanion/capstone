@@ -1312,7 +1312,7 @@
   </div>
 
 
-  <div id="payment_history_walkin" class="modal fade" role="dialog">
+  <div id="payment_history_walkin" class="modal fade">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content" style="width: 700px;">
@@ -3229,74 +3229,82 @@
   }
 
   function regularPaymentHistory(el) {
-      let id = el.getAttribute('data-id');
+    let id = el.getAttribute('data-id');
 
-      // AJAX Request
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
-          display(this.responseText);
+    $("#payment-history-footer").pagination({
+      dataSource: function(done) {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = function() {
+          if(this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(this.responseText);
+            done(data);
+          }
+        }
+        req.open('GET', 'payment_history.php?id=' + id, true);
+        req.send();
+      },
+      pageSize: 5,
+      showNext: false,
+      showPrevious: false,
+      callback: function(data) {
+        let tbody = document.getElementById('modal-tbody-payment-history');
+        if(data == 0) {
+          tbody.innerHTML = "";
+        } else {
+          tbody.innerHTML = "";
+          data.forEach(row => {
+            var html = `<tr>
+              <td>${row.payment_id}</td>
+              <td>${row.payment_description}</td>
+              <td>${row.payment_amount}</td>
+              <td>${row.date_payment} ${row.time_payment}</td>
+              <td>${row.payment_type}</td>
+            </tr>`;
+            tbody.innerHTML += html;
+          });
         }
       }
-      req.open('GET', 'payment_history.php?id=' + id, true);
-      req.send();
+    });
+  }
 
-      function display(res) {
-      let tbody = document.getElementById('modal-tbody-payment-history');
-      if(res == 0) {
-        tbody.innerHTML = "";
-      } else {
-        let data = JSON.parse(res);
-        tbody.innerHTML = "";
-        data.forEach(row => {
-          var html = `<tr>
-            <td>${row.payment_id}</td>
-            <td>${row.payment_description}</td>
-            <td>${row.payment_amount}</td>
-            <td>${row.date_payment} ${row.time_payment}</td>
-            <td>${row.payment_type}</td>
-          </tr>`;
-          tbody.innerHTML += html;
-        });
-      }
-    }
-    }
+  function walkinPaymentHistory(el) {
+    let id = el.getAttribute('data-id');
 
-    function walkinPaymentHistory(el) {
-      let id = el.getAttribute('data-id');
-
-      // AJAX Request
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200) {
-          display(this.responseText);
+    $("#payment-walkin-history-footer").pagination({
+      dataSource: function(done) {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = function() {
+          if(this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(this.responseText);
+            done(data);
+          }
+        }
+        req.open('GET', 'walkin_payment_history.php?id=' + id, true);
+        req.send();
+      },
+      pageSize: 5,
+      showPrevious: false,
+      showNext: false,
+      callback: function(data) {
+        let tbody = document.getElementById('modal-tbody-walkin-payment-history');
+        if(data == 0) {
+          tbody.innerHTML = "";
+        } else {
+          tbody.innerHTML = "";
+          data.forEach(row => {
+            var html = `<tr>
+              <td>${row.payment_id}</td>
+              <td>${row.payment_description}</td>
+              <td>${row.payment_amount}</td>
+              <td>${row.date_payment} ${row.time_payment}</td>
+              <td>${row.payment_type}</td>
+            </tr>`;
+            tbody.innerHTML += html;
+          });
         }
       }
-      req.open('GET', 'walkin_payment_history.php?id=' + id, true);
-      req.send();
-
-      function display(res) {
-      let tbody = document.getElementById('modal-tbody-walkin-payment-history');
-      if(res == 0) {
-        tbody.innerHTML = "";
-      } else {
-        let data = JSON.parse(res);
-        tbody.innerHTML = "";
-        data.forEach(row => {
-          var html = `<tr>
-            <td>${row.payment_id}</td>
-            <td>${row.payment_description}</td>
-            <td>${row.payment_amount}</td>
-            <td>${row.date_payment} ${row.time_payment}</td>
-            <td>${row.payment_type}</td>
-          </tr>`;
-          tbody.innerHTML += html;
-        });
-      }
-    }
-    }
-
-
+    });
+  }
   </script>
 
 </body>

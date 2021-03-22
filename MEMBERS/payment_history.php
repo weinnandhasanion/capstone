@@ -17,6 +17,6 @@ if(mysqli_num_rows($res) > 0) {
 
   echo json_encode($data);
 } else {
-  echo 0;
+  echo json_encode(array());
 }
 ?>
