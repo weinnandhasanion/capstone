@@ -123,7 +123,54 @@ $reportTitle = "List of Active seasonal Promos";
         $sql = "SELECT * FROM promo WHERE   status = 'Expired' AND promo_type = 'Seasonal'";
         $res = mysqli_query($conn, $sql);
       }
-      
+}else if($promo_status == "all" AND $promo_type == "Seasonal"){
+      $reportTitle = "List of All Seasonal Promos";
+        if($timespan == "Custom") {
+            $reportText = "Generating reports for All seasonal promo list from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
+            $sql = "SELECT * FROM promo
+                    WHERE date_added >= '$fromDate' 
+                    AND date_added <= '$toDate'
+                    AND promo_type = 'Seasonal'";
+            $res = mysqli_query($conn, $sql);
+          } else if($timespan == "Today") {
+            $reportText = "Generating reports for All seasonal  promo list  today, ".date("F d, Y")."...";
+            $today = date("Y-m-d");
+            $sql = "SELECT * FROM promo
+                    WHERE date_added = '$today'
+                    AND promo_type = 'Seasonal'";
+            $res = mysqli_query($conn, $sql);
+          } else if($timespan == "This week") {
+            $today = date("Y-m-d");
+            $lastWeek = date("Y-m-d", strtotime($today. "- 7 days"));
+            $reportText = "Generating reports for All seasonal  promo list  this week (".date("F d, Y", strtotime($lastWeek))." to ".date("F d, Y").")...";
+            $sql = "SELECT * FROM promo
+                    WHERE date_added >= '$lastWeek'
+                    AND date_added <= '$today'
+                    AND promo_type = 'Seasonal'";
+            $res = mysqli_query($conn, $sql);
+          } else if($timespan == "This month") {
+            $monthStart = date("Y-m-01");
+            $monthEnd = date("Y-m-t");
+            $reportText = "Generating reports for All seasonal  promo list  this month of ".date("F")."...";
+            $sql = "SELECT * FROM promo
+                    WHERE date_added >= '$monthStart'
+                    AND date_added <= '$monthEnd'
+                    AND promo_type = 'Seasonal'";
+            $res = mysqli_query($conn, $sql);
+          } else if($timespan == "This year") {
+            $yearStart = date("Y-01-01");
+            $yearEnd = date("Y-12-31");
+            $reportText = "Generating reports for All seasonal  promo list this year (".date("Y").")...";
+            $sql = "SELECT * FROM promo
+                    WHERE date_added >= '$yearStart'
+                    AND date_added <= '$yearEnd'
+                    AND promo_type = 'Seasonal'";
+            $res = mysqli_query($conn, $sql);
+          } else {
+            $reportText = "Generating reports for All seasonal  promo list  since all of time...";
+            $sql = "SELECT * FROM promo WHERE  promo_type = 'Seasonal'";
+            $res = mysqli_query($conn, $sql);
+          }  
 }else if($promo_status == "Deleted" AND $promo_type == "Seasonal"){
   $reportTitle = "List of Deleted Promos";
     if($timespan == "Custom") {
@@ -285,6 +332,54 @@ $reportTitle = "List of Active  Permanent Promos";
         $sql = "SELECT * FROM promo WHERE   status = 'Expired' AND promo_type = 'Permanent'";
         $res = mysqli_query($conn, $sql);
       }
+}else if($promo_status == "all" AND $promo_type == "Permanent"){
+      $reportTitle = "List of all Permanent Promos";
+        if($timespan == "Custom") {
+            $reportText = "Generating reports for all Permanent promo list from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
+            $sql = "SELECT * FROM promo
+                    WHERE date_added >= '$fromDate' 
+                    AND date_added <= '$toDate'
+                    AND promo_type = 'Permanent'";
+            $res = mysqli_query($conn, $sql);
+          } else if($timespan == "Today") {
+            $reportText = "Generating reports for all Permanent  promo list  today, ".date("F d, Y")."...";
+            $today = date("Y-m-d");
+            $sql = "SELECT * FROM promo
+                    WHERE date_added = '$today'
+                    AND promo_type = 'Permanent'";
+            $res = mysqli_query($conn, $sql);
+          } else if($timespan == "This week") {
+            $today = date("Y-m-d");
+            $lastWeek = date("Y-m-d", strtotime($today. "- 7 days"));
+            $reportText = "Generating reports for all Permanent  promo list  this week (".date("F d, Y", strtotime($lastWeek))." to ".date("F d, Y").")...";
+            $sql = "SELECT * FROM promo
+                    WHERE date_added >= '$lastWeek'
+                    AND date_added <= '$today'
+                    AND promo_type = 'Permanent'";
+            $res = mysqli_query($conn, $sql);
+          } else if($timespan == "This month") {
+            $monthStart = date("Y-m-01");
+            $monthEnd = date("Y-m-t");
+            $reportText = "Generating reports for all Permanent  promo list  this month of ".date("F")."...";
+            $sql = "SELECT * FROM promo
+                    WHERE date_added >= '$monthStart'
+                    AND date_added <= '$monthEnd'
+                    AND promo_type = 'Permanent'";
+            $res = mysqli_query($conn, $sql);
+          } else if($timespan == "This year") {
+            $yearStart = date("Y-01-01");
+            $yearEnd = date("Y-12-31");
+            $reportText = "Generating reports for all Permanent  promo list this year (".date("Y").")...";
+            $sql = "SELECT * FROM promo
+                    WHERE date_added >= '$yearStart'
+                    AND date_added <= '$yearEnd'
+                    AND promo_type = 'Permanent'";
+            $res = mysqli_query($conn, $sql);
+          } else {
+            $reportText = "Generating reports for all Permanent  promo list  since all of time...";
+            $sql = "SELECT * FROM promo WHERE  promo_type = 'Permanent'";
+            $res = mysqli_query($conn, $sql);
+          }
 }else if($promo_status == "Deleted" AND $promo_type == "Permanent"){
   $reportTitle = "List of Deleted Promos";
     if($timespan == "Custom") {
@@ -389,7 +484,7 @@ else if($promo_status == "Active" AND $promo_type == "Both"){
       $sql = "SELECT * FROM promo WHERE   status = 'Active'";
       $res = mysqli_query($conn, $sql);
     }
-  }else if($promo_status == "Expired" AND $promo_type == "Both"){
+}else if($promo_status == "Expired" AND $promo_type == "Both"){
     $reportTitle = "List of Expired Promos";
       if($timespan == "Custom") {
           $reportText = "Generating reports for Expired  both permanent and seasonal promo list from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
@@ -437,7 +532,50 @@ else if($promo_status == "Active" AND $promo_type == "Both"){
           $sql = "SELECT * FROM promo WHERE   status = 'Expired'";
           $res = mysqli_query($conn, $sql);
         }
-  }else if($promo_status == "Deleted" AND $promo_type == "Both"){
+}else if($promo_status == "all" AND $promo_type == "Both"){
+        $reportTitle = "List of all both Promos";
+          if($timespan == "Custom") {
+              $reportText = "Generating reports for all  both permanent and seasonal promo list from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
+              $sql = "SELECT * FROM promo
+                      WHERE date_added >= '$fromDate' 
+                      AND date_added <= '$toDate'";
+              $res = mysqli_query($conn, $sql);
+            } else if($timespan == "Today") {
+              $reportText = "Generating reports for all  both permanent and seasonal  promo list  today, ".date("F d, Y")."...";
+              $today = date("Y-m-d");
+              $sql = "SELECT * FROM promo
+                      WHERE date_added = '$today'";
+              $res = mysqli_query($conn, $sql);
+            } else if($timespan == "This week") {
+              $today = date("Y-m-d");
+              $lastWeek = date("Y-m-d", strtotime($today. "- 7 days"));
+              $reportText = "Generating reports for all  both permanent and seasonal  promo list  this week (".date("F d, Y", strtotime($lastWeek))." to ".date("F d, Y").")...";
+              $sql = "SELECT * FROM promo
+                      WHERE date_added >= '$lastWeek'
+                      AND date_added <= '$today'";
+              $res = mysqli_query($conn, $sql);
+            } else if($timespan == "This month") {
+              $monthStart = date("Y-m-01");
+              $monthEnd = date("Y-m-t");
+              $reportText = "Generating reports for all  both permanent and seasonal  promo list  this month of ".date("F")."...";
+              $sql = "SELECT * FROM promo
+                      WHERE date_added >= '$monthStart'
+                      AND date_added <= '$monthEnd'";
+              $res = mysqli_query($conn, $sql);
+            } else if($timespan == "This year") {
+              $yearStart = date("Y-01-01");
+              $yearEnd = date("Y-12-31");
+              $reportText = "Generating reports for all  both permanent and seasonal  promo list this year (".date("Y").")...";
+              $sql = "SELECT * FROM promo
+                      WHERE date_added >= '$yearStart'
+                      AND date_added <= '$yearEnd'";
+              $res = mysqli_query($conn, $sql);
+            } else {
+              $reportText = "Generating reports for all  both permanent and seasonal  promo list  since all of time...";
+              $sql = "SELECT * FROM promo ";
+              $res = mysqli_query($conn, $sql);
+            }
+}else if($promo_status == "Deleted" AND $promo_type == "Both"){
     $reportTitle = "List of Deleted Promos";
       if($timespan == "Custom") {
           $reportText = "Generating reports for Deleted  both permanent and seasonal promo list from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
@@ -513,6 +651,31 @@ if($_POST["status"] == "Active" || $_POST["status"] == "Expired"){
     'timespan' => $timespan,
     'fileName' => "ReportPromoList_".date("MdY")
   ];
+}else if($_POST["status"] == "all"){
+    $data = array();
+    if($res) {
+      while($row = mysqli_fetch_assoc($res)) {
+        $row["date_added"] = date("M d, Y", strtotime($row["date_added"]));
+        $row["promo_starting_date"] = date("M d, Y", strtotime($row["promo_starting_date"]));
+        $row["promo_ending_date"] = date("M d, Y", strtotime($row["promo_ending_date"]));
+        $row["date_deleted"] = date("M d, Y", strtotime($row["date_deleted"]));
+        $data[] = $row;
+      }
+    }
+  
+    $labels = array("Promo ID", "Promo Name", "Promo Type", "Starting Date","Ending Date","Amount","Status");
+    $rowLabels = array("promo_id", "promo_name", "promo_type", "promo_starting_date","promo_ending_date","amount","status");
+  
+    $object = (object) [
+      'data' => $data,
+      'rowLabels' => $rowLabels,
+      'labels' => $labels,
+      'toDate' => $toDate,
+      'fromDate' => $fromDate,
+      'reportTitle' => $reportTitle,
+      'timespan' => $timespan,
+      'fileName' => "ReportPromoList_".date("MdY")
+    ];
 
 }else if($_POST["status"] == "Deleted"){
 

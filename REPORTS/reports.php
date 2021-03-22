@@ -724,6 +724,7 @@
               <div class="col-sm-6">
                   <label for="">Promo status</label>
                   <select name="status" class="form-control">
+                    <option value="all">All</option>
                     <option value="Active">Active</option>
                     <option value="Expired">Expired</option>
                     <option value="Deleted">Deleted</option>
