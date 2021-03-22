@@ -10,7 +10,7 @@ if(isset($_GET["givemepromoname"])) {
 
   echo $row["promo_name"];
 } else {
-  $sql = "SELECT * FROM member WHERE member_type = 'Regular'";
+  $sql = "SELECT * FROM member WHERE member_type = 'Regular' AND isDeleted = 'false'";
   $res = mysqli_query($conn, $sql);
   $data = array();
   if($res) {

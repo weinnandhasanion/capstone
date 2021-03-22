@@ -30,31 +30,36 @@ if($status == "Both") {
   if($timespan == "Custom") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
-            AND (date_deleted BETWEEN '$fromDate' AND '$toDate' OR annual_end BETWEEN '$fromDate' AND NOW())";
+            AND date_deleted BETWEEN '$fromDate' AND '$toDate'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "Today") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
-            AND (date_deleted = '$today' OR annual_end = '$today')";
+            AND (date_deleted = '$today')";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This week") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
-            AND (date_deleted BETWEEN '$lastWeek' AND '$today' OR annual_end BETWEEN '$lastWeek' AND '$today')";
+            AND date_deleted BETWEEN '$lastWeek' AND '$today'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This month") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
-            AND (date_deleted BETWEEN '$monthStart' AND '$monthEnd' OR annual_end BETWEEN '$monthStart' AND NOW())";
+            AND date_deleted BETWEEN '$monthStart' AND '$monthEnd'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This year") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
-            AND (date_deleted BETWEEN '$yearStart' AND '$yearEnd' OR annual_end BETWEEN '$yearStart' AND NOW())";
+            AND date_deleted BETWEEN '$yearStart' AND '$yearEnd'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "All-time") {
     $sql = "SELECT * FROM member
-            WHERE acc_status = 'inactive'";
+            WHERE acc_status = 'inactive'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   }
 } else if($status == "Deleted") {
@@ -63,32 +68,43 @@ if($status == "Both") {
   if($timespan == "Custom") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
-            AND date_deleted BETWEEN '$fromDate' AND '$toDate'";
+            AND date_deleted BETWEEN '$fromDate' AND '$toDate'
+            AND isDeleted = 'true'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "Today") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
-            AND date_deleted = '$today'";
+            AND date_deleted = '$today'
+            AND isDeleted = 'true'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This week") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
-            AND date_deleted BETWEEN '$lastWeek' AND '$today'";
+            AND date_deleted BETWEEN '$lastWeek' AND '$today'
+            AND isDeleted = 'true'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This month") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
-            AND date_deleted BETWEEN '$monthStart' AND '$monthEnd'";
+            AND date_deleted BETWEEN '$monthStart' AND '$monthEnd'
+            AND isDeleted = 'true'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This year") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
-            AND date_deleted BETWEEN '$yearStart' AND '$yearEnd'";
+            AND date_deleted BETWEEN '$yearStart' AND '$yearEnd'
+            AND isDeleted = 'true'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "All-time") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
-            AND date_deleted IS NOT NULL";
+            AND isDeleted = 'true'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   }
 } else {
@@ -98,37 +114,43 @@ if($status == "Both") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
             AND annual_end BETWEEN '$fromDate' AND NOW()
-            AND date_deleted IS NULL";
+            AND isDeleted = 'false'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "Today") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
             AND annual_end = '$today'
-            AND date_deleted IS NULL";
+            AND isDeleted = 'false'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This week") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
             AND annual_end BETWEEN '$lastWeek' AND '$today'
-            AND date_deleted IS NULL";
+            AND isDeleted = 'false'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This month") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
             AND annual_end BETWEEN '$monthStart' AND NOW()
-            AND date_deleted IS NULL";
+            AND isDeleted = 'false'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "This year") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
             AND annual_end BETWEEN '$yearStart' AND NOW()
-            AND date_deleted IS NULL";
+            AND isDeleted = 'false'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   } else if($timespan == "All-time") {
     $sql = "SELECT * FROM member
             WHERE acc_status = 'inactive'
             AND annual_end < NOW()
-            AND date_deleted IS NULL";
+            AND isDeleted = 'false'
+            ORDER BY date_deleted DESC";
     $res = mysqli_query($conn, $sql);
   }
 }
@@ -139,11 +161,10 @@ if($res) {
     $row["name"] = $row["first_name"]." ".$row["last_name"];
     $row["monthly_end"] = date("M d, Y", strtotime($row["monthly_end"]));
     $row["annual_end"] = date("M d, Y", strtotime($row["annual_end"]));
-    if($row["date_deleted"] != NULL) {
-      $row["date_inactive"] = date("M d, Y", strtotime($row["date_deleted"]));
+    $row["date_inactive"] = date("M d, Y", strtotime($row["date_deleted"]));
+    if($row["isDeleted"] == "true") {
       $row["reason"] = "Deleted by admin";
     } else {
-      $row["date_inactive"] = date("M d, Y", strtotime($row["annual_end"]));
       $row["reason"] = "Failure to renew annual membership";
     }
     $data[] = $row;

@@ -43,9 +43,9 @@ if(mysqli_num_rows($membersQuery) > 0) {
 
     if($today == date("Y-m-d", strtotime($row["annual_end"]."+ 1 day"))) {
       sendNotif($row["member_id"], $dateNow, 5);
-    } else if($today == date("Y-m-d", strtotime($row["annual_end"]."+ 7 days")) && $today == date("Y-m-d", strtotime($row["monthly_end"]."+ 1 day"))) {
+    } else if($today == date("Y-m-d", strtotime($row["annual_end"]."+ 7 days")) && $today >= date("Y-m-d", strtotime($row["monthly_end"]."+ 1 day"))) {
       sendNotif($row["member_id"], $dateNow, 8);
-    } else if($today == date("Y-m-d", strtotime($row["annual_end"]."+ 15 days")) && $today == date("Y-m-d", strtotime($row["monthly_end"]."+ 1 day"))) {
+    } else if($today == date("Y-m-d", strtotime($row["annual_end"]."+ 15 days")) && $today >= date("Y-m-d", strtotime($row["monthly_end"]."+ 1 day"))) {
       makeInactive($row["member_id"]);
     }
   }
@@ -66,7 +66,7 @@ function sendNotif($id, $dateNow, $notifId) {
 function makeInactive($id) {
   global $conn;
 
-  $sql = "UPDATE member SET member_status = 'inactive' WHERE member_id = '$id'";
+  $sql = "UPDATE member SET member_status = 'inactive', date_deleted = '".date("Y-m-d")."' WHERE member_id = '$id'";
   mysqli_query($conn, $sql);
 }
  

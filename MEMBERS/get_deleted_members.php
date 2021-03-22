@@ -1,7 +1,7 @@
 <?php 
 require "./connect.php";
 
-$sql = "SELECT * FROM member WHERE acc_status = 'inactive' AND date_deleted IS NOT NULL";
+$sql = "SELECT * FROM member WHERE acc_status = 'inactive' AND isDeleted = 'true'";
 $res = mysqli_query($conn, $sql);
 
 $data = array();
