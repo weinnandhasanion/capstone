@@ -1,5 +1,5 @@
 <?php 
-require "./connect.php";
+require "./../connect.php";
 date_default_timezone_set('Asia/Manila');
 if(isset($_GET)) {
   $sql = "SELECT * FROM logtrail ORDER BY login_id DESC";

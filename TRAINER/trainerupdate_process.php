@@ -1,7 +1,7 @@
 <?php 
 //CONNECTION SA DATABASE <3
 session_start();
-require('connect.php');
+require('./../connect.php');
 date_default_timezone_set('Asia/Manila');
 if($_SESSION['admin_id']){
         $session_admin_id = $_SESSION['admin_id'];

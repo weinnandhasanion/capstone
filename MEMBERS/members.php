@@ -1,6 +1,6 @@
 <?php
 	session_start();
-    require('connect.php');
+    require('./../connect.php');
 
 	if(isset($_SESSION['admin_id'])){
 		$id = $_SESSION['admin_id'];
@@ -302,7 +302,7 @@
           class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-chart-pie mr-3"></i>Dashboard
         </a>
-        <a href="./../MEMBERS/members.php"
+        <a href="#"
           class="list-group-item list-group-item-action waves-effect sidebar-item-active">
           <i class="fas fa-user mr-3"></i>Members</a>
         <a href="./../TRAINER/trainers.php"

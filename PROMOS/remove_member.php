@@ -1,11 +1,12 @@
 <?php 
-require "./connect.php";
+require "./../connect.php";
 session_start();
 date_default_timezone_set('Asia/Manila');
 if($_SESSION['admin_id']){
         $session_admin_id = $_SESSION['admin_id'];
     }
 $memberId = $_REQUEST["member_id"];
+$promoId = $_REQUEST["promo_id"];
 
 $sql = "UPDATE memberpromos 
         SET status = 'Expired', date_expired = '".date("Y-m-d")."'

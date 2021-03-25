@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `gym`
 --
-CREATE DATABASE IF NOT EXISTS `gym` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE `gym` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `gym`;
 
 -- --------------------------------------------------------

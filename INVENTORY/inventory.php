@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('connect.php');
+require('./../connect.php');
 
 if ($_SESSION['admin_id']) {
   $id = $_SESSION['admin_id'];
@@ -127,18 +127,18 @@ $res = mysqli_query($conn, $sql);
 
 
       <br>
-      <div class="list-group list-group-flush" >
+      <div class="list-group list-group-flush">
         <a href="./../DASHBOARD/dashboard.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-chart-pie mr-3"></i>Dashboard
         </a>
         <a href="./../MEMBERS/members.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-user mr-3"></i>Members</a>
-        <a href="/PROJECT/TRAINER/trainers.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
+        <a href="./../TRAINER/trainers.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-user-shield mr-3"></i>Trainers
         </a>
-        <a href="./../INVENTORY/inventory.php" class="list-group-item list-group-item-action waves-effect sidebar-item-active">
+        <a href="#" class="list-group-item list-group-item-action waves-effect sidebar-item-active">
           <i class="fas fa-dumbbell  mr-3"></i>Inventory</a>
-        <a href="/PROJECT/PROMOS/promos.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
+        <a href="./../PROMOS/promos.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-percent mr-3"></i>Promos
         </a>
         <a href="./../PAYMENT/paymentlog.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
