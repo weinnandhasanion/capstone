@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require('connect.php');
+require('./../connect.php');
 date_default_timezone_set('Asia/Manila');
 $id = $_REQUEST['id'];
 

@@ -1,5 +1,5 @@
 <?php 
-require "./connect.php";
+require "./../connect.php";
 
 if(isset($_GET)) {
   $sql = "SELECT * FROM program WHERE program_status = 'active' ORDER BY program_id DESC";

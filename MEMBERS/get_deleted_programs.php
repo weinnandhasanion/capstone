@@ -1,5 +1,5 @@
 <?php 
-require "./connect.php";
+require "./../connect.php";
 
 $sql = "SELECT * FROM program WHERE program_status = 'inactive'";
 $query = mysqli_query($conn, $sql);

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('connect.php');
+require('./../connect.php');
 
 if ($_SESSION['admin_id']) {
   $id = $_SESSION['admin_id'];
