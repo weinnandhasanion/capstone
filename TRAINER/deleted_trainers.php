@@ -1,5 +1,5 @@
 <?php 
-require "./connect.php";
+require "./../connect.php";
 
 if(isset($_GET)) {
   $sql = "SELECT * FROM trainer WHERE trainer_status = 'deleted' ORDER BY trainer_id DESC";
