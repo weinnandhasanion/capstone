@@ -28,62 +28,62 @@ $existPhone = mysqli_query($conn, $exist);
 if (preg_match($phoneregex, $phone, $match)) {
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Phone has letters.. pelase check ur inputs.');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 }else if($email == ""){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Email address is empty');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>"); 
 }else if(strlen($email) > 40){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Invalid email address. Maximum of 40 letters only');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 }else if(mysqli_num_rows($existEmail)>0){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Email is already taken');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 }else if($phone == ""){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Contact number is empty');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 }else if(strlen($phone) <= 10){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Invalid contact number. lacking numbers inputed');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 }else if(strlen($phone) > 11){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Invalid contact number. morethan 11 numbers inputed');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 }else if(mysqli_num_rows($existPhone)>0){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Phone is already Taken');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 }else if($address == ""){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Address is empty');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 }else if(strlen($address) > 60){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Invalid address. Maximum of 60 letters only');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 }else if(strlen($address) < 5){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Invalid address. Too short for a address');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");    
 }else if($sql_update){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Update successfully');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 }else{
         $sql = "UPDATE member SET email = '$email', address = '$address', phone = '$phone', member_type = '$member_type'
@@ -153,7 +153,7 @@ mysqli_query($conn, $sql1);
 
     echo ("<script LANGUAGE='JavaScript'>
                 window.alert('Member updated successfully!');
-                window.location.href='/PROJECT/MEMBERS/members.php';
+                window.location.href='./../MEMBERS/members.php';
                 </script>");
 }
 

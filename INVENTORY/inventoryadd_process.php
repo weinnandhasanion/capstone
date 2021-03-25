@@ -49,28 +49,28 @@ $duplicate_name = mysqli_query($conn, $check_name);
 if (preg_match($qtyregex, $inventory_qty, $match)) {
 	echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid quantity, use only numbers...');
-    window.location.href='/PROJECT/INVENTORY/inventory.php';
+    window.location.href='./../INVENTORY/inventory.php';
     </script>");
 } 
 else if(mysqli_num_rows($duplicate_name)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Inventory name is already Taken');
-    window.location.href='/PROJECT/INVENTORY/inventory.php';
+    window.location.href='./../INVENTORY/inventory.php';
     </script>");
 }else if(strlen($inventory_name) > 50){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid inventory name. Maximum of 50 letters only');
-    window.location.href='/PROJECT/INVENTORY/inventory.php';
+    window.location.href='./../INVENTORY/inventory.php';
     </script>");
 }else if($inventory_qty > 999){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid inventory quantity. Maximum of 999 only');
-    window.location.href='/PROJECT/INVENTORY/inventory.php';
+    window.location.href='./../INVENTORY/inventory.php';
     </script>");
 }else if(strlen($inventory_description) > 100){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid inventory quantity. Maximum of 100 letters only');
-    window.location.href='/PROJECT/INVENTORY/inventory.php';
+    window.location.href='./../INVENTORY/inventory.php';
     </script>");
 }else {  
 	$sql = "INSERT INTO `inventory` ( inventory_name,inventory_qty,inventory_category,inventory_description,date_added, image_pathname)
@@ -80,7 +80,7 @@ else if(mysqli_num_rows($duplicate_name)>0){
 
 	echo ("<script LANGUAGE='JavaScript'>
     window.alert('Successfully added inventory...');
-    window.location.href='/PROJECT/INVENTORY/inventory.php';
+    window.location.href='./../INVENTORY/inventory.php';
     </script>");
 //-----------LOGTRAIL DOING
 

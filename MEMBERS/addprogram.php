@@ -75,135 +75,135 @@ $existProgramName = mysqli_query($conn, $exist);
 if(preg_match($program_name_regex, $program_name, $match)){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid program name. make sure no numbers');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if(mysqli_num_rows($existProgramName)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Program name is already Taken');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if(strlen($program_name) > 20){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Invalid program name. Maximum of 20 letters only');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 }else if(strlen($program_description) > 60){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Invalid program description. Maximum of 60 letters only');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 }else if(strlen($program_description) < 10){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Invalid program description. Too short for a description');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 //---------------DAY 1 EMPTY VALIDATION
 }else if($upper1day1 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 1 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($upper2day1 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 2 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($upper3day1 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($lower1day1 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($lower2day1 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($lower3day1 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($abdominalday1 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./..//MEMBERS/members.php';
     </script>");
 //---------------DAY 2 EMPTY VALIDATION
 }else if($upper1day2 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 1 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($upper2day2 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 2 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($upper3day2 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($lower1day2 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($lower2day2 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($lower3day2 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./.../..//MEMBERS/members.php';
     </script>");
 }else if($abdominalday2 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 //---------------DAY 3 EMPTY VALIDATION
 }else if($upper1day3 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 1 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($upper2day3 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 2 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($upper3day3 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($lower1day3 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($lower2day3 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($lower3day3 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if($abdominalday3 == ""){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Day 1 Upper Body 3 is empty');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else{
 
@@ -222,7 +222,7 @@ if(preg_match($program_name_regex, $program_name, $match)){
 
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('program is been added.');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }
 

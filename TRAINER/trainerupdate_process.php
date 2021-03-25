@@ -36,44 +36,44 @@ if (preg_match($phoneregex, $phone, $match))
 {
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Contact number has letters. Please check ur inputs.');
-        window.location.href='/PROJECT/TRAINER/trainers.php';
+        window.location.href='./../TRAINER/trainers.php';
         </script>");
 
 // CHECK KUNG 11 NUMBERS IMO INPUT.. IF FALSE MO EXIT SA ELSE
 }else if(mysqli_num_rows($duplicate_phone)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Contact number is already taken');
-    window.location.href='/PROJECT/TRAINER/trainers.php';
+    window.location.href='./../TRAINER/trainers.php';
     </script>");
 }else if(mysqli_num_rows($duplicate_email)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Email address is already taken');
-    window.location.href='/PROJECT/TRAINER/trainers.php';
+    window.location.href='./../TRAINER/trainers.php';
     </script>");
 }else if(strlen($phone) > 11){
    echo ("<script LANGUAGE='JavaScript'>
    window.alert('Invalid Phone number. Too many numbers inputed');
-   window.location.href='/PROJECT/TRAINER/trainers.php';
+   window.location.href='./../TRAINER/trainers.php';
    </script>");
 }else if(strlen($phone) < 10){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid Phone number. Lacking numbers input');
-    window.location.href='/PROJECT/TRAINER/trainers.php';
+    window.location.href='./../TRAINER/trainers.php';
     </script>"); 
 }else if(strlen($email) > 40){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid email address. Maximum of 40 letters only');
-    window.location.href='/PROJECT/TRAINER/trainers.php';
+    window.location.href='./../TRAINER/trainers.php';
     </script>");      
 }else if(strlen($address) > 60){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid  address. Maximum of 60 letters only');
-    window.location.href='/PROJECT/TRAINER/trainers.php';
+    window.location.href='./..//TRAINER/trainers.php';
     </script>");       
 }else if(strlen($address) < 5){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid  address. Too short for address');
-    window.location.href='/PROJECT/TRAINER/trainers.php';
+    window.location.href='./../TRAINER/trainers.php';
     </script>");    
 }else{
     mysqli_query($conn, $tan);
@@ -145,7 +145,7 @@ if (preg_match($phoneregex, $phone, $match))
 
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Trainer is successfully updated.');
-        window.location.href='/PROJECT/TRAINER/trainers.php';
+        window.location.href='./../TRAINER/trainers.php';
         </script>"); 
 //-------------------------------------------------------------------------------
 

@@ -11,7 +11,7 @@ $id = $_REQUEST['id'];
 $date_deleted = date("Y-m-d");
 $time_deleted = date("H:i:s");
 
-$ox = "UPDATE member SET acc_status = 'inactive', date_deleted = '$date_deleted', time_deleted = '$time_deleted'
+$ox = "UPDATE member SET acc_status = 'inactive', date_deleted = '$date_deleted', time_deleted = '$time_deleted',isDeleted = 'true'
 WHERE member_id = " . intval($id) . "";     
     
         //this is for puting login_id in the array

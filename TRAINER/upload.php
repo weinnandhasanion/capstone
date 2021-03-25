@@ -16,9 +16,9 @@ if(isset($_POST['submit'])){
         if($fileError === 0){
             if($fileSize < 1000000){
                 $fileNameNew = uniqid('', true).".".$fileActualExt;
-                $fileDestination = '/PROJECT/TRAINER/uploads/'. $fileNameNew;
+                $fileDestination = './../TRAINER/uploads/'. $fileNameNew;
                 move_uploaded_file($fileTmpName, $fileDestination);
-                header("Location: /PROJECT/TRAINER/trainers.php?uploadsuccess");
+                header("Location: ./../TRAINER/trainers.php?uploadsuccess");
             }else{
                 echo "Your file is too big!";
             }

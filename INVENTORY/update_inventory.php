@@ -49,7 +49,7 @@ if($_FILES["image"]["size"] > 0) {
   if (preg_match($qtyregex, $inventory_qty, $match)) {
     echo ("<script LANGUAGE='JavaScript'>
       window.alert('Invalid quantity, use only numbers...');
-      window.location.href='/PROJECT/INVENTORY/inventory.php';
+      window.location.href='./../INVENTORY/inventory.php';
       </script>");
   }else {
     // $sql = "INSERT INTO `inventory` ( inventory_name,inventory_qty,inventory_category,inventory_description,date_added, image_pathname)
@@ -70,7 +70,7 @@ if($_FILES["image"]["size"] > 0) {
     if($query_run) {
       echo ("<script LANGUAGE='JavaScript'>
       window.alert('Successfully updated item...');
-      window.location.href='/PROJECT/INVENTORY/inventory.php';
+      window.location.href='./../INVENTORY/inventory.php';
       </script>");
     } else {
       echo ("<script LANGUAGE='JavaScript'>
@@ -81,28 +81,28 @@ if($_FILES["image"]["size"] > 0) {
 }else if(strlen($inventory_name) > 50){
   echo ("<script LANGUAGE='JavaScript'>
   window.alert('Invalid inventory name. Maximum of 50 letters only');
-  window.location.href='/PROJECT/INVENTORY/inventory.php';
+  window.location.href='./../INVENTORY/inventory.php';
   </script>");
 }else if($inventory_qty > 999){
   echo ("<script LANGUAGE='JavaScript'>
   window.alert('Invalid inventory quantity. Maximum of 999 only');
-  window.location.href='/PROJECT/INVENTORY/inventory.php';
+  window.location.href='./../INVENTORY/inventory.php';
   </script>");
 }else if($inventory_dmg > $inventory_qty){
   echo ("<script LANGUAGE='JavaScript'>
   window.alert('Invalid inventory damage. Maximum of $inventory_qty only');
-  window.location.href='/PROJECT/INVENTORY/inventory.php';
+  window.location.href='./../INVENTORY/inventory.php';
   </script>");
 }else if(strlen($inventory_description) > 100){
   echo ("<script LANGUAGE='JavaScript'>
   window.alert('Invalid inventory quantity. Maximum of 100 letters only');
-  window.location.href='/PROJECT/INVENTORY/inventory.php';
+  window.location.href='./../INVENTORY/inventory.php';
   </script>");
 } else {
   if (preg_match($qtyregex, $inventory_qty, $match)) {
     echo ("<script LANGUAGE='JavaScript'>
       window.alert('Invalid quantity, use only numbers...');
-      window.location.href='/PROJECT/INVENTORY/inventory.php';
+      window.location.href='./../INVENTORY/inventory.php';
       </script>");
   } else {
     // $sql = "INSERT INTO `inventory` ( inventory_name,inventory_qty,inventory_category,inventory_description,date_added, image_pathname)
@@ -183,7 +183,7 @@ if($_FILES["image"]["size"] > 0) {
 
       echo ("<script LANGUAGE='JavaScript'>
       window.alert('Successfully updated item...');
-      window.location.href='/PROJECT/INVENTORY/inventory.php';
+      window.location.href='./../INVENTORY/inventory.php';
       </script>");
     } else {
       echo ("<script LANGUAGE='JavaScript'>

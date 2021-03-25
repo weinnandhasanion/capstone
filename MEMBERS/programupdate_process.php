@@ -47,32 +47,32 @@ $existProgramDescription = mysqli_query($conn, $exist1);
 if (preg_match($NumberRegex, $program_name, $match)) {
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Program name has numbers.. pelase check ur inputs.');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if(preg_match($NumberRegex, $program_description, $match)){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Program description has numbers.. pelase check ur inputs.');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if(mysqli_num_rows($existProgramName)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Program name is already taken');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if(mysqli_num_rows($existProgramDescription)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Program description is already taken');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if(strlen($program_name) > 20){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid program name. Maximum of 20 letters only');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if(strlen($program_description) > 100){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid program name. Maximum of 100 letters only');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else{
     $sql_update = "UPDATE program 

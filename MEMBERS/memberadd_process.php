@@ -41,97 +41,97 @@ $LnameNumregex = "/[0-9]/";
  if(preg_match($LnameNumregex, $last_name, $match)){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid last name. Please check, make sure no numbers...');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }
 //VALIDATION IF NAAY NUMBERS ANG GI INPUT NMO SA FIRSTNAME.. 
 else if(preg_match($FnameNumregex, $first_name, $match)){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid first name. Please check, make sure no numbers...');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }
 //VALIDATION IF 20 LENGTH RA ANG GI INPUT NMO SA FIRSTNAME.. 
 else if(strlen($first_name) > 20){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid first name. Maximum of 20 letters only');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }
 //VALIDATION IF 20 LENGTH RA ANG GI INPUT NMO SA LASTNAME.. 
 else if(strlen($last_name) > 20){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid last name. Maximum of 20 letters only');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }
 //VALIDATION IF NAME IS ALREADY TAKEN.. 
 else if(mysqli_num_rows($duplicate_name)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Name is already Taken');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }
 //VALIDATION IF EMAIL IS ALREADY TAKEN.. 
 else if(mysqli_num_rows($duplicate_email)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Email address is already Taken');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }
 //VALIDATION IF 40 LENGTH RA ANG GI INPUT NMO SA EMAIL.. 
 else if(strlen($email) > 40){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid email address. Maximum of 40 letters only');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }
 //VALIDATION IF 60 LENGTH RA ANG GI INPUT NMO SA ADDRESS.. 
 else if(strlen($address) > 60){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid address. Maximum of 60 letters only');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }
 //VALIDATION IF 5 LENGTH RA ANG GI INPUT NMO SA ADDRESS.. 
 else if(strlen($address) < 5){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid address. Too short for a address');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }
 //VALIDATION IF CONTACT NUMBER IS ALREADY TAKEN.. 
 else if(mysqli_num_rows($duplicate_phone)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Contact number is already Taken');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }
 //VALIDATION IF NAAY LETTERS ANG GI INPUT NMO SA CONTACT NUMBER.. IF WALA MO PROCEED SHA SA NEXT CHECKING
 else if (preg_match($phoneregex, $phone, $match)){
     echo ("<script LANGUAGE='JavaScript'>
         window.alert('Phone has letters.. pelase check ur inputs.');
-        window.location.href='/PROJECT/MEMBERS/members.php';
+        window.location.href='./../MEMBERS/members.php';
         </script>");
 }else if(strlen($phone) <= 10){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid contact number. lacking numbers inputed');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if(strlen($phone) > 11){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid contact number. morethan 11 numbers inputed');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if(!checkBirthdate($birthdate)) {
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid birthdate. You must be at least 15 years old to enter the gym!');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 } else if(!checkValidBdate($birthdate)) {
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid birthdate. Please enter a valid date.');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 } else {
         $sql = "INSERT INTO `member` ( first_name,last_name,gender,birthdate,email,address,
@@ -216,7 +216,7 @@ else if (preg_match($phoneregex, $phone, $match)){
 
      echo ("<script LANGUAGE='JavaScript'>
     window.alert('Successfully Added a member');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }
 
@@ -254,7 +254,7 @@ if($member_type == 'Regular'){
 }else{
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('ERROR');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 }
 

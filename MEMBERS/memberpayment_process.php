@@ -58,7 +58,7 @@ $timeNow = date("h:i A");
 if($payment_description == ''){
     echo ("<script LANGUAGE='JavaScript'>
                 window.alert('FAIL TO PAY!..You did not choose subscription.');
-                window.location.href='/PROJECT/MEMBERS/members.php';
+                window.location.href='./../MEMBERS/members.php';
                 </script>");
 }
 
@@ -89,7 +89,7 @@ else if($payment_description == 'Monthly Subscription'){
     if($query_run) {
         echo ("<script LANGUAGE='JavaScript'>
                 window.alert('Monthly Payment is been added.');
-                window.location.href='/PROJECT/MEMBERS/members.php';
+                window.location.href='./../MEMBERS/members.php';
                 </script>");
     } else {
         echo mysqli_error($conn);
@@ -240,7 +240,7 @@ else if($payment_description == 'Monthly Subscription'){
 
     echo ("<script LANGUAGE='JavaScript'>
                 window.alert('Annual Payment is been added.');
-                window.location.href='/PROJECT/MEMBERS/members.php';
+                window.location.href='./../MEMBERS/members.php';
                 </script>");
 
 // INSERTINGN REPORTS FOR THE ADMIN INFO
@@ -301,7 +301,7 @@ $query_run123 = mysqli_query($conn, $klint);
 
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Both Annual and Monthly  Payment is been added.');
-    window.location.href='/PROJECT/MEMBERS/members.php';
+    window.location.href='./../MEMBERS/members.php';
     </script>");
 
 
@@ -386,7 +386,7 @@ $query_run123 = mysqli_query($conn, $klint);
     
     echo ("<script LANGUAGE='JavaScript'>
                 window.alert('Walk-in Payment is been added.');
-                window.location.href='/PROJECT/MEMBERS/members.php';
+                window.location.href='./../MEMBERS/members.php';
                 </script>");
 
      //this is for puting member_id in the array
@@ -448,11 +448,11 @@ $query_run123 = mysqli_query($conn, $klint);
 
     echo ("<script LANGUAGE='JavaScript'>
                 window.alert('Annual Payment is been added.');
-                window.location.href='/PROJECT/MEMBERS/members.php';
+                window.location.href='./../MEMBERS/members.php';
                 </script>");
 }else{
     echo "failure to register";
-    header('Location: /PROJECT/MEMBERS/members.php?failure to pay');
+    header('Location: ./../MEMBERS/members.php?failure to pay');
 }
 
 // Checking if paid
