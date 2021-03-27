@@ -40,6 +40,8 @@ $abdominalday3 = $_POST['abdominal-day-3'];
 
 //REGEX
 $program_name_regex = "/[0-9]/";
+$specialCharacterRegex  = "/\\W/";
+$checkSpace = "/\\s/";
 
  // INSERTING  ADMIN INFO 
  $sql0 = "SELECT * FROM admin WHERE admin_id = $session_admin_id";
@@ -77,6 +79,16 @@ if(preg_match($program_name_regex, $program_name, $match)){
     window.alert('Invalid program name. make sure no numbers');
     window.location.href='./../MEMBERS/members.php';
     </script>");
+}else if(preg_match($checkSpace, $program_name, $match)){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid program name. make sure no space included');
+        window.location.href='./../MEMBERS/members.php';
+        </script>");
+}else if(preg_match($specialCharacterRegex, $program_name, $match)){
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid program name. make sure no special characters');
+        window.location.href='./../MEMBERS/members.php';
+        </script>");
 }else if(mysqli_num_rows($existProgramName)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Program name is already Taken');

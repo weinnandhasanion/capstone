@@ -16,6 +16,8 @@ $phone= $_POST['phone'];
 $member_type = $_POST['member_type'];
 $address= $_POST['address'];
 $phoneregex = "/[a-zA-Z]/";
+$specialCharacterRegex  = "/\\W/";
+$checkSpace = "/\\s/";
 
 $exist = "SELECT * FROM member WHERE member_id != '$id' AND email = '$email'";
 $existEmail = mysqli_query($conn, $exist);
@@ -35,6 +37,22 @@ if (preg_match($phoneregex, $phone, $match)) {
         window.alert('Email address is empty');
         window.location.href='./../MEMBERS/members.php';
         </script>"); 
+        
+}else if(preg_match($checkSpace, $email, $match)) {
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid email address. Please check, make sure no space...');
+        window.location.href='./../MEMBERS/members.php';
+        </script>");
+}else if(preg_match($checkSpace, $phone, $match)) {
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid contact number. Please check, make sure no space...');
+        window.location.href='./../MEMBERS/members.php';
+        </script>");
+}else if(preg_match($specialCharacterRegex, $phone, $match)) {
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid contact number. Please check, make sure special characters...');
+        window.location.href='./../MEMBERS/members.php';
+        </script>");
 }else if(strlen($email) > 40){
         echo ("<script LANGUAGE='JavaScript'>
         window.alert('Invalid email address. Maximum of 40 letters only');
