@@ -2525,13 +2525,12 @@
           let html = `<tr>
             <td>${row.program_name}</td>
             <td>
-              <span data-toggle="tooltip" data-placement="top"
-                title="View ${row.program_name} members">
-                <i style="cursor: pointer; color:brown; font-size: 25px;" data-toggle="modal"
-                  data-target="#viewprogram" class=" far fa-user mx-1 get_id"
+              <span data-toggle="tooltip" data-placement="top" title="View ${row.program_name} members">
+                <i style="cursor: pointer; color:brown; font-size: 25px;"
+                  class="fas fa-pencil-alt mx-1 get_id" data-toggle="modal" data-target="#viewprogram"
                   data-id='${row.program_id}' onclick="displayProgramMembers(this)"></i>
               </span>
-              <span data-toggle="tooltip" data-placement="top" title="${row.program_name} info">
+              <span data-toggle="tooltip" data-placement="top" title="update ${row.program_name}">
                 <i style="cursor: pointer; color:#C71585; font-size: 25px;"
                   class="fas fa-pencil-alt mx-1 get_id" data-toggle="modal" data-target="#programUpdate"
                   data-id='${row.program_id}' onclick="displayUpdateProgramInformation(this)"></i>

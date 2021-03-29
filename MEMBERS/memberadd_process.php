@@ -37,6 +37,9 @@ $duplicate_phone = mysqli_query($conn, $check_phone);
 $phoneregex = "/[a-zA-Z]/";
 $FnameNumregex = "/[0-9]/";
 $LnameNumregex = "/[0-9]/";
+$specialCharacterRegex  = "/\\W/";
+$checkSpace = "/\\s/";
+
 //VALIDATION IF NAAY NUMBERS ANG GI INPUT NMO SA LASTNAME..
  if(preg_match($LnameNumregex, $last_name, $match)){
     echo ("<script LANGUAGE='JavaScript'>
@@ -44,6 +47,56 @@ $LnameNumregex = "/[0-9]/";
     window.location.href='./../MEMBERS/members.php';
     </script>");
 }
+//VALIDATION IF NAAY SPACE.. 
+else if(preg_match($checkSpace, $last_name, $match)){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid last name. Please check, make sure no space...');
+    window.location.href='./../MEMBERS/members.php';
+    </script>");
+}
+//VALIDATION IF NAAY SPACE.. 
+else if(preg_match($checkSpace, $first_name, $match)){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid first name. Please check, make sure no space...');
+    window.location.href='./../MEMBERS/members.php';
+    </script>");
+}
+//VALIDATION IF NAAY SPACE.. 
+else if(preg_match($checkSpace, $phone, $match)){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid Contact number. Please check, make sure no space...');
+    window.location.href='./../MEMBERS/members.php';
+    </script>");
+}
+//VALIDATION IF NAAY SPACE.. 
+else if(preg_match($checkSpace, $email, $match)){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid Email address. Please check, make sure no space...');
+    window.location.href='./../MEMBERS/members.php';
+    </script>");
+}
+//VALIDATION IF NAAY SPECIAL CHARACTER.. 
+else if(preg_match($specialCharacterRegex, $last_name, $match)){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid last name. Please check, make sure no special characters...');
+    window.location.href='./../MEMBERS/members.php';
+    </script>");
+}
+//VALIDATION IF NAAY SPECIAL CHARACTER.. 
+else if(preg_match($specialCharacterRegex, $first_name, $match)){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid first name. Please check, make sure no special characters...');
+    window.location.href='./../MEMBERS/members.php';
+    </script>");
+}
+//VALIDATION IF NAAY SPECIAL CHARACTER.. 
+else if(preg_match($specialCharacterRegex, $phone, $match)){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid  Contact number. Please check, make sure no special characters...');
+    window.location.href='./../MEMBERS/members.php';
+    </script>");
+}
+
 //VALIDATION IF NAAY NUMBERS ANG GI INPUT NMO SA FIRSTNAME.. 
 else if(preg_match($FnameNumregex, $first_name, $match)){
     echo ("<script LANGUAGE='JavaScript'>

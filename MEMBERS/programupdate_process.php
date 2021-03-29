@@ -37,6 +37,8 @@ $lower2day3 = $_POST['lower-2-day-3'];
 $lower3day3 = $_POST['lower-3-day-3'];  
 $abdominalday3 = $_POST['abdominal-day-3']; 
 $NumberRegex = "/[0-9]/";
+$specialCharacterRegex  = "/\\W/";
+$checkSpace = "/\\s/";
 
 $exist = "SELECT * FROM program WHERE program_id != '$id' AND program_name = '$program_name'";
 $existProgramName = mysqli_query($conn, $exist);
@@ -52,6 +54,16 @@ if (preg_match($NumberRegex, $program_name, $match)) {
 }else if(preg_match($NumberRegex, $program_description, $match)){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Program description has numbers.. pelase check ur inputs.');
+    window.location.href='./../MEMBERS/members.php';
+    </script>");
+}else if(preg_match($checkSpace, $program_name, $match)){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid program name. make sure no space included');
+    window.location.href='./../MEMBERS/members.php';
+    </script>");
+}else if(preg_match($specialCharacterRegex, $program_name, $match)){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid program name. make sure no special character');
     window.location.href='./../MEMBERS/members.php';
     </script>");
 }else if(mysqli_num_rows($existProgramName)>0){
