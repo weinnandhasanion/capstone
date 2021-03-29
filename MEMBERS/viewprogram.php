@@ -38,7 +38,7 @@ if($row = mysqli_fetch_assoc($res)) {
 
 
 function getName($id) {
-  include "./connect.php";
+  include "./../connect.php";
   $sql = "SELECT routine_name FROM routines WHERE routine_id = $id";
   $result = mysqli_query($conn, $sql);
 
