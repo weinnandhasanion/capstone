@@ -2527,7 +2527,7 @@
             <td>
               <span data-toggle="tooltip" data-placement="top" title="View ${row.program_name} members">
                 <i style="cursor: pointer; color:brown; font-size: 25px;"
-                  class="fas fa-pencil-alt mx-1 get_id" data-toggle="modal" data-target="#viewprogram"
+                  class="fas fa-user mx-1 get_id" data-toggle="modal" data-target="#viewprogram"
                   data-id='${row.program_id}' onclick="displayProgramMembers(this)"></i>
               </span>
               <span data-toggle="tooltip" data-placement="top" title="update ${row.program_name}">
