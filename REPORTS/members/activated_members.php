@@ -22,6 +22,7 @@ if($timespan == "Custom") {
   $reportText = "Generating reports for members activated from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
   $sql = "SELECT * FROM member
           WHERE acc_status = 'active'
+          AND isActivated = 'true'
           AND date_activated >= '$fromDate' 
           AND date_activated <= '$toDate'
           AND date_activated IS NOT NULL";
@@ -31,6 +32,7 @@ if($timespan == "Custom") {
   $today = date("Y-m-d");
   $sql = "SELECT * FROM member
           WHERE acc_status = 'active'
+          AND isActivated = 'true'
           AND date_activated = '$today'
           AND date_activated IS NOT NULL";
   $res = mysqli_query($conn, $sql);
@@ -40,6 +42,7 @@ if($timespan == "Custom") {
   $reportText = "Generating reports for members activated this week (".date("F d, Y", strtotime($lastWeek))." to ".date("F d, Y").")...";
   $sql = "SELECT * FROM member
           WHERE acc_status = 'active'
+          AND isActivated = 'true'
           AND date_activated >= '$lastWeek'
           AND date_activated <= '$today'
           AND date_activated IS NOT NULL";
@@ -50,6 +53,7 @@ if($timespan == "Custom") {
   $reportText = "Generating reports for members activated this month of ".date("F")."...";
   $sql = "SELECT * FROM member
           WHERE acc_status = 'active'
+          AND isActivated = 'true'
           AND date_activated >= '$monthStart'
           AND date_activated <= '$monthEnd'
           AND date_activated IS NOT NULL";
@@ -60,6 +64,7 @@ if($timespan == "Custom") {
   $reportText = "Generating reports for members activated this year (".date("Y").")...";
   $sql = "SELECT * FROM member
           WHERE acc_status = 'active'
+          AND isActivated = 'true'
           AND date_activated >= '$yearStart'
           AND date_activated <= '$yearEnd'
           AND date_activated IS NOT NULL";
@@ -67,7 +72,8 @@ if($timespan == "Custom") {
 } else {
   $reportText = "Generating reports for members activated since all of time...";
   $sql = "SELECT * FROM member WHERE acc_status = 'active'
-  AND date_activated IS NOT NULL";
+          AND isActivated = 'true'
+          AND date_activated IS NOT NULL";
   $res = mysqli_query($conn, $sql);
 }
 

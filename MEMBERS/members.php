@@ -2353,7 +2353,7 @@
       $("#no-data-div").css("display", "none");
       data.forEach(row => {
         var span;
-        if (row.username) {
+        if (row.isActivated == "true") {
           span = `<span  data-toggle="tooltip" data-placement="top" title="Deactivate ${row.last_name} Account?">
                   <i style="cursor: pointer; color:#FF4500; font-size: 25px;"
                   class="fa fa-lock mx-1" data-id="${row.member_id}"lastname-id="${row.last_name}"
