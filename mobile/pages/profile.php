@@ -35,12 +35,9 @@
     .modal-footer-btn {
       display: flex;
       justify-content: center;
-      padding: 20px 20px 0 20px;
+      align-items: center;
+      padding-top: 20px;
       width: 80%;
-    }
-
-    .modal-footer-btn a {
-      width: 100%;
     }
 
     .img-cont {
