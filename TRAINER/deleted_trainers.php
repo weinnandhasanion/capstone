@@ -2,7 +2,7 @@
 require "./../connect.php";
 
 if(isset($_GET)) {
-  $sql = "SELECT * FROM trainer WHERE trainer_status = 'deleted' ORDER BY trainer_id DESC";
+  $sql = "SELECT * FROM trainer WHERE trainer_status = 'deleted' ORDER BY  date_deleted DESC, time_deleted DESC";
   $res = mysqli_query($conn, $sql);
 
   if($res) {

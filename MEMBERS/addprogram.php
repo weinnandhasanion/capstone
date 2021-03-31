@@ -40,7 +40,7 @@ $abdominalday3 = $_POST['abdominal-day-3'];
 
 //REGEX
 $program_name_regex = "/[0-9]/";
-$specialCharacterRegex  = "/\\W/";
+$specialCharacterRegex  = "/[\\W_]/";
 $checkSpace = "/\\s/";
 
  // INSERTING  ADMIN INFO 

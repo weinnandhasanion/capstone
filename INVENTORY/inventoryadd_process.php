@@ -15,6 +15,7 @@ $date_added = date("Y-m-d");
 
 //regex
 $qtyregex = "/[a-zA-Z]/";
+$specialCharacterRegex  = "/[\\W_]/";
 
 // Uploading image
 $target_dir = "./img/";
@@ -51,8 +52,12 @@ if (preg_match($qtyregex, $inventory_qty, $match)) {
     window.alert('Invalid quantity, use only numbers...');
     window.location.href='./../INVENTORY/inventory.php';
     </script>");
-} 
-else if(mysqli_num_rows($duplicate_name)>0){
+}else if(preg_match($specialCharacterRegex, $inventory_qty, $match)){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid quantity. make sure no special character and space');
+    window.location.href='./../INVENTORY/inventory.php';
+    </script>");
+}else if(mysqli_num_rows($duplicate_name)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Inventory name is already Taken');
     window.location.href='./../INVENTORY/inventory.php';

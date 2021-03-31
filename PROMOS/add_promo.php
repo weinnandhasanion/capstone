@@ -17,6 +17,7 @@ $dateAdded = date("Y-m-d");
 //REGEX
 $letterRegex = "/[a-zA-Z]/";
 $numberRegex = "/[0-9]/";
+$specialCharacterRegex  = "/[\\W_]/";
 //---- query validations
 $check_name = "SELECT * from promo where promo_name='$name'";
 $duplicate_name = mysqli_query($conn, $check_name);
@@ -24,6 +25,11 @@ $duplicate_name = mysqli_query($conn, $check_name);
 if(preg_match($letterRegex, $amount, $match)){
   echo ("<script LANGUAGE='JavaScript'>
   window.alert('Invalid amount. Please check make sure no letters.');
+  window.location.href='./promos.php';
+  </script>");
+}else if(preg_match($specialCharacterRegex, $amount, $match)){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid Amount. make sure no special character and space');
   window.location.href='./promos.php';
   </script>");
 } else if(strlen($name) < 5){

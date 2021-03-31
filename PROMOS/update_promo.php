@@ -16,6 +16,7 @@ $endDate = date("Y-m-d", strtotime($_POST["promo-end-date-update"]));
 //REGEX
 $letterRegex = "/[a-zA-Z]/";
 $numberRegex = "/[0-9]/";
+$specialCharacterRegex  = "/[\\W_]/";
 
 $check_name = "SELECT * from promo where promo_name='$name' AND promo_id != '$id'";
 $duplicate_name = mysqli_query($conn, $check_name);
@@ -23,6 +24,11 @@ $duplicate_name = mysqli_query($conn, $check_name);
 if(preg_match($letterRegex, $amount, $match)){
   echo ("<script LANGUAGE='JavaScript'>
   window.alert('Invalid amount. Please check make sure no letters.');
+  window.location.href='./promos.php';
+  </script>");
+}else if(preg_match($specialCharacterRegex, $amount, $match)){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid Amount. make sure no special character and space');
   window.location.href='./promos.php';
   </script>");
 }else if(strlen($name) < 5){

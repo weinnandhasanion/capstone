@@ -16,7 +16,7 @@ $phone= $_POST['phone'];
 $member_type = $_POST['member_type'];
 $address= $_POST['address'];
 $phoneregex = "/[a-zA-Z]/";
-$specialCharacterRegex  = "/\\W/";
+$specialCharacterRegex  = "/[\\W_]/";
 $checkSpace = "/\\s/";
 
 $exist = "SELECT * FROM member WHERE member_id != '$id' AND email = '$email'";

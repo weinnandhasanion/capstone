@@ -17,6 +17,7 @@ $id = $_POST["inventory_id"];
 
 //regex
 $qtyregex = "/[a-zA-Z]/";
+$specialCharacterRegex  = "/[\\W_]/";
 
 if($_FILES["image"]["size"] > 0) {
   // Uploading image
@@ -86,6 +87,11 @@ if($_FILES["image"]["size"] > 0) {
 }else if($inventory_qty > 999){
   echo ("<script LANGUAGE='JavaScript'>
   window.alert('Invalid inventory quantity. Maximum of 999 only');
+  window.location.href='./../INVENTORY/inventory.php';
+  </script>");
+}else if(preg_match($specialCharacterRegex, $inventory_qty, $match)){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid quantity. make sure no special character and space');
   window.location.href='./../INVENTORY/inventory.php';
   </script>");
 }else if($inventory_dmg > $inventory_qty){

@@ -37,7 +37,7 @@ $duplicate_phone = mysqli_query($conn, $check_phone);
 $phoneregex = "/[a-zA-Z]/";
 $FnameNumregex = "/[0-9]/";
 $LnameNumregex = "/[0-9]/";
-$specialCharacterRegex  = "/\\W/";
+$specialCharacterRegex  = "/[\\W_]/";
 $checkSpace = "/\\s/";
 
 //VALIDATION IF NAAY NUMBERS ANG GI INPUT NMO SA LASTNAME..
