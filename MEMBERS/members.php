@@ -2620,7 +2620,7 @@
               <td>
                 <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
                   title="Recover ${row.program_name}" class="fas fa-undo mx-1"
-                  data-id="${row.member_id}" onclick="recover(this)"></i>
+                  data-id="${row.program_id}" onclick="recoverProgram(this)"></i>
               </td>
             </tr>`;
             $("#deletetbody-programs").append(html);
