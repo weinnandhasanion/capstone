@@ -78,6 +78,7 @@ if (preg_match($qtyregex, $inventory_qty, $match)) {
     window.location.href='./../INVENTORY/inventory.php';
     </script>");
 }else {  
+if(preg_match('/^[0-9 a-zA-Z 0-9]+$/', $inventory_name)){
 	$sql = "INSERT INTO `inventory` ( inventory_name,inventory_qty,inventory_category,inventory_description,date_added, image_pathname)
     VALUES ( '$inventory_name', '$inventory_qty', '$inventory_category', '$inventory_description', '$date_added', '" . $_FILES["image"]["name"] . "')";
 
@@ -87,6 +88,17 @@ if (preg_match($qtyregex, $inventory_qty, $match)) {
     window.alert('Successfully added inventory...');
     window.location.href='./../INVENTORY/inventory.php';
     </script>");
+}else{
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid inventory name. Please check, make sure no special characters...');
+    window.location.href='./../INVENTORY/inventory.php';
+    </script>");
+    }
+}
+
+?>
+
+<?php
 //-----------LOGTRAIL DOING
 
      //this is for puting member_id in the array
@@ -147,8 +159,6 @@ if (preg_match($qtyregex, $inventory_qty, $match)) {
      VALUES 
 	 ( '$login_id_new','$admin_id', '$inventory_id_new', '$user_fname','$description','$identity', '$timeNow')";
      mysqli_query($conn, $sql1);
-
-}
 ?>
 
 

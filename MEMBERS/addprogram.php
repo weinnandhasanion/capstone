@@ -84,11 +84,6 @@ if(preg_match($program_name_regex, $program_name, $match)){
         window.alert('Invalid program name. make sure no space included');
         window.location.href='./../MEMBERS/members.php';
         </script>");
-}else if(preg_match($specialCharacterRegex, $program_name, $match)){
-        echo ("<script LANGUAGE='JavaScript'>
-        window.alert('Invalid program name. make sure no special characters');
-        window.location.href='./../MEMBERS/members.php';
-        </script>");
 }else if(mysqli_num_rows($existProgramName)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Program name is already Taken');
@@ -218,7 +213,7 @@ if(preg_match($program_name_regex, $program_name, $match)){
     window.location.href='./../MEMBERS/members.php';
     </script>");
 }else{
-
+if(preg_match('/^[a-zA-Z]+$/', $program_name, $match)){
     $sql = "INSERT INTO `program`
     ( admin_id, trainer_id, program_name,program_description,date_added,time_added,
     upper_1_day_1,upper_2_day_1,upper_3_day_1,lower_1_day_1,lower_2_day_1,lower_3_day_1,abdominal_day_1,
@@ -236,10 +231,8 @@ if(preg_match($program_name_regex, $program_name, $match)){
     window.alert('program is been added.');
     window.location.href='./../MEMBERS/members.php';
     </script>");
-}
 
-
-
+    
 
 //this is for puting login_id in the array
 $data_logtrail = array();
@@ -300,5 +293,13 @@ $sql1 = "INSERT INTO `logtrail_doing` ( `program_id`, `login_id`,`admin_id`,`use
 `description`, `identity`,`time`)
 VALUES ( '$program_id_new','$login_id_new','$admin_id', '$program_name','$description','$identity', '$timeNow')";
 mysqli_query($conn, $sql1);
+
+}else{
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid program name, make sure no special characters...');
+    window.location.href='./../MEMBERS/members.php';
+    </script>");
+}
+}
 
 ?>

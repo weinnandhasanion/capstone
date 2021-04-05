@@ -51,16 +51,6 @@ if(preg_match($Lnameregex, $last_name, $match)){
     window.alert('Invalid first name. Maximum of 20 letters only');
     window.location.href='./../TRAINER/trainers.php';
     </script>");
-}else if(preg_match($specialCharacterRegex, $first_name, $match)){
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid First name. make sure no special character and space');
-    window.location.href='./../TRAINER/trainers.php';
-    </script>");
-}else if(preg_match($specialCharacterRegex, $last_name, $match)){
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid Last name. make sure no special character and space');
-    window.location.href='./../TRAINER/trainers.php';
-    </script>");
 }else if(preg_match($specialCharacterRegex, $phone, $match)){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Invalid Contact number. make sure no special character and space');
@@ -139,25 +129,35 @@ else if(strlen($phone) < 10){
         window.alert('Invalid birthdate. Please enter a valid date.');
         window.location.href='./../TRAINER/trainers.php';
         </script>");
-}else{
-     // QUERY 
-     $sql = "INSERT INTO `trainer` ( `first_name`,`last_name`,`email`,
-     `address`,`birthdate`,`phone`,`gender`,date_hired)
-      VALUES ( '$first_name', '$last_name', '$email', '$address',
-     '$birthdate',  '$phone', '$gender','$date_hired')";
+} else{
+    if(preg_match('/^[a-zA-Z]+$/', $first_name, $match)){
+        if(preg_match('/^[a-zA-Z]+$/', $last_name, $match)){
 
-            //MAIN  CONDITION NI SA UPDATE
-            if($query_run = mysqli_query($conn, $sql)){
-                echo ("<script LANGUAGE='JavaScript'>
-                        window.alert('Trainer is been added.');
-                        window.location.href='./../TRAINER/trainers.php';
-                        </script>");
-            }else{
-                echo "failure to register";
-                header('Location: ./../TRAINER/trainers.php?failure to register');
-            }
+            $sql = "INSERT INTO `trainer` ( `first_name`,`last_name`,`email`,
+            `address`,`birthdate`,`phone`,`gender`,date_hired)
+             VALUES ( '$first_name', '$last_name', '$email', '$address',
+            '$birthdate',  '$phone', '$gender','$date_hired')";
+            mysqli_query($conn, $sql);
 
+            echo ("<script LANGUAGE='JavaScript'>
+            window.alert('Trainer is been added.');
+            window.location.href='./../TRAINER/trainers.php';
+            </script>");
+
+        }else{
+            echo ("<script LANGUAGE='JavaScript'>
+            window.alert('Invalid last name, make sure no special characters...');
+            window.location.href='./../TRAINER/trainers.php';
+            </script>");
+        }
+    }else{
+        echo ("<script LANGUAGE='JavaScript'>
+        window.alert('Invalid first name, make sure no special characters...');
+        window.location.href='./../TRAINER/trainers.php';
+        </script>");
+    }
 }
+
 
 function checkBirthdate($date) {
     $today = date("Y-m-d");

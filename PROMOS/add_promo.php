@@ -69,6 +69,10 @@ if(preg_match($letterRegex, $amount, $match)){
     $sql = "INSERT INTO promo (promo_name, promo_type, promo_description, date_added, promo_starting_date, promo_ending_date, amount)
     VALUES ('$name', '$type', '$description', '$dateAdded', '$startDate', '$endDate', '$amount')";
     $res = mysqli_query($conn, $sql);
+    echo "<script>
+    window.alert('Promo successfully added!');
+    window.location.href = './promos.php';
+  </script>";
 
     //-----------LOGTRAIL DOING
 
@@ -133,10 +137,7 @@ if(preg_match($letterRegex, $amount, $match)){
 
 
 
-    echo "<script>
-      window.alert('Promo successfully added!');
-      window.location.href = './promos.php';
-    </script>";
+   
   }
 }
 
