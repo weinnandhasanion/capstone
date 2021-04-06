@@ -1,7 +1,7 @@
 <?php 
 require "./../connect.php";
 
-$sql = "SELECT * FROM program WHERE program_status = 'inactive'";
+$sql = "SELECT * FROM program WHERE program_status = 'inactive' ORDER BY date_deleted DESC, time_deleted DESC";
 $query = mysqli_query($conn, $sql);
 
 $data = array();

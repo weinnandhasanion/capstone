@@ -17,6 +17,7 @@ $id = $_POST["inventory_id"];
 
 //regex
 $qtyregex = "/[a-zA-Z]/";
+$specialCharacterRegex  = "/[\\W_]/";
 
 if($_FILES["image"]["size"] > 0) {
   // Uploading image
@@ -52,8 +53,6 @@ if($_FILES["image"]["size"] > 0) {
       window.location.href='./../INVENTORY/inventory.php';
       </script>");
   }else {
-    // $sql = "INSERT INTO `inventory` ( inventory_name,inventory_qty,inventory_category,inventory_description,date_added, image_pathname)
-    //   VALUES ( '$inventory_name', '$inventory_qty', '$inventory_category', '$inventory_description', '$date_added', '" . $_FILES["image"]["name"] . "')";
 
     $sql = "UPDATE inventory 
             SET inventory_name = '$inventory_name',
@@ -88,6 +87,11 @@ if($_FILES["image"]["size"] > 0) {
   window.alert('Invalid inventory quantity. Maximum of 999 only');
   window.location.href='./../INVENTORY/inventory.php';
   </script>");
+}else if(preg_match($specialCharacterRegex, $inventory_qty, $match)){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid quantity. make sure no special character and space');
+  window.location.href='./../INVENTORY/inventory.php';
+  </script>");
 }else if($inventory_dmg > $inventory_qty){
   echo ("<script LANGUAGE='JavaScript'>
   window.alert('Invalid inventory damage. Maximum of $inventory_qty only');
@@ -98,15 +102,14 @@ if($_FILES["image"]["size"] > 0) {
   window.alert('Invalid inventory quantity. Maximum of 100 letters only');
   window.location.href='./../INVENTORY/inventory.php';
   </script>");
-} else {
-  if (preg_match($qtyregex, $inventory_qty, $match)) {
+} else if (preg_match($qtyregex, $inventory_qty, $match)) {
     echo ("<script LANGUAGE='JavaScript'>
       window.alert('Invalid quantity, use only numbers...');
       window.location.href='./../INVENTORY/inventory.php';
       </script>");
   } else {
-    // $sql = "INSERT INTO `inventory` ( inventory_name,inventory_qty,inventory_category,inventory_description,date_added, image_pathname)
-    //   VALUES ( '$inventory_name', '$inventory_qty', '$inventory_category', '$inventory_description', '$date_added', '" . $_FILES["image"]["name"] . "')";
+
+if(preg_match('/^[0-9 a-zA-Z 0-9]+$/', $inventory_name)){
 
     $sql = "UPDATE inventory 
             SET inventory_name = '$inventory_name',
@@ -116,11 +119,24 @@ if($_FILES["image"]["size"] > 0) {
                 date_added = '$date_added',
                 inventory_damage = $inventory_dmg
             WHERE inventory_id = $id";
+            mysqli_query($conn, $sql);
+            
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Successfully updated item...');
+    window.location.href='./../INVENTORY/inventory.php';
+    </script>");
+}else{
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid inventory name. Please check, make sure no special characters...');
+    window.location.href='./../INVENTORY/inventory.php';
+    </script>");
+    }
+}
+    
+?>
 
-    $query_run = mysqli_query($conn, $sql);
-
-    if($query_run) {
-      //-------------------------LOGTRAIL DOING
+<?php
+//-------------------------LOGTRAIL DOING
 
   //this is for puting member_id in the array
   $data = array();
@@ -180,17 +196,4 @@ if($_FILES["image"]["size"] > 0) {
   VALUES 
 ( '$login_id_new','$admin_id', '$inventory_id_new', '$user_fname','$description','$identity', '$timeNow')";
   mysqli_query($conn, $sql1);
-
-      echo ("<script LANGUAGE='JavaScript'>
-      window.alert('Successfully updated item...');
-      window.location.href='./../INVENTORY/inventory.php';
-      </script>");
-    } else {
-      echo ("<script LANGUAGE='JavaScript'>
-      window.alert('".mysqli_error($conn)."');
-      </script>");
-    }
-  }
-}
-
 ?>

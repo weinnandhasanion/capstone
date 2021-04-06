@@ -1,7 +1,8 @@
 <?php 
 require "./../connect.php";
 
-$sql = "SELECT * FROM member WHERE acc_status = 'inactive' AND isDeleted = 'true'";
+$sql = "SELECT * FROM member WHERE acc_status = 'inactive' AND isDeleted = 'true'
+ORDER BY date_deleted DESC, time_deleted DESC";
 $res = mysqli_query($conn, $sql);
 
 $data = array();

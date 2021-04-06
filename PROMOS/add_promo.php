@@ -17,6 +17,7 @@ $dateAdded = date("Y-m-d");
 //REGEX
 $letterRegex = "/[a-zA-Z]/";
 $numberRegex = "/[0-9]/";
+$specialCharacterRegex  = "/[\\W_]/";
 //---- query validations
 $check_name = "SELECT * from promo where promo_name='$name'";
 $duplicate_name = mysqli_query($conn, $check_name);
@@ -24,6 +25,11 @@ $duplicate_name = mysqli_query($conn, $check_name);
 if(preg_match($letterRegex, $amount, $match)){
   echo ("<script LANGUAGE='JavaScript'>
   window.alert('Invalid amount. Please check make sure no letters.');
+  window.location.href='./promos.php';
+  </script>");
+}else if(preg_match($specialCharacterRegex, $amount, $match)){
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Invalid Amount. make sure no special character and space');
   window.location.href='./promos.php';
   </script>");
 } else if(strlen($name) < 5){
@@ -63,6 +69,10 @@ if(preg_match($letterRegex, $amount, $match)){
     $sql = "INSERT INTO promo (promo_name, promo_type, promo_description, date_added, promo_starting_date, promo_ending_date, amount)
     VALUES ('$name', '$type', '$description', '$dateAdded', '$startDate', '$endDate', '$amount')";
     $res = mysqli_query($conn, $sql);
+    echo "<script>
+    window.alert('Promo successfully added!');
+    window.location.href = './promos.php';
+  </script>";
 
     //-----------LOGTRAIL DOING
 
@@ -127,10 +137,7 @@ if(preg_match($letterRegex, $amount, $match)){
 
 
 
-    echo "<script>
-      window.alert('Promo successfully added!');
-      window.location.href = './promos.php';
-    </script>";
+   
   }
 }
 

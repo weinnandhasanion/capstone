@@ -37,7 +37,7 @@ $lower2day3 = $_POST['lower-2-day-3'];
 $lower3day3 = $_POST['lower-3-day-3'];  
 $abdominalday3 = $_POST['abdominal-day-3']; 
 $NumberRegex = "/[0-9]/";
-$specialCharacterRegex  = "/\\W/";
+$specialCharacterRegex  = "/[\\W_]/";
 $checkSpace = "/\\s/";
 
 $exist = "SELECT * FROM program WHERE program_id != '$id' AND program_name = '$program_name'";

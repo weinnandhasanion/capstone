@@ -438,7 +438,7 @@ function paginateLogtrail(data) {
                 <td>${row.program_id}</td>
                 <td>${row.identity}</td>
                 <td>${row.description}</td>
-                <td>${row.user_fname} ${row.user_lname}</td>
+                <td>${row.user_fname}</td>
                 <td>${row.time}</td>
               </tr>`;
             } else if(row.identity === 'Inventory' || row.identity === 'inventory'){

@@ -32,6 +32,8 @@ $duplicate_phone = mysqli_query($conn, $check_phone);
 
 //VALIDATION IF NAAY LETTERS ANG GI INPUT NMO SA CONTACT NUMBER.. IF WALA MO PROCEED SHA SA NEXT CHECKING
 $phoneregex = "/[a-zA-Z]/";
+$specialCharacterRegex  = "/[\\W_]/";
+
 if (preg_match($phoneregex, $phone, $match)) 
 {
         echo ("<script LANGUAGE='JavaScript'>
@@ -48,6 +50,11 @@ if (preg_match($phoneregex, $phone, $match))
 }else if(mysqli_num_rows($duplicate_email)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Email address is already taken');
+    window.location.href='./../TRAINER/trainers.php';
+    </script>");
+}else if(preg_match($specialCharacterRegex, $phone, $match)){
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid Contact number. make sure no special character and space');
     window.location.href='./../TRAINER/trainers.php';
     </script>");
 }else if(strlen($phone) > 11){

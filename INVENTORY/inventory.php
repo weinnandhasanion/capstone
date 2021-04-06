@@ -432,7 +432,7 @@ $res = mysqli_query($conn, $sql);
       <div class="modal-content" style="width: 700px;">
 
         <div class="modal-header" style="background-color: #DF3A01; color: white;">
-          <h4 class="modal-title">Deleted Members</h4>
+          <h4 class="modal-title">Deleted Inventory</h4>
           <form class="d-flex justify-content-center">
             <input type="text" placeholder="Search deleted name" id="search-delete" class="form-control">
           </form>
@@ -456,7 +456,7 @@ $res = mysqli_query($conn, $sql);
               <tbody id='deletetbody'>
                 <?php
             /* code for display data  AND date_deleted IS NOT NULL */
-            $sql = "SELECT * FROM inventory WHERE inventory_status = 'deleted'";
+            $sql = "SELECT * FROM inventory WHERE inventory_status = 'deleted' ORDER BY  date_deleted DESC, time_deleted DESC";
             $result = mysqli_query($conn, $sql);
             $resultCheck = mysqli_num_rows($result);
 
