@@ -56,16 +56,6 @@ if (preg_match($NumberRegex, $program_name, $match)) {
     window.alert('Program description has numbers.. pelase check ur inputs.');
     window.location.href='./../MEMBERS/members.php';
     </script>");
-}else if(preg_match($checkSpace, $program_name, $match)){
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid program name. make sure no space included');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
-}else if(preg_match($specialCharacterRegex, $program_name, $match)){
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid program name. make sure no special character');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
 }else if(mysqli_num_rows($existProgramName)>0){
     echo ("<script LANGUAGE='JavaScript'>
     window.alert('Program name is already taken');
@@ -87,6 +77,7 @@ if (preg_match($NumberRegex, $program_name, $match)) {
     window.location.href='./../MEMBERS/members.php';
     </script>");
 }else{
+    if(preg_match('/^[a-zA-Z]+( [a-zA-Z]+)*$/', $program_name, $match)){
     $sql_update = "UPDATE program 
     SET program_name = '$program_name', program_description = '$program_description', trainer_id = '$trainer_id',
     upper_1_day_1 = '$upper1day1', upper_2_day_1 = '$upper2day1', upper_3_day_1 = '$upper3day1',
@@ -97,62 +88,62 @@ if (preg_match($NumberRegex, $program_name, $match)) {
     lower_1_day_3 = '$lower1day3', lower_2_day_3 = '$lower2day3', lower_3_day_3 = '$lower3day3', abdominal_day_3 = '$abdominalday3'
     WHERE program_id =" . intval($id) . ""; 
     $query = mysqli_query($conn, $sql_update);
-}
-   
-//--------------------------------------------------------------------------
-            
-if($query) {
-    //this is for puting login_id in the array
-    $data_logtrail = array();
-    $login_id;
-    $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
-    $logtrail = mysqli_query($conn, $log);
-    if($logtrail) {
-        while($rowrow = mysqli_fetch_assoc($logtrail)) {
-            $data_logtrail[] = $rowrow["login_id"];
-        }
-
-        $login_id = $data_logtrail[0];
-    }
-
-    // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
-    $ad= "SELECT * FROM admin WHERE admin_id = $session_admin_id";
-    $query_runad = mysqli_query($conn, $ad);
-    $rowed = mysqli_fetch_assoc($query_runad);
-    
-    $admin_id = $rowed["admin_id"];
-    
-    
-    // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-    $sql22 = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
-    $query_run22 = mysqli_query($conn, $sql22);
-    $rows22 = mysqli_fetch_assoc($query_run22);
-    
-    $login_id_new = $rows22["login_id"];
-    
-    
-    // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-    $sql222 = "SELECT * FROM program WHERE program_id = '$id'";
-    $query_run222 = mysqli_query($conn, $sql222);
-    $rows222 = mysqli_fetch_assoc($query_run222);
-    
-    $program_id_new = $rows222["program_id"];
-    $program_name = $rows222["program_name"];  
-    $description = "Updated the program";
-    $identity = "Programs";
-    $timeNow = date("h:i A");
-    
-    $sql1 = "INSERT INTO `logtrail_doing` ( `program_id`, `login_id`,`admin_id`,`user_fname`,
-            `description`, `identity`,`time`)
-            VALUES ( '$id','$login_id_new','$admin_id', '$program_name','$description','$identity', '$timeNow')";
-            mysqli_query($conn, $sql1);
 
     echo "<script>
         alert('Program is successfully updated!');
         window.location.href = './members.php';
         </script>";
-} else {
-    echo "<script>
-        alert('Update unsuccessful. Error: ". mysqli_error($conn) ."');
-        </script>";
+
+       //this is for puting login_id in the array
+       $data_logtrail = array();
+       $login_id;
+       $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
+       $logtrail = mysqli_query($conn, $log);
+       if($logtrail) {
+           while($rowrow = mysqli_fetch_assoc($logtrail)) {
+               $data_logtrail[] = $rowrow["login_id"];
+           }
+   
+           $login_id = $data_logtrail[0];
+       }
+   
+       // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
+       $ad= "SELECT * FROM admin WHERE admin_id = $session_admin_id";
+       $query_runad = mysqli_query($conn, $ad);
+       $rowed = mysqli_fetch_assoc($query_runad);
+       
+       $admin_id = $rowed["admin_id"];
+       
+       
+       // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
+       $sql22 = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
+       $query_run22 = mysqli_query($conn, $sql22);
+       $rows22 = mysqli_fetch_assoc($query_run22);
+       
+       $login_id_new = $rows22["login_id"];
+       
+       
+       // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
+       $sql222 = "SELECT * FROM program WHERE program_id = '$id'";
+       $query_run222 = mysqli_query($conn, $sql222);
+       $rows222 = mysqli_fetch_assoc($query_run222);
+       
+       $program_id_new = $rows222["program_id"];
+       $program_name = $rows222["program_name"];  
+       $description = "Updated the program";
+       $identity = "Programs";
+       $timeNow = date("h:i A");
+       
+       $sql1 = "INSERT INTO `logtrail_doing` ( `program_id`, `login_id`,`admin_id`,`user_fname`,
+               `description`, `identity`,`time`)
+               VALUES ( '$id','$login_id_new','$admin_id', '$program_name','$description','$identity', '$timeNow')";
+               mysqli_query($conn, $sql1);
+
+}else{
+    echo ("<script LANGUAGE='JavaScript'>
+    window.alert('Invalid program name, make sure no special characters...');
+    window.location.href='./../MEMBERS/members.php';
+    </script>");
 }
+}
+   

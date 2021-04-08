@@ -65,7 +65,7 @@ if(preg_match($letterRegex, $amount, $match)){
     alert('Ending date is in conflict with ". $checkEnd->name ." schedule. Choose another ending date.');
     window.location.href='./promos.php';
     </script>";
-  } else {
+  } else if(preg_match('/^[a-zA-Z]+( [a-zA-Z]+)*$/', $first_name)){
     $sql = "INSERT INTO promo (promo_name, promo_type, promo_description, date_added, promo_starting_date, promo_ending_date, amount)
     VALUES ('$name', '$type', '$description', '$dateAdded', '$startDate', '$endDate', '$amount')";
     $res = mysqli_query($conn, $sql);
@@ -135,10 +135,15 @@ if(preg_match($letterRegex, $amount, $match)){
 	  ('$login_id_new','$admin_id', '$promo_id_new', '$user_fname','$description','$identity', '$timeNow')";
      mysqli_query($conn, $sql1);
 
-
+    }else{
+      echo ("<script LANGUAGE='JavaScript'>
+      window.alert('Invalid promo name. Please check, make sure no special characters and only one space...');
+      window.location.href='./promos.php';
+      </script>");
+      }
 
    
-  }
+  
 }
 
 function checkExistingDates($date) {

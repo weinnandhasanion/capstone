@@ -158,8 +158,8 @@ else if (preg_match($phoneregex, $phone, $match)){
     window.location.href='./../MEMBERS/members.php';
     </script>");
 } else{
-    if(preg_match('/^[a-zA-Z]+$/', $first_name)){
-        if(preg_match('/^[a-zA-Z]+$/', $last_name)){
+    if(preg_match('/^[a-zA-Z]+( [a-zA-Z]+)*$/', $first_name)){
+        if(preg_match('/^[a-zA-Z]+( [a-zA-Z]+)*$/', $last_name)){
 
             $sql = "INSERT INTO `member` ( first_name,last_name,gender,birthdate,email,address,
             phone,member_type,date_registered,program_id )         

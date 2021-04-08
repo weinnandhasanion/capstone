@@ -213,7 +213,7 @@ if(preg_match($program_name_regex, $program_name, $match)){
     window.location.href='./../MEMBERS/members.php';
     </script>");
 }else{
-if(preg_match('/^[a-zA-Z]+$/', $program_name, $match)){
+if(preg_match('/^[a-zA-Z]+( [a-zA-Z]+)*$/', $program_name, $match)){
     $sql = "INSERT INTO `program`
     ( admin_id, trainer_id, program_name,program_description,date_added,time_added,
     upper_1_day_1,upper_2_day_1,upper_3_day_1,lower_1_day_1,lower_2_day_1,lower_3_day_1,abdominal_day_1,

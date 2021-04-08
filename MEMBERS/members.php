@@ -1279,7 +1279,7 @@
       <!-- Modal content-->
       <div class="modal-content" style="width: 700px;">
         <div class="modal-header" style="background-color:#EB460D;color:white;">
-          <h4 class="modal-title">Payment History</h4>
+          <h4 class="modal-title">Regular Payment History</h4>
          
         </div>
         <div class="modal-body">

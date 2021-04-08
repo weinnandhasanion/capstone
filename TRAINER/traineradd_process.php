@@ -130,8 +130,8 @@ else if(strlen($phone) < 10){
         window.location.href='./../TRAINER/trainers.php';
         </script>");
 } else{
-    if(preg_match('/^[a-zA-Z]+$/', $first_name, $match)){
-        if(preg_match('/^[a-zA-Z]+$/', $last_name, $match)){
+    if(preg_match('/^[a-zA-Z]+( [a-zA-Z]+)*$/', $first_name, $match)){
+        if(preg_match('/^[a-zA-Z]+( [a-zA-Z]+)*$/', $last_name, $match)){
 
             $sql = "INSERT INTO `trainer` ( `first_name`,`last_name`,`email`,
             `address`,`birthdate`,`phone`,`gender`,date_hired)
