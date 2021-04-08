@@ -6,7 +6,7 @@ $promoId = $_REQUEST["id"];
 $memberId = $_SESSION["member_id"];
 $date = date("Y-m-d");
 
-$sql = "SELECT * FROM memberpromos WHERE promo_id = $promoId AND member_id = $memberId";
+$sql = "SELECT * FROM memberpromos WHERE promo_id = $promoId AND member_id = $memberId AND status = 'Active'";
 $avail = "INSERT INTO memberpromos (promo_id, member_id, date_added)
           VALUES ('$promoId', '$memberId', '$date')";
 $promo = "SELECT promo_name, promo_starting_date, promo_ending_date FROM promo WHERE promo_id = $promoId";

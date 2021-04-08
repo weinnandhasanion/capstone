@@ -143,35 +143,38 @@ p, h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: 0;
   margin: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
 .modal .modal-sm {
-  width: 60%;
-  margin: auto;
+  max-width: 250px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
   position: relative;
+  padding: 20px;
 }
 
 .modal .modal-md {
-  width: 75%;
-  margin: auto;
+  max-width: 350px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
+  padding: 20px;
   position: relative;
 }
 
 .modal .modal-lg {
-  width: 90%;
-  margin: auto;
+  max-width: 500px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
+  padding: 20px;
   position: relative;
 }
 
@@ -241,6 +244,14 @@ p, h1, h2, h3, h4, h5, h6 {
 
 .form-field .form-input:focus + label {
   font-weight: 700;
+}
+
+.form-field .form-disabled {
+  border-bottom: 2px solid #E5E5E5 !important;
+}
+
+.form-field .form-disabled label {
+  color: #E5E5E5 !important;
 }
 
 .form-field label {
@@ -395,35 +406,38 @@ p, h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: 0;
   margin: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
 .modal .modal-sm {
-  width: 60%;
-  margin: auto;
+  max-width: 250px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
   position: relative;
+  padding: 20px;
 }
 
 .modal .modal-md {
-  width: 75%;
-  margin: auto;
+  max-width: 350px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
+  padding: 20px;
   position: relative;
 }
 
 .modal .modal-lg {
-  width: 90%;
-  margin: auto;
+  max-width: 500px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
+  padding: 20px;
   position: relative;
 }
 
@@ -607,35 +621,38 @@ p, h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: 0;
   margin: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
 .modal .modal-sm {
-  width: 60%;
-  margin: auto;
+  max-width: 250px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
   position: relative;
+  padding: 20px;
 }
 
 .modal .modal-md {
-  width: 75%;
-  margin: auto;
+  max-width: 350px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
+  padding: 20px;
   position: relative;
 }
 
 .modal .modal-lg {
-  width: 90%;
-  margin: auto;
+  max-width: 500px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
+  padding: 20px;
   position: relative;
 }
 
@@ -866,35 +883,38 @@ p, h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: 0;
   margin: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
 .modal .modal-sm {
-  width: 60%;
-  margin: auto;
+  max-width: 250px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
   position: relative;
+  padding: 20px;
 }
 
 .modal .modal-md {
-  width: 75%;
-  margin: auto;
+  max-width: 350px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
+  padding: 20px;
   position: relative;
 }
 
 .modal .modal-lg {
-  width: 90%;
-  margin: auto;
+  max-width: 500px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
+  padding: 20px;
   position: relative;
 }
 
@@ -1129,35 +1149,38 @@ p, h1, h2, h3, h4, h5, h6 {
   position: absolute;
   top: 0;
   margin: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
 .modal .modal-sm {
-  width: 60%;
-  margin: auto;
+  max-width: 250px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
   position: relative;
+  padding: 20px;
 }
 
 .modal .modal-md {
-  width: 75%;
-  margin: auto;
+  max-width: 350px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
+  padding: 20px;
   position: relative;
 }
 
 .modal .modal-lg {
-  width: 90%;
-  margin: auto;
+  max-width: 500px;
+  margin: 20px;
   background: white;
   border-radius: 15px;
-  padding: 7.5% 5%;
+  padding: 20px;
   position: relative;
 }
 
