@@ -281,6 +281,8 @@
       $("#loader").css("display", "none");
     });
 
+    new QRCode(document.getElementById("qr-code"), "./../functions/check_if_paid_qr.php?id=<?php echo $_SESSION["member_id"] ?>");
+
     $.ajax({
       url: "./../functions/subscription_details.php",
       type: 'GET',
@@ -392,20 +394,19 @@
 
     let downloadBtn = document.getElementById('download-btn');
     let qr = document.getElementById('qr-code');
+    let img = qr.lastChild;
+    let path = img.src;
+    let fileName = 'qr-code';
+    let canvas = qr.firstChild;
 
     downloadBtn.onclick = () => {
-      let img = qr.lastChild;
-      let path = img.src;
-      let fileName = 'qr-code';
-
-      saveAs(path, fileName);
+        var image = canvas.toDataURL("image/png").replace("image/png", "image/jpeg");
+        saveAs(image, "QR Code");
     }
 
     closeModal = (elem) => {
       elem.style.display = 'none';
     }
-
-    new QRCode(document.getElementById("qr-code"), "./../functions/check_if_paid_qr.php?id=<?php echo $_SESSION["member_id"] ?>");
   </script>
 </body>
 </html>
