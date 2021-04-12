@@ -1218,9 +1218,6 @@ main .activate p a:hover {
             align-items: center;
     margin-top: 0;
   }
-  main .sign-in .form-field {
-    width: 100%;
-  }
   main .sign-in div {
     margin-bottom: .5rem !important;
   }

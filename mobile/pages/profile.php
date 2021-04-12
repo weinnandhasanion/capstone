@@ -119,7 +119,7 @@
     </div>
   </div>
 
-  <div class="sidebar" id="sidebar">
+  <div class="sidebar" id="sidebar" style="display: none">
     <div>
       <i class="material-icons v-hidden" style="font-size: 32px" id="back">keyboard_backspace</i>
       <img src="./../../logo.png" style="width: 32px; height: 32px; margin-left: 70px" alt="">
@@ -279,6 +279,7 @@
   <script>
     window.addEventListener("load", () => {
       $("#loader").css("display", "none");
+      $("#sidebar").css("display", "block");
     });
 
     new QRCode(document.getElementById("qr-code"), "./../functions/check_if_paid_qr.php?id=<?php echo $_SESSION["member_id"] ?>");

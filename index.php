@@ -29,6 +29,10 @@
       }
     }
 
+    .form-input {
+      font-size: 15px !important;
+    }
+
     .modal-sm .form-field .form-input:focus {
       border-bottom: 2px solid;
       outline: none !important;
