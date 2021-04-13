@@ -805,7 +805,6 @@
 			let id = el.getAttribute("data-id");
 			let name = el.getAttribute("data-name");
       $("#member-modal-title").text(`${name} Members`);
-      $("#add-member-btn").attr("data-id", id);
 
 			$.get("./get_promo_members.php?id=" + id, function(res) {
 				let data = JSON.parse(res);
@@ -813,6 +812,7 @@
 					$("#members-modal").empty();
 					$("#members-modal").removeClass("p-0").addClass("p-3").text("No members for this promo.");
 				} else {
+          console.log(data);
           $("#members-modal").removeClass("p-3").addClass("p-0");
           $("#view-members-footer").pagination({  
             dataSource: function(done) {
