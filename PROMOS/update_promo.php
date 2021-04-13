@@ -46,6 +46,11 @@ if(preg_match($letterRegex, $amount, $match)){
   window.alert('Promo name is already taken.');
   window.location.href='./promos.php';
   </script>");
+} else if($startDate > $endDate) {
+  echo ("<script LANGUAGE='JavaScript'>
+  window.alert('Ending date must be greater than starting date!');
+  window.location.href='./promos.php';
+  </script>");
 } else {
     $checkStart = checkExistingDates($startDate);
     $checkEnd = checkExistingDates($endDate);
