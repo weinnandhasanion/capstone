@@ -916,7 +916,6 @@
       // Searching members
       $("#search-members").on("keyup", function() {
         let val = $("#search-members").val();
-        let id = $("#add-member-btn").attr("data-id");
 
         if(val != "") {
           results = members.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
@@ -1063,9 +1062,11 @@
     function addNewMember(el) {
       var promoId = el.parentNode.getAttribute("data-id");
       var memberId = el.getAttribute("data-id");
-
+      console.log(promoId);
+        console.log(" " + memberId);
       let x = confirm("Do you want this member to avail this promo?");
       if(x) {
+
         $.get(`./promo_check.php?member_id=${memberId}&promo_id=${promoId}`, function(res) {
           res = JSON.parse(res);
 

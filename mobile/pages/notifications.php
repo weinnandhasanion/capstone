@@ -250,7 +250,6 @@ session_start();
           } else {
             popup.style.display = 'flex';
           }
-          document.getElementsByTagName('main')[0].style.overflow = 'hidden';
         });
       }
       

@@ -11,7 +11,7 @@ if($_SESSION['admin_id']){
 
 $id = $_REQUEST['id'];
 $date_deleted = date("Y-m-d");
-$time_deleted = date("h:i a");
+$time_deleted = date("H:i:s");
 
 $ox = "UPDATE program SET program_status = 'inactive', date_deleted = '$date_deleted', time_deleted = '$time_deleted'  
 WHERE program_id = " . intval($id) . "";     

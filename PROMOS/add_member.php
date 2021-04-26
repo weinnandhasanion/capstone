@@ -8,6 +8,7 @@ $memberId = $_REQUEST["memberId"];
 $status = intval($_REQUEST["status"]);
 $date = date("Y-m-d");
 $isActive = true;
+$session_admin_id = $_SESSION["admin_id"];
 
 $checkIfActiveSql = "SELECT acc_status FROM member WHERE member_id = $memberId";
 $checkIfActiveQuery = mysqli_query($conn, $checkIfActiveSql);

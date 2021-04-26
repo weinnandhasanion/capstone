@@ -1801,7 +1801,7 @@
                     <small class="validation text-danger" id="prgram_name-invalid">Invalid input</small>
                 </div>
                 <div class="col-sm-4">
-                  <label>Trainer_assign</label>
+                  <label>Trainer to assign</label>
                   <select style="width: 230px;" required name="trainer_id" id="trainer_name" class="form-control" oninput="checkIfValid(this)" onblur="checkIfValid(this)">
                     <option value="" selected disabled>Select here...</option>
                     <?php
@@ -1810,7 +1810,7 @@
                     if($res) {
                       while($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["trainer_id"]?>"><?php echo $row["first_name"], $row["last_name"] ?></option>
+                    <option value="<?php echo $row["trainer_id"]?>"><?php echo $row["first_name"]." ".$row["last_name"] ?></option>
                     <?php
                       }
                     }
