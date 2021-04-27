@@ -20,6 +20,7 @@
   <title>Profile Page</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./../css/default.css">
+  <link rel="stylesheet" href="./../css/sidebar.css">
   <link rel="stylesheet" href="./../css/mediaquery.css">
   <link rel="icon" href="./../img/gym_logo.png">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -69,6 +70,58 @@
   </style>
 </head>
 <body>
+<div class="sidebar" id="sidebar">
+    <div>
+      <i class="material-icons v-hidden" style="font-size: 32px" id="back">keyboard_backspace</i>
+      <img src="./../../logo.png" style="width: 32px; height: 32px; margin-left: 70px" alt="">
+    </div>    <div class="items">
+      <a href="#">
+        <span class="active">
+          <i class="material-icons">account_circle</i>
+          <h2>Profile</h2>
+        </span>
+      </a>
+      <a href="./pay.php">
+        <span>
+          <i class="material-icons">payment</i>
+          <h2>Pay</h2>
+        </span>
+      </a>
+      <a href="./promos.php">
+        <span>
+          <i class="material-icons">shopping_cart</i>
+          <h2>Promos</h2>
+        </span>
+      </a>
+      <a href="./payment_history.php">
+        <span>
+          <i class="material-icons">history</i>
+          <h2>Payment History</h2>
+        </span>
+      </a>
+      <a href="./program.php">
+        <span>
+          <i class="material-icons">settings</i>
+          <h2>Program</h2>
+        </span>
+      </a>
+      <a href="./notifications.php">
+        <span>
+          <i class="material-icons">notifications_active</i>
+          <h2>Notifications</h2>
+        </span>
+      </a>
+      <a href="./tutorial.php">
+        <span>
+          <i class="material-icons">slow_motion_video</i>
+          <h2>Tutorials</h2>
+        </span>
+      </a>
+    </div>
+    <div class="logout">
+      <button class="btn btn-red" style="width: 80%" id="logout-btn">Logout</button>
+    </div>
+  </div>
   <div class="modal">
     <div class="modal-sm">
       <h3>Do you want to remove your profile photo?</h3>

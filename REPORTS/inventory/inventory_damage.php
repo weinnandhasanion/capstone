@@ -173,7 +173,7 @@ $reportTitle = "List of Damage Weight Equipment";
       }
     }
   
-    $labels = array("Inventory ID", "Name", "Category", "Quantity","Number of Damage");
+    $labels = array("Item ID", "Name", "Category", "Quantity","No. of Damaged");
     $rowLabels = array("inventory_id", "inventory_name", "inventory_category", "inventory_qty","inventory_damage");
    
     $object = (object) [

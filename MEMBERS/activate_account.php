@@ -72,6 +72,8 @@ if (empty($row["date_activated"])) {
         echo mysqli_error($conn), 'NOT UPDATED';
     }
 } else {
+    $dateNow = date("Y-m-d");
+
     $ox = "UPDATE member SET date_activated = '$dateNow', isActivated = 'true'
     WHERE member_id = " . intval($id) . "";
 
