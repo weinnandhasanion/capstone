@@ -888,7 +888,7 @@
     // Delete promo
 		function deletePromo(el) {
 			let id = el.getAttribute("data-id");
-			let x = confirm("Are you sure you want to delete this promo?");
+			let x = confirm("WARNING: Deleting this promo will also remove the current members of this promo, requiring you to add them again once you restore this promo. Are you sure you want to proceed?");
 			if(x) {
 				window.location.href = "./delete_promo.php?id=" + id;
 			}
