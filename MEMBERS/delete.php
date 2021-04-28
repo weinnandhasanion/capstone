@@ -76,8 +76,12 @@ WHERE member_id = " . intval($id) . "";
     mysqli_query($conn, $sql1);
             
 
-if(mysqli_query($conn, $ox))
+if(mysqli_query($conn, $ox)) {
+        $date = date("Y-m-d");
+        $sql = "UPDATE memberpromos SET status = 'Expired', date_expired = '$date' WHERE member_id = $id";
+        $res = mysqli_query($conn, $sql);
         json_encode('success');
-else
+} else {
         echo mysqli_error($conn), 'NOT UPDATED';    
+}
 ?>

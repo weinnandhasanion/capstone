@@ -13,6 +13,9 @@ $sql = "UPDATE promo SET status = 'Deleted', date_deleted = '$date' WHERE promo_
 $res = mysqli_query($conn, $sql);
 
 if ($res) {
+  $sql = "UPDATE memberpromos SET status = 'Expired', date_expired = '$date' WHERE promo_id = $id";
+  $res = mysqli_query($conn, $sql);
+
   $data = array();
   $promo_id;
   $sql3 = "SELECT * FROM promo ORDER BY promo_id DESC";

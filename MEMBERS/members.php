@@ -2991,8 +2991,13 @@
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          alert("Account successfully activated!");
-          window.location.reload()
+          console.log(this.responseText)
+          if(JSON.parse(this.responseText) == "failure") {
+            alert("Can't activate account: User must have an active membership.");
+          } else {
+            alert("Account successfully activated!");
+            window.location.reload()
+          }
         }
       }
       req.open('GET', 'activate_account.php?id=' + id, true);

@@ -167,6 +167,7 @@ else if($payment_description == 'Monthly Subscription'){
     $member_type = $rows["member_type"];
  
     $annual_start = date("Y-m-d"); 
+    $annual_end = date("Y-m-d", strtotime($annual_start." + 365 days"));
     $pass = password_hash('12345', PASSWORD_DEFAULT);
 
     $sql2 = "UPDATE member 
