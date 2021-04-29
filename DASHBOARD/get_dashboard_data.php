@@ -115,7 +115,7 @@ function getPromos() {
 function getPromoMembers($id, $conn) {
   global $promoMembers;
 
-  $sql = "SELECT COUNT(*) AS total FROM memberpromos WHERE promo_id = $id";
+  $sql = "SELECT COUNT(*) AS total FROM memberpromos WHERE promo_id = $id AND status = 'Active'";
   $res = mysqli_query($conn, $sql);
 
   if($res) {

@@ -86,7 +86,7 @@ if($res) {
         <small>
         <?php 
           if(!empty($row["annual_end"])) {
-            echo ($monthlyPaid) ? "Expires" : "Expired" ?> on <?= date("M d, Y", strtotime($row["monthly_end"]));
+            echo ($monthlyPaid) ? "Expires" : "Expired" ?> on <?= date("M d, Y", strtotime($row["annual_end"]));
           } else {
             echo "No payment for Annual Membership yet";
           }
