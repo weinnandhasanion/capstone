@@ -3,7 +3,7 @@ require "./connect.php";
 session_start();
 
 // Notifications CRON job
-$dateNow = date("Y-m-d H:i A");
+$dateNow = date("Y-m-d h:i:s");
 
 $sql = "SELECT * FROM member WHERE acc_status = 'active' AND member_status = 'Paid'";
 $res = mysqli_query($conn, $sql);
@@ -37,7 +37,7 @@ $membersSql = "SELECT * FROM member WHERE member_status = 'Expired'";
 $membersQuery = mysqli_query($conn, $membersSql);
 if(mysqli_num_rows($membersQuery) > 0) {
   while($row = mysqli_fetch_assoc($membersQuery)) {
-    if($today >= date("Y-m-d", strtotime($row["monthly_end"]."+ 1 day"))) {
+    if($today == date("Y-m-d", strtotime($row["monthly_end"]."+ 1 day"))) {
       sendNotif($row["member_id"], $dateNow, 4);
     }
 
@@ -68,9 +68,7 @@ function checkNotifs($id, $conn, $notifId) {
   $sql = "SELECT * FROM member_notifs WHERE DATE(datetime_sent) = '$date' 
           AND member_id = $id AND notif_id = $notifId";
   $res = mysqli_query($conn, $sql);
-  $hasNotifs = mysqli_num_rows($res) > 0 ? true : false;
-
-  return $hasNotifs;
+  return (mysqli_num_rows($res) > 0) ? true : false;
 }
 
 function makeInactive($id) {
