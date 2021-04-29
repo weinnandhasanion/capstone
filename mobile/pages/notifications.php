@@ -1,6 +1,10 @@
 <?php 
 require "./../functions/connect.php";
 session_start();
+
+if(!isset($_SESSION["member_id"])) {
+  header("Location: ./pages/index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

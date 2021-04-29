@@ -2,6 +2,10 @@
 require "./../functions/connect.php";
 session_start();
 
+if(!isset($_SESSION["member_id"])) {
+  header("Location: ./pages/index.php");
+}
+
 $sql = "SELECT * FROM paymentlog WHERE member_id = '".$_SESSION["member_id"]."' ORDER BY payment_id DESC";
 $query = mysqli_query($con, $sql);
 
