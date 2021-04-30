@@ -234,11 +234,7 @@
                 <i data-toggle="modal" data-target="#add" id="add-new-member-btn" class="fas fa-plus mr-2"></i></span>
               Trainers
             </h3>
-            <div class="btn-group" role="group" aria-label="Basic example">
-              <button type="button" id="sort-active" class="btn btn-sm btn-outline-orange">ACTIVE</button>
-              <button type="button" id="sort-both" class="btn btn-sm btn-orange">Both</button>
-              <button type="button" id="sort-inactive" class="btn btn-sm btn-outline-orange">INACTIVE</button>
-            </div>
+            
             <div>
               <div class="d-flex justify-content-center">
                 <input type="text" placeholder="Search trainer here..." class="form-control" id="search-trainer">
@@ -252,6 +248,7 @@
                   <th>ID</th>
                   <th>First name</th>
                   <th>Last name</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -618,8 +615,9 @@
           data.forEach(row => {
             let html = `<tr>
                 <td>${row.trainer_id}</td>
-                <td>${row.last_name}</td>
                 <td>${row.first_name}</td>
+                <td>${row.last_name}</td>
+                <td>${row.trainer_status}</td>
                 <td>
                   <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
                   <i style="cursor: pointer; color:brown; font-size: 25px;"data-toggle="modal" data-target="#view"
