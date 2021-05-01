@@ -20,7 +20,7 @@ $sql = "UPDATE member SET program_id = $programId
 $res = mysqli_query($conn, $sql);
 
 if($res) {
-  if(!$isActive) {
+  if($isActive == "false") {
     echo json_encode("success");
   } else {
     $sql2 = "INSERT INTO `paymentlog` (`member_id`, `first_name`, `last_name`, `time_payment`, `date_payment`,

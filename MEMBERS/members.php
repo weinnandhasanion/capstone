@@ -13,7 +13,7 @@
 
   if(isset($_GET["type"])) {
     if($_GET["type"] == "regular") {
-      $sql = "SELECT * FROM member WHERE member_type = 'Regular' AND isDeleted = 'false' ORDER BY date_registered DESC";
+      $sql = "SELECT * FROM member WHERE member_type = 'Regular' AND isDeleted = 'false' ORDER BY member_id DESC";
       $res = mysqli_query($conn, $sql);
       $data = array();
       while($row = mysqli_fetch_assoc($res)) {
@@ -24,7 +24,7 @@
       echo json_encode($data);
       exit();
     } else {
-      $sql = "SELECT * FROM member WHERE member_type = 'Walk-in' AND acc_status = 'active' ORDER BY date_registered DESC";
+      $sql = "SELECT * FROM member WHERE member_type = 'Walk-in' AND acc_status = 'active' ORDER BY member_id DESC";
       $res = mysqli_query($conn, $sql);
       $data = array();
       while($row = mysqli_fetch_assoc($res)) {
@@ -879,7 +879,7 @@
           </div>
         </div>
         <div class="modal-footer d-flex flex-row justify-content-between">
-          <button class="btn btn-orange" id="avail-btn">Pay & Avail</button>
+          <button class="btn btn-orange" id="avail-btn">Avail</button>
         </div>
       </div>
     </div>
@@ -894,85 +894,83 @@
           <button type='button' class='close' id='close-paymentModal' data-dismiss='modal'>&times;</button>
         </div>
         <div class="modal-body">
-          <form action="memberpayment_process.php" method="post">
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <label>Unique ID</label>
-                  <input type="text" name="member_id" class="form-control" readonly id="member_id">
-                </div>
-                <div class="col-sm-6">
-                  <label>Last Name</label>
-                  <input type="text" name="last_name" class="form-control" readonly id="member_lastname">
-                </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label>Unique ID</label>
+                <input type="text" name="member_id" class="form-control" readonly id="member_id">
+              </div>
+              <div class="col-sm-6">
+                <label>Last Name</label>
+                <input type="text" name="last_name" class="form-control" readonly id="member_lastname">
               </div>
             </div>
-            <div class="form-group" id="promo-form-group">
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <label>Promo Availed</label>
-                  <input type="text" name="promo_availed" class="form-control" readonly id="promo_availed">
-                </div>
-                <div class="col-sm-6">
-                  <label>Promo Discount</label>
-                  <input type="text" name="promo_discount" class="form-control" readonly id="promo_discount">
-                </div>
+          </div>
+          <div class="form-group" id="promo-form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label>Promo Availed</label>
+                <input type="text" name="promo_availed" class="form-control" readonly id="promo_availed">
+              </div>
+              <div class="col-sm-6">
+                <label>Promo Discount</label>
+                <input type="text" name="promo_discount" class="form-control" readonly id="promo_discount">
               </div>
             </div>
-            <div class="form-group" id="program-form-group">
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <label for="">Program Enrolled</label>
-                  <input type="text" name="program_enrolled" class="form-control" readonly id="program_enrolled">
-                </div>
-                <div class="col-sm-6">
-                  <label for="">Program Fee</label>
-                  <input type="text" name="program_amount" class="form-control" value="0" readonly id="program_amount">
-                </div>
+          </div>
+          <div class="form-group" id="program-form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label for="">Program Enrolled</label>
+                <input type="text" name="program_enrolled" class="form-control" readonly id="program_enrolled">
+              </div>
+              <div class="col-sm-6">
+                <label for="">Program Fee</label>
+                <input type="text" name="program_amount" class="form-control" value="0" readonly id="program_amount">
               </div>
             </div>
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <label>Payment Description</label>
-                  <select name="payment_description" id="payment_description" onchange="pay(this)" class="form-control"
-                    required="">
-                    <option value="" selected>Select Payment</option>
-                    <option value="Monthly Subscription">Monthly Subscription</option>
-                    <option value="Annual Membership">Annual Membership</option>
-                    <option value="both">Both</option>
-                  </select>
-                </div>
-                <div class="col-sm-6">
-                  <label>Amount</label>
-                  <input id="amount" type="text" class="form-control" readonly>
-                </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label>Payment Description</label>
+                <select name="payment_description" id="payment_description" onchange="pay(this)" class="form-control"
+                  required="">
+                  <option value="" selected>Select Payment</option>
+                  <option value="Monthly Subscription">Monthly Subscription</option>
+                  <option value="Annual Membership">Annual Membership</option>
+                  <option value="both">Both</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label>Amount</label>
+                <input id="amount" type="text" class="form-control" readonly>
               </div>
             </div>
-            <div class="d-flex justify-content-center">
-              <small><a href="#" class="text-darkgrey"><span id="showCalc" style="position:relative;right:100px;">Show
-                    Calculator</span>
-            </div>
-            <div id="calculator" class="form-group" style="display: none">
-              <div class="form-row">
-                <div class="col-sm-4">
-                  <label>Cash</label>
-                  <input type="number" class="form-control" id="payment-cash">
-                </div>
-                <div class="col-sm-4">
-                  <label>Change</label>
-                  <input type="text" class="form-control" id="payment-change" readonly>
-                </div>
-                <div class="col-sm-4">
-                  <br>
-                  <input readonly class="btn btn-green" style="width: 120px;" id="enterCalc" value="ENTER">
-                </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <small><a href="#" class="text-darkgrey"><span id="showCalc" style="position:relative;right:100px;">Show
+                  Calculator</span>
+          </div>
+          <div id="calculator" class="form-group" style="display: none">
+            <div class="form-row">
+              <div class="col-sm-4">
+                <label>Cash</label>
+                <input type="number" class="form-control" id="payment-cash">
+              </div>
+              <div class="col-sm-4">
+                <label>Change</label>
+                <input type="text" class="form-control" id="payment-change" readonly>
+              </div>
+              <div class="col-sm-4">
+                <br>
+                <input readonly class="btn btn-green" style="width: 120px;" id="enterCalc" value="ENTER">
               </div>
             </div>
-            <div class="modal-footer">
-              <button class="btn btn-orange" id="add-payment-btn">Add payment</button>
-            </div>
-          </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-orange" id="add-payment-btn-regular">Add payment</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1005,7 +1003,7 @@
                 <div class="col-sm-6">
                   <label>Payment Description</label>
                   <input type="text" name="payment_description" value="Walk-in" class="form-control" readonly
-                    id="payment_description">
+                    id="walkinpayment_description">
                 </div>
                 <div class="col-sm-6">
                   <label>Amount</label>
@@ -2534,7 +2532,7 @@
             ${span}
             <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name} to Walk-in">
               <i style="cursor: pointer; color:#C71585; font-size: 25px;"
-              class="fas fa-pencil-alt mx-1" data-id="${row.member_id}"
+              class="fas fa-pencil-alt mx-1 update-icon-btn" data-id="${row.member_id}"
               data-toggle="modal" data-target="#regular_update"
               onclick="updateDetailsRegular(this)"></i>
             </span>
@@ -3058,14 +3056,12 @@
   // update regular member Modal
   function updateDetailsRegular(el) {
     let id = el.getAttribute('data-id');
-
     // AJAX Request
 
     let req = new XMLHttpRequest();
     req.onreadystatechange = function() {
 
       if (this.readyState == 4 && this.status == 200) {
-        console.log(this.responseText)
         display(JSON.parse(this.responseText));
       }
     }
@@ -3084,6 +3080,7 @@
         $("#has-no-program").css("display", "block");
         $("#has-program").css("display", "none");
       } else {
+        $("#update_program").val(row.program_id);
         $("#has-no-program").css("display", "none");
         $("#has-program").css("display", "block");
       }
@@ -3163,7 +3160,6 @@
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText)
           if (JSON.parse(this.responseText) == "failure") {
             alert("Can't activate account: User must have an active membership.");
           } else {
@@ -3501,13 +3497,12 @@
 
   availBtn.click(function () {
     memberId = availBtn.attr("data-id");
-    console.log(memberId);
     updateModal.modal("hide");
     availModal.modal("show");
   });
 
   availModal.on("hide.bs.modal", function () {
-    updateModal.modal("show");
+    $(".update-icon-btn[data-id=" + memberId + "]").click();
   });
 
   // avail program
@@ -3528,7 +3523,7 @@
     $.confirm({
       closeIcon: true,
       title: "Confirm?",
-      content: `Are you sure you want to avail ${programName} Program?`,
+      content: `Avail ${programName} Program for this member?`,
       buttons: {
         confirm: {
           btnClass: "btn-orange",
@@ -3543,17 +3538,20 @@
                     ok: {
                       btnClass: "btn-orange",
                       action: function () {
-                        $.post("./avail_program.php", {memberId: memberId, programId: programVal, amount: $("#programpayment-amount").val(), isActive: true}, function(res) {
+                        $.post("./avail_program.php", {memberId: memberId, programId: programVal, amount: $("#programpayment-amount").val(), isActive: "true"}, function(res) {
                           if(JSON.parse(res) == "success") {
                             $.alert({
                               title: "Success!",
                               type: 'green',
                               content: `Member has successfully availed program.`,
+                              backgroundDismiss: function () {
+                                $("#avail-program-modal").modal("hide");
+                              },
                               buttons: {
                                 ok: {
                                   btnClass: "btn-success",
                                   action: function () {
-                                    window.location.reload();
+                                    $("#avail-program-modal").modal("hide");
                                   }
                                 }
                               }
@@ -3575,17 +3573,20 @@
                   }
                 });
               } else {
-                $.post("./avail_program.php", {memberId: memberId, programId: programVal, amount: $("#programpayment-amount").val(), isActive: false}, function(res) {
+                $.post("./avail_program.php", {memberId: memberId, programId: programVal, amount: $("#programpayment-amount").val(), isActive: "false"}, function(res) {
                   if(JSON.parse(res) == "success") {
                     $.alert({
                       title: "Success!",
                       type: 'green',
                       content: `Member has successfully availed program.`,
+                      backgroundDismiss: function () {
+                        $("#avail-program-modal").modal("hide");
+                      },
                       buttons: {
                         ok: {
                           btnClass: "btn-success",
                           action: function () {
-                            window.location.reload();
+                            $("#avail-program-modal").modal("hide");
                           }
                         }
                       }
@@ -3605,6 +3606,54 @@
       }
     });
   })
+
+  $("#remove-program-btn").click(function () {
+    let id = $(this).attr("data-id");
+    $.confirm({
+      title: "Remove?",
+      content: "Are you sure you want to remove this member from this program?",
+      buttons: {
+        confirm: {
+          btnClass: "btn-orange",
+          action: function () {
+            $.get("./remove_from_program.php?id=" + id, function (res) {
+              if(JSON.parse(res) == "success") {
+                $.alert({
+                  type: 'green',
+                  title: "Success",
+                  content: 'Member successfully removed from program.',
+                  buttons: {
+                    ok: {
+                      btnClass: 'btn-success',
+                      action: function () {
+                        window.location.reload();
+                      }
+                    }
+                  }
+                });
+              } else {
+                $.alert({
+                  type: 'red',
+                  title: 'Error',
+                  content: JSON.parse(res),
+                  buttons: {
+                    close: {
+                      btnClass: 'btn-danger',
+                      action: function () {}
+                    }
+                  }
+                });
+              }
+            });
+          }
+        },
+        cancel: {
+          btnClass: "btn-grey",
+          action: function () {}
+        }
+      }
+    });
+  });
 
   document.getElementById('programshowCalc').addEventListener('click', () => {
     let programcalc = document.getElementById('programcalculator');
@@ -3654,6 +3703,60 @@
     let calc = document.getElementById('calculator');
     calc.style.display = 'none';
     document.getElementById('showCalc').innerHTML = 'Show Calculator';
+  });
+
+  $("#add-payment-btn-regular").click(function () {
+    $.post(
+      "./memberpayment_process.php",
+      {
+        member_id: $("#member_id").val(),
+        payment_description: $("#payment_description").val(),
+        promo_discount: $("#promo_discount").val(),
+        promo_availed: $("#promo_availed").val(),
+        program_enrolled: $("#program_enrolled").val(),
+        program_amount: $("#program_enrolled").val()
+      },
+      function (res) {
+        console.log(res);
+        let r = JSON.parse(res);
+        let message;
+        let type = 'green';
+        let title = 'Success';
+        let btnClass = 'btn-success';
+
+        if(r == "success monthly") {
+          message = "Monthly subscription payment successful.";
+        } else if(r == "success annual") {
+          message = "Annual membership payment successful.";
+        } else if(r == "success both") {
+          message = "Monthly subscription and annual membership payments successful.";
+        } else if(r == "success walkin") {
+          message = "Walk-in payment successful.";
+        } else {
+          message = JSON.parse(res);
+          type = 'red';
+          title = 'Error';
+          btnClass = 'btn-danger';
+        }
+
+        $.alert({
+          title: title,
+          type: type,
+          content: message,
+          backgroundDismiss: function () {
+            window.location.reload();
+          },
+          buttons: {
+            ok: {
+              btnClass: btnClass,
+              action: function () {
+                window.location.reload();
+              }
+            }
+          }
+        });
+      }
+    );
   });
   </script>
 

@@ -20,6 +20,7 @@ $member_type = $_POST['member_type'];
 $date_registered = date("Y-m-d");
 $program_id = $_POST['program_id'];
 $avail = $_POST["program-form-check"];
+$timeregistered = date("Y-m-d h:i:s");
 
 //---- query validations
 $check_name = "SELECT * from member where first_name='$first_name' AND last_name='$last_name'";
@@ -165,9 +166,9 @@ else if (preg_match($phoneregex, $phone, $match)) {
             if ($avail == "Yes") {
                if($member_type == "Regular") {
                 $sql = "INSERT INTO `member` ( first_name,last_name,gender,birthdate,email,address,
-                phone,member_type,date_registered,program_id )         
+                phone,member_type,date_registered,program_id,time_registered )         
                 VALUES ( '$first_name', '$last_name', '$gender', '$birthdate', '$email', 
-                '$address', '$phone', '$member_type', '$date_registered','$program_id')";
+                '$address', '$phone', '$member_type', '$date_registered','$program_id','$timeregistered')";
                     $query_run = mysqli_query($conn, $sql);
     
                     echo ("<script LANGUAGE='JavaScript'>
@@ -273,9 +274,9 @@ else if (preg_match($phoneregex, $phone, $match)) {
                     }
                } else {
                 $sql = "INSERT INTO `member` ( first_name,last_name,gender,birthdate,email,address,
-                phone,member_type,date_registered)         
+                phone,member_type,date_registered,time_registered)         
                 VALUES ( '$first_name', '$last_name', '$gender', '$birthdate', '$email', 
-                '$address', '$phone', '$member_type', '$date_registered')";
+                '$address', '$phone', '$member_type', '$date_registered','$timeregistered')";
                     $query_run = mysqli_query($conn, $sql);
     
                     echo ("<script LANGUAGE='JavaScript'>
@@ -382,9 +383,9 @@ else if (preg_match($phoneregex, $phone, $match)) {
                }
             } else {
                 $sql = "INSERT INTO `member` ( first_name,last_name,gender,birthdate,email,address,
-            phone,member_type,date_registered )         
+            phone,member_type,date_registered ,time_registered)         
             VALUES ( '$first_name', '$last_name', '$gender', '$birthdate', '$email', 
-            '$address', '$phone', '$member_type', '$date_registered')";
+            '$address', '$phone', '$member_type', '$date_registered','$timeregistered')";
                 $query_run = mysqli_query($conn, $sql);
 
 
