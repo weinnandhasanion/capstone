@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2021 at 10:55 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.13
+-- Generation Time: May 01, 2021 at 08:52 PM
+-- Server version: 10.1.9-MariaDB
+-- PHP Version: 5.6.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -20,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `gym`
 --
-CREATE DATABASE IF NOT EXISTS `gym` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `gym`;
 
 -- --------------------------------------------------------
 
@@ -44,7 +41,9 @@ CREATE TABLE `admin` (
 INSERT INTO `admin` (`admin_id`, `username`, `password`, `first_name`, `last_name`) VALUES
 (87000, 'klintjohn60@gmail.com', '$2y$10$I5JX347ujLO4i566c8qFeOIyTRy0eSdmkY.rs8Jz40.TH/.7xYeEG', 'klintjohn', 'cagot'),
 (87001, 'weinnandhasanion@gmail.com', '$2y$10$gNnkz9JJ5nNYFRuMuPpFkuBha9A6KpXKZxcSES56MnJufxQDB/hLa', 'Weinnand', 'Hasanion'),
-(87002, 'babayaga@gmail.com', '$2y$10$aQT4kRsC5ZDz/ANKh4FsWOegfDzwcjWpz5la2dDxADVYObg8cYSga', 'baba', 'yaga');
+(87002, 'babayaga@gmail.com', '$2y$10$aQT4kRsC5ZDz/ANKh4FsWOegfDzwcjWpz5la2dDxADVYObg8cYSga', 'baba', 'yaga'),
+(87003, 'johngaga@gmail.com', '$2y$10$nxC8Npzmdke8VdKSGlkbwubzZU/A8I51fSeJffKH9.HmMlE0qNQrG', 'john', 'gaga'),
+(87004, 'asddfsadfW@gmail.com', '$2y$10$JDl4LsFGus8aUJ0nLp49oeWjy0dMIAKlQbLRNzxOnnjAJXhhCe3Ce', 'asdfsadf', 'asdfasdfd');
 
 -- --------------------------------------------------------
 
@@ -62,6 +61,7 @@ CREATE TABLE `inventory` (
   `inventory_description` varchar(255) DEFAULT NULL,
   `inventory_status` enum('notdeleted','deleted') NOT NULL,
   `date_deleted` date DEFAULT NULL,
+  `admin_delete` varchar(100) DEFAULT NULL,
   `time_deleted` time DEFAULT NULL,
   `date_added` date DEFAULT NULL,
   `image_pathname` varchar(9999) DEFAULT NULL
@@ -71,20 +71,20 @@ CREATE TABLE `inventory` (
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`inventory_id`, `inventory_name`, `inventory_category`, `inventory_qty`, `inventory_damage`, `inventory_working`, `inventory_description`, `inventory_status`, `date_deleted`, `time_deleted`, `date_added`, `image_pathname`) VALUES
-(2010, '5 lbs dumbbell', 'Weight Equipment', 10, 2, NULL, '5 pound dumbbells.', 'notdeleted', NULL, NULL, '2021-03-20', '5lbdumbell.jpg'),
-(2012, 'Treadmill', 'Cardio Equipment', 3, 1, NULL, 'Nordic TrackSeries T', 'notdeleted', NULL, NULL, '2021-03-06', '710XQC8XqpL._AC_SL1500_.jpg'),
-(2013, 'charot', 'Cardio Equipment', 5, 1, NULL, 'hi cagot', 'deleted', '2021-03-18', '01:03:46', '2021-03-06', 'localhost_capstoneMobile_pages_pay.php(iPhone X).png'),
-(2014, 'Rowing machine', 'Cardio Equipment', 3, 0, NULL, 'Concept2 Model D Indoor Rowing Machine with PM5', 'notdeleted', NULL, NULL, '2021-03-20', 'rowing machine.jpg'),
-(2015, 'Exercise stationary bike', 'Cardio Equipment', 4, 0, NULL, 'Exercise stationary bikes good for cardio exercise.', 'notdeleted', NULL, NULL, '2021-03-20', 'exercise bike.png'),
-(2016, '10 lbs dumbbell', 'Weight Equipment', 10, 0, NULL, '10 pound dumbbells.', 'notdeleted', NULL, NULL, '2021-03-20', '10dumbbell.png'),
-(2017, '15 lbs weight disc', 'Weight Equipment', 8, NULL, NULL, '15 pound weight discs for adjustable barbells.', 'notdeleted', NULL, NULL, '2021-03-20', '15 plate.jpg'),
-(2018, '15 lbs dumbbell', 'Weight Equipment', 12, NULL, NULL, '15 pound dumbbells.', 'notdeleted', NULL, NULL, '2021-03-20', '15dumbbell.jpg'),
-(2019, '20 lbs dumbbell', 'Weight Equipment', 8, NULL, NULL, '20 pound dumbbells.', 'notdeleted', NULL, NULL, '2021-03-20', '20dumbbell.jpg'),
-(2020, '25 lbs dumbbell', 'Weight Equipment', 12, NULL, NULL, '25 pound dumbbells.', 'notdeleted', NULL, NULL, '2021-03-20', '25dumbbell.jpg'),
-(2021, 'Barbell bar', 'Weight Equipment', 6, NULL, NULL, 'Adjustable barbell bars.', 'notdeleted', NULL, NULL, '2021-03-20', 'barbell bar.jpg'),
-(2022, '5 lbs weight disc', 'Weight Equipment', 6, NULL, NULL, '5 pound weight discs for adjustable barbells.', 'notdeleted', NULL, NULL, '2021-03-20', '5 plate.jpg'),
-(2023, '10 lbs weight disc', 'Weight Equipment', 10, NULL, NULL, '10 pound weight discs for adjustable barbells.', 'notdeleted', NULL, NULL, '2021-03-20', '10plate.jpg');
+INSERT INTO `inventory` (`inventory_id`, `inventory_name`, `inventory_category`, `inventory_qty`, `inventory_damage`, `inventory_working`, `inventory_description`, `inventory_status`, `date_deleted`, `admin_delete`, `time_deleted`, `date_added`, `image_pathname`) VALUES
+(2010, '5 lbs dumbbell', 'Weight Equipment', 10, 2, NULL, '5 pound dumbbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '5lbdumbell.jpg'),
+(2012, 'Treadmill', 'Cardio Equipment', 3, 1, NULL, 'Nordic TrackSeries T', 'notdeleted', NULL, NULL, NULL, '2021-03-06', '710XQC8XqpL._AC_SL1500_.jpg'),
+(2013, 'charot', 'Cardio Equipment', 5, 1, NULL, 'hi cagot', 'notdeleted', NULL, NULL, NULL, '2021-03-06', 'localhost_capstoneMobile_pages_pay.php(iPhone X).png'),
+(2014, 'Rowing machine', 'Cardio Equipment', 3, 0, NULL, 'Concept2 Model D Indoor Rowing Machine with PM5', 'notdeleted', NULL, NULL, NULL, '2021-03-20', 'rowing machine.jpg'),
+(2015, 'Exercise stationary bike', 'Cardio Equipment', 4, 0, NULL, 'Exercise stationary bikes good for cardio exercise.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', 'exercise bike.png'),
+(2016, '10 lbs dumbbell', 'Weight Equipment', 10, 0, NULL, '10 pound dumbbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '10dumbbell.png'),
+(2017, '15 lbs weight disc', 'Weight Equipment', 8, NULL, NULL, '15 pound weight discs for adjustable barbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '15 plate.jpg'),
+(2018, '15 lbs dumbbell', 'Weight Equipment', 12, NULL, NULL, '15 pound dumbbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '15dumbbell.jpg'),
+(2019, '20 lbs dumbbell', 'Weight Equipment', 8, NULL, NULL, '20 pound dumbbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '20dumbbell.jpg'),
+(2020, '25 lbs dumbbell', 'Weight Equipment', 12, NULL, NULL, '25 pound dumbbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '25dumbbell.jpg'),
+(2021, 'Barbell bar', 'Weight Equipment', 6, NULL, NULL, 'Adjustable barbell bars.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', 'barbell bar.jpg'),
+(2022, '5 lbs weight disc', 'Weight Equipment', 6, NULL, NULL, '5 pound weight discs for adjustable barbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '5 plate.jpg'),
+(2023, '10 lbs weight disc', 'Weight Equipment', 10, NULL, NULL, '10 pound weight discs for adjustable barbells.', 'deleted', '2021-05-02', 'klintjohn cagot', '02:39:46', '2021-03-20', '10plate.jpg');
 
 -- --------------------------------------------------------
 
@@ -97,7 +97,7 @@ CREATE TABLE `logtrail` (
   `admin_id` int(100) DEFAULT NULL,
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
-  `dateandtime_login` datetime DEFAULT current_timestamp(),
+  `dateandtime_login` datetime DEFAULT CURRENT_TIMESTAMP,
   `dateandtime_logout` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -106,21 +106,41 @@ CREATE TABLE `logtrail` (
 --
 
 INSERT INTO `logtrail` (`login_id`, `admin_id`, `first_name`, `last_name`, `dateandtime_login`, `dateandtime_logout`) VALUES
-(1, 87001, 'Weinnand', 'Hasanion', '2021-03-18 00:10:20', '2021-03-18 00:10:57'),
+(1, 87001, 'Weinnand', 'Hasanion', '2021-03-18 00:10:20', '2021-03-18 02:10:32'),
 (2, 87001, 'Weinnand', 'Hasanion', '2021-03-18 04:30:51', '2021-03-18 04:31:25'),
-(3, 87001, 'Weinnand', 'Hasanion', '2021-03-18 04:31:32', '2021-03-18 05:23:32'),
 (4, 87001, 'Weinnand', 'Hasanion', '2021-03-18 11:44:15', '2021-03-18 18:28:44'),
 (5, 87002, 'baba', 'yaga', '2021-03-18 18:28:54', '2021-03-18 18:57:09'),
 (6, 87001, 'Weinnand', 'Hasanion', '2021-03-18 18:57:57', '2021-03-18 19:00:04'),
-(7, 87002, 'baba', 'yaga', '2021-03-18 20:57:32', '2021-03-18 22:30:30'),
-(8, 87002, 'baba', 'yaga', '2021-03-19 02:10:53', '2021-03-19 03:28:53'),
-(9, 87002, 'baba', 'yaga', '2021-03-19 18:21:50', '2021-03-19 20:11:50'),
-(10, 87001, 'Weinnand', 'Hasanion', '2021-03-20 11:14:38', '2021-03-20 01:02:38'),
-(11, 87001, 'Weinnand', 'Hasanion', '2021-03-21 19:21:41', '2021-03-21 21:53:41'),
-(12, 87001, 'Weinnand', 'Hasanion', '2021-03-22 10:25:08', '2021-03-22 12:04:08'),
-(13, 87001, 'Weinnand', 'Hasanion', '2021-03-25 12:18:12', '2021-03-25 02:47:12'),
-(14, 87001, 'Weinnand', 'Hasanion', '2021-03-29 10:20:06', '2021-03-29 12:10:06'),
-(15, 87001, 'Weinnand', 'Hasanion', '2021-03-29 16:45:18', '2021-03-29 18:15:18');
+(7, 87002, 'baba', 'yaga', '2021-03-18 20:57:32', '2021-03-18 23:24:31'),
+(9, 87002, 'baba', 'yaga', '2021-03-19 18:21:50', '2021-03-19 20:22:53'),
+(10, 87001, 'Weinnand', 'Hasanion', '2021-03-20 11:14:38', '2021-03-20 02:20:49'),
+(11, 87001, 'Weinnand', 'Hasanion', '2021-03-21 19:21:41', '2021-03-21 20:32:04'),
+(12, 87001, 'Weinnand', 'Hasanion', '2021-03-22 10:25:08', '2021-03-22 11:02:08'),
+(13, 87001, 'Weinnand', 'Hasanion', '2021-03-25 12:18:12', '2021-03-25 12:56:23'),
+(14, 87001, 'Weinnand', 'Hasanion', '2021-03-29 10:20:06', '2021-03-29 11:50:05'),
+(15, 87001, 'Weinnand', 'Hasanion', '2021-03-29 16:45:18', '2021-03-29 18:50:52'),
+(16, 87001, 'Weinnand', 'Hasanion', '2021-03-31 13:34:03', '2021-03-31 15:43:30'),
+(17, 87001, 'Weinnand', 'Hasanion', '2021-04-02 14:21:53', '2021-04-02 14:56:53'),
+(18, 87001, 'Weinnand', 'Hasanion', '2021-04-09 12:03:37', '2021-04-09 12:56:05'),
+(19, 87001, 'Weinnand', 'Hasanion', '2021-04-12 11:10:22', '2021-04-12 14:26:38'),
+(20, 87001, 'Weinnand', 'Hasanion', '2021-04-12 17:24:01', '2021-04-12 18:24:01'),
+(21, 87001, 'Weinnand', 'Hasanion', '2021-04-13 20:44:17', '2021-04-13 22:54:43'),
+(22, 87001, 'Weinnand', 'Hasanion', '2021-04-15 09:23:32', '2021-04-15 09:56:04'),
+(23, 87001, 'Weinnand', 'Hasanion', '2021-04-26 14:30:25', '2021-04-26 18:34:56'),
+(24, 87001, 'Weinnand', 'Hasanion', '2021-04-26 23:30:27', '2021-04-26 23:34:25'),
+(25, 87001, 'Weinnand', 'Hasanion', '2021-04-27 00:09:56', '2021-04-27 01:10:23'),
+(26, 87001, 'Weinnand', 'Hasanion', '2021-04-27 19:44:42', '2021-04-27 20:44:24'),
+(27, 87001, 'Weinnand', 'Hasanion', '2021-04-28 22:07:23', '2021-04-28 23:29:30'),
+(28, 87001, 'Weinnand', 'Hasanion', '2021-04-30 20:41:03', '2021-04-30 21:45:06'),
+(29, 87001, 'Weinnand', 'Hasanion', '2021-04-30 21:45:09', '2021-04-30 21:47:39'),
+(30, 87001, 'Weinnand', 'Hasanion', '2021-04-30 22:36:45', '2021-04-30 23:20:28'),
+(31, 87001, 'Weinnand', 'Hasanion', '2021-04-30 23:24:18', '2021-05-01 01:01:43'),
+(32, 87001, 'Weinnand', 'Hasanion', '2021-05-01 01:06:23', '2021-05-01 05:20:32'),
+(33, 87000, 'klintjohn', 'cagot', '2021-05-01 23:49:16', '2021-05-01 23:50:36'),
+(34, 87000, 'klintjohn', 'cagot', '2021-05-02 00:55:47', '2021-05-02 00:55:50'),
+(35, 87000, 'klintjohn', 'cagot', '2021-05-02 02:20:11', '2021-05-02 02:48:56'),
+(36, 87000, 'klintjohn', 'cagot', '2021-05-02 02:49:00', '2021-05-02 02:50:03'),
+(37, 87000, 'klintjohn', 'cagot', '2021-05-02 02:50:05', '2021-05-02 02:51:45');
 
 -- --------------------------------------------------------
 
@@ -263,7 +283,228 @@ INSERT INTO `logtrail_doing` (`logtrail_doing_id`, `login_id`, `admin_id`, `memb
 (109, 15, 87001, 1921681014, NULL, NULL, NULL, NULL, 'John Jay', 'Desierto', 'Activated the account', 'Members', '04:45 PM', NULL, NULL, NULL, NULL),
 (110, 15, 87001, 1921681014, NULL, NULL, NULL, NULL, 'John Jay', 'Desierto', 'Deactivated the Account', 'Members', '04:45 PM', NULL, NULL, NULL, NULL),
 (111, 15, 87001, 1921681014, NULL, NULL, NULL, NULL, 'John Jay', 'Desierto', 'Deactivated the Account', 'Members', '04:45 PM', NULL, NULL, NULL, NULL),
-(112, 15, 87001, 1921681011, NULL, NULL, NULL, NULL, 'John', 'Doe', 'Activated the account', 'Members', '04:49 PM', NULL, NULL, NULL, NULL);
+(112, 15, 87001, 1921681011, NULL, NULL, NULL, NULL, 'John', 'Doe', 'Activated the account', 'Members', '04:49 PM', NULL, NULL, NULL, NULL),
+(113, 15, 87001, 1921681022, NULL, NULL, NULL, NULL, 'Weinnand', 'Hasanion', 'Activated the account', 'Members', '04:56 PM', NULL, NULL, NULL, NULL),
+(114, 16, 87001, NULL, NULL, NULL, NULL, 202112, 'John Doe', NULL, 'Remove a member from Senior Discount promo', 'Promos', '01:34 PM', NULL, NULL, NULL, NULL),
+(115, 16, 87001, 1921681022, NULL, NULL, NULL, NULL, 'Weinnand', 'Hasanion', 'Paid Monthly Subscription', 'Members', '01:39 PM', NULL, NULL, NULL, NULL),
+(116, 16, 87001, NULL, NULL, NULL, NULL, 202114, 'May Promo', NULL, 'Added new promo', 'Promos', '01:50 PM', NULL, NULL, NULL, NULL),
+(117, 16, 87001, NULL, NULL, NULL, NULL, 202114, 'May Promo', NULL, 'Update a promo', 'Promos', '01:50 PM', NULL, NULL, NULL, NULL),
+(118, 16, 87001, NULL, NULL, NULL, NULL, 202114, 'May Promo', NULL, 'Update a promo', 'Promos', '01:50 PM', NULL, NULL, NULL, NULL),
+(119, 16, 87001, NULL, NULL, NULL, NULL, 202114, 'May Promo', NULL, 'Update a promo', 'Promos', '01:50 PM', NULL, NULL, NULL, NULL),
+(120, 16, 87001, NULL, NULL, NULL, NULL, 202114, 'May Promo', NULL, 'Update a promo', 'Promos', '01:51 PM', NULL, NULL, NULL, NULL),
+(121, 16, 87001, NULL, NULL, NULL, NULL, 202114, 'May Promo', NULL, 'Update a promo', 'Promos', '01:51 PM', NULL, NULL, NULL, NULL),
+(122, 16, 87001, NULL, NULL, NULL, NULL, 202114, 'May Promo', NULL, 'Update a promo', 'Promos', '01:51 PM', NULL, NULL, NULL, NULL),
+(123, 16, 87001, NULL, NULL, NULL, NULL, 202114, 'May Promo', NULL, 'Deleted a promo', 'Promos', '01:52 PM', NULL, NULL, NULL, NULL),
+(124, 16, 87001, NULL, NULL, NULL, NULL, 202114, 'May Promo', NULL, 'Restore a promo', 'Promos', '01:56 PM', NULL, NULL, NULL, NULL),
+(125, 17, 87001, NULL, NULL, NULL, NULL, 202113, 'John Doe', NULL, 'Remove a member from Back-to-school Promo promo', 'Promos', '02:22 PM', NULL, NULL, NULL, NULL),
+(126, 17, 87001, NULL, NULL, NULL, NULL, 202114, 'April Promo', NULL, 'Update a promo', 'Promos', '02:25 PM', NULL, NULL, NULL, NULL),
+(127, 18, 87001, NULL, 3, NULL, NULL, NULL, 'asfsafsaf', NULL, 'Recover the program', 'Programs', '01:02 PM', NULL, NULL, NULL, NULL),
+(128, 18, 87001, NULL, 3, NULL, NULL, NULL, 'asfsafsaf', NULL, 'Deleted the program', 'Programs', '01:02 PM', NULL, NULL, NULL, NULL),
+(129, 19, 87001, NULL, 2, NULL, NULL, NULL, 'Reducing', NULL, 'Updated the program', 'Programs', '11:10 AM', NULL, NULL, NULL, NULL),
+(130, 21, 87001, NULL, NULL, NULL, NULL, 202115, 'May Promo', NULL, 'Added new promo', 'Promos', '08:51 PM', NULL, NULL, NULL, NULL),
+(131, 21, 87001, NULL, NULL, NULL, NULL, 202115, 'May Promo', NULL, 'Update a promo', 'Promos', '08:52 PM', NULL, NULL, NULL, NULL),
+(132, 21, 87001, NULL, NULL, NULL, NULL, 202115, 'May Promo', NULL, 'Deleted a promo', 'Promos', '08:55 PM', NULL, NULL, NULL, NULL),
+(133, 21, 87001, NULL, NULL, NULL, NULL, 202116, 'girl promo haha', NULL, 'Added new promo', 'Promos', '08:57 PM', NULL, NULL, NULL, NULL),
+(134, 21, 87001, NULL, NULL, NULL, NULL, 202116, 'girl promo haha', NULL, 'Deleted a promo', 'Promos', '08:57 PM', NULL, NULL, NULL, NULL),
+(135, 21, 87001, NULL, NULL, NULL, NULL, 202113, 'Back-to-school Promo', NULL, 'Deleted a promo', 'Promos', '09:10 PM', NULL, NULL, NULL, NULL),
+(136, 23, 87001, 1921681024, NULL, NULL, NULL, NULL, 'Clint', 'Lapera', 'Activated the account', 'Members', '02:31 PM', NULL, NULL, NULL, NULL),
+(137, 24, 87001, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Added a new program', 'Programs', '11:32 PM', NULL, NULL, NULL, NULL),
+(138, 24, 87001, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Deleted the program', 'Programs', '11:32 PM', NULL, NULL, NULL, NULL),
+(139, 24, 87001, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Recover the program', 'Programs', '11:32 PM', NULL, NULL, NULL, NULL),
+(140, 24, 87001, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Deleted the program', 'Programs', '11:34 PM', NULL, NULL, NULL, NULL),
+(141, 24, 87001, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Updated a Trainer ', 'Trainers', '11:35 PM', NULL, NULL, NULL, NULL),
+(142, 24, 87001, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Recover the program', 'Programs', '11:37 PM', NULL, NULL, NULL, NULL),
+(143, 24, 87001, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Deleted the program', 'Programs', '11:37 PM', NULL, NULL, NULL, NULL),
+(148, 25, 87001, NULL, NULL, NULL, NULL, 202114, 'Michael Antiporta', NULL, 'Remove a member from April Promo promo', 'Promos', '12:11 AM', NULL, NULL, NULL, NULL),
+(149, 25, 87001, NULL, NULL, NULL, NULL, 202114, 'John Doe', NULL, 'Remove a member from April Promo promo', 'Promos', '12:14 AM', NULL, NULL, NULL, NULL),
+(150, 25, 87001, NULL, NULL, NULL, NULL, 202114, 'John Doe', NULL, 'Added a member to April Promo', 'Promos', '12:14 AM', NULL, NULL, NULL, NULL),
+(151, 25, 87001, NULL, NULL, NULL, NULL, 202112, 'John Doe', NULL, 'Added a member to Senior Discount', 'Promos', '12:20 AM', NULL, NULL, NULL, NULL),
+(152, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members ongoing subscription', NULL, 'Generated a report for members with  ongoing subscription', 'Reports', '07:45 PM', NULL, NULL, NULL, NULL),
+(153, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members ongoing subscription', NULL, 'Generated a report for members with  ongoing subscription', 'Reports', '07:45 PM', NULL, NULL, NULL, NULL),
+(154, 26, 87001, 1921681011, NULL, NULL, NULL, NULL, 'John', 'Doe', 'Paid Annual Membership', 'Members', '07:46 PM', NULL, NULL, NULL, NULL),
+(155, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members ongoing subscription', NULL, 'Generated a report for members with  ongoing subscription', 'Reports', '07:46 PM', NULL, NULL, NULL, NULL),
+(156, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members expired subscription', NULL, 'Generated a report for members with expired subscription', 'Reports', '07:46 PM', NULL, NULL, NULL, NULL),
+(157, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members expired subscription', NULL, 'Generated a report for members with expired subscription', 'Reports', '07:46 PM', NULL, NULL, NULL, NULL),
+(158, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members expired subscription', NULL, 'Generated a report for members with expired subscription', 'Reports', '07:46 PM', NULL, NULL, NULL, NULL),
+(159, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members expired subscription', NULL, 'Generated a report for members with expired subscription', 'Reports', '07:47 PM', NULL, NULL, NULL, NULL),
+(160, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members expired subscription', NULL, 'Generated a report for members with expired subscription', 'Reports', '07:47 PM', NULL, NULL, NULL, NULL),
+(161, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members activated mobile account', NULL, 'Generated a report for members who have activated their mobile account', 'Reports', '10:14 PM', NULL, NULL, NULL, NULL),
+(162, 26, 87001, 1921681013, NULL, NULL, NULL, NULL, 'Christian James', 'Gulapa', 'Activated the account', 'Members', '10:15 PM', NULL, NULL, NULL, NULL),
+(163, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members activated mobile account', NULL, 'Generated a report for members who have activated their mobile account', 'Reports', '10:15 PM', NULL, NULL, NULL, NULL),
+(164, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members activated mobile account', NULL, 'Generated a report for members who have activated their mobile account', 'Reports', '10:16 PM', NULL, NULL, NULL, NULL),
+(165, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members activated mobile account', NULL, 'Generated a report for members who have activated their mobile account', 'Reports', '10:17 PM', NULL, NULL, NULL, NULL),
+(166, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members activated mobile account', NULL, 'Generated a report for members who have activated their mobile account', 'Reports', '10:17 PM', NULL, NULL, NULL, NULL),
+(167, 26, 87001, 1921681013, NULL, NULL, NULL, NULL, 'Christian James', 'Gulapa', 'Deactivated the Account', 'Members', '10:17 PM', NULL, NULL, NULL, NULL),
+(168, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members activated mobile account', NULL, 'Generated a report for members who have activated their mobile account', 'Reports', '10:18 PM', NULL, NULL, NULL, NULL),
+(169, 26, 87001, 1921681013, NULL, NULL, NULL, NULL, 'Christian James', 'Gulapa', 'Activated the account', 'Members', '10:18 PM', NULL, NULL, NULL, NULL),
+(170, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members activated mobile account', NULL, 'Generated a report for members who have activated their mobile account', 'Reports', '10:18 PM', NULL, NULL, NULL, NULL),
+(171, 26, 87001, 1921681013, NULL, NULL, NULL, NULL, 'Christian James', 'Gulapa', 'Deactivated the Account', 'Members', '10:18 PM', NULL, NULL, NULL, NULL),
+(172, 26, 87001, 1921681013, NULL, NULL, NULL, NULL, 'Christian James', 'Gulapa', 'Activated the account', 'Members', '10:18 PM', NULL, NULL, NULL, NULL),
+(173, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members activated mobile account', NULL, 'Generated a report for members who have activated their mobile account', 'Reports', '10:19 PM', NULL, NULL, NULL, NULL),
+(174, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members availed promo', NULL, 'Generated a report for members who availed promo', 'Reports', '10:19 PM', NULL, NULL, NULL, NULL),
+(175, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members availed promo', NULL, 'Generated a report for members who availed promo', 'Reports', '10:19 PM', NULL, NULL, NULL, NULL),
+(176, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members availed promo', NULL, 'Generated a report for members who availed promo', 'Reports', '10:19 PM', NULL, NULL, NULL, NULL),
+(177, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members availed promo', NULL, 'Generated a report for members who availed promo', 'Reports', '10:19 PM', NULL, NULL, NULL, NULL),
+(178, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'members availed promo', NULL, 'Generated a report for members who availed promo', 'Reports', '10:19 PM', NULL, NULL, NULL, NULL),
+(179, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'list of trainers', NULL, 'Generated a report for list of trainers', 'Reports', '10:19 PM', NULL, NULL, NULL, NULL),
+(180, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'list of trainers', NULL, 'Generated a report for list of trainers', 'Reports', '10:19 PM', NULL, NULL, NULL, NULL),
+(181, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'active trainers', NULL, 'Generated a report for list of active trainers', 'Reports', '10:20 PM', NULL, NULL, NULL, NULL),
+(182, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'active trainers', NULL, 'Generated a report for list of active trainers', 'Reports', '10:20 PM', NULL, NULL, NULL, NULL),
+(183, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'list of inventory', NULL, 'Generated a report for inventory list', 'Reports', '10:20 PM', NULL, NULL, NULL, NULL),
+(184, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'list of inventory', NULL, 'Generated a report for inventory list', 'Reports', '10:22 PM', NULL, NULL, NULL, NULL),
+(185, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'list of inventory', NULL, 'Generated a report for inventory list', 'Reports', '10:24 PM', NULL, NULL, NULL, NULL),
+(186, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'damage equipments', NULL, 'Generated a report for damage equipment', 'Reports', '10:26 PM', NULL, NULL, NULL, NULL),
+(187, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'damage equipments', NULL, 'Generated a report for damage equipment', 'Reports', '10:26 PM', NULL, NULL, NULL, NULL),
+(188, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'damage equipments', NULL, 'Generated a report for damage equipment', 'Reports', '10:27 PM', NULL, NULL, NULL, NULL),
+(189, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'seasonal promos', NULL, 'Generated a report for list of seasonal promos', 'Reports', '10:35 PM', NULL, NULL, NULL, NULL),
+(190, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'list of promos', NULL, 'Generated a report for list of promos', 'Reports', '10:35 PM', NULL, NULL, NULL, NULL),
+(191, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'list of promos', NULL, 'Generated a report for list of promos', 'Reports', '10:35 PM', NULL, NULL, NULL, NULL),
+(192, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'list of promos', NULL, 'Generated a report for list of promos', 'Reports', '10:35 PM', NULL, NULL, NULL, NULL),
+(193, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'list of promos', NULL, 'Generated a report for list of promos', 'Reports', '10:35 PM', NULL, NULL, NULL, NULL),
+(194, 26, 87001, NULL, NULL, NULL, NULL, NULL, 'list of promos', NULL, 'Generated a report for list of promos', 'Reports', '10:36 PM', NULL, NULL, NULL, NULL),
+(195, 27, 87001, NULL, NULL, NULL, NULL, 202114, 'Clint Lapera', NULL, 'Remove a member from April Promo promo', 'Promos', '10:07 PM', NULL, NULL, NULL, NULL),
+(196, 27, 87001, NULL, NULL, NULL, NULL, 202114, 'Clint Lapera', NULL, 'Added a member to April Promo', 'Promos', '10:08 PM', NULL, NULL, NULL, NULL),
+(197, 27, 87001, NULL, NULL, NULL, NULL, 202114, 'April Promo', NULL, 'Deleted a promo', 'Promos', '10:13 PM', NULL, NULL, NULL, NULL),
+(198, 27, 87001, NULL, NULL, NULL, NULL, 202114, 'April Promo', NULL, 'Restore a promo', 'Promos', '10:13 PM', NULL, NULL, NULL, NULL),
+(199, 27, 87001, 1921681030, NULL, NULL, NULL, NULL, 'Gil', 'Eaton', 'Deleted an account from regular table', 'Members', '10:16 PM', NULL, NULL, NULL, NULL),
+(200, 27, 87001, 1921681030, NULL, NULL, NULL, NULL, 'Gil', 'Eaton', 'Recover an account to Regular table', 'Members', '10:17 PM', NULL, NULL, NULL, NULL),
+(201, 27, 87001, 1921681030, NULL, NULL, NULL, NULL, 'Gil', 'Eaton', 'Deleted an account from regular table', 'Members', '10:17 PM', NULL, NULL, NULL, NULL),
+(202, 27, 87001, 1921681030, NULL, NULL, NULL, NULL, 'Gil', 'Eaton', 'Recover an account to Regular table', 'Members', '10:17 PM', NULL, NULL, NULL, NULL),
+(203, 27, 87001, 1921681030, NULL, NULL, NULL, NULL, 'Gil', 'Eaton', 'Deleted an account from regular table', 'Members', '10:50 PM', NULL, NULL, NULL, NULL),
+(204, 27, 87001, 1921681026, NULL, NULL, NULL, NULL, 'Phelan', 'Blackwell', 'Paid Annual Membership', 'Members', '12:03 AM', NULL, NULL, NULL, NULL),
+(205, 27, 87001, 1921681026, NULL, NULL, NULL, NULL, 'Phelan', 'Blackwell', 'Paid Annual Membership', 'Members', '12:06 AM', NULL, NULL, NULL, NULL),
+(206, 27, 87001, 1921681026, NULL, NULL, NULL, NULL, 'Phelan', 'Blackwell', 'Activated the account', 'Members', '12:08 AM', NULL, NULL, NULL, NULL),
+(207, 27, 87001, 1921681026, NULL, NULL, NULL, NULL, 'Phelan', 'Blackwell', 'Deactivated the Account', 'Members', '12:08 AM', NULL, NULL, NULL, NULL),
+(208, 27, 87001, 1921681026, NULL, NULL, NULL, NULL, 'Phelan', 'Blackwell', 'Activated the account', 'Members', '12:08 AM', NULL, NULL, NULL, NULL),
+(209, 27, 87001, 1921681026, NULL, NULL, NULL, NULL, 'Phelan', 'Blackwell', 'Deactivated the Account', 'Members', '12:09 AM', NULL, NULL, NULL, NULL),
+(210, 27, 87001, 1921681026, NULL, NULL, NULL, NULL, 'Phelan', 'Blackwell', 'Activated the account', 'Members', '12:09 AM', NULL, NULL, NULL, NULL),
+(211, 27, 87001, 1921681026, NULL, NULL, NULL, NULL, 'Phelan', 'Blackwell', 'Deactivated the Account', 'Members', '12:09 AM', NULL, NULL, NULL, NULL),
+(212, 27, 87001, 1921681030, NULL, NULL, NULL, NULL, 'Gil', 'Eaton', 'Recover an account to Regular table', 'Members', '12:16 AM', NULL, NULL, NULL, NULL),
+(213, 27, 87001, 1921681030, NULL, NULL, NULL, NULL, 'Gil', 'Eaton', 'Deleted an account from regular table', 'Members', '12:16 AM', NULL, NULL, NULL, NULL),
+(214, 27, 87001, 1921681030, NULL, NULL, NULL, NULL, 'Gil', 'Eaton', 'Recover an account to Regular table', 'Members', '12:17 AM', NULL, NULL, NULL, NULL),
+(215, 27, 87001, 1921681030, NULL, NULL, NULL, NULL, 'Gil', 'Eaton', 'Deleted an account from regular table', 'Members', '12:17 AM', NULL, NULL, NULL, NULL),
+(216, 27, 87001, 1921681030, NULL, NULL, NULL, NULL, 'Gil', 'Eaton', 'Recover an account to Regular table', 'Members', '12:17 AM', NULL, NULL, NULL, NULL),
+(217, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'members ongoing subscription', NULL, 'Generated a report for members with  ongoing subscription', 'Reports', '08:49 PM', NULL, NULL, NULL, NULL),
+(218, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'members ongoing subscription', NULL, 'Generated a report for members with  ongoing subscription', 'Reports', '08:50 PM', NULL, NULL, NULL, NULL),
+(219, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'members expired subscription', NULL, 'Generated a report for members with expired subscription', 'Reports', '08:50 PM', NULL, NULL, NULL, NULL),
+(220, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'list of inactive members', NULL, 'Generated a report for list of inactive members', 'Reports', '08:51 PM', NULL, NULL, NULL, NULL),
+(221, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'list of inactive members', NULL, 'Generated a report for list of inactive members', 'Reports', '08:51 PM', NULL, NULL, NULL, NULL),
+(222, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'members activated mobile account', NULL, 'Generated a report for members who have activated their mobile account', 'Reports', '08:51 PM', NULL, NULL, NULL, NULL),
+(223, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'members availed promo', NULL, 'Generated a report for members who availed promo', 'Reports', '08:52 PM', NULL, NULL, NULL, NULL),
+(224, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'members availed promo', NULL, 'Generated a report for members who availed promo', 'Reports', '08:52 PM', NULL, NULL, NULL, NULL),
+(225, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'list of trainers', NULL, 'Generated a report for list of trainers', 'Reports', '08:52 PM', NULL, NULL, NULL, NULL),
+(226, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'list of trainers', NULL, 'Generated a report for list of trainers', 'Reports', '08:52 PM', NULL, NULL, NULL, NULL),
+(227, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'active trainers', NULL, 'Generated a report for list of active trainers', 'Reports', '08:53 PM', NULL, NULL, NULL, NULL),
+(228, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'inactive trainers', NULL, 'Generated a report for list of inactive trainers', 'Reports', '08:53 PM', NULL, NULL, NULL, NULL),
+(229, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'deleted trainers', NULL, 'Generated a report for list of deleted trainers', 'Reports', '08:53 PM', NULL, NULL, NULL, NULL),
+(230, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'list of inventory', NULL, 'Generated a report for inventory list', 'Reports', '08:53 PM', NULL, NULL, NULL, NULL),
+(231, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'working equipments', NULL, 'Generated a report for working equipment', 'Reports', '08:54 PM', NULL, NULL, NULL, NULL),
+(232, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'damage equipments', NULL, 'Generated a report for damage equipment', 'Reports', '08:54 PM', NULL, NULL, NULL, NULL),
+(233, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'list of promos', NULL, 'Generated a report for list of promos', 'Reports', '08:54 PM', NULL, NULL, NULL, NULL),
+(234, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '08:54 PM', NULL, NULL, NULL, NULL),
+(235, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'seasonal promos', NULL, 'Generated a report for list of seasonal promos', 'Reports', '08:55 PM', NULL, NULL, NULL, NULL),
+(236, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'total sales', NULL, 'Generated a report for list of total sales', 'Reports', '08:55 PM', NULL, NULL, NULL, NULL),
+(237, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'monthly payments', NULL, 'Generated a report for list of monthly payments', 'Reports', '08:55 PM', NULL, NULL, NULL, NULL),
+(238, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'annual payments', NULL, 'Generated a report for list of annual payments', 'Reports', '08:56 PM', NULL, NULL, NULL, NULL),
+(239, 28, 87001, NULL, NULL, NULL, NULL, NULL, 'walk-in payments', NULL, 'Generated a report for list of walk-in payments', 'Reports', '08:56 PM', NULL, NULL, NULL, NULL),
+(240, 28, 87001, 1921681093, NULL, NULL, NULL, NULL, 'John', 'Lennon', 'Added a regular member ', 'Members', '08:57 PM', NULL, NULL, NULL, NULL),
+(241, 28, 87001, 1921681093, NULL, NULL, NULL, NULL, 'John', 'Lennon', 'Deleted an account from regular table', 'Members', '08:59 PM', NULL, NULL, NULL, NULL),
+(242, 28, 87001, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Recover the program', 'Programs', '09:06 PM', NULL, NULL, NULL, NULL),
+(243, 28, 87001, NULL, NULL, NULL, NULL, 202100, 'April-May Promo', NULL, 'Update a promo', 'Promos', '09:42 PM', NULL, NULL, NULL, NULL),
+(244, 28, 87001, NULL, NULL, NULL, NULL, 202100, 'March-May Promo', NULL, 'Update a promo', 'Promos', '09:43 PM', NULL, NULL, NULL, NULL),
+(245, 28, 87001, NULL, NULL, NULL, NULL, 202100, 'Ivor Potts', NULL, 'Added a member to March-May Promo', 'Promos', '09:43 PM', NULL, NULL, NULL, NULL),
+(246, 28, 87001, NULL, NULL, NULL, NULL, 202100, 'Steven Deleon', NULL, 'Added a member to March-May Promo', 'Promos', '09:43 PM', NULL, NULL, NULL, NULL),
+(247, 28, 87001, NULL, NULL, NULL, NULL, 202100, 'Xanthus Joyce', NULL, 'Added a member to March-May Promo', 'Promos', '09:43 PM', NULL, NULL, NULL, NULL),
+(248, 29, 87001, 1921681014, NULL, NULL, NULL, NULL, 'John Jay', 'Desierto', 'Paid Monthly Subscription', 'Members', '09:45 PM', NULL, NULL, NULL, NULL),
+(249, 29, 87001, 1921681014, NULL, NULL, NULL, NULL, 'John Jay', 'Desierto', 'Activated the account', 'Members', '09:45 PM', NULL, NULL, NULL, NULL),
+(250, 29, 87001, 1921681094, NULL, NULL, NULL, NULL, 'Ringo', 'Star', 'Added a regular member ', 'Members', '09:46 PM', NULL, NULL, NULL, NULL),
+(251, 29, 87001, 1921681094, NULL, NULL, NULL, NULL, 'Ringo', 'Star', 'Paid Annual Membership', 'Members', '09:46 PM', NULL, NULL, NULL, NULL),
+(252, 29, 87001, NULL, NULL, NULL, NULL, 202100, 'Ringo Star', NULL, 'Added a member to March-May Promo', 'Promos', '09:47 PM', NULL, NULL, NULL, NULL),
+(254, 31, 87001, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Deleted the program', 'Programs', '11:49 PM', NULL, NULL, NULL, NULL),
+(257, 31, 87001, 1921681100, NULL, NULL, NULL, NULL, 'check', 'check', 'Added a regular member ', 'Members', '12:01 AM', NULL, NULL, NULL, NULL),
+(258, 31, 87001, NULL, NULL, 1512, NULL, NULL, 'George', 'Vasquez', 'Deleted a trainer', 'Trainers', '12:25 AM', NULL, NULL, NULL, NULL),
+(259, 31, 87001, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Deleted a trainer', 'Trainers', '12:25 AM', NULL, NULL, NULL, NULL),
+(260, 31, 87001, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Recovered a trainer', 'Trainers', '12:25 AM', NULL, NULL, NULL, NULL),
+(261, 31, 87001, NULL, NULL, 1512, NULL, NULL, 'George', 'Vasquez', 'Recovered a trainer', 'Trainers', '12:26 AM', NULL, NULL, NULL, NULL),
+(262, 31, 87001, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Recovered a trainer', 'Trainers', '12:26 AM', NULL, NULL, NULL, NULL),
+(263, 31, 87001, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Deleted a trainer', 'Trainers', '12:26 AM', NULL, NULL, NULL, NULL),
+(264, 31, 87001, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Deleted a trainer', 'Trainers', '12:28 AM', NULL, NULL, NULL, NULL),
+(265, 31, 87001, NULL, NULL, 1512, NULL, NULL, 'George', 'Vasquez', 'Deleted a trainer', 'Trainers', '12:29 AM', NULL, NULL, NULL, NULL),
+(266, 31, 87001, NULL, NULL, 1512, NULL, NULL, 'George', 'Vasquez', 'Recovered a trainer', 'Trainers', '12:29 AM', NULL, NULL, NULL, NULL),
+(267, 31, 87001, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Recovered a trainer', 'Trainers', '12:29 AM', NULL, NULL, NULL, NULL),
+(268, 31, 87001, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Recovered a trainer', 'Trainers', '12:29 AM', NULL, NULL, NULL, NULL),
+(269, 31, 87001, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Deleted a trainer', 'Trainers', '12:32 AM', NULL, NULL, NULL, NULL),
+(270, 31, 87001, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Deleted a trainer', 'Trainers', '12:32 AM', NULL, NULL, NULL, NULL),
+(271, 31, 87001, NULL, NULL, 1512, NULL, NULL, 'George', 'Vasquez', 'Deleted a trainer', 'Trainers', '12:34 AM', NULL, NULL, NULL, NULL),
+(272, 31, 87001, NULL, NULL, 1512, NULL, NULL, 'George', 'Vasquez', 'Recovered a trainer', 'Trainers', '12:34 AM', NULL, NULL, NULL, NULL),
+(273, 31, 87001, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Recovered a trainer', 'Trainers', '12:34 AM', NULL, NULL, NULL, NULL),
+(274, 31, 87001, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Recovered a trainer', 'Trainers', '12:34 AM', NULL, NULL, NULL, NULL),
+(275, 31, 87001, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Deleted a trainer', 'Trainers', '12:34 AM', NULL, NULL, NULL, NULL),
+(276, 31, 87001, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Deleted a trainer', 'Trainers', '12:35 AM', NULL, NULL, NULL, NULL),
+(277, 31, 87001, NULL, NULL, 1512, NULL, NULL, 'George', 'Vasquez', 'Deleted a trainer', 'Trainers', '12:36 AM', NULL, NULL, NULL, NULL),
+(278, 31, 87001, NULL, NULL, 1512, NULL, NULL, 'George', 'Vasquez', 'Recovered a trainer', 'Trainers', '12:36 AM', NULL, NULL, NULL, NULL),
+(279, 31, 87001, NULL, NULL, 1512, NULL, NULL, 'George', 'Vasquez', 'Deleted a trainer', 'Trainers', '12:39 AM', NULL, NULL, NULL, NULL),
+(280, 31, 87001, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Added a trainer', 'Trainers', '12:40 AM', NULL, NULL, NULL, NULL),
+(281, 31, 87001, NULL, NULL, 1512, NULL, NULL, 'George', 'Vasquez', 'Recovered a trainer', 'Trainers', '12:42 AM', NULL, NULL, NULL, NULL),
+(282, 32, 87001, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Recover the program', 'Programs', '09:02 PM', NULL, NULL, NULL, NULL),
+(283, 32, 87001, 1921681101, NULL, NULL, NULL, NULL, 'asdf', 'qwer', 'Added a regular member ', 'Members', '09:24 PM', NULL, NULL, NULL, NULL),
+(284, 32, 87001, 1921681100, NULL, NULL, NULL, NULL, 'check', 'check', 'Paid both Annual Membership and Monthly Subscription', 'Members', '10:16 PM', NULL, NULL, NULL, NULL),
+(285, 32, 87001, 1921681102, NULL, NULL, NULL, NULL, 'george', 'harrison', 'Added a walk-in member ', 'Members', '10:34 PM', NULL, NULL, NULL, NULL),
+(286, 32, 87001, 1921681094, NULL, NULL, NULL, NULL, 'Ringo', 'Star', 'Paid Monthly Subscription', 'Members', '11:13 PM', NULL, NULL, NULL, NULL),
+(287, 32, 87001, 1921681094, NULL, NULL, NULL, NULL, 'Ringo', 'Star', 'Paid Monthly Subscription', 'Members', '11:17 PM', NULL, NULL, NULL, NULL),
+(288, 33, 87000, 1921681100, NULL, NULL, NULL, NULL, 'check', 'check', 'Deleted an account from regular table', 'Members', '11:49 PM', NULL, NULL, NULL, NULL),
+(289, 33, 87000, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Deleted the program', 'Programs', '11:49 PM', NULL, NULL, NULL, NULL),
+(290, 33, 87000, NULL, NULL, 1512, NULL, NULL, 'George', 'Vasquez', 'Deleted a trainer', 'Trainers', '11:49 PM', NULL, NULL, NULL, NULL),
+(291, 33, 87000, NULL, NULL, 1512, NULL, NULL, 'George', 'Vasquez', 'Recovered a trainer', 'Trainers', '11:49 PM', NULL, NULL, NULL, NULL),
+(292, 33, 87000, NULL, NULL, NULL, 2023, NULL, '10 lbs weight disc', NULL, 'Deleted an inventory', 'Inventory', '11:49 PM', NULL, NULL, NULL, NULL),
+(293, 33, 87000, NULL, NULL, NULL, 2023, NULL, '10 lbs weight disc', NULL, 'Recover an inventory', 'Inventory', '11:50 PM', NULL, NULL, NULL, NULL),
+(294, 33, 87000, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Recovered a trainer', 'Trainers', '11:50 PM', NULL, NULL, NULL, NULL),
+(295, 33, 87000, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Recovered a trainer', 'Trainers', '11:50 PM', NULL, NULL, NULL, NULL),
+(296, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'list of members', NULL, 'Generated a report for list of members', 'Reports', '02:21 AM', NULL, NULL, NULL, NULL),
+(297, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'list of inventory', NULL, 'Generated a report for inventory list', 'Reports', '02:21 AM', NULL, NULL, NULL, NULL),
+(298, 35, 87000, NULL, NULL, NULL, 2013, NULL, 'charot', NULL, 'Recover an inventory', 'Inventory', '02:24 AM', NULL, NULL, NULL, NULL),
+(299, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'list of inventory', NULL, 'Generated a report for inventory list', 'Reports', '02:24 AM', NULL, NULL, NULL, NULL),
+(300, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'working equipments', NULL, 'Generated a report for working equipment', 'Reports', '02:24 AM', NULL, NULL, NULL, NULL),
+(301, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'working equipments', NULL, 'Generated a report for working equipment', 'Reports', '02:25 AM', NULL, NULL, NULL, NULL),
+(302, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'damage equipments', NULL, 'Generated a report for damage equipment', 'Reports', '02:25 AM', NULL, NULL, NULL, NULL),
+(303, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'deleted trainers', NULL, 'Generated a report for list of deleted trainers', 'Reports', '02:26 AM', NULL, NULL, NULL, NULL),
+(304, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'active trainers', NULL, 'Generated a report for list of active trainers', 'Reports', '02:26 AM', NULL, NULL, NULL, NULL),
+(305, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'seasonal promos', NULL, 'Generated a report for list of seasonal promos', 'Reports', '02:26 AM', NULL, NULL, NULL, NULL),
+(306, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'list of promos', NULL, 'Generated a report for list of promos', 'Reports', '02:26 AM', NULL, NULL, NULL, NULL),
+(307, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:27 AM', NULL, NULL, NULL, NULL),
+(308, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:27 AM', NULL, NULL, NULL, NULL),
+(309, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:27 AM', NULL, NULL, NULL, NULL),
+(310, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'seasonal promos', NULL, 'Generated a report for list of seasonal promos', 'Reports', '02:27 AM', NULL, NULL, NULL, NULL),
+(311, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'seasonal promos', NULL, 'Generated a report for list of seasonal promos', 'Reports', '02:27 AM', NULL, NULL, NULL, NULL),
+(312, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'seasonal promos', NULL, 'Generated a report for list of seasonal promos', 'Reports', '02:27 AM', NULL, NULL, NULL, NULL),
+(313, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'seasonal promos', NULL, 'Generated a report for list of seasonal promos', 'Reports', '02:28 AM', NULL, NULL, NULL, NULL),
+(314, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:28 AM', NULL, NULL, NULL, NULL),
+(315, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:31 AM', NULL, NULL, NULL, NULL),
+(316, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:32 AM', NULL, NULL, NULL, NULL),
+(317, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:33 AM', NULL, NULL, NULL, NULL),
+(318, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:35 AM', NULL, NULL, NULL, NULL),
+(319, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:35 AM', NULL, NULL, NULL, NULL),
+(320, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:35 AM', NULL, NULL, NULL, NULL),
+(321, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:35 AM', NULL, NULL, NULL, NULL),
+(322, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:35 AM', NULL, NULL, NULL, NULL),
+(323, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:36 AM', NULL, NULL, NULL, NULL),
+(324, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'damage equipments', NULL, 'Generated a report for damage equipment', 'Reports', '02:36 AM', NULL, NULL, NULL, NULL),
+(325, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'damage equipments', NULL, 'Generated a report for damage equipment', 'Reports', '02:36 AM', NULL, NULL, NULL, NULL);
+INSERT INTO `logtrail_doing` (`logtrail_doing_id`, `login_id`, `admin_id`, `member_id`, `program_id`, `trainer_id`, `inventory_id`, `promo_id`, `user_fname`, `user_lname`, `description`, `identity`, `time`, `trainer_status`, `trainer_phone`, `trainer_position`, `trainer_address`) VALUES
+(326, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'seasonal promos', NULL, 'Generated a report for list of seasonal promos', 'Reports', '02:36 AM', NULL, NULL, NULL, NULL),
+(327, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:36 AM', NULL, NULL, NULL, NULL),
+(328, 35, 87000, NULL, NULL, NULL, NULL, NULL, 'permanent promos', NULL, 'Generated a report for list of permanent promos', 'Reports', '02:36 AM', NULL, NULL, NULL, NULL),
+(329, 35, 87000, 1921681093, NULL, NULL, NULL, NULL, 'John', 'Lennon', 'Recover an account to Regular table', 'Members', '02:38 AM', NULL, NULL, NULL, NULL),
+(330, 35, 87000, 1921681025, NULL, NULL, NULL, NULL, 'Dante', 'Phillips', 'Recover an account to Walk-in table', 'Members', '02:38 AM', NULL, NULL, NULL, NULL),
+(331, 35, 87000, 1921681043, NULL, NULL, NULL, NULL, 'Clarke', 'Jacobson', 'Recover an account to Regular table', 'Members', '02:38 AM', NULL, NULL, NULL, NULL),
+(332, 35, 87000, 1921681032, NULL, NULL, NULL, NULL, 'Rigel', 'Wilson', 'Recover an account to Walk-in table', 'Members', '02:38 AM', NULL, NULL, NULL, NULL),
+(333, 35, 87000, NULL, 3, NULL, NULL, NULL, 'asfsafsaf', NULL, 'Recover the program', 'Programs', '02:38 AM', NULL, NULL, NULL, NULL),
+(334, 35, 87000, 1921681101, NULL, NULL, NULL, NULL, 'asdf', 'qwer', 'Deleted an account from regular table', 'Members', '02:38 AM', NULL, NULL, NULL, NULL),
+(335, 35, 87000, 1921681093, NULL, NULL, NULL, NULL, 'John', 'Lennon', 'Deleted an account from regular table', 'Members', '02:39 AM', NULL, NULL, NULL, NULL),
+(336, 35, 87000, 1921681087, NULL, NULL, NULL, NULL, 'Elton', 'Lyons', 'Deleted an account from regular table', 'Members', '02:39 AM', NULL, NULL, NULL, NULL),
+(337, 35, 87000, NULL, 3, NULL, NULL, NULL, 'asfsafsaf', NULL, 'Deleted the program', 'Programs', '02:39 AM', NULL, NULL, NULL, NULL),
+(338, 35, 87000, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Deleted a trainer', 'Trainers', '02:39 AM', NULL, NULL, NULL, NULL),
+(339, 35, 87000, NULL, NULL, NULL, 2023, NULL, '10 lbs weight disc', NULL, 'Deleted an inventory', 'Inventory', '02:39 AM', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -292,10 +533,11 @@ CREATE TABLE `member` (
   `monthly_end` date DEFAULT NULL,
   `annual_start` date DEFAULT NULL,
   `annual_end` date DEFAULT NULL,
+  `admin_delete` varchar(100) DEFAULT NULL,
   `member_type` enum('Regular','Walk-in') DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
   `acc_status` enum('active','inactive') NOT NULL DEFAULT 'active',
-  `program_id` int(11) NOT NULL,
+  `program_id` int(11) DEFAULT NULL,
   `image_pathname` varchar(9999) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -303,89 +545,94 @@ CREATE TABLE `member` (
 -- Dumping data for table `member`
 --
 
-INSERT INTO `member` (`member_id`, `first_name`, `last_name`, `username`, `password`, `gender`, `birthdate`, `email`, `phone`, `member_status`, `date_registered`, `date_deleted`, `time_deleted`, `isActivated`, `isDeleted`, `date_activated`, `monthly_start`, `monthly_end`, `annual_start`, `annual_end`, `member_type`, `address`, `acc_status`, `program_id`, `image_pathname`) VALUES
-(1921681011, 'John', 'Doe', 'johndoe', '$2y$10$ng6vDgB2bZnNAZf4ojemaej77TYkwySfHKKQlbtGxIaz2btNWuZli', 'M', '1931-01-01', 'johndoe@gmail.com', '09152351252', 'Paid', '2021-02-09', NULL, NULL, 'true', 'false', '0000-00-00', '2021-03-19', '2021-04-18', '2021-02-16', '2022-02-16', 'Regular', '2nd floor G7 Suites', 'active', 1, 'wp6645977.png'),
-(1921681012, 'George', 'Duterte', NULL, NULL, 'M', '1998-01-01', 'georgebush@hotmail.com', '09233215471', 'Not Paid', '2021-02-16', NULL, NULL, 'false', 'false', NULL, NULL, NULL, '2021-02-16', '2022-02-16', 'Regular', '2nd floor G7 Suites', 'active', 2, ''),
-(1921681013, 'Christian James', 'Gulapa', NULL, NULL, 'M', '1978-01-01', 'cjbayot@gmail.com', '09455611244', 'Paid', '2021-02-17', NULL, '06:39:31', 'false', 'false', NULL, '2021-03-18', '2021-04-17', '2021-03-18', '2022-03-18', 'Regular', 'Talamban, Cebu', 'active', 1, ''),
-(1921681014, 'John Jay', 'Desierto', '1921681014', '$2y$10$SM9gjk1E4wTFWhbyS1rewOKUcdpqwr5ndlQsd09xsDGw/y7a0hUES', 'M', '1998-05-12', 'johnjay@gmail.com', '09124562133', 'Paid', '2021-02-17', NULL, NULL, 'false', 'false', '2021-03-29', '2021-03-05', '2021-04-04', '2021-03-05', '2022-03-05', 'Regular', 'Talamban, Cebu', 'active', 1, ''),
-(1921681015, 'Kim', 'Jorolan', '1921681015', '$2y$10$Bla6ve7HtM52uRczZX8I3u7eDUJMNtRW2iiLve/UlA0S2dvHDN8Ym', 'M', '1987-09-15', 'kimjorolan@gmail.com', '09234567891', 'Not Paid', '2021-02-17', NULL, NULL, 'false', 'false', '2021-03-22', NULL, NULL, NULL, NULL, 'Regular', 'Talamban, Cebu', 'active', 2, ''),
-(1921681016, 'Michael', 'Antiporta', '1921681016', '$2y$10$pm2RPs6jo.Y442ISAhzu4eKjyxUET5IAD0vqJBXUS/KPLm0y5oZXq', 'M', '1996-02-15', 'kaelantiporta@gmail.com', '09201235400', 'Expired', '2021-02-17', NULL, NULL, 'false', 'false', '2021-03-06', '2020-07-01', '2020-07-31', '2020-07-01', '2021-07-01', 'Regular', 'Badian, Cebu, Philippines', 'active', 2, ''),
-(1921681017, 'Thomas Rey', 'Barcenas', NULL, NULL, 'M', '1993-09-04', 'thomdatrain@gmail.com', '09475466911', 'Not Paid', '2021-02-17', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'Toledo City, Cebu', 'active', 2, ''),
-(1921681018, 'Justine', 'Garcia', NULL, NULL, 'M', '1998-11-15', 'justinegarcia@gmail.com', '09135644887', 'Not Paid', '2021-02-17', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'Subangdaku, Mandaue', 'active', 1, ''),
-(1921681019, 'Romhel', 'Ceniza', NULL, NULL, 'M', '1998-01-21', 'aldiceniza@gmail.com', '09234561121', 'Not Paid', '2021-02-17', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'Pit-os, Talamban, Cebu City', 'active', 1, ''),
-(1921681020, 'Jade', 'Tibon', NULL, NULL, 'M', '1999-12-15', 'jadetibones@gmail.com', '09334651320', 'Not Paid', '2021-02-17', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'Jagobiao, Mandaue City', 'active', 1, ''),
-(1921681021, 'Francis', 'Vasquez', NULL, NULL, 'M', '1997-02-14', 'bogoorven@gmail.com', '09164562230', 'Paid', '2021-02-17', NULL, NULL, 'false', 'false', NULL, '2021-02-22', '2021-04-23', '2021-02-22', '2022-02-22', 'Regular', 'Bacolod City', 'active', 2, ''),
-(1921681022, 'Weinnand', 'Hasanion', NULL, NULL, 'M', '1999-08-04', 'weinnandhasanion@gmail.com', '09206013530', 'Expired', '2021-02-17', NULL, NULL, 'false', 'false', NULL, '2021-02-18', '2021-03-20', '2021-02-18', '2022-02-18', 'Regular', 'Lapulapu City, Cebu', 'active', 1, ''),
-(1921681023, 'Ivanne', 'Candano', NULL, NULL, 'M', '1998-03-16', 'vancandano@gmail.com', '09455641010', 'Expired', '2021-02-17', NULL, NULL, 'false', 'false', NULL, '2021-02-18', '2021-03-20', '2021-02-18', '2022-02-18', 'Regular', 'Pagadian, Philippines', 'active', 1, ''),
-(1921681024, 'Clint', 'Lapera', 'febieclint', '$2y$10$96uGA7tAS5TSAchRuLlPcu6kFQpBB9oUvkXfVmbvItAYY2E4uBgTK', 'M', '2000-02-10', 'clintlapera@gmail.com', '09165433165', 'Paid', '2021-02-18', '2021-02-23', NULL, 'false', 'false', '2021-02-18', '2021-03-22', '2021-04-21', '2021-02-18', '2022-02-18', 'Regular', 'Masulog, Lapu-Lapu City', 'active', 1, '121773513_3617406608324077_306887283432560114_o.jpg'),
-(1921681025, 'Dante', 'Phillips', NULL, NULL, 'F', '1988-04-09', 'blandit.congue.In@vitaeeratVivamus.edu', '09503661490', 'Not Paid', '2020-12-26', '2021-03-18', '13:06:15', 'false', 'true', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '4979 A Ave', 'inactive', 1, ''),
-(1921681026, 'Phelan', 'Blackwell', NULL, NULL, 'M', '1988-12-03', 'magna@Praesenteudui.com', '09819897080', 'Not Paid', '2020-05-10', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'Ap #623-6725 Sit Rd.', 'active', 2, ''),
-(1921681027, 'Hamish', 'Kelly', NULL, NULL, 'M', '1976-07-10', 'nunc.ac.mattis@a.co.uk', '09942335946', 'Not Paid', '2020-10-15', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '133-6723 Lorem Road', 'active', 1, ''),
-(1921681028, 'Cedric', 'Huffman', NULL, NULL, 'M', '1986-09-02', 'tellus.Phasellus.elit@loremfringilla.edu', '09859151288', 'Expired', '2018-08-03', '2020-10-25', NULL, 'false', 'false', NULL, '2020-01-05', '2020-03-04', '2019-10-01', '2020-10-01', 'Regular', '3286 Volutpat. Road', 'inactive', 2, ''),
-(1921681029, 'Graham', 'Vang', NULL, NULL, 'F', '1974-08-03', 'auctor@sagittis.edu', '09728554807', 'Not Paid', '2018-07-26', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #213-9940 Nunc Street', 'active', 1, ''),
-(1921681030, 'Gil', 'Eaton', NULL, NULL, 'F', '1989-04-10', 'bibendum@ac.com', '09283818109', 'Not Paid', '2018-07-01', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '118-1929 Nec Road', 'active', 2, ''),
-(1921681031, 'Lance', 'Calderon', NULL, NULL, 'F', '1995-10-08', 'dolor.Fusce@ligulaNullamenim.edu', '09103482282', 'Not Paid', '2018-08-15', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '770-6890 Consequat Avenue', 'active', 1, ''),
-(1921681032, 'Rigel', 'Wilson', NULL, NULL, 'F', '1999-12-21', 'orci.quis@interdumfeugiat.co.uk', '09462250477', 'Not Paid', '2021-02-22', '2021-03-18', '00:11:07', 'false', 'true', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 730, 5300 Dignissim. Ave', 'inactive', 1, ''),
-(1921681033, 'Ivor', 'Potts', NULL, NULL, 'F', '1997-06-11', 'lectus.Nullam.suscipit@amet.edu', '09774901141', 'Not Paid', '2018-04-11', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'P.O. Box 942, 7742 Duis Rd.', 'active', 2, ''),
-(1921681034, 'Xanthus', 'Joyce', NULL, NULL, 'F', '2000-04-02', 'eget@lacusEtiam.org', '09982524430', 'Not Paid', '2020-09-02', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'P.O. Box 364, 5901 Lorem St.', 'active', 2, ''),
-(1921681035, 'Oren', 'Baird', NULL, NULL, 'F', '1976-03-15', 'Cum.sociis.natoque@dictum.com', '09282261414', 'Not Paid', '2018-11-12', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '525-9260 Lorem, Ave', 'active', 2, ''),
-(1921681036, 'Cameron', 'Bates', NULL, NULL, 'F', '1988-01-14', 'nisi.sem.semper@velmaurisInteger.ca', '09180678532', 'Not Paid', '2020-09-05', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'Ap #931-8291 Nunc Street', 'active', 1, ''),
-(1921681037, 'Vincent', 'Hanson', NULL, NULL, 'F', '1992-01-03', 'iaculis.lacus@faucibusMorbivehicula.edu', '09648533037', 'Not Paid', '2019-05-03', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'P.O. Box 935, 8945 Cursus Avenue', 'active', 1, ''),
-(1921681038, 'Joel', 'Calhoun', NULL, NULL, 'M', '1989-08-06', 'vel.venenatis@nunc.net', '09682880508', 'Not Paid', '2019-08-16', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '7571 Penatibus Road', 'active', 1, ''),
-(1921681039, 'Lyle', 'Griffith', NULL, NULL, 'M', '1995-09-01', 'Donec.tempor@Cum.org', '09848565730', 'Not Paid', '2019-04-08', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '3094 Mi. Ave', 'active', 1, ''),
-(1921681040, 'Jermaine', 'Osborn', NULL, NULL, 'M', '1989-10-19', 'vulputate.risus.a@ipsumnonarcu.com', '09637532023', 'Not Paid', '2019-08-12', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '1623 Arcu St.', 'active', 2, ''),
-(1921681041, 'Rafael', 'Witt', NULL, NULL, 'F', '1973-07-24', 'ac@idblanditat.org', '09531736583', 'Not Paid', '2018-03-20', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '908-1554 Lectus Rd.', 'active', 2, ''),
-(1921681042, 'Herrod', 'Lang', NULL, NULL, 'F', '1979-10-19', 'sagittis.lobortis.mauris@sedpedenec.edu', '09824158157', 'Not Paid', '2020-05-02', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '8635 Neque Av.', 'active', 1, ''),
-(1921681043, 'Clarke', 'Jacobson', NULL, NULL, 'F', '1980-02-16', 'ipsum@laciniaSedcongue.net', '09736071281', 'Paid', '2020-03-13', '2021-03-18', '12:50:14', 'false', 'true', NULL, '2021-02-23', '2021-03-25', '2021-02-23', '2022-02-23', 'Regular', '826-8158 Gravida Street', 'inactive', 1, ''),
-(1921681044, 'Alvin', 'Vance', NULL, NULL, 'M', '1983-02-05', 'Sed.pharetra@temporbibendum.co.uk', '09334981692', 'Not Paid', '2018-11-19', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '746-313 Orci Road', 'active', 1, ''),
-(1921681045, 'Xavier', 'Ellis', NULL, NULL, 'F', '1991-05-14', 'nisi@Duis.ca', '09905178265', 'Not Paid', '2019-02-14', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '2242 Neque Av.', 'active', 2, ''),
-(1921681046, 'Wallace', 'Velasquez', NULL, NULL, 'F', '1991-04-28', 'at.pretium@euismodenimEtiam.co.uk', '09917962390', 'Not Paid', '2020-07-19', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '253-1786 Lectus Rd.', 'active', 2, ''),
-(1921681047, 'Graiden', 'Knight', NULL, NULL, 'M', '1988-04-28', 'ridiculus.mus.Aenean@ultricesVivamusrhoncus.net', '09449699878', 'Not Paid', '2020-01-09', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '975-3806 A, Rd.', 'active', 2, ''),
-(1921681048, 'Wang', 'Bradshaw', NULL, NULL, 'F', '1997-01-25', 'nisl.Nulla@sodales.co.uk', '09875369629', 'Not Paid', '2018-03-29', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '5884 Egestas Ave', 'active', 2, ''),
-(1921681049, 'Chandler', 'Lowery', NULL, NULL, 'M', '1976-02-08', 'neque.vitae@inconsequat.edu', '09944567659', 'Not Paid', '2019-05-21', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '570-6336 Quam, Av.', 'active', 1, ''),
-(1921681050, 'Caesar', 'Maxwell', NULL, NULL, 'F', '1999-07-27', 'molestie.arcu.Sed@adipiscingelitEtiam.com', '09691967540', 'Not Paid', '2018-04-16', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 432, 9045 Morbi St.', 'active', 1, ''),
-(1921681051, 'Akeem', 'Pollard', NULL, NULL, 'M', '1978-09-06', 'hymenaeos@felisNulla.edu', '09983166627', 'Not Paid', '2020-04-10', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '1030 Orci St.', 'active', 1, ''),
-(1921681052, 'Salvador', 'Knapp', NULL, NULL, 'F', '1976-08-25', 'sit.amet@Nunc.org', '09982239424', 'Not Paid', '2020-01-29', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '9634 Eu, St.', 'active', 2, ''),
-(1921681053, 'Magee', 'Ayers', NULL, NULL, 'M', '1982-03-06', 'tempus@non.net', '09320480090', 'Not Paid', '2019-07-07', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #218-8399 Vestibulum. Road', 'active', 2, ''),
-(1921681054, 'Jeremy', 'Frye', NULL, NULL, 'F', '1978-01-15', 'cursus@ullamcorpereu.com', '09385439462', 'Not Paid', '2019-08-20', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '273-8995 Enim. Ave', 'active', 2, ''),
-(1921681055, 'Jonas', 'Garza', NULL, NULL, 'F', '1992-02-10', 'malesuada.vel.venenatis@massaVestibulum.edu', '09566241596', 'Not Paid', '2019-09-13', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '811-6487 Et Rd.', 'active', 2, ''),
-(1921681056, 'Porter', 'Lowery', NULL, NULL, 'M', '1979-09-11', 'taciti.sociosqu@non.org', '09509845702', 'Not Paid', '2020-07-14', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #450-1414 Adipiscing Av.', 'active', 2, ''),
-(1921681057, 'Phelan', 'Galloway', NULL, NULL, 'F', '1989-04-20', 'mollis.Integer@consequatenim.ca', '09106606601', 'Not Paid', '2019-11-07', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #708-3794 Lacinia St.', 'active', 2, ''),
-(1921681058, 'Asher', 'Mcclure', NULL, NULL, 'M', '1979-05-25', 'eros@molestiepharetra.edu', '09127396138', 'Not Paid', '2019-07-17', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '445-9684 Sem St.', 'active', 2, ''),
-(1921681059, 'Basil', 'Hodges', NULL, NULL, 'F', '1986-03-30', 'eu.metus.In@uteros.co.uk', '09115474709', 'Not Paid', '2019-06-27', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 182, 725 Libero Rd.', 'active', 1, ''),
-(1921681060, 'Boris', 'Hopkins', NULL, NULL, 'F', '1992-05-01', 'blandit.congue.In@lorem.co.uk', '09249104148', 'Not Paid', '2018-04-26', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '5548 Nec, Ave', 'active', 1, ''),
-(1921681061, 'Ulric', 'Rollins', NULL, NULL, 'M', '2000-05-19', 'non.lobortis.quis@pedeCrasvulputate.com', '09598153405', 'Not Paid', '2018-12-18', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '756-1186 Phasellus Rd.', 'active', 1, ''),
-(1921681062, 'William', 'Suarez', NULL, NULL, 'M', '1981-05-30', 'dui.Cum@tempusmauris.ca', '09930619290', 'Not Paid', '2020-01-29', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'P.O. Box 608, 8662 Ornare St.', 'active', 2, ''),
-(1921681063, 'Lucian', 'Slater', NULL, NULL, 'F', '2000-03-28', 'cursus.purus@Praesent.edu', '09781339342', 'Not Paid', '2020-10-29', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 508, 6827 Tincidunt. Road', 'active', 1, ''),
-(1921681064, 'Cedric', 'Raymond', NULL, NULL, 'M', '1997-05-16', 'sem.Nulla.interdum@adipiscingenimmi.co.uk', '09372214862', 'Not Paid', '2019-06-22', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #497-8148 Faucibus Rd.', 'active', 1, ''),
-(1921681065, 'Gage', 'Tucker', NULL, NULL, 'F', '1991-03-12', 'blandit.at@ipsumdolorsit.co.uk', '09301779974', 'Not Paid', '2020-08-28', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '996-6180 Molestie Rd.', 'active', 2, ''),
-(1921681066, 'Troy', 'Lloyd', NULL, NULL, 'F', '1978-03-22', 'dictum@etnuncQuisque.com', '09603704508', 'Not Paid', '2018-03-11', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #478-1955 Urna Av.', 'active', 2, ''),
-(1921681067, 'David', 'Roach', NULL, NULL, 'M', '1996-01-09', 'ut@luctus.edu', '09267815600', 'Not Paid', '2019-02-22', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '5503 Mauris Avenue', 'active', 2, ''),
-(1921681068, 'Fuller', 'Boyd', NULL, NULL, 'M', '1995-05-12', 'Donec@loremfringilla.ca', '09394496753', 'Not Paid', '2019-02-07', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '6721 Etiam Road', 'active', 1, ''),
-(1921681069, 'Simon', 'Clarke', NULL, NULL, 'M', '2000-02-05', 'magna.Praesent@Donecegestas.edu', '09777071216', 'Not Paid', '2020-12-04', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '471-7279 Vulputate, Avenue', 'active', 1, ''),
-(1921681070, 'Thomas', 'Thornton', NULL, NULL, 'F', '1984-02-03', 'Cras.eget@vitae.ca', '09587604314', 'Not Paid', '2018-03-18', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 283, 2691 Pede Av.', 'active', 2, ''),
-(1921681071, 'Steven', 'Deleon', NULL, NULL, 'M', '1987-02-21', 'Phasellus@Maurisvelturpis.org', '09688024898', 'Not Paid', '2020-02-21', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '3383 Interdum. Street', 'active', 2, ''),
-(1921681072, 'Quentin', 'Mclaughlin', NULL, NULL, 'F', '1988-03-16', 'libero.Proin@utmiDuis.co.uk', '09934019321', 'Not Paid', '2019-04-06', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #585-3600 Nisi Avenue', 'active', 1, ''),
-(1921681073, 'Cruz', 'Combs', NULL, NULL, 'F', '1986-12-25', 'mus.Proin@ultriciesdignissim.net', '09592681068', 'Not Paid', '2020-04-17', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'Ap #947-1102 Sem. Road', 'active', 1, ''),
-(1921681074, 'Keefe', 'England', NULL, NULL, 'F', '1979-06-05', 'urna.Ut@maurisMorbi.edu', '09237518540', 'Not Paid', '2020-11-06', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 850, 1111 Eu St.', 'active', 2, ''),
-(1921681075, 'Samson', 'Harvey', NULL, NULL, 'M', '1997-04-28', 'In.faucibus@aliquetmolestietellus.co.uk', '09957764442', 'Not Paid', '2018-06-01', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'Ap #339-5086 Feugiat Road', 'active', 1, ''),
-(1921681076, 'Damon', 'Reynolds', NULL, NULL, 'M', '1978-07-20', 'erat@acrisusMorbi.com', '09760567029', 'Not Paid', '2020-10-20', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'Ap #183-587 Duis Av.', 'active', 1, ''),
-(1921681077, 'Ciaran', 'Vincent', NULL, NULL, 'M', '1996-01-20', 'vitae.posuere@Sedpharetra.net', '09354945184', 'Not Paid', '2019-01-18', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '909-1700 Cursus St.', 'active', 2, ''),
-(1921681078, 'Sebastian', 'Farley', NULL, NULL, 'F', '1989-12-21', 'Suspendisse@necimperdietnec.org', '09565747679', 'Not Paid', '2019-08-25', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'P.O. Box 587, 6935 Diam St.', 'active', 2, ''),
-(1921681079, 'Finn', 'Patterson', NULL, NULL, 'F', '1994-05-25', 'arcu.Sed@Vivamus.com', '09477503056', 'Not Paid', '2019-04-11', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '5332 Integer St.', 'active', 2, ''),
-(1921681080, 'Graham', 'Nunez', NULL, NULL, 'F', '1997-03-10', 'mus@aliquet.ca', '09634684992', 'Not Paid', '2018-05-06', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 591, 2996 Accumsan St.', 'active', 2, ''),
-(1921681081, 'Dane', 'Bird', NULL, NULL, 'F', '1982-02-18', 'vestibulum.massa.rutrum@metusfacilisislorem.edu', '09270804621', 'Not Paid', '2019-07-25', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #402-6538 Amet, Avenue', 'active', 1, ''),
-(1921681082, 'Jared', 'Mullins', NULL, NULL, 'M', '1999-11-22', 'in@semut.co.uk', '09808136994', 'Not Paid', '2019-02-28', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '661-542 Vulputate St.', 'active', 2, ''),
-(1921681083, 'Giacomo', 'Mcgowan', NULL, NULL, 'F', '1982-11-15', 'Nulla@eu.ca', '09380918963', 'Not Paid', '2020-08-26', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #340-2379 Massa. St.', 'active', 2, ''),
-(1921681084, 'Hamilton', 'Bernard', NULL, NULL, 'F', '1994-02-06', 'Donec.tempor.est@nequeseddictum.com', '09769927909', 'Not Paid', '2019-04-22', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '5262 Mi Road', 'active', 2, ''),
-(1921681085, 'Ciaran', 'Kinney', NULL, NULL, 'M', '1992-02-11', 'a@Etiamimperdiet.ca', '09692243138', 'Not Paid', '2020-01-15', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '526 Mollis Ave', 'active', 2, ''),
-(1921681086, 'Ishmael', 'Davidson', NULL, NULL, 'F', '1973-03-05', 'massa.Mauris.vestibulum@Donecest.ca', '09315304442', 'Not Paid', '2019-04-29', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '6371 Malesuada St.', 'active', 1, ''),
-(1921681087, 'Elton', 'Lyons', NULL, NULL, 'M', '1973-10-21', 'in@gravidanunc.ca', '09276062812', 'Paid', '2020-07-24', NULL, NULL, 'false', 'false', NULL, '2021-02-23', '2021-03-25', '2021-02-23', '2022-02-23', 'Regular', 'P.O. Box 902, 1824 Tellus St.', 'active', 2, ''),
-(1921681088, 'Burke', 'Good', NULL, NULL, 'M', '1990-08-06', 'orci.Phasellus@Proinsedturpis.org', '09905620678', 'Not Paid', '2021-01-21', NULL, '23:52:02', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 923, 1396 Rhoncus. Road', 'active', 2, ''),
-(1921681089, 'Oleg', 'Whitley', NULL, NULL, 'F', '2000-02-12', 'penatibus.et@tellusnon.co.uk', '09872820215', 'Not Paid', '2020-10-03', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 417, 9010 Aliquam St.', 'active', 1, ''),
-(1921681090, 'Honorato', 'Barr', NULL, NULL, 'M', '1989-09-06', 'non.vestibulum@maurisid.com', '09170867269', 'Not Paid', '2019-03-15', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 672, 4154 Pede, St.', 'active', 1, ''),
-(1921681091, 'Josiah', 'Luna', NULL, NULL, 'F', '1985-02-26', 'a@nequeNullamnisl.edu', '09141565157', 'Paid', '2018-10-30', '2021-03-18', '12:50:21', 'false', 'false', NULL, '2021-02-23', '2021-03-25', '2021-02-23', '2022-02-23', 'Regular', '7983 Elementum Avenue', 'active', 2, ''),
-(1921681092, 'Hammett', 'Vaughn', NULL, NULL, 'F', '1998-10-06', 'aliquet.Proin.velit@atarcu.com', '09495661215', 'Not Paid', '2018-12-16', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '676 Penatibus Avenue', 'active', 2, '');
+INSERT INTO `member` (`member_id`, `first_name`, `last_name`, `username`, `password`, `gender`, `birthdate`, `email`, `phone`, `member_status`, `date_registered`, `date_deleted`, `time_deleted`, `isActivated`, `isDeleted`, `date_activated`, `monthly_start`, `monthly_end`, `annual_start`, `annual_end`, `admin_delete`, `member_type`, `address`, `acc_status`, `program_id`, `image_pathname`) VALUES
+(1921681011, 'John', 'Doe', 'johndoe123', '$2y$10$30DgnP/mHSSIxx6esDBFvOgUwruFfO/LEo9kXuyZgWSUyzWKCGeGO', 'M', '1931-01-01', 'johndoe@gmail.com', '09152351252', 'Expired', '2021-02-09', NULL, NULL, 'true', 'false', NULL, '2021-03-31', '2021-04-30', '2021-04-27', '2022-04-27', NULL, 'Regular', 'Lapu-lapu City, Philippines', 'active', 1, '48380811_2483901434958508_4031859068325855232_n.jpg'),
+(1921681012, 'George', 'Duterte', NULL, NULL, 'M', '1998-01-01', 'georgebush@hotmail.com', '09233215471', 'Not Paid', '2021-02-16', NULL, NULL, 'false', 'false', NULL, NULL, NULL, '2021-02-16', '2022-02-16', NULL, 'Regular', '2nd floor G7 Suites', 'active', 2, ''),
+(1921681013, 'Christian James', 'Gulapa', '1921681013', '$2y$10$AaEyAQSUrnT.tyhFfPhArewLnaJOnZ.Rc7pkEmYQImpNeGN735DHe', 'M', '1978-01-01', 'cjbayot@gmail.com', '09455611244', 'Expired', '2021-02-17', NULL, '06:39:31', 'true', 'false', '2021-04-27', '2021-03-18', '2021-04-17', '2021-03-18', '2022-03-18', NULL, 'Regular', 'Talamban, Cebu', 'active', 1, ''),
+(1921681014, 'John Jay', 'Desierto', '1921681014', '$2y$10$SM9gjk1E4wTFWhbyS1rewOKUcdpqwr5ndlQsd09xsDGw/y7a0hUES', 'M', '1998-05-12', 'johnjay@gmail.com', '09124562133', 'Paid', '2021-02-17', NULL, NULL, 'true', 'false', '2021-04-30', '2021-04-30', '2021-05-30', '2021-03-05', '2022-03-05', NULL, 'Regular', 'Talamban, Cebu', 'active', 1, ''),
+(1921681015, 'Kim', 'Jorolan', '1921681015', '$2y$10$Bla6ve7HtM52uRczZX8I3u7eDUJMNtRW2iiLve/UlA0S2dvHDN8Ym', 'M', '1987-09-15', 'kimjorolan@gmail.com', '09234567891', 'Not Paid', '2021-02-17', NULL, NULL, 'false', 'false', '2021-03-22', NULL, NULL, NULL, NULL, NULL, 'Regular', 'Talamban, Cebu', 'active', 2, ''),
+(1921681016, 'Michael', 'Antiporta', '1921681016', '$2y$10$pm2RPs6jo.Y442ISAhzu4eKjyxUET5IAD0vqJBXUS/KPLm0y5oZXq', 'M', '1996-02-15', 'kaelantiporta@gmail.com', '09201235400', 'Expired', '2021-02-17', NULL, NULL, 'false', 'false', '2021-03-06', '2020-07-01', '2020-07-31', '2020-07-01', '2021-07-01', NULL, 'Regular', 'Badian, Cebu, Philippines', 'active', 2, ''),
+(1921681017, 'Thomas Rey', 'Barcenas', NULL, NULL, 'M', '1993-09-04', 'thomdatrain@gmail.com', '09475466911', 'Not Paid', '2021-02-17', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'Toledo City, Cebu', 'active', 2, ''),
+(1921681018, 'Justine', 'Garcia', NULL, NULL, 'M', '1998-11-15', 'justinegarcia@gmail.com', '09135644887', 'Not Paid', '2021-02-17', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'Subangdaku, Mandaue', 'active', 1, ''),
+(1921681019, 'Romhel', 'Ceniza', NULL, NULL, 'M', '1998-01-21', 'aldiceniza@gmail.com', '09234561121', 'Not Paid', '2021-02-17', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'Pit-os, Talamban, Cebu City', 'active', 1, ''),
+(1921681020, 'Jade', 'Tibon', NULL, NULL, 'M', '1999-12-15', 'jadetibones@gmail.com', '09334651320', 'Not Paid', '2021-02-17', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'Jagobiao, Mandaue City', 'active', 1, ''),
+(1921681021, 'Francis', 'Vasquez', NULL, NULL, 'M', '1997-02-14', 'bogoorven@gmail.com', '09164562230', 'Expired', '2021-02-17', NULL, NULL, 'false', 'false', NULL, '2021-02-22', '2021-04-23', '2021-02-22', '2022-02-22', NULL, 'Regular', 'Bacolod City', 'active', 2, ''),
+(1921681022, 'Weinnand', 'Hasanion', 'weinnandhasanion', '$2y$10$jLfDlT0Jiy3fA.yPQhSU3eulsrULRtJesHNVbR25YXaakhqM4ZiTi', 'M', '1999-08-04', 'weinnandhasanion@gmail.com', '09206013530', 'Expired', '2021-02-17', NULL, NULL, 'true', 'false', '2021-03-29', '2021-03-31', '2021-04-30', '2021-02-18', '2022-02-18', NULL, 'Regular', 'Lapulapu City, Cebu', 'active', 1, ''),
+(1921681023, 'Ivanne', 'Candano', NULL, NULL, 'M', '1998-03-16', 'vancandano@gmail.com', '09455641010', 'Expired', '2021-02-17', NULL, NULL, 'false', 'false', NULL, '2021-02-18', '2021-03-20', '2021-02-18', '2022-02-18', NULL, 'Regular', 'Pagadian, Philippines', 'active', 1, ''),
+(1921681024, 'Clint', 'Lapera', 'febieclint', '$2y$10$96uGA7tAS5TSAchRuLlPcu6kFQpBB9oUvkXfVmbvItAYY2E4uBgTK', 'M', '2000-02-10', 'clintlapera@gmail.com', '09165433165', 'Paid', '2021-02-18', '2021-02-23', NULL, 'true', 'false', '2021-03-10', '2021-04-26', '2021-05-26', '2021-02-18', '2022-02-18', NULL, 'Regular', 'Masulog, Lapu-Lapu City', 'active', 2, '121773513_3617406608324077_306887283432560114_o.jpg'),
+(1921681025, 'Dante', 'Phillips', NULL, NULL, 'F', '1988-04-09', 'blandit.congue.In@vitaeeratVivamus.edu', '09503661490', 'Not Paid', '2020-12-26', '2021-03-18', '13:06:15', 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '4979 A Ave', 'active', 1, ''),
+(1921681026, 'Phelan', 'Blackwell', '1921681026', '$2y$10$qY0d.hRKjXBwbZ3cpm1VlOotJ8gz5q/VGAodmbivFkjyk3rqoGDy6', 'M', '1988-12-03', 'magna@Praesenteudui.com', '09819897080', 'Not Paid', '2020-05-10', NULL, NULL, 'false', 'false', '2021-04-29', NULL, NULL, '2021-04-29', '2022-04-29', NULL, 'Regular', 'Ap #623-6725 Sit Rd.', 'active', 2, ''),
+(1921681027, 'Hamish', 'Kelly', NULL, NULL, 'M', '1976-07-10', 'nunc.ac.mattis@a.co.uk', '09942335946', 'Not Paid', '2020-10-15', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '133-6723 Lorem Road', 'active', 1, ''),
+(1921681028, 'Cedric', 'Huffman', NULL, NULL, 'M', '1986-09-02', 'tellus.Phasellus.elit@loremfringilla.edu', '09859151288', 'Expired', '2018-08-03', '2020-10-25', NULL, 'false', 'false', NULL, '2020-01-05', '2020-03-04', '2019-10-01', '2020-10-01', NULL, 'Regular', '3286 Volutpat. Road', 'inactive', 2, ''),
+(1921681029, 'Graham', 'Vang', NULL, NULL, 'F', '1974-08-03', 'auctor@sagittis.edu', '09728554807', 'Not Paid', '2018-07-26', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #213-9940 Nunc Street', 'active', 1, ''),
+(1921681030, 'Gil', 'Eaton', NULL, NULL, 'F', '1989-04-10', 'bibendum@ac.com', '09283818109', 'Not Paid', '2018-07-01', '2021-04-29', '00:17:31', 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '118-1929 Nec Road', 'active', 2, ''),
+(1921681031, 'Lance', 'Calderon', NULL, NULL, 'F', '1995-10-08', 'dolor.Fusce@ligulaNullamenim.edu', '09103482282', 'Not Paid', '2018-08-15', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '770-6890 Consequat Avenue', 'active', 1, ''),
+(1921681032, 'Rigel', 'Wilson', NULL, NULL, 'F', '1999-12-21', 'orci.quis@interdumfeugiat.co.uk', '09462250477', 'Not Paid', '2021-02-22', '2021-03-18', '00:11:07', 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 730, 5300 Dignissim. Ave', 'active', 1, ''),
+(1921681033, 'Ivor', 'Potts', NULL, NULL, 'F', '1997-06-11', 'lectus.Nullam.suscipit@amet.edu', '09774901141', 'Not Paid', '2018-04-11', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'P.O. Box 942, 7742 Duis Rd.', 'active', 2, ''),
+(1921681034, 'Xanthus', 'Joyce', NULL, NULL, 'F', '2000-04-02', 'eget@lacusEtiam.org', '09982524430', 'Not Paid', '2020-09-02', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'P.O. Box 364, 5901 Lorem St.', 'active', 2, ''),
+(1921681035, 'Oren', 'Baird', NULL, NULL, 'F', '1976-03-15', 'Cum.sociis.natoque@dictum.com', '09282261414', 'Not Paid', '2018-11-12', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '525-9260 Lorem, Ave', 'active', 2, ''),
+(1921681036, 'Cameron', 'Bates', NULL, NULL, 'F', '1988-01-14', 'nisi.sem.semper@velmaurisInteger.ca', '09180678532', 'Not Paid', '2020-09-05', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'Ap #931-8291 Nunc Street', 'active', 1, ''),
+(1921681037, 'Vincent', 'Hanson', NULL, NULL, 'F', '1992-01-03', 'iaculis.lacus@faucibusMorbivehicula.edu', '09648533037', 'Not Paid', '2019-05-03', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'P.O. Box 935, 8945 Cursus Avenue', 'active', 1, ''),
+(1921681038, 'Joel', 'Calhoun', NULL, NULL, 'M', '1989-08-06', 'vel.venenatis@nunc.net', '09682880508', 'Not Paid', '2019-08-16', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '7571 Penatibus Road', 'active', 1, ''),
+(1921681039, 'Lyle', 'Griffith', NULL, NULL, 'M', '1995-09-01', 'Donec.tempor@Cum.org', '09848565730', 'Not Paid', '2019-04-08', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '3094 Mi. Ave', 'active', 1, ''),
+(1921681040, 'Jermaine', 'Osborn', NULL, NULL, 'M', '1989-10-19', 'vulputate.risus.a@ipsumnonarcu.com', '09637532023', 'Not Paid', '2019-08-12', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '1623 Arcu St.', 'active', 2, ''),
+(1921681041, 'Rafael', 'Witt', NULL, NULL, 'F', '1973-07-24', 'ac@idblanditat.org', '09531736583', 'Not Paid', '2018-03-20', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '908-1554 Lectus Rd.', 'active', 2, ''),
+(1921681042, 'Herrod', 'Lang', NULL, NULL, 'F', '1979-10-19', 'sagittis.lobortis.mauris@sedpedenec.edu', '09824158157', 'Not Paid', '2020-05-02', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '8635 Neque Av.', 'active', 1, ''),
+(1921681043, 'Clarke', 'Jacobson', NULL, NULL, 'F', '1980-02-16', 'ipsum@laciniaSedcongue.net', '09736071281', 'Expired', '2020-03-13', '2021-03-18', '12:50:14', 'false', 'false', NULL, '2021-02-23', '2021-03-25', '2021-02-23', '2022-02-23', NULL, 'Regular', '826-8158 Gravida Street', 'active', 1, ''),
+(1921681044, 'Alvin', 'Vance', NULL, NULL, 'M', '1983-02-05', 'Sed.pharetra@temporbibendum.co.uk', '09334981692', 'Not Paid', '2018-11-19', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '746-313 Orci Road', 'active', 1, ''),
+(1921681045, 'Xavier', 'Ellis', NULL, NULL, 'F', '1991-05-14', 'nisi@Duis.ca', '09905178265', 'Not Paid', '2019-02-14', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '2242 Neque Av.', 'active', 2, ''),
+(1921681046, 'Wallace', 'Velasquez', NULL, NULL, 'F', '1991-04-28', 'at.pretium@euismodenimEtiam.co.uk', '09917962390', 'Not Paid', '2020-07-19', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '253-1786 Lectus Rd.', 'active', 2, ''),
+(1921681047, 'Graiden', 'Knight', NULL, NULL, 'M', '1988-04-28', 'ridiculus.mus.Aenean@ultricesVivamusrhoncus.net', '09449699878', 'Not Paid', '2020-01-09', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '975-3806 A, Rd.', 'active', 2, ''),
+(1921681048, 'Wang', 'Bradshaw', NULL, NULL, 'F', '1997-01-25', 'nisl.Nulla@sodales.co.uk', '09875369629', 'Not Paid', '2018-03-29', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '5884 Egestas Ave', 'active', 2, ''),
+(1921681049, 'Chandler', 'Lowery', NULL, NULL, 'M', '1976-02-08', 'neque.vitae@inconsequat.edu', '09944567659', 'Not Paid', '2019-05-21', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '570-6336 Quam, Av.', 'active', 1, ''),
+(1921681050, 'Caesar', 'Maxwell', NULL, NULL, 'F', '1999-07-27', 'molestie.arcu.Sed@adipiscingelitEtiam.com', '09691967540', 'Not Paid', '2018-04-16', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 432, 9045 Morbi St.', 'active', 1, ''),
+(1921681051, 'Akeem', 'Pollard', NULL, NULL, 'M', '1978-09-06', 'hymenaeos@felisNulla.edu', '09983166627', 'Not Paid', '2020-04-10', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '1030 Orci St.', 'active', 1, ''),
+(1921681052, 'Salvador', 'Knapp', NULL, NULL, 'F', '1976-08-25', 'sit.amet@Nunc.org', '09982239424', 'Not Paid', '2020-01-29', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '9634 Eu, St.', 'active', 2, ''),
+(1921681053, 'Magee', 'Ayers', NULL, NULL, 'M', '1982-03-06', 'tempus@non.net', '09320480090', 'Not Paid', '2019-07-07', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #218-8399 Vestibulum. Road', 'active', 2, ''),
+(1921681054, 'Jeremy', 'Frye', NULL, NULL, 'F', '1978-01-15', 'cursus@ullamcorpereu.com', '09385439462', 'Not Paid', '2019-08-20', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '273-8995 Enim. Ave', 'active', 2, ''),
+(1921681055, 'Jonas', 'Garza', NULL, NULL, 'F', '1992-02-10', 'malesuada.vel.venenatis@massaVestibulum.edu', '09566241596', 'Not Paid', '2019-09-13', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '811-6487 Et Rd.', 'active', 2, ''),
+(1921681056, 'Porter', 'Lowery', NULL, NULL, 'M', '1979-09-11', 'taciti.sociosqu@non.org', '09509845702', 'Not Paid', '2020-07-14', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #450-1414 Adipiscing Av.', 'active', 2, ''),
+(1921681057, 'Phelan', 'Galloway', NULL, NULL, 'F', '1989-04-20', 'mollis.Integer@consequatenim.ca', '09106606601', 'Not Paid', '2019-11-07', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #708-3794 Lacinia St.', 'active', 2, ''),
+(1921681058, 'Asher', 'Mcclure', NULL, NULL, 'M', '1979-05-25', 'eros@molestiepharetra.edu', '09127396138', 'Not Paid', '2019-07-17', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '445-9684 Sem St.', 'active', 2, ''),
+(1921681059, 'Basil', 'Hodges', NULL, NULL, 'F', '1986-03-30', 'eu.metus.In@uteros.co.uk', '09115474709', 'Not Paid', '2019-06-27', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 182, 725 Libero Rd.', 'active', 1, ''),
+(1921681060, 'Boris', 'Hopkins', NULL, NULL, 'F', '1992-05-01', 'blandit.congue.In@lorem.co.uk', '09249104148', 'Not Paid', '2018-04-26', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '5548 Nec, Ave', 'active', 1, ''),
+(1921681061, 'Ulric', 'Rollins', NULL, NULL, 'M', '2000-05-19', 'non.lobortis.quis@pedeCrasvulputate.com', '09598153405', 'Not Paid', '2018-12-18', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '756-1186 Phasellus Rd.', 'active', 1, ''),
+(1921681062, 'William', 'Suarez', NULL, NULL, 'M', '1981-05-30', 'dui.Cum@tempusmauris.ca', '09930619290', 'Not Paid', '2020-01-29', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'P.O. Box 608, 8662 Ornare St.', 'active', 2, ''),
+(1921681063, 'Lucian', 'Slater', NULL, NULL, 'F', '2000-03-28', 'cursus.purus@Praesent.edu', '09781339342', 'Not Paid', '2020-10-29', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 508, 6827 Tincidunt. Road', 'active', 1, ''),
+(1921681064, 'Cedric', 'Raymond', NULL, NULL, 'M', '1997-05-16', 'sem.Nulla.interdum@adipiscingenimmi.co.uk', '09372214862', 'Not Paid', '2019-06-22', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #497-8148 Faucibus Rd.', 'active', 1, ''),
+(1921681065, 'Gage', 'Tucker', NULL, NULL, 'F', '1991-03-12', 'blandit.at@ipsumdolorsit.co.uk', '09301779974', 'Not Paid', '2020-08-28', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '996-6180 Molestie Rd.', 'active', 2, ''),
+(1921681066, 'Troy', 'Lloyd', NULL, NULL, 'F', '1978-03-22', 'dictum@etnuncQuisque.com', '09603704508', 'Not Paid', '2018-03-11', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #478-1955 Urna Av.', 'active', 2, ''),
+(1921681067, 'David', 'Roach', NULL, NULL, 'M', '1996-01-09', 'ut@luctus.edu', '09267815600', 'Not Paid', '2019-02-22', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '5503 Mauris Avenue', 'active', 2, ''),
+(1921681068, 'Fuller', 'Boyd', NULL, NULL, 'M', '1995-05-12', 'Donec@loremfringilla.ca', '09394496753', 'Not Paid', '2019-02-07', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '6721 Etiam Road', 'active', 1, ''),
+(1921681069, 'Simon', 'Clarke', NULL, NULL, 'M', '2000-02-05', 'magna.Praesent@Donecegestas.edu', '09777071216', 'Not Paid', '2020-12-04', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '471-7279 Vulputate, Avenue', 'active', 1, ''),
+(1921681070, 'Thomas', 'Thornton', NULL, NULL, 'F', '1984-02-03', 'Cras.eget@vitae.ca', '09587604314', 'Not Paid', '2018-03-18', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 283, 2691 Pede Av.', 'active', 2, ''),
+(1921681071, 'Steven', 'Deleon', NULL, NULL, 'M', '1987-02-21', 'Phasellus@Maurisvelturpis.org', '09688024898', 'Not Paid', '2020-02-21', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '3383 Interdum. Street', 'active', 2, ''),
+(1921681072, 'Quentin', 'Mclaughlin', NULL, NULL, 'F', '1988-03-16', 'libero.Proin@utmiDuis.co.uk', '09934019321', 'Not Paid', '2019-04-06', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #585-3600 Nisi Avenue', 'active', 1, ''),
+(1921681073, 'Cruz', 'Combs', NULL, NULL, 'F', '1986-12-25', 'mus.Proin@ultriciesdignissim.net', '09592681068', 'Not Paid', '2020-04-17', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'Ap #947-1102 Sem. Road', 'active', 1, ''),
+(1921681074, 'Keefe', 'England', NULL, NULL, 'F', '1979-06-05', 'urna.Ut@maurisMorbi.edu', '09237518540', 'Not Paid', '2020-11-06', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 850, 1111 Eu St.', 'active', 2, ''),
+(1921681075, 'Samson', 'Harvey', NULL, NULL, 'M', '1997-04-28', 'In.faucibus@aliquetmolestietellus.co.uk', '09957764442', 'Not Paid', '2018-06-01', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'Ap #339-5086 Feugiat Road', 'active', 1, ''),
+(1921681076, 'Damon', 'Reynolds', NULL, NULL, 'M', '1978-07-20', 'erat@acrisusMorbi.com', '09760567029', 'Not Paid', '2020-10-20', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'Ap #183-587 Duis Av.', 'active', 1, ''),
+(1921681077, 'Ciaran', 'Vincent', NULL, NULL, 'M', '1996-01-20', 'vitae.posuere@Sedpharetra.net', '09354945184', 'Not Paid', '2019-01-18', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '909-1700 Cursus St.', 'active', 2, ''),
+(1921681078, 'Sebastian', 'Farley', NULL, NULL, 'F', '1989-12-21', 'Suspendisse@necimperdietnec.org', '09565747679', 'Not Paid', '2019-08-25', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'P.O. Box 587, 6935 Diam St.', 'active', 2, ''),
+(1921681079, 'Finn', 'Patterson', NULL, NULL, 'F', '1994-05-25', 'arcu.Sed@Vivamus.com', '09477503056', 'Not Paid', '2019-04-11', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '5332 Integer St.', 'active', 2, ''),
+(1921681080, 'Graham', 'Nunez', NULL, NULL, 'F', '1997-03-10', 'mus@aliquet.ca', '09634684992', 'Not Paid', '2018-05-06', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 591, 2996 Accumsan St.', 'active', 2, ''),
+(1921681081, 'Dane', 'Bird', NULL, NULL, 'F', '1982-02-18', 'vestibulum.massa.rutrum@metusfacilisislorem.edu', '09270804621', 'Not Paid', '2019-07-25', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #402-6538 Amet, Avenue', 'active', 1, ''),
+(1921681082, 'Jared', 'Mullins', NULL, NULL, 'M', '1999-11-22', 'in@semut.co.uk', '09808136994', 'Not Paid', '2019-02-28', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '661-542 Vulputate St.', 'active', 2, ''),
+(1921681083, 'Giacomo', 'Mcgowan', NULL, NULL, 'F', '1982-11-15', 'Nulla@eu.ca', '09380918963', 'Not Paid', '2020-08-26', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #340-2379 Massa. St.', 'active', 2, ''),
+(1921681084, 'Hamilton', 'Bernard', NULL, NULL, 'F', '1994-02-06', 'Donec.tempor.est@nequeseddictum.com', '09769927909', 'Not Paid', '2019-04-22', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '5262 Mi Road', 'active', 2, ''),
+(1921681085, 'Ciaran', 'Kinney', NULL, NULL, 'M', '1992-02-11', 'a@Etiamimperdiet.ca', '09692243138', 'Not Paid', '2020-01-15', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '526 Mollis Ave', 'active', 2, ''),
+(1921681086, 'Ishmael', 'Davidson', NULL, NULL, 'F', '1973-03-05', 'massa.Mauris.vestibulum@Donecest.ca', '09315304442', 'Not Paid', '2019-04-29', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '6371 Malesuada St.', 'active', 1, ''),
+(1921681087, 'Elton', 'Lyons', NULL, NULL, 'M', '1973-10-21', 'in@gravidanunc.ca', '09276062812', 'Expired', '2020-07-24', '2021-05-02', '02:39:09', 'false', 'true', NULL, '2021-02-23', '2021-03-25', '2021-02-23', '2022-02-23', 'klintjohn cagot', 'Regular', 'P.O. Box 902, 1824 Tellus St.', 'inactive', 2, ''),
+(1921681088, 'Burke', 'Good', NULL, NULL, 'M', '1990-08-06', 'orci.Phasellus@Proinsedturpis.org', '09905620678', 'Not Paid', '2021-01-21', NULL, '23:52:02', 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 923, 1396 Rhoncus. Road', 'active', 2, ''),
+(1921681089, 'Oleg', 'Whitley', NULL, NULL, 'F', '2000-02-12', 'penatibus.et@tellusnon.co.uk', '09872820215', 'Not Paid', '2020-10-03', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 417, 9010 Aliquam St.', 'active', 1, ''),
+(1921681090, 'Honorato', 'Barr', NULL, NULL, 'M', '1989-09-06', 'non.vestibulum@maurisid.com', '09170867269', 'Not Paid', '2019-03-15', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 672, 4154 Pede, St.', 'active', 1, ''),
+(1921681091, 'Josiah', 'Luna', NULL, NULL, 'F', '1985-02-26', 'a@nequeNullamnisl.edu', '09141565157', 'Expired', '2018-10-30', '2021-03-18', '12:50:21', 'false', 'false', NULL, '2021-02-23', '2021-03-25', '2021-02-23', '2022-02-23', NULL, 'Regular', '7983 Elementum Avenue', 'active', 2, ''),
+(1921681092, 'Hammett', 'Vaughn', NULL, NULL, 'F', '1998-10-06', 'aliquet.Proin.velit@atarcu.com', '09495661215', 'Not Paid', '2018-12-16', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '676 Penatibus Avenue', 'active', 2, ''),
+(1921681093, 'John', 'Lennon', NULL, NULL, 'M', '1985-01-01', 'john@gmail.com', '09135426654', 'Not Paid', '2021-04-30', '2021-05-02', '02:39:00', 'false', 'true', NULL, NULL, NULL, NULL, NULL, 'klintjohn cagot', 'Regular', 'Liverpool', 'inactive', 1, ''),
+(1921681094, 'Ringo', 'Star', NULL, NULL, 'M', '1999-01-01', 'ringo@gmail.com', '09203165455', 'Paid', '2021-04-30', NULL, NULL, 'false', 'false', NULL, '2021-05-01', '2021-06-30', '2021-04-30', '2022-04-30', NULL, 'Regular', 'Liverpool', 'active', 1, ''),
+(1921681100, 'check', 'check', NULL, NULL, 'M', '1999-11-11', 'check@check.com', '09000000001', 'Paid', '2021-05-01', '2021-05-01', '23:49:20', 'false', 'true', NULL, '2021-05-01', '2021-05-31', '2021-05-01', '2022-05-01', 'klintjohn cagot', 'Regular', 'check', 'inactive', NULL, ''),
+(1921681101, 'asdf', 'qwer', NULL, NULL, 'M', '1999-11-11', 'asdf@gmail.com', '09125124411', 'Not Paid', '2021-05-01', '2021-05-02', '02:38:54', 'false', 'true', NULL, NULL, NULL, NULL, NULL, 'klintjohn cagot', 'Regular', 'asdfqwer', 'inactive', 1, ''),
+(1921681102, 'george', 'harrison', NULL, NULL, 'M', '1988-01-01', 'geoarge@gmail.com', '09201115421', 'Not Paid', '2021-05-01', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'liverpool', 'active', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -407,7 +654,7 @@ CREATE TABLE `memberpromos` (
 --
 
 INSERT INTO `memberpromos` (`id`, `promo_id`, `member_id`, `date_added`, `status`, `date_expired`) VALUES
-(2, 202112, 1921681011, '2021-02-16', 'Active', NULL),
+(2, 202112, 1921681011, '2021-02-16', 'Expired', '2021-03-31'),
 (3, 202111, 1921681011, '2021-02-16', 'Expired', NULL),
 (4, 202111, 1921681022, '2021-02-18', 'Expired', NULL),
 (5, 202111, 1921681043, '2021-02-23', 'Expired', NULL),
@@ -420,12 +667,27 @@ INSERT INTO `memberpromos` (`id`, `promo_id`, `member_id`, `date_added`, `status
 (13, 202101, 1921681013, '2021-03-02', 'Expired', NULL),
 (14, 202112, 1921681013, '2021-03-02', 'Active', NULL),
 (15, 202113, 1921681015, '2021-03-05', 'Expired', '2021-03-22'),
-(16, 202113, 1921681014, '2021-03-05', 'Active', NULL),
-(17, 202113, 1921681016, '2021-03-06', 'Active', NULL),
-(18, 202112, 1921681030, '2021-03-18', 'Active', NULL),
+(16, 202113, 1921681014, '2021-03-05', 'Expired', NULL),
+(17, 202113, 1921681016, '2021-03-06', 'Expired', NULL),
+(18, 202112, 1921681030, '2021-03-18', 'Expired', '2021-04-29'),
 (19, 202101, 1921681026, '2021-03-18', 'Active', NULL),
 (20, 202101, 1921681047, '2021-03-18', 'Active', NULL),
-(21, 202113, 1921681024, '2021-03-22', 'Active', NULL);
+(21, 202113, 1921681024, '2021-03-22', 'Expired', NULL),
+(22, 202113, 1921681011, '2021-03-31', 'Expired', '2021-04-02'),
+(23, 202114, 1921681011, '2021-04-02', 'Expired', '2021-04-28'),
+(24, 202114, 1921681024, '2021-04-26', 'Expired', '2021-04-28'),
+(25, 202114, 1921681058, '2021-04-26', 'Expired', '2021-04-28'),
+(26, 202114, 1921681026, '2021-04-27', 'Expired', '2021-04-28'),
+(27, 202114, 1921681020, '2021-04-27', 'Expired', '2021-04-28'),
+(28, 202114, 1921681016, '2021-04-27', 'Expired', '2021-04-28'),
+(29, 202114, 1921681011, '2021-04-27', 'Expired', '2021-04-28'),
+(30, 202112, 1921681011, '2021-04-27', 'Active', NULL),
+(31, 202114, 1921681024, '2021-04-28', 'Expired', '2021-04-28'),
+(32, 202114, 1921681022, '2021-04-30', 'Expired', NULL),
+(33, 202100, 1921681033, '2021-04-30', 'Active', NULL),
+(34, 202100, 1921681071, '2021-04-30', 'Active', NULL),
+(35, 202100, 1921681034, '2021-04-30', 'Active', NULL),
+(36, 202100, 1921681094, '2021-04-30', 'Active', NULL);
 
 -- --------------------------------------------------------
 
@@ -447,11 +709,10 @@ CREATE TABLE `member_notifs` (
 --
 
 INSERT INTO `member_notifs` (`id`, `member_id`, `notif_id`, `status`, `datetime_sent`, `date_read`) VALUES
-(14, 1921681011, 1, 'Read', '2021-02-18 01:24:10', '2021-02-23 06:10:00'),
-(18, 1921681011, 2, 'Read', '2021-02-22 04:40:27', '2021-02-23 06:22:10'),
-(20, 1921681016, 1, 'Deleted', '2021-03-06 15:40:23', '2021-03-06 15:42:13'),
-(24, 1921681011, 4, 'Unread', '2021-03-19 10:36:00', NULL),
-(25, 1921681087, 2, 'Unread', '2021-03-22 02:45:00', NULL);
+(76, 1921681011, 3, 'Unread', '2021-04-29 03:24:00', NULL),
+(77, 1921681022, 3, 'Unread', '2021-04-29 03:24:00', NULL),
+(78, 1921681011, 4, 'Unread', '2021-05-01 04:07:46', NULL),
+(79, 1921681022, 4, 'Unread', '2021-05-01 04:07:46', NULL);
 
 -- --------------------------------------------------------
 
@@ -490,11 +751,13 @@ CREATE TABLE `paymentlog` (
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
   `member_type` enum('Regular','Walk-in') DEFAULT NULL,
-  `payment_description` enum('Monthly Subscription','Annual Membership','Walk-in') DEFAULT NULL,
+  `payment_description` enum('Monthly Subscription','Annual Membership','Walk-in','Program Fee') DEFAULT NULL,
   `payment_type` enum('Cash','Online') NOT NULL,
   `date_payment` date DEFAULT NULL,
   `time_payment` varchar(15) NOT NULL,
   `payment_amount` varchar(4) DEFAULT NULL,
+  `program_enrolled` varchar(30) DEFAULT NULL,
+  `program_amount` varchar(4) DEFAULT NULL,
   `promo_availed` varchar(100) DEFAULT NULL,
   `online_payment_id` varchar(9999) DEFAULT NULL,
   `admin_id` int(100) DEFAULT NULL
@@ -504,38 +767,48 @@ CREATE TABLE `paymentlog` (
 -- Dumping data for table `paymentlog`
 --
 
-INSERT INTO `paymentlog` (`payment_id`, `member_id`, `first_name`, `last_name`, `member_type`, `payment_description`, `payment_type`, `date_payment`, `time_payment`, `payment_amount`, `promo_availed`, `online_payment_id`, `admin_id`) VALUES
-(10, 1921681011, 'John', 'Doe', 'Regular', 'Annual Membership', 'Cash', '2021-02-16', '07:25 PM', '200', NULL, NULL, NULL),
-(11, 1921681012, 'George', 'Duterte', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-16', '07:26 PM', '750', 'N/A', NULL, NULL),
-(12, 1921681012, 'George', 'Duterte', 'Regular', 'Annual Membership', 'Cash', '2021-02-16', '07:26 PM', '200', NULL, NULL, NULL),
-(38, 1921681024, 'Clint', 'Lapera', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-18', '09:46 PM', '750', 'N/A', NULL, NULL),
-(39, 1921681024, 'Clint', 'Lapera', 'Regular', 'Annual Membership', 'Cash', '2021-02-18', '09:46 PM', '200', NULL, NULL, NULL),
-(40, 1921681022, 'Weinnand', 'Hasanion', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-18', '09:52 PM', '700', 'January-February Promo', NULL, NULL),
-(41, 1921681022, 'Weinnand', 'Hasanion', 'Regular', 'Annual Membership', 'Cash', '2021-02-18', '09:52 PM', '200', NULL, NULL, NULL),
-(42, 1921681023, 'Ivanne', 'Candano', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-18', '10:36 PM', '750', 'N/A', NULL, NULL),
-(43, 1921681023, 'Ivanne', 'Candano', 'Regular', 'Annual Membership', 'Cash', '2021-02-18', '10:36 PM', '200', NULL, NULL, NULL),
-(44, 1921681021, 'Francis', 'Vasquez', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-22', '08:45 AM', '750', 'N/A', NULL, NULL),
-(45, 1921681021, 'Francis', 'Vasquez', 'Regular', 'Annual Membership', 'Cash', '2021-02-22', '08:45 AM', '200', NULL, NULL, NULL),
-(46, 1921681021, 'Francis', 'Vasquez', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-22', '08:45 AM', '750', 'N/A', NULL, NULL),
-(47, 1921681091, 'Josiah', 'Luna', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-23', '02:55 PM', '750', 'N/A', NULL, NULL),
-(48, 1921681091, 'Josiah', 'Luna', 'Regular', 'Annual Membership', 'Cash', '2021-02-23', '02:55 PM', '200', NULL, NULL, NULL),
-(49, 1921681087, 'Elton', 'Lyons', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-23', '02:55 PM', '750', 'N/A', NULL, NULL),
-(50, 1921681087, 'Elton', 'Lyons', 'Regular', 'Annual Membership', 'Cash', '2021-02-23', '02:55 PM', '200', NULL, NULL, NULL),
-(51, 1921681043, 'Clarke', 'Jacobson', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-23', '02:56 PM', '700', 'January-February Promo', NULL, NULL),
-(52, 1921681043, 'Clarke', 'Jacobson', 'Regular', 'Annual Membership', 'Cash', '2021-02-23', '02:56 PM', '200', NULL, NULL, NULL),
-(53, 1921681032, 'Rigel', 'Wilson', 'Walk-in', 'Walk-in', 'Cash', '2021-03-05', '04:11 AM', '50', NULL, NULL, NULL),
-(54, 1921681088, 'Burke', 'Good', 'Walk-in', 'Walk-in', 'Cash', '2021-03-05', '04:11 AM', '50', NULL, NULL, NULL),
-(55, 1921681025, 'Dante', 'Phillips', 'Walk-in', 'Walk-in', 'Cash', '2021-03-05', '04:11 AM', '50', NULL, NULL, NULL),
-(56, 1921681014, 'John Jay', 'Desierto', 'Regular', 'Monthly Subscription', 'Cash', '2021-03-05', '04:12 AM', '650', 'Student Discount', NULL, NULL),
-(57, 1921681014, 'John Jay', 'Desierto', 'Regular', 'Annual Membership', 'Cash', '2021-03-05', '04:12 AM', '200', NULL, NULL, NULL),
-(58, 1921681016, 'Michael', 'Antiporta', NULL, 'Monthly Subscription', 'Online', '2021-03-06', '11:06 PM', '750', NULL, '6K2378805T6522126', NULL),
-(59, 1921681016, 'Michael', 'Antiporta', NULL, 'Annual Membership', 'Online', '2021-03-06', '11:06 PM', '200', NULL, '6K2378805T6522126', NULL),
-(60, 1921681032, 'Rigel', 'Wilson', 'Walk-in', 'Walk-in', 'Cash', '2021-03-16', '06:40 PM', '50', NULL, NULL, NULL),
-(61, 1921681013, 'Christian James', 'Gulapa', 'Regular', 'Annual Membership', 'Cash', '2021-03-18', '12:45 AM', '100', NULL, NULL, NULL),
-(62, 1921681054, 'Jeremy', 'Frye', 'Walk-in', 'Walk-in', 'Cash', '2021-03-18', '12:46 AM', '50', NULL, NULL, NULL),
-(63, 1921681013, 'Christian James', 'Gulapa', 'Regular', 'Monthly Subscription', 'Cash', '2021-03-18', '12:46 AM', '650', 'Senior Discount', NULL, NULL),
-(67, 1921681011, 'John', 'Doe', 'Regular', 'Monthly Subscription', 'Online', '2021-03-19', '07:24 PM', '650', 'Senior Discount', '2M657311FH662914C', NULL),
-(68, 1921681024, 'Clint', 'Lapera', 'Regular', 'Monthly Subscription', 'Online', '2021-03-22', '11:34 AM', '675', 'Back-to-school Promo', '136225401D330332B', NULL);
+INSERT INTO `paymentlog` (`payment_id`, `member_id`, `first_name`, `last_name`, `member_type`, `payment_description`, `payment_type`, `date_payment`, `time_payment`, `payment_amount`, `program_enrolled`, `program_amount`, `promo_availed`, `online_payment_id`, `admin_id`) VALUES
+(10, 1921681011, 'John', 'Doe', 'Regular', 'Annual Membership', 'Cash', '2021-02-16', '07:25 PM', '200', NULL, NULL, NULL, NULL, NULL),
+(11, 1921681012, 'George', 'Duterte', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-16', '07:26 PM', '750', NULL, NULL, 'N/A', NULL, NULL),
+(12, 1921681012, 'George', 'Duterte', 'Regular', 'Annual Membership', 'Cash', '2021-02-16', '07:26 PM', '200', NULL, NULL, NULL, NULL, NULL),
+(38, 1921681024, 'Clint', 'Lapera', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-18', '09:46 PM', '750', NULL, NULL, 'N/A', NULL, NULL),
+(39, 1921681024, 'Clint', 'Lapera', 'Regular', 'Annual Membership', 'Cash', '2021-02-18', '09:46 PM', '200', NULL, NULL, NULL, NULL, NULL),
+(40, 1921681022, 'Weinnand', 'Hasanion', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-18', '09:52 PM', '700', NULL, NULL, 'January-February Promo', NULL, NULL),
+(41, 1921681022, 'Weinnand', 'Hasanion', 'Regular', 'Annual Membership', 'Cash', '2021-02-18', '09:52 PM', '200', NULL, NULL, NULL, NULL, NULL),
+(42, 1921681023, 'Ivanne', 'Candano', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-18', '10:36 PM', '750', NULL, NULL, 'N/A', NULL, NULL),
+(43, 1921681023, 'Ivanne', 'Candano', 'Regular', 'Annual Membership', 'Cash', '2021-02-18', '10:36 PM', '200', NULL, NULL, NULL, NULL, NULL),
+(44, 1921681021, 'Francis', 'Vasquez', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-22', '08:45 AM', '750', NULL, NULL, 'N/A', NULL, NULL),
+(45, 1921681021, 'Francis', 'Vasquez', 'Regular', 'Annual Membership', 'Cash', '2021-02-22', '08:45 AM', '200', NULL, NULL, NULL, NULL, NULL),
+(46, 1921681021, 'Francis', 'Vasquez', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-22', '08:45 AM', '750', NULL, NULL, 'N/A', NULL, NULL),
+(47, 1921681091, 'Josiah', 'Luna', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-23', '02:55 PM', '750', NULL, NULL, 'N/A', NULL, NULL),
+(48, 1921681091, 'Josiah', 'Luna', 'Regular', 'Annual Membership', 'Cash', '2021-02-23', '02:55 PM', '200', NULL, NULL, NULL, NULL, NULL),
+(49, 1921681087, 'Elton', 'Lyons', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-23', '02:55 PM', '750', NULL, NULL, 'N/A', NULL, NULL),
+(50, 1921681087, 'Elton', 'Lyons', 'Regular', 'Annual Membership', 'Cash', '2021-02-23', '02:55 PM', '200', NULL, NULL, NULL, NULL, NULL),
+(51, 1921681043, 'Clarke', 'Jacobson', 'Regular', 'Monthly Subscription', 'Cash', '2021-02-23', '02:56 PM', '700', NULL, NULL, 'January-February Promo', NULL, NULL),
+(52, 1921681043, 'Clarke', 'Jacobson', 'Regular', 'Annual Membership', 'Cash', '2021-02-23', '02:56 PM', '200', NULL, NULL, NULL, NULL, NULL),
+(53, 1921681032, 'Rigel', 'Wilson', 'Walk-in', 'Walk-in', 'Cash', '2021-03-05', '04:11 AM', '50', NULL, NULL, NULL, NULL, NULL),
+(54, 1921681088, 'Burke', 'Good', 'Walk-in', 'Walk-in', 'Cash', '2021-03-05', '04:11 AM', '50', NULL, NULL, NULL, NULL, NULL),
+(55, 1921681025, 'Dante', 'Phillips', 'Walk-in', 'Walk-in', 'Cash', '2021-03-05', '04:11 AM', '50', NULL, NULL, NULL, NULL, NULL),
+(56, 1921681014, 'John Jay', 'Desierto', 'Regular', 'Monthly Subscription', 'Cash', '2021-03-05', '04:12 AM', '650', NULL, NULL, 'Student Discount', NULL, NULL),
+(57, 1921681014, 'John Jay', 'Desierto', 'Regular', 'Annual Membership', 'Cash', '2021-03-05', '04:12 AM', '200', NULL, NULL, NULL, NULL, NULL),
+(58, 1921681016, 'Michael', 'Antiporta', NULL, 'Monthly Subscription', 'Online', '2021-03-06', '11:06 PM', '750', NULL, NULL, NULL, '6K2378805T6522126', NULL),
+(59, 1921681016, 'Michael', 'Antiporta', NULL, 'Annual Membership', 'Online', '2021-03-06', '11:06 PM', '200', NULL, NULL, NULL, '6K2378805T6522126', NULL),
+(60, 1921681032, 'Rigel', 'Wilson', 'Walk-in', 'Walk-in', 'Cash', '2021-03-16', '06:40 PM', '50', NULL, NULL, NULL, NULL, NULL),
+(61, 1921681013, 'Christian James', 'Gulapa', 'Regular', 'Annual Membership', 'Cash', '2021-03-18', '12:45 AM', '100', NULL, NULL, NULL, NULL, NULL),
+(62, 1921681054, 'Jeremy', 'Frye', 'Walk-in', 'Walk-in', 'Cash', '2021-03-18', '12:46 AM', '50', NULL, NULL, NULL, NULL, NULL),
+(63, 1921681013, 'Christian James', 'Gulapa', 'Regular', 'Monthly Subscription', 'Cash', '2021-03-18', '12:46 AM', '650', NULL, NULL, 'Senior Discount', NULL, NULL),
+(68, 1921681024, 'Clint', 'Lapera', 'Regular', 'Monthly Subscription', 'Online', '2021-03-22', '11:34 AM', '675', NULL, NULL, 'Back-to-school Promo', '136225401D330332B', NULL),
+(69, 1921681022, 'Weinnand', 'Hasanion', 'Regular', 'Monthly Subscription', 'Cash', '2021-03-31', '01:39 PM', '700', NULL, NULL, 'Student Discount', NULL, NULL),
+(70, 1921681011, 'John', 'Doe', 'Regular', 'Monthly Subscription', 'Online', '2021-03-31', '01:46 PM', '750', NULL, NULL, '', '2MB59268H68586939', NULL),
+(71, 1921681024, 'Clint', 'Lapera', 'Regular', 'Monthly Subscription', 'Online', '2021-04-26', '11:54 PM', '700', NULL, NULL, 'April Promo', '9EA49560X4174013C', NULL),
+(72, 1921681011, 'John', 'Doe', 'Regular', 'Annual Membership', 'Cash', '2021-04-27', '07:46 PM', '150', NULL, NULL, NULL, NULL, NULL),
+(74, 1921681026, 'Phelan', 'Blackwell', 'Regular', 'Annual Membership', 'Cash', '2021-04-29', '12:06 AM', '150', NULL, NULL, NULL, NULL, NULL),
+(75, 1921681014, 'John Jay', 'Desierto', 'Regular', 'Monthly Subscription', 'Cash', '2021-04-30', '09:45 PM', '700', NULL, NULL, 'Student Discount', NULL, NULL),
+(76, 1921681094, 'Ringo', 'Star', 'Regular', 'Annual Membership', 'Cash', '2021-04-30', '09:46 PM', '200', NULL, NULL, NULL, NULL, NULL),
+(79, 1921681100, 'check', 'check', 'Regular', 'Monthly Subscription', 'Cash', '2021-05-01', '10:16 PM', '750', NULL, NULL, 'N/A', NULL, NULL),
+(80, 1921681100, 'check', 'check', 'Regular', 'Annual Membership', 'Cash', '2021-05-01', '10:16 PM', '200', NULL, NULL, NULL, NULL, NULL),
+(81, 1921681100, 'check', 'check', 'Regular', 'Program Fee', 'Cash', '2021-05-01', '10:23 PM', '30', NULL, NULL, NULL, NULL, NULL),
+(83, 1921681094, 'Ringo', 'Star', 'Regular', 'Monthly Subscription', 'Cash', '2021-05-01', '11:17 PM', '705', 'Gaining', '30', 'March-May Promo', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -552,8 +825,10 @@ CREATE TABLE `program` (
   `program_status` enum('active','inactive') NOT NULL DEFAULT 'active',
   `date_added` date DEFAULT NULL,
   `time_added` time NOT NULL,
+  `admin_delete` varchar(100) DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
   `time_deleted` time NOT NULL,
+  `amount` int(11) DEFAULT NULL,
   `upper_1_day_1` int(11) DEFAULT NULL,
   `upper_2_day_1` int(11) DEFAULT NULL,
   `upper_3_day_1` int(11) DEFAULT NULL,
@@ -581,10 +856,11 @@ CREATE TABLE `program` (
 -- Dumping data for table `program`
 --
 
-INSERT INTO `program` (`program_id`, `admin_id`, `trainer_id`, `program_name`, `program_description`, `program_status`, `date_added`, `time_added`, `date_deleted`, `time_deleted`, `upper_1_day_1`, `upper_2_day_1`, `upper_3_day_1`, `upper_1_day_2`, `upper_2_day_2`, `upper_3_day_2`, `upper_1_day_3`, `upper_2_day_3`, `upper_3_day_3`, `lower_1_day_1`, `lower_2_day_1`, `lower_3_day_1`, `lower_1_day_2`, `lower_2_day_2`, `lower_3_day_2`, `lower_1_day_3`, `lower_2_day_3`, `lower_3_day_3`, `abdominal_day_1`, `abdominal_day_2`, `abdominal_day_3`) VALUES
-(1, 87001, 1512, 'Gaining', 'This is a program for members who aim to gain weight and mass.', 'active', '2021-02-09', '19:30:00', NULL, '00:00:00', 1, 2, 3, 4, 5, 6, 7, 8, 2, 9, 10, 11, 12, 13, 14, 15, 9, 11, 16, 19, 20),
-(2, 87001, 1514, 'Reducing', 'AD', 'active', '2021-02-15', '12:14:00', NULL, '00:00:00', 1, 2, 3, 4, 5, 6, 7, 8, 1, 9, 10, 11, 12, 13, 14, 15, 9, 10, 21, 20, 18),
-(3, 87001, 1514, 'asfsafsaf', 'sdfsadhfsadfhsladkfhsadflkashflsakhflaskhfadslfhsalkdfh', 'inactive', '2021-03-16', '06:04:00', '2021-03-18', '12:04:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 16, 16, 16);
+INSERT INTO `program` (`program_id`, `admin_id`, `trainer_id`, `program_name`, `program_description`, `program_status`, `date_added`, `time_added`, `admin_delete`, `date_deleted`, `time_deleted`, `amount`, `upper_1_day_1`, `upper_2_day_1`, `upper_3_day_1`, `upper_1_day_2`, `upper_2_day_2`, `upper_3_day_2`, `upper_1_day_3`, `upper_2_day_3`, `upper_3_day_3`, `lower_1_day_1`, `lower_2_day_1`, `lower_3_day_1`, `lower_1_day_2`, `lower_2_day_2`, `lower_3_day_2`, `lower_1_day_3`, `lower_2_day_3`, `lower_3_day_3`, `abdominal_day_1`, `abdominal_day_2`, `abdominal_day_3`) VALUES
+(1, 87001, 1512, 'Gaining', 'This is a program for members who aim to gain weight and mass.', 'active', '2021-02-09', '19:30:00', NULL, NULL, '00:00:00', 30, 1, 2, 3, 4, 5, 6, 7, 8, 2, 9, 10, 11, 12, 13, 14, 15, 9, 11, 16, 19, 20),
+(2, 87001, 1514, 'Reducing', 'This program is for reducing weight.', 'active', '2021-02-15', '12:14:00', NULL, NULL, '00:00:00', 30, 1, 2, 3, 4, 5, 6, 7, 8, 1, 9, 10, 11, 12, 13, 14, 15, 9, 10, 21, 20, 18),
+(3, 87001, 1514, 'asfsafsaf', 'sdfsadhfsadfhsladkfhsadflkashflsakhflaskhfadslfhsalkdfh', 'inactive', '2021-03-16', '06:04:00', 'klintjohn cagot', '2021-05-02', '02:39:17', NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 16, 16, 16),
+(4, 87001, 1514, 'Crossfit', 'This is for members who want to try crossfit.', 'inactive', '2021-04-26', '11:32:00', 'klintjohn cagot', '2021-05-01', '23:49:24', 30, 1, 3, 2, 4, 7, 4, 8, 7, 6, 9, 10, 11, 12, 9, 10, 15, 14, 13, 16, 20, 23);
 
 -- --------------------------------------------------------
 
@@ -610,11 +886,14 @@ CREATE TABLE `promo` (
 --
 
 INSERT INTO `promo` (`promo_id`, `promo_name`, `promo_type`, `promo_description`, `date_added`, `promo_starting_date`, `promo_ending_date`, `amount`, `status`, `date_deleted`) VALUES
-(202100, 'Christmas Promo', 'Seasonal', 'Monthly subscription is P75 off for the whole month of December.', '2021-01-27', '2021-12-01', '2021-12-31', 75, 'Active', '2021-03-18'),
+(202100, 'March-May Promo', 'Seasonal', 'Monthly subscription is P75 off for the months of April and May.', '2021-01-27', '2021-03-01', '2021-05-31', 75, 'Active', '2021-03-18'),
 (202101, 'Student Discount', 'Permanent', 'Monthly subscription is P100 off for students. Please show valid school ID to the counter to avail.', '2021-01-27', '1970-01-01', '1970-01-01', 50, 'Active', NULL),
-(202111, 'January-February Promo', 'Seasonal', 'P50 off for the whole month of January.', '2021-01-28', '2021-01-01', '2021-02-28', 50, 'Expired', '2021-02-03'),
+(202111, 'January-February Promo', 'Seasonal', 'P50 off for the whole month of January.', '2021-01-28', '2021-01-01', '2021-02-28', 50, 'Expired', '2021-02-28'),
 (202112, 'Senior Discount', 'Permanent', 'Monthly subscription is P100 off for ages 40 and above. Please present valid Senior Citizen ID to avail promo.', '2021-01-28', '1970-01-01', '1970-01-01', 50, 'Active', '2021-01-27'),
-(202113, 'Back-to-school Promo', 'Seasonal', 'P75 discount to all who avail our back-to-school promo. This promo is only available starting March 1, 2021 until March 31, 2021.', '2021-02-23', '2021-03-01', '2021-03-31', 75, 'Active', NULL);
+(202113, 'Back-to-school Promo', 'Seasonal', 'P75 discount to all who avail our back-to-school promo. This promo is only available starting March 1, 2021 until March 31, 2021.', '2021-02-23', '2021-03-01', '2021-03-31', 75, 'Expired', '2021-03-31'),
+(202114, 'April Promo', 'Seasonal', 'P50 off for monthly subscription for the whole month of April.', '2021-03-31', '2021-04-01', '2021-04-30', 50, 'Expired', '2021-04-30'),
+(202115, 'May Promo', 'Seasonal', 'may prom ohaha', '2021-04-13', '2021-05-05', '2021-05-04', 60, 'Deleted', '2021-04-13'),
+(202116, 'girl promo haha', 'Permanent', 'asfdsadfsd', '2021-04-13', '1970-01-01', '1970-01-01', 50, 'Deleted', '2021-04-13');
 
 -- --------------------------------------------------------
 
@@ -676,7 +955,8 @@ CREATE TABLE `trainer` (
   `gender` enum('M','F') DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `file` blob DEFAULT NULL,
+  `file` blob,
+  `admin_delete` varchar(100) DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
   `date_hired` date DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
@@ -687,10 +967,10 @@ CREATE TABLE `trainer` (
 -- Dumping data for table `trainer`
 --
 
-INSERT INTO `trainer` (`trainer_id`, `trainer_status`, `trainer_position`, `first_name`, `last_name`, `address`, `gender`, `phone`, `email`, `file`, `birthdate`, `date_hired`, `date_deleted`, `time_deleted`) VALUES
-(1512, 'active', 'junior', 'George', 'Vasquez', '2nd floor G7 Suites', 'M', '09453216542', 'leeapple619@gmail.com', NULL, '1985-01-01', '2021-02-23', NULL, NULL),
-(1513, 'active', 'junior', 'Greg', 'Ivor', 'Cebu City', 'M', '09994562154', 'greg@gmail.com', NULL, '1990-02-16', '2021-02-23', NULL, NULL),
-(1514, 'deleted', 'junior', 'Reyland', 'Nazareth', 'Lapulapu City', 'M', '09164543211', 'reylandbogo@gmail.com', NULL, '1977-09-23', '2021-02-23', '2021-03-15', '16:32:31');
+INSERT INTO `trainer` (`trainer_id`, `trainer_status`, `trainer_position`, `first_name`, `last_name`, `address`, `gender`, `phone`, `email`, `file`, `admin_delete`, `birthdate`, `date_hired`, `date_deleted`, `time_deleted`) VALUES
+(1512, 'active', 'junior', 'George', 'Vasquez', '2nd floor G7 Suites', 'M', '09453216542', 'leeapple619@gmail.com', NULL, 'klintjohn cagot', '1985-01-01', '2021-02-23', NULL, NULL),
+(1513, 'active', 'junior', 'Greg', 'Ivor', 'Cebu City', 'M', '09994562154', 'greg@gmail.com', NULL, NULL, '1990-02-16', '2021-02-23', NULL, NULL),
+(1514, 'deleted', 'junior', 'Reyland', 'Nazareth', 'Lapulapu City', 'M', '09164543211', 'reylandbogo@gmail.com', NULL, 'klintjohn cagot', '1977-09-23', '2021-02-23', '2021-05-02', '02:39:31');
 
 --
 -- Indexes for dumped tables
@@ -733,7 +1013,7 @@ ALTER TABLE `logtrail_doing`
 --
 ALTER TABLE `member`
   ADD PRIMARY KEY (`member_id`),
-  ADD KEY `program_id` (`program_id`);
+  ADD KEY `member_ibfk_1` (`program_id`);
 
 --
 -- Indexes for table `memberpromos`
@@ -801,80 +1081,67 @@ ALTER TABLE `trainer`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87003;
-
+  MODIFY `admin_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87005;
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
   MODIFY `inventory_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2024;
-
 --
 -- AUTO_INCREMENT for table `logtrail`
 --
 ALTER TABLE `logtrail`
-  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
+  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT for table `logtrail_doing`
 --
 ALTER TABLE `logtrail_doing`
-  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
-
+  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=340;
 --
 -- AUTO_INCREMENT for table `member`
 --
 ALTER TABLE `member`
-  MODIFY `member_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1921681093;
-
+  MODIFY `member_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1921681103;
 --
 -- AUTO_INCREMENT for table `memberpromos`
 --
 ALTER TABLE `memberpromos`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `member_notifs`
 --
 ALTER TABLE `member_notifs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
   MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
 --
 -- AUTO_INCREMENT for table `paymentlog`
 --
 ALTER TABLE `paymentlog`
-  MODIFY `payment_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
-
+  MODIFY `payment_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 --
 -- AUTO_INCREMENT for table `program`
 --
 ALTER TABLE `program`
-  MODIFY `program_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `program_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `promo`
 --
 ALTER TABLE `promo`
-  MODIFY `promo_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202114;
-
+  MODIFY `promo_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202117;
 --
 -- AUTO_INCREMENT for table `routines`
 --
 ALTER TABLE `routines`
   MODIFY `routine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
 --
 -- AUTO_INCREMENT for table `trainer`
 --
 ALTER TABLE `trainer`
   MODIFY `trainer_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1515;
-
 --
 -- Constraints for dumped tables
 --
@@ -928,7 +1195,6 @@ ALTER TABLE `paymentlog`
 --
 ALTER TABLE `program`
   ADD CONSTRAINT `program_admin_fk` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

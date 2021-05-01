@@ -381,6 +381,7 @@
                   <th>Full name</th>
                   <th>Date deleted</th>
                   <th>Time deleted</th>
+                  <th>Deleted by</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -737,6 +738,7 @@
                 <td>${row.fullname}</td>
                 <td>${row.date}</td>
                 <td>${row.time}</td>
+                <td>${row.admin_delete}</td>
                 <td>
                   <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
                     title="Recover ${row.fullname}" class="fas fa-undo mx-2"

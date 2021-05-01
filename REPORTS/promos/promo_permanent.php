@@ -190,8 +190,8 @@ if($_POST["status"] == "Active" || $_POST["status"] == "Expired"){
     }
   }
 
-  $labels = array("Promo ID", "Promo Name", "Promo Type", "Starting Date","Ending Date","Amount");
-  $rowLabels = array("promo_id", "promo_name", "promo_type", "promo_starting_date","promo_ending_date","amount");
+  $labels = array("Promo ID", "Promo Name", "Promo Type", "Date Added","Amount");
+  $rowLabels = array("promo_id", "promo_name", "promo_type", "date_added","amount");
 
   $object = (object) [
     'data' => $data,
@@ -217,8 +217,8 @@ if($_POST["status"] == "Active" || $_POST["status"] == "Expired"){
     }
   }
   
-  $labels = array("Promo ID", "Promo Name", "Promo Type", "Starting Date","Ending Date","Amount","Date Deleted");
-  $rowLabels = array("promo_id", "promo_name", "promo_type", "promo_starting_date","promo_ending_date","amount","date_deleted");
+  $labels = array("Promo ID", "Promo Name", "Promo Type", "Date Added","Amount","Date Deleted");
+  $rowLabels = array("promo_id", "promo_name", "promo_type", "date_added","amount","date_deleted");
   
   $object = (object) [
     'data' => $data,

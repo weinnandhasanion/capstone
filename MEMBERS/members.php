@@ -493,6 +493,7 @@
                 <tr style="text-align:center;">
 
                   <th>program name</th>
+                  <th>Deleted by</th>
                   <th>Date Added</th>
                   <th>date deleted</th>
                   <th>Time deleted</th>
@@ -1253,6 +1254,7 @@
                 <tr style="text-align:center;">
                   <th>Full name</th>
                   <th>Member type</th>
+                  <th>Deleted by</th>
                   <th>Time deleted</th>
                   <th>Date deleted</th>
                   <th>Action</th>
@@ -2571,6 +2573,7 @@
             let html = `<tr>
               <td>${row.first_name} ${row.last_name}</td>
               <td>${row.member_type}</td>
+              <td>${row.admin_delete}</td>
               <td>${row.time_deleted}</td>
               <td>${row.date_deleted}</td>
               <td>
@@ -2614,6 +2617,7 @@
           data.forEach(row => {
             let html = `<tr>
               <td>${row.program_name}</td>
+              <td>${row.admin_delete}</td>
               <td>${row.date_added}</td>
               <td>${row.date_deleted}</td>
               <td>${row.time_deleted}</td>

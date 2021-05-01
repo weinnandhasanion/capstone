@@ -167,6 +167,7 @@ $reportTitle = "List of working weight equipment";
         if($row["inventory_working"] == null){
             $row["inventory_working"] = 0;
         }
+        $row["inventory_working"] = $row["inventory_qty"] - $row["inventory_damage"];
         $data[] = $row;
       }
     }

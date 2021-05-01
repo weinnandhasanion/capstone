@@ -11,7 +11,19 @@ $id = $_REQUEST['id'];
 $date_deleted = date("Y-m-d");
 $time_deleted = date("H:i:s");
 
-$ox = "UPDATE member SET acc_status = 'inactive',date_deleted = '$date_deleted' , time_deleted = '$time_deleted', isDeleted = 'true'
+ // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
+ $admin_sql = "SELECT first_name,last_name,admin_id FROM admin WHERE admin_id = $session_admin_id";
+ $admin_query_run = mysqli_query($conn, $admin_sql);
+ $rows_admin = mysqli_fetch_assoc($admin_query_run);
+
+ $admin_delete_fullname = $rows_admin["first_name"]." ".$rows_admin["last_name"];;
+ $admin_id = $rows_admin["admin_id"];
+
+$ox = "UPDATE member SET acc_status = 'inactive',
+                         date_deleted = '$date_deleted',
+                         time_deleted = '$time_deleted',
+                         isDeleted = 'true',
+                         admin_delete = '$admin_delete_fullname'
 WHERE member_id = " . intval($id) . "";     
 
 
