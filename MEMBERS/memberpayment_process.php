@@ -11,6 +11,8 @@ $id = $_REQUEST['member_id'];
 $payment_description = $_POST['payment_description'];
 $discount = $_POST['promo_discount'];
 $promo_availed = $_POST["promo_availed"];
+$program_enrolled = $_POST["program_enrolled"];
+$program_amount = $_POST["program_amount"];
 $monthly_end;
 $monthly_start;
 
@@ -64,7 +66,7 @@ if($payment_description == ''){
 
 //Check if its monthly
 else if($payment_description == 'Monthly Subscription'){
-    $payment_amount = 750 - $discount;
+    $payment_amount = 750 - intval($discount) + intval($program_amount);
     
     $sql0 = "SELECT first_name,last_name,member_type FROM member WHERE member_id = $id";
     $query_run = mysqli_query($conn, $sql0);
@@ -81,9 +83,9 @@ else if($payment_description == 'Monthly Subscription'){
     mysqli_query($conn, $sql2);
 
     $sql1 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,
-    `payment_description`,`payment_amount`,`member_type`, `promo_availed`)
+    `payment_description`,`payment_amount`,`member_type`, `promo_availed`, `program_enrolled`, `program_amount`)
     VALUES ('$id', '$first_name', '$last_name', '$timeNow', '$dateNow', '$payment_description','$payment_amount',
-    '$member_type', '$promo_availed')";
+    '$member_type', '$promo_availed', '$program_enrolled', '$program_amount')";
     $query_run = mysqli_query($conn, $sql1);
     
     if($query_run) {
@@ -156,7 +158,7 @@ else if($payment_description == 'Monthly Subscription'){
 
  //Check if its Annual
 }else if($payment_description == 'Annual Membership'){
-    $payment_amount = 200 - $discount;
+    $payment_amount = 200;
 
     $sql0 = "SELECT * FROM member WHERE member_id = $id";
     $query_run = mysqli_query($conn, $sql0);
@@ -289,9 +291,9 @@ $query_run123 = mysqli_query($conn, $klint);
     mysqli_query($conn, $sql1);
 
     $sql2 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,
-    `payment_description`,`payment_amount`,`member_type`, `promo_availed`)
-    VALUES ( '$id', '$first_name', '$last_name', '$timeNow', '$dateNow', 'Monthly subscription',".intval(750 - $discount)."
-    ,'$member_type', '$promo_availed')";
+    `payment_description`,`payment_amount`,`member_type`, `promo_availed`, `program_enrolled`, `program_amount`)
+    VALUES ( '$id', '$first_name', '$last_name', '$timeNow', '$dateNow', 'Monthly subscription',". 750 - intval($discount) + intval($program_amount) ."
+    ,'$member_type', '$promo_availed', '$program_enrolled', '$program_amount')";
     mysqli_query($conn, $sql2);
 
     $sql3 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,

@@ -332,13 +332,17 @@
           </div>
           <div class="form-group">
              <div class="form-row">
-              <div class="col-sm-6" id="online_payment_div">
+              <div class="col-sm-4" id="online_payment_div">
                 <label>Online Payment ID</label>
                 <input type="text" disabled id="online_payment_id" class="form-control">
               </div>
-              <div class="col-sm-6" id="promo-availed-div">
+              <div class="col-sm-4" id="promo-availed-div">
                 <label>Promo Used</label>
                 <input type="text" disabled id="promo_availed" class="form-control">
+              </div>
+              <div class="col-sm-4" id="program-fee-div">
+                <label for="">Program Fee</label>
+                <input type="text" disabled id="program_fee" class="form-control">
               </div>
              </div>
           </div>
@@ -424,8 +428,12 @@
         document.getElementById("new_date_payment").value = row.date_payment;
         document.getElementById("new_time_payment").value = row.time_payment;
         document.getElementById("payment_amount").value = row.payment_amount;
-
-            
+        $("#program_fee").val(row.program);
+        if(row.program == "") {
+          $("#program-fee-div").css("display", "none");
+        } else {
+          $("#program-fee-div").css("display", "block");
+        }
       }
     }
     var paymentlog;
