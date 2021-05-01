@@ -7,10 +7,12 @@ if($_SESSION['admin_id']){
     $session_admin_id = $_SESSION['admin_id'];
 }
 
-$id = $_REQUEST['member_id'];
+$id = $_POST['member_id'];
 $payment_description = $_POST['payment_description'];
 $discount = $_POST['promo_discount'];
 $promo_availed = $_POST["promo_availed"];
+$program_enrolled = $_POST["program_enrolled"];
+$program_amount = $_POST["program_amount"];
 $monthly_end;
 $monthly_start;
 
@@ -20,7 +22,7 @@ $now = date("Y-m-d");
 if($checkIfPaidQuery) {
     $assoc = mysqli_fetch_assoc($checkIfPaidQuery);
 
-    if($assoc["monthly_start"] == null || $assoc["monthly_end"] == null) {
+    if(empty($assoc["monthly_start"]) || empty($assoc["monthly_end"])) {
         $monthly_start = $now;
         $monthly_end = date("Y-m-d", strtotime($now." + 30 days"));
     } else {
@@ -37,7 +39,7 @@ if($checkIfPaidQuery) {
 if($checkIfPaidQuery) {
     $assoc1 = mysqli_fetch_assoc($checkIfPaidQuery);
 
-    if($assoc1["annual_start"] == null || $assoc1["annual_end"] == null) {
+    if(empty($assoc1["annual_start"]) || empty($assoc1["annual_end"])) {
         $annual_start = $now;
         $annual_end = date("Y-m-d", strtotime($now." + 365 days"));
     } else {
@@ -56,15 +58,12 @@ $timeNow = date("h:i A");
 
 //Check if you did not choose a subscription
 if($payment_description == ''){
-    echo ("<script LANGUAGE='JavaScript'>
-                window.alert('FAIL TO PAY!..You did not choose subscription.');
-                window.location.href='./../MEMBERS/members.php';
-                </script>");
+    echo json_encode("You did not choose payment description.");
 }
 
 //Check if its monthly
 else if($payment_description == 'Monthly Subscription'){
-    $payment_amount = 750 - $discount;
+    $payment_amount = 750 - intval($discount) + intval($program_amount);
     
     $sql0 = "SELECT first_name,last_name,member_type FROM member WHERE member_id = $id";
     $query_run = mysqli_query($conn, $sql0);
@@ -81,18 +80,15 @@ else if($payment_description == 'Monthly Subscription'){
     mysqli_query($conn, $sql2);
 
     $sql1 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,
-    `payment_description`,`payment_amount`,`member_type`, `promo_availed`)
+    `payment_description`,`payment_amount`,`member_type`, `promo_availed`, `program_enrolled`, `program_amount`)
     VALUES ('$id', '$first_name', '$last_name', '$timeNow', '$dateNow', '$payment_description','$payment_amount',
-    '$member_type', '$promo_availed')";
+    '$member_type', '$promo_availed', '$program_enrolled', '$program_amount')";
     $query_run = mysqli_query($conn, $sql1);
     
     if($query_run) {
-        echo ("<script LANGUAGE='JavaScript'>
-                window.alert('Monthly Payment is been added.');
-                window.location.href='./../MEMBERS/members.php';
-                </script>");
+        echo json_encode("success monthly");
     } else {
-        echo mysqli_error($conn);
+        echo json_encode(mysqli_error($conn));
     }
 
         //this is for puting member_id in the array
@@ -156,7 +152,7 @@ else if($payment_description == 'Monthly Subscription'){
 
  //Check if its Annual
 }else if($payment_description == 'Annual Membership'){
-    $payment_amount = 200 - $discount;
+    $payment_amount = 200;
 
     $sql0 = "SELECT * FROM member WHERE member_id = $id";
     $query_run = mysqli_query($conn, $sql0);
@@ -239,10 +235,7 @@ else if($payment_description == 'Monthly Subscription'){
      VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
      mysqli_query($conn, $sql1);
 
-    echo ("<script LANGUAGE='JavaScript'>
-                window.alert('Annual Payment is been added.');
-                window.location.href='./../MEMBERS/members.php';
-                </script>");
+    echo json_encode("success annual");
 
 // INSERTINGN REPORTS FOR THE ADMIN INFO
 $sql00 = "SELECT first_name,last_name,admin_id FROM admin WHERE admin_id = $session_admin_id";
@@ -289,9 +282,9 @@ $query_run123 = mysqli_query($conn, $klint);
     mysqli_query($conn, $sql1);
 
     $sql2 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,
-    `payment_description`,`payment_amount`,`member_type`, `promo_availed`)
-    VALUES ( '$id', '$first_name', '$last_name', '$timeNow', '$dateNow', 'Monthly subscription',".intval(750 - $discount)."
-    ,'$member_type', '$promo_availed')";
+    `payment_description`,`payment_amount`,`member_type`, `promo_availed`, `program_enrolled`, `program_amount`)
+    VALUES ( '$id', '$first_name', '$last_name', '$timeNow', '$dateNow', 'Monthly subscription',". intval(750 - intval($discount) + intval($program_amount)) ."
+    ,'$member_type', '$promo_availed', '$program_enrolled', '$program_amount')";
     mysqli_query($conn, $sql2);
 
     $sql3 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,
@@ -300,10 +293,7 @@ $query_run123 = mysqli_query($conn, $klint);
     ,'$member_type')";
     mysqli_query($conn, $sql3);
 
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Both Annual and Monthly  Payment is been added.');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("success both");
 
 
      //this is for puting member_id in the array
@@ -384,76 +374,68 @@ $query_run123 = mysqli_query($conn, $klint);
     ,'$member_type')";
     $query_run = mysqli_query($conn, $sql1);
 
-    
-    echo ("<script LANGUAGE='JavaScript'>
-                window.alert('Walk-in Payment is been added.');
-                window.location.href='./../MEMBERS/members.php';
-                </script>");
+    if($query_run) {
+  //this is for puting member_id in the array
+  $data = array();
+  $member_id;
+  $sql3 = "SELECT * FROM member ORDER BY member_id DESC";
+  $res3 = mysqli_query($conn, $sql3);
+  if($res3) {
+      while($row = mysqli_fetch_assoc($res3)) {
+          $data[] = $row["member_id"];
+      }
 
-     //this is for puting member_id in the array
-     $data = array();
-     $member_id;
-     $sql3 = "SELECT * FROM member ORDER BY member_id DESC";
-     $res3 = mysqli_query($conn, $sql3);
-     if($res3) {
-         while($row = mysqli_fetch_assoc($res3)) {
-             $data[] = $row["member_id"];
-         }
+      $member_id = $data[0];
+  }
 
-         $member_id = $data[0];
-     }
+  //this is for puting login_id in the array
+  $data_logtrail = array();
+  $login_id;
+  $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
+  $logtrail = mysqli_query($conn, $log);
+  if($logtrail) {
+      while($rowrow = mysqli_fetch_assoc($logtrail)) {
+          $data_logtrail[] = $rowrow["login_id"];
+      }
 
-     //this is for puting login_id in the array
-     $data_logtrail = array();
-     $login_id;
-     $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
-     $logtrail = mysqli_query($conn, $log);
-     if($logtrail) {
-         while($rowrow = mysqli_fetch_assoc($logtrail)) {
-             $data_logtrail[] = $rowrow["login_id"];
-         }
+      $login_id = $data_logtrail[0];
+  }
 
-         $login_id = $data_logtrail[0];
-     }
+  // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
+  $ad= "SELECT * FROM admin WHERE admin_id = $session_admin_id";
+  $query_runad = mysqli_query($conn, $ad);
+  $rowed = mysqli_fetch_assoc($query_runad);
 
-     // INSERTING  ADMIN INFO FOR THE LOGTRAIL DOING
-     $ad= "SELECT * FROM admin WHERE admin_id = $session_admin_id";
-     $query_runad = mysqli_query($conn, $ad);
-     $rowed = mysqli_fetch_assoc($query_runad);
+  $admin_id = $rowed["admin_id"];
 
-     $admin_id = $rowed["admin_id"];
+  // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
+  $ew = "SELECT * FROM member WHERE member_id = '$id'";
+  $query_runew = mysqli_query($conn, $ew);
+  $rowew = mysqli_fetch_assoc($query_runew);
 
-     // INSERTING MEMBER INFO FOR THE LOGTRAIL DOING
-     $ew = "SELECT * FROM member WHERE member_id = '$id'";
-     $query_runew = mysqli_query($conn, $ew);
-     $rowew = mysqli_fetch_assoc($query_runew);
+  $member_id_new = $rowew["member_id"];
+  $user_fname = $rowew["first_name"];
+  $user_lname = $rowew["last_name"];
+  $description = "Paid Walk-in";
+  $identity = "Members";
+  $timeNow = date("h:i A");
 
-     $member_id_new = $rowew["member_id"];
-     $user_fname = $rowew["first_name"];
-     $user_lname = $rowew["last_name"];
-     $description = "Paid Walk-in";
-     $identity = "Members";
-     $timeNow = date("h:i A");
+  // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
+  $sql22 = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
+  $query_run22 = mysqli_query($conn, $sql22);
+  $rows22 = mysqli_fetch_assoc($query_run22);
 
-     // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-     $sql22 = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
-     $query_run22 = mysqli_query($conn, $sql22);
-     $rows22 = mysqli_fetch_assoc($query_run22);
+  $login_id_new = $rows22["login_id"];
 
-     $login_id_new = $rows22["login_id"];
+  $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
+  `description`, `identity`,`time`)
+  VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
+  mysqli_query($conn, $sql1);
 
-     $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
-     `description`, `identity`,`time`)
-     VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
-     mysqli_query($conn, $sql1);
+  echo json_encode("success walkin");
+    }
 
-    echo ("<script LANGUAGE='JavaScript'>
-                window.alert('Annual Payment is been added.');
-                window.location.href='./../MEMBERS/members.php';
-                </script>");
-}else{
-    echo "failure to register";
-    header('Location: ./../MEMBERS/members.php?failure to pay');
+   
 }
 
 // Checking if paid
@@ -464,33 +446,29 @@ $sqlMonthly = "SELECT * FROM paymentlog WHERE member_id = '$id'
         AND payment_description = 'Monthly Subscription'
         ORDER BY payment_id DESC";
 $resMonthly = mysqli_query($conn, $sqlMonthly);
-if($resMonthly) {
+if(mysqli_num_rows($resMonthly) > 0) {
     $results = array();
     while($row = mysqli_fetch_assoc($resMonthly)) {
         $results[] = $row;
     }
 
     $lastMonthly = strtotime($results[0]["date_payment"]);
-    echo $lastMonthly;
-} else {
-    echo mysqli_error($conn);
 }
 
 $sqlAnnual = "SELECT * FROM paymentlog WHERE member_id = '$id'
         AND payment_description = 'Annual Membership'
         ORDER BY payment_id DESC";
 $resAnnual = mysqli_query($conn, $sqlAnnual);
-if($resAnnual) {
+if(mysqli_num_rows($resAnnual) > 0) {
     $results = array();
     while($row = mysqli_fetch_assoc($resAnnual)) {
         $results[] = $row;
     }
 
     $lastAnnual = strtotime($results[0]["date_payment"]);
-    echo $lastAnnual;
 }
 
-if($resAnnual && $resMonthly) {
+if(mysqli_num_rows($resAnnual) > 0 && mysqli_num_rows($resMonthly) > 0) {
     $today = date("Y-m-d");
     $now = strtotime($today);
     $lastMonth = strtotime(date("Y-m-d", strtotime($today." - 30 days")));
@@ -499,11 +477,7 @@ if($resAnnual && $resMonthly) {
     if($lastMonthly >= $lastMonth && $lastMonthly <= $now && $lastAnnual >= $lastYear && $lastAnnual <= $now) {
         $sql = "UPDATE member SET member_status = 'Paid'
                 WHERE member_id = $id";
-        if(mysqli_query($conn, $sql)) {
-            echo "Paid naka dots";
-        } else {
-            echo mysqli_error($conn);
-        }
+        mysqli_query($conn, $sql);
     }
 }
 ?>

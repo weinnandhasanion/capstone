@@ -36,6 +36,14 @@ if($row = mysqli_fetch_assoc($res1)) {
     $row["amount"] = 0;
   }
 
+  if(!empty($row["program_id"])) {
+    $programSql = "SELECT program_name, amount FROM program WHERE program_id = ".$row["program_id"];
+    $programRes = mysqli_query($conn, $programSql);
+    $row2 = mysqli_fetch_assoc($programRes);
+
+    $row["program_name"] = $row2["program_name"];
+    $row["program_amount"] = $row2["amount"];
+  }
   echo json_encode($row);
 }
 ?>

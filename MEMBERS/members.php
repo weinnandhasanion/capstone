@@ -13,7 +13,7 @@
 
   if(isset($_GET["type"])) {
     if($_GET["type"] == "regular") {
-      $sql = "SELECT * FROM member WHERE member_type = 'Regular' AND isDeleted = 'false' ORDER BY date_registered DESC";
+      $sql = "SELECT * FROM member WHERE member_type = 'Regular' AND isDeleted = 'false' ORDER BY member_id DESC";
       $res = mysqli_query($conn, $sql);
       $data = array();
       while($row = mysqli_fetch_assoc($res)) {
@@ -24,7 +24,7 @@
       echo json_encode($data);
       exit();
     } else {
-      $sql = "SELECT * FROM member WHERE member_type = 'Walk-in' AND acc_status = 'active' ORDER BY date_registered DESC";
+      $sql = "SELECT * FROM member WHERE member_type = 'Walk-in' AND acc_status = 'active' ORDER BY member_id DESC";
       $res = mysqli_query($conn, $sql);
       $data = array();
       while($row = mysqli_fetch_assoc($res)) {
@@ -58,9 +58,11 @@
   <link href="./../css/pagination.css" rel="stylesheet">
   <link rel="icon" href="../mobile/img/gym_logo.png">
   <link href="css/theme-colors.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
   <style>
-  input[type=text], input[type=email] {
+  input[type=text],
+  input[type=email] {
     text-align: center;
   }
 
@@ -129,7 +131,7 @@
     text-decoration: underline;
   }
 
-  th, 
+  th,
   td {
     text-align: center;
   }
@@ -270,7 +272,7 @@
 		      ?>
         </h4>
         <div class="logout">
-        <?php 
+          <?php 
             $sql = "SELECT * FROM logtrail ORDER BY login_id DESC";
             $result = mysqli_query($conn, $sql); 
             $data = array();
@@ -281,12 +283,11 @@
 
               $row = $data[0];
             }
-          ?> 
+          ?>
 
-        <a href="#">
-          <button id="logoutBtn" type="button" class="btn btn-sm btn-danger"
-          data-id="<?php echo $row['login_id'] ?>"
-          onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
+          <a href="#">
+            <button id="logoutBtn" type="button" class="btn btn-sm btn-danger" data-id="<?php echo $row['login_id'] ?>"
+              onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
         </div>
       </div>
     </nav>
@@ -302,11 +303,9 @@
           class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-chart-pie mr-3"></i>Dashboard
         </a>
-        <a href="#"
-          class="list-group-item list-group-item-action waves-effect sidebar-item-active">
+        <a href="#" class="list-group-item list-group-item-action waves-effect sidebar-item-active">
           <i class="fas fa-user mr-3"></i>Members</a>
-        <a href="./../TRAINER/trainers.php"
-          class="list-group-item list-group-item-action waves-effect sidebar-items">
+        <a href="./../TRAINER/trainers.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-user-shield mr-3"></i>Trainers
         </a>
         <a href="./../INVENTORY/inventory.php"
@@ -315,16 +314,13 @@
         <a href="./../PROMOS/promos.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-percent mr-3"></i>Promos
         </a>
-        <a href="./../PAYMENT/paymentlog.php"
-          class="list-group-item list-group-item-action waves-effect sidebar-items">
+        <a href="./../PAYMENT/paymentlog.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-money-bill-alt mr-3"></i>Payment Log
         </a>
-        <a href="./../REPORTS/reports.php"
-          class="list-group-item list-group-item-action waves-effect sidebar-items">
+        <a href="./../REPORTS/reports.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-flag-checkered mr-3"></i>Reports
         </a>
-        <a href="./../LOGTRAIL/logtrail.php"
-          class="list-group-item list-group-item-action waves-effect sidebar-items">
+        <a href="./../LOGTRAIL/logtrail.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-history mr-3"></i>Logtrail
         </a>
       </div>
@@ -341,7 +337,7 @@
         View Deleted Members
       </button>
       <button class="btn btn-sm btn-outline-orange mb-3" data-toggle="modal" data-target="#deletedProgram">
-      <i class="fas fa-trash mr-2"></i>
+        <i class="fas fa-trash mr-2"></i>
         View Deleted Programs
       </button>
       <div class='card'>
@@ -451,7 +447,7 @@
                     </tr>
                   </thead>
                   <tbody id="program-tbody">
-                    
+
                   </tbody>
                 </table>
                 <div id="no-data-div-programs" class="no-data-div my-5 text-muted">
@@ -501,7 +497,7 @@
                 </tr>
               </thead>
               <tbody id='deletetbody-programs'>
-        
+
               </tbody>
             </table>
             <div id="no-data-div-programs-deleted" class="no-data-div my-5 text-muted">
@@ -600,8 +596,8 @@
               </div>
 
               <div class="form-group">
-              <label style="font-size: 25px;">Day 1</label><br>
-              <label>Upper Body </label>
+                <label style="font-size: 25px;">Day 1</label><br>
+                <label>Upper Body </label>
                 <div class="form-row">
                   <div class="col-sm-4">
                     <input id="day1upper1" type="text" readonly class="form-control">
@@ -615,7 +611,7 @@
                 </div>
               </div>
               <div class="form-group">
-              <label>Lower Body </label>
+                <label>Lower Body </label>
                 <div class="form-row">
                   <div class="col-sm-4">
                     <input id="day1lower1" type="text" readonly class="form-control">
@@ -627,10 +623,10 @@
                     <input id="day1lower3" type="text" readonly class="form-control">
                   </div>
                 </div>
-              </div>            
+              </div>
               <div class="form-group">
-              <label>Abdominal </label>
-              <div class="form-row">
+                <label>Abdominal </label>
+                <div class="form-row">
                   <div class="col-sm-12">
                     <input id="day1abdominal1" type="text" readonly class="form-control">
                   </div>
@@ -638,10 +634,10 @@
               </div>
 
               <div class="form-group">
-              <label style="font-size: 25px;">Day 2</label><br>
-              <label>Upper Body </label>
+                <label style="font-size: 25px;">Day 2</label><br>
+                <label>Upper Body </label>
                 <div class="form-row">
-                <div class="col-sm-4">
+                  <div class="col-sm-4">
                     <input id="day2upper1" type="text" readonly class="form-control">
                   </div>
                   <div class="col-sm-4">
@@ -653,9 +649,9 @@
                 </div>
               </div>
               <div class="form-group">
-              <label>Lower Body </label>
+                <label>Lower Body </label>
                 <div class="form-row">
-                <div class="col-sm-4">
+                  <div class="col-sm-4">
                     <input id="day2lower1" type="text" readonly class="form-control">
                   </div>
                   <div class="col-sm-4">
@@ -665,10 +661,10 @@
                     <input id="day2lower3" type="text" readonly class="form-control">
                   </div>
                 </div>
-              </div>            
+              </div>
               <div class="form-group">
-              <label>Abdominal </label>
-              <div class="form-row">
+                <label>Abdominal </label>
+                <div class="form-row">
                   <div class="col-sm-12">
                     <input id="day2abdominal2" type="text" readonly class="form-control">
                   </div>
@@ -676,10 +672,10 @@
               </div>
 
               <div class="form-group">
-              <label style="font-size: 25px;">Day 3</label><br>
-              <label>Upper Body </label>
-              <div class="form-row">
-                <div class="col-sm-4">
+                <label style="font-size: 25px;">Day 3</label><br>
+                <label>Upper Body </label>
+                <div class="form-row">
+                  <div class="col-sm-4">
                     <input id="day3upper1" type="text" readonly class="form-control">
                   </div>
                   <div class="col-sm-4">
@@ -691,9 +687,9 @@
                 </div>
               </div>
               <div class="form-group">
-              <label>Lower Body </label>
+                <label>Lower Body </label>
                 <div class="form-row">
-                <div class="col-sm-4">
+                  <div class="col-sm-4">
                     <input id="day3lower1" type="text" readonly class="form-control">
                   </div>
                   <div class="col-sm-4">
@@ -703,10 +699,10 @@
                     <input id="day3lower3" type="text" readonly class="form-control">
                   </div>
                 </div>
-              </div>           
+              </div>
               <div class="form-group">
-              <label>Abdominal </label>
-              <div class="form-row">
+                <label>Abdominal </label>
+                <div class="form-row">
                   <div class="col-sm-12">
                     <input id="day3abdominal3" type="text" readonly class="form-control">
                   </div>
@@ -721,8 +717,8 @@
       </div>
     </div>
   </div>
-   <!------------------------------------------------- Regular update modal----------------------------------------->
-   <div class="modal fade" id="regular_update">
+  <!------------------------------------------------- Regular update modal----------------------------------------->
+  <div class="modal fade" id="regular_update">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header" style="background-color: #DF3A01; color: white;">
@@ -742,16 +738,16 @@
                   <input type="text" name="" class="form-control" readonly id="update_fullname">
                 </div>
               </div>
-            </div>  
+            </div>
             <div class="form-group">
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Email</label>
-                  <input type="email" required name="email" class="form-control"  id="update_email"
-                  onblur="checkEmail(this)">
+                  <input type="email" required name="email" class="form-control" id="update_email"
+                    onblur="checkEmail(this)">
                   <small class="validation text-danger" id="update_email-empty">Please fill out this field</small>
                   <small class="validation text-danger" id="update_email-invalid">Invalid email</small>
-                
+
                 </div>
               </div>
             </div>
@@ -759,11 +755,12 @@
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Phone</label>
-                  <input type="text" name="phone" required class="form-control"  id="update_phone"
-                  onblur="checkNumber(this)">
+                  <input type="text" name="phone" required class="form-control" id="update_phone"
+                    onblur="checkNumber(this)">
                   <small class="validation text-danger" id="update_phone-empty">Please fill out this field</small>
                   <small class="validation text-danger" id="update_phone-invalid">Invalid input</small>
-                  <small class="validation text-danger" id="update_phone-length">Phone number must contain 11 digits</small>
+                  <small class="validation text-danger" id="update_phone-length">Phone number must contain 11
+                    digits</small>
                 </div>
                 <div class="col-sm-6">
                   <label>Member Type</label>
@@ -778,9 +775,32 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <center><label>Address</label></center>
-                  <input name="address" required id="update_address" type="text" class="form-control mb-1"
-                    id="address"  oninput="checkIfValid(this)" onblur="checkIfValidupdate(this)">
+                  <input name="address" required id="update_address" type="text" class="form-control mb-1" id="address"
+                    oninput="checkIfValid(this)" onblur="checkIfValidupdate(this)">
                   <small class="validation text-danger" id="update_address-empty">Please fill out this field</small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-sm-6" id="has-program">
+                  <label for="">Program &#183; <a href="#" class="text-danger" id="remove-program-btn">Remove</a></label>
+                  <select id="update_program" class="form-control">
+                    <?php 
+                    $sql = "SELECT * FROM program WHERE program_status = 'active'";
+                    $res = mysqli_query($conn, $sql);
+
+                    while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?= $row["program_id"] ?>"><?= $row["program_name"] ?></option>
+                    <?php
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-sm-6" id="has-no-program">
+                  <label for="">Program</label> &#183; <a href="#" id="avail-program-btn" class="text-success">Avail program</a>
+                  <input type="text" class="form-control" disabled value="N/A">
                 </div>
               </div>
             </div>
@@ -793,6 +813,79 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="avail-program-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Avail program</h4>
+          <button type='button' class='close' id='close-programModal' data-dismiss='modal'>&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label for="">Choose a program</label>
+                <select class="form-control" name="avail-program-select" id="avail-program-select">
+                <?php 
+                $sql = "SELECT * FROM program WHERE program_status = 'active'";
+                $res = mysqli_query($conn, $sql);
+
+                while($row = mysqli_fetch_assoc($res)) {
+                ?>
+                <option value="<?= $row["program_id"] ?>"><?= $row["program_name"] ?></option>
+                <?php
+                }
+                ?>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label for="">Amount</label>
+                <input type="text" id="programpayment-amount" value="
+                <?php 
+                $sql = "SELECT * FROM program WHERE program_status = 'active'";
+                $res = mysqli_query($conn, $sql);
+
+                $data = array();
+                while($row = mysqli_fetch_assoc($res)) {
+                  $data[] = $row;
+                }
+
+                echo $data[0]["amount"];
+                ?>
+                " class="form-control" readonly>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="text-darkgrey"><span id="programshowCalc">Show
+                Calculator</span>
+            </a>
+          </div>
+          <div id="programcalculator" class="form-group" style="display: none">
+            <div class="form-row">
+              <div class="col-sm-4">
+                <label>Cash</label>
+                <input type="number" class="form-control" id="program-cash">
+              </div>
+              <div class="col-sm-4">
+                <label>Change</label>
+                <input type="text" class="form-control" id="program-change" readonly>
+              </div>
+              <div class="col-sm-4">
+                <br>
+                <input readonly class="btn btn-green" id="programenterCalc" style="width: 120px" value="ENTER">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer d-flex flex-row justify-content-between">
+          <button class="btn btn-orange" id="avail-btn">Avail</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!------------------------------------------------- Regular Payment modal----------------------------------------->
   <div class="modal fade" id="regular_payment">
     <div class="modal-dialog">
@@ -802,73 +895,83 @@
           <button type='button' class='close' id='close-paymentModal' data-dismiss='modal'>&times;</button>
         </div>
         <div class="modal-body">
-          <form action="memberpayment_process.php" method="post">
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <label>Unique ID</label>
-                  <input type="text" name="member_id" class="form-control" readonly id="member_id">
-                </div>
-                <div class="col-sm-6">
-                  <label>Last Name</label>
-                  <input type="text" name="last_name" class="form-control" readonly id="member_lastname">
-                </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label>Unique ID</label>
+                <input type="text" name="member_id" class="form-control" readonly id="member_id">
+              </div>
+              <div class="col-sm-6">
+                <label>Last Name</label>
+                <input type="text" name="last_name" class="form-control" readonly id="member_lastname">
               </div>
             </div>
-            <div class="form-group" id="promo-form-group">
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <label>Promo Availed</label>
-                  <input type="text" name="promo_availed" class="form-control" readonly id="promo_availed">
-                </div>
-                <div class="col-sm-6">
-                  <label>Promo Discount</label>
-                  <input type="text" name="promo_discount" class="form-control" readonly id="promo_discount">
-                </div>
+          </div>
+          <div class="form-group" id="promo-form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label>Promo Availed</label>
+                <input type="text" name="promo_availed" class="form-control" readonly id="promo_availed">
+              </div>
+              <div class="col-sm-6">
+                <label>Promo Discount</label>
+                <input type="text" name="promo_discount" class="form-control" readonly id="promo_discount">
               </div>
             </div>
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <label>Payment Description</label>
-                  <select name="payment_description" id="payment_description" onchange="pay(this)" class="form-control" required="">
-                    <option value="" selected>Select Payment</option>
-                    <option value="Monthly Subscription">Monthly Subscription</option>
-                    <option value="Annual Membership">Annual Membership</option>
-                    <option value="both">Both</option>
-                  </select>
-                </div>
-                <div class="col-sm-6">
-                  <label>Amount</label>
-                  <input  id="amount" type="text" class="form-control" readonly>
-                </div>
+          </div>
+          <div class="form-group" id="program-form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label for="">Program Enrolled</label>
+                <input type="text" name="program_enrolled" class="form-control" readonly id="program_enrolled">
+              </div>
+              <div class="col-sm-6">
+                <label for="">Program Fee</label>
+                <input type="text" name="program_amount" class="form-control" value="0" readonly id="program_amount">
               </div>
             </div>
-            <div class="d-flex justify-content-center">
-              <small><a href="#" class="text-darkgrey"><span id="showCalc"
-                    style="position:relative;right:100px;">Show Calculator</span>
-            </div>
-            <div id="calculator" class="form-group" style="display: none">
-              <div class="form-row">
-                <div class="col-sm-4">
-                  <label>Cash</label>
-                  <input type="number" class="form-control" id="payment-cash">
-                </div>
-                <div class="col-sm-4">
-                  <label>Change</label>
-                  <input type="text" class="form-control" id="payment-change" readonly>
-                </div>
-                <div class="col-sm-4">
-                  <br>
-                  <input readonly class="btn btn-green" style="width: 120px;" id="enterCalc" value="ENTER">
-                </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label>Payment Description</label>
+                <select name="payment_description" id="payment_description" onchange="pay(this)" class="form-control"
+                  required="">
+                  <option value="" selected>Select Payment</option>
+                  <option value="Monthly Subscription">Monthly Subscription</option>
+                  <option value="Annual Membership">Annual Membership</option>
+                  <option value="both">Both</option>
+                </select>
+              </div>
+              <div class="col-sm-6">
+                <label>Amount</label>
+                <input id="amount" type="text" class="form-control" readonly>
               </div>
             </div>
-            <div class="modal-footer">
-              <button class="btn btn-orange" id="add-payment-btn">Add payment</button>
+          </div>
+          <div class="d-flex justify-content-center">
+            <small><a href="#" class="text-darkgrey"><span id="showCalc" style="position:relative;right:100px;">Show
+                  Calculator</span>
+          </div>
+          <div id="calculator" class="form-group" style="display: none">
+            <div class="form-row">
+              <div class="col-sm-4">
+                <label>Cash</label>
+                <input type="number" class="form-control" id="payment-cash">
+              </div>
+              <div class="col-sm-4">
+                <label>Change</label>
+                <input type="text" class="form-control" id="payment-change" readonly>
+              </div>
+              <div class="col-sm-4">
+                <br>
+                <input readonly class="btn btn-green" style="width: 120px;" id="enterCalc" value="ENTER">
+              </div>
             </div>
-          </form>
-
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-orange" id="add-payment-btn-regular">Add payment</button>
+          </div>
         </div>
       </div>
     </div>
@@ -901,18 +1004,19 @@
                 <div class="col-sm-6">
                   <label>Payment Description</label>
                   <input type="text" name="payment_description" value="Walk-in" class="form-control" readonly
-                    id="payment_description">
+                    id="walkinpayment_description">
                 </div>
                 <div class="col-sm-6">
                   <label>Amount</label>
-                  <input type="text" name="payment_amount" class="form-control" value = "50" readonly
+                  <input type="text" name="payment_amount" class="form-control" value="50" readonly
                     id="walkinpayment-amount">
                 </div>
               </div>
             </div>
             <div class="d-flex justify-content-center">
-              <a href="#" class="text-darkgrey"><span id="walkinshowCalc"
-                    style="position:relative;right:100px;">Show Calculator</span>
+              <a href="#" class="text-darkgrey"><span id="walkinshowCalc" style="position:relative;right:100px;">Show
+                  Calculator</span>
+              </a>
             </div>
             <div id="walkincalculator" class="form-group" style="display: none">
               <div class="form-row">
@@ -1021,17 +1125,38 @@
                     <option value="Walk-in">Walk-in</option>
                   </select>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4" id="enroll-program-div">
+                  <label>Enroll in a program?</label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" value="Yes" name="program-check" id="program-yes">
+                    <label class="form-check-label" for="program-yes">
+                      Yes
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" value="No" name="program-check" id="program-no"
+                      checked>
+                    <label class="form-check-label" for="program-no">
+                      No
+                    </label>
+                  </div>
+                  <input type="text" name="program-form-check" id="program-form-check" style="display: none">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-sm-4" id="program-check-div" style="display: none">
                   <label>Program</label>
-                  <select name="program_id" required id="program" class="form-control">
-                    <option value="" selected disabled>Select here...</option>
-                    <?php
-                    $sql = "SELECT program_id, program_name FROM program WHERE program_status = 'active'";
+                  <select name="program_id" required="" id="program" class="form-control">
+                    <?php 
+                    $sql = "SELECT * FROM program WHERE program_status = 'active'";
                     $res = mysqli_query($conn, $sql);
+
                     if($res) {
                       while($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["program_id"]?>"><?php echo $row["program_name"] ?></option>
+                    <option value="<?= $row["program_id"] ?>"><?= $row["program_name"] ?></option>
                     <?php
                       }
                     }
@@ -1039,7 +1164,6 @@
                   </select>
                 </div>
               </div>
-              <small><i>NOTE: All fields are <b>required</b></b></i></small>
             </div>
             <div class="modal-footer">
               <button type="submit" class='btn btn-orange' id='addMemberBtn'>Submit</button>
@@ -1151,7 +1275,7 @@
                 <input name="program" type="text" id="view_program" disabled class="form-control">
               </div>
             </div>
-          </div>  
+          </div>
           <div class="form-group">
             <div class="form-row">
               <div class="col-sm-12 train">
@@ -1166,7 +1290,7 @@
   </div>
 
 
-  
+
   <!---------------------------------------------------- View walkin member modal -------------------------------------->
   <div class="modal fade" id="viewwalkin">
     <div class="modal-dialog">
@@ -1194,7 +1318,7 @@
           </div>
           <div class="form-group">
             <div class="form-row">
-            <div class="col-sm-4">
+              <div class="col-sm-4">
                 <label>Date Registered</label>
                 <input name="date_registered" type="text" class="form-control" id="viewwalkin_dateregistered" disabled>
               </div>
@@ -1214,12 +1338,12 @@
           </div>
           <div class="form-group">
             <div class="form-row">
-            <div class="col-sm-12">
+              <div class="col-sm-12">
                 <label>E-mail</label>
                 <input name="email" type="text" id="viewwalkin_email" disabled class="form-control">
               </div>
             </div>
-          </div>  
+          </div>
           <div class="form-group">
             <div class="form-row">
               <div class="col-sm-12">
@@ -1282,7 +1406,7 @@
       <div class="modal-content" style="width: 700px;">
         <div class="modal-header" style="background-color:#EB460D;color:white;">
           <h4 class="modal-title">Regular Payment History</h4>
-         
+
         </div>
         <div class="modal-body">
           <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>
@@ -1320,7 +1444,7 @@
       <div class="modal-content" style="width: 700px;">
         <div class="modal-header" style="background-color:#EB460D;color:white;">
           <h4 class="modal-title">Walk-in Payment History</h4>
-         
+
         </div>
         <div class="modal-body">
           <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>
@@ -1361,7 +1485,7 @@
             <h4 class="modal-title">Update Program</h4>
           </div>
           <div class="modal-body">
-          <div class="form-group">
+            <div class="form-group">
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Program Name</label>
@@ -1369,17 +1493,17 @@
                     placeholder="Enter program name here">
                 </div>
                 <div class="col-sm-6">
-                  <label>Trainer assigned</label>    
+                  <label>Trainer assigned</label>
                   <select class="form-control" name="trainer_id" id="trainer_name_update">
-                  <?php 
+                    <?php 
                   $trainerSql = "SELECT * FROM trainer";
                   $trainerQuery = mysqli_query($conn, $trainerSql);
 
                   if($trainerQuery) {
                     while($row = mysqli_fetch_assoc($trainerQuery)) {
                   ?>
-                  <option value="<?= $row["trainer_id"] ?>"><?= $row["first_name"]." ".$row["last_name"] ?></option>
-                  <?php 
+                    <option value="<?= $row["trainer_id"] ?>"><?= $row["first_name"]." ".$row["last_name"] ?></option>
+                    <?php 
                     }
                   }
                   ?>
@@ -1391,7 +1515,9 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Program Description</label>
-                  <textarea name="program_description" required style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc_update" placeholder="Enter program desciption here"></textarea>
+                  <textarea name="program_description" required style="resize: none" rows="3" cols="0"
+                    class="form-control mb-1" id="program_desc_update"
+                    placeholder="Enter program desciption here"></textarea>
                 </div>
               </div>
             </div>
@@ -1799,12 +1925,13 @@
                   <label>Program Name</label>
                   <input name="program_name" required type="text" id="prgram_name" class="form-control mb-1"
                     placeholder="Enter program name here" onblur="checkIfValid(this)">
-                    <small class="validation text-danger" id="prgram_name-empty">Please fill out this field</small>
-                    <small class="validation text-danger" id="prgram_name-invalid">Invalid input</small>
+                  <small class="validation text-danger" id="prgram_name-empty">Please fill out this field</small>
+                  <small class="validation text-danger" id="prgram_name-invalid">Invalid input</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Trainer to assign</label>
-                  <select style="width: 230px;" required name="trainer_id" id="trainer_name" class="form-control" oninput="checkIfValid(this)" onblur="checkIfValid(this)">
+                  <select style="width: 230px;" required name="trainer_id" id="trainer_name" class="form-control"
+                    oninput="checkIfValid(this)" onblur="checkIfValid(this)">
                     <option value="" selected disabled>Select here...</option>
                     <?php
                     $sql = "SELECT * FROM trainer";
@@ -1812,7 +1939,8 @@
                     if($res) {
                       while($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["trainer_id"]?>"><?php echo $row["first_name"]." ".$row["last_name"] ?></option>
+                    <option value="<?php echo $row["trainer_id"]?>">
+                      <?php echo $row["first_name"]." ".$row["last_name"] ?></option>
                     <?php
                       }
                     }
@@ -1826,7 +1954,9 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Program Description</label>
-                  <textarea name="program_description" oninput="checkIfValid(this)" onblur="checkIfValid(this)" required style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc" placeholder="Enter program desciption here"></textarea>
+                  <textarea name="program_description" oninput="checkIfValid(this)" onblur="checkIfValid(this)" required
+                    style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc"
+                    placeholder="Enter program desciption here"></textarea>
                   <small class="validation text-danger" id="program_desc-empty">Please fill out this field</small>
                 </div>
               </div>
@@ -1836,7 +1966,8 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
-                  <select name="upper-1-day-1"  id="upper-1-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control" >
+                  <select name="upper-1-day-1" id="upper-1-day-1" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1854,7 +1985,8 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 2</label>
-                  <select name="upper-2-day-1" id="upper-2-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control" >
+                  <select name="upper-2-day-1" id="upper-2-day-1" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1872,7 +2004,8 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 3</label>
-                  <select name="upper-3-day-1" id="upper-3-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-3-day-1" id="upper-3-day-1" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1892,7 +2025,8 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Lower Body 1</label>
-                  <select name="lower-1-day-1" id="lower-1-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-1-day-1" id="lower-1-day-1" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1910,7 +2044,8 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 2</label>
-                  <select name="lower-2-day-1" id="lower-2-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-2-day-1" id="lower-2-day-1" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1928,7 +2063,8 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 3</label>
-                  <select name="lower-3-day-1" id="lower-3-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-3-day-1" id="lower-3-day-1" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -1948,7 +2084,8 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Abdominals</label>
-                  <select name="abdominal-day-1" id="abdominal-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="abdominal-day-1" id="abdominal-day-1" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
@@ -1969,7 +2106,8 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
-                  <select name="upper-1-day-2" id="upper-1-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-1-day-2" id="upper-1-day-2" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -1987,7 +2125,8 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 2</label>
-                  <select name="upper-2-day-2" id="upper-2-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-2-day-2" id="upper-2-day-2" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -2005,7 +2144,8 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 3</label>
-                  <select name="upper-3-day-2" id="upper-3-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-3-day-2" id="upper-3-day-2" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -2025,7 +2165,8 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Lower Body 1</label>
-                  <select name="lower-1-day-2" id="lower-1-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-1-day-2" id="lower-1-day-2" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -2043,7 +2184,8 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 2</label>
-                  <select name="lower-2-day-2" id="lower-2-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-2-day-2" id="lower-2-day-2" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -2061,7 +2203,8 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 3</label>
-                  <select name="lower-3-day-2" id="lower-3-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-3-day-2" id="lower-3-day-2" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -2081,7 +2224,8 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Abdominals</label>
-                  <select name="abdominal-day-2" id="abdominal-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="abdominal-day-2" id="abdominal-day-2" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
@@ -2102,7 +2246,8 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
-                  <select name="upper-1-day-3" id="upper-1-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-1-day-3" id="upper-1-day-3" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -2120,7 +2265,8 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 2</label>
-                  <select name="upper-2-day-3" id="upper-2-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-2-day-3" id="upper-2-day-3" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -2138,7 +2284,8 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 3</label>
-                  <select name="upper-3-day-3" id="upper-3-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-3-day-3" id="upper-3-day-3" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
@@ -2158,7 +2305,8 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Lower Body 1</label>
-                  <select name="lower-1-day-3" id="lower-1-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-1-day-3" id="lower-1-day-3" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -2176,7 +2324,8 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 2</label>
-                  <select name="lower-2-day-3" id="lower-2-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-2-day-3" id="lower-2-day-3" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -2194,7 +2343,8 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 3</label>
-                  <select name="lower-3-day-3" id="lower-3-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-3-day-3" id="lower-3-day-3" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
@@ -2214,7 +2364,8 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Abdominals</label>
-                  <select name="abdominal-day-3" id="abdominal-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
+                  <select name="abdominal-day-3" id="abdominal-day-3" oninput="checkIfValid(this)"
+                    onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
                     <?php 
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
@@ -2242,6 +2393,7 @@
   </div>
 
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
   <script src="./../js/pagination.js"></script>
   <script type="text/javascript" src="js/popper.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -2249,22 +2401,22 @@
   <script type="text/javascript" src="validation.js"></script>
 
   <script>
-
   function pay(elem) {
     let discount = $("#promo_discount").val();
-    if(elem.value == 'Monthly Subscription'){
-      $("#amount").val(750 - parseInt(discount));
-    }else if(elem.value == 'Annual Membership'){
+    let fee = $("#program_amount").val();
+    if (elem.value == 'Monthly Subscription') {
+      $("#amount").val(750 - parseInt(discount) + parseInt(fee));
+    } else if (elem.value == 'Annual Membership') {
       $("#amount").val(200);
-    } else if(elem.value == 'both') {
-      $("#amount").val(950 - parseInt(discount));
+    } else if (elem.value == 'both') {
+      $("#amount").val(950 - parseInt(discount) + parseInt(fee));
     } else {
       $("#amount").val("");
     }
   }
-  
+
   var regs, walks, programs, deletedMembers, deletedPrograms;
-  
+
   $.get("./members.php?type=regular", function(res) {
     // Gibutang nimo sa regs ang tanan members nga regular
     regs = JSON.parse(res);
@@ -2345,7 +2497,7 @@
   $(function() {
     $('[data-toggle="tooltip"]').tooltip();
   });
-   
+
 
 
   // Function nga gitawag para mo render ug data sa regular table gamit pagination
@@ -2382,7 +2534,7 @@
             ${span}
             <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name} to Walk-in">
               <i style="cursor: pointer; color:#C71585; font-size: 25px;"
-              class="fas fa-pencil-alt mx-1" data-id="${row.member_id}"
+              class="fas fa-pencil-alt mx-1 update-icon-btn" data-id="${row.member_id}"
               data-toggle="modal" data-target="#regular_update"
               onclick="updateDetailsRegular(this)"></i>
             </span>
@@ -2412,8 +2564,8 @@
     }
 
     $(function() {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
+      $('[data-toggle="tooltip"]').tooltip();
+    });
 
   }
 
@@ -2521,7 +2673,7 @@
     showNext: false,
     callback: function(data) {
       $("#program-tbody").empty();
-      if(data.length > 0) {
+      if (data.length > 0) {
         $("#no-data-div-programs").css("display", "none");
         data.forEach(row => {
           let html = `<tr>
@@ -2567,7 +2719,7 @@
       showNext: false,
       callback: function(data) {
         $("#deletetbody-members").empty();
-        if(data.length > 0) {
+        if (data.length > 0) {
           $("#no-data-div-deleted-members").css("display", "none");
           data.forEach(row => {
             let html = `<tr>
@@ -2594,7 +2746,7 @@
   $("#search-deleted-members").on("keyup", function() {
     let val = $("#search-deleted-members").val();
 
-    if(val != "") {
+    if (val != "") {
       data = deletedMembers.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
       paginateDeletedMembers(data);
     } else {
@@ -2612,7 +2764,7 @@
       showNext: false,
       callback: function(data) {
         $("#deletetbody-programs").empty();
-        if(data.length > 0) {
+        if (data.length > 0) {
           $("#no-data-div-programs-deleted").css("display", "none");
           data.forEach(row => {
             let html = `<tr>
@@ -2639,7 +2791,7 @@
   $("#search-deleted-programs").on("keyup", function() {
     let val = $(this).val();
 
-    if(val != "") {
+    if (val != "") {
       data = deletedPrograms.filter(row => row.program_name.toLowerCase().includes(val.toLowerCase()));
       paginateDeletedPrograms(data);
     } else {
@@ -2687,7 +2839,7 @@
         }
       }
 
-      if(row.image_pathname) {
+      if (row.image_pathname) {
         $("#member_picture").attr("src", `./../mobile/img/uploads/${row.image_pathname}`);
       } else {
         $("#member_picture").attr("src", "./member.png");
@@ -2839,7 +2991,6 @@
       document.getElementById("lower-2-day-3_update").value = row.lower_2_day_3;
       document.getElementById("lower-3-day-3_update").value = row.lower_3_day_3;
       document.getElementById("abdominal-day-3_update").value = row.abdominal_day_3;
-    
     }
   }
 
@@ -2854,7 +3005,7 @@
     let req = new XMLHttpRequest();
     req.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        display(JSON.parse(this.responseText)); 
+        display(JSON.parse(this.responseText));
       }
     }
     req.open('GET', 'paymentmember.php?id=' + id, true);
@@ -2865,11 +3016,20 @@
       document.getElementById("member_lastname").value = row.last_name;
       document.getElementById("promo_availed").value = row.promo_name;
       document.getElementById("promo_discount").value = row.amount;
-      if(row.promo_name == "N/A") {
+      if (row.promo_name == "N/A") {
         $("#promo-form-group").css("display", "none");
         $("#promo-availed").val("N/A")
       } else {
         $("#promo-form-group").css("display", "block");
+      }
+      if(row.program_id == null) {
+        $("#program-form-group").css("display", "none");
+        $("#program_enrolled").val("N/A");
+        $("#program_amount").val("0");
+      } else {
+        $("#program_enrolled").val(row.program_name);
+        $("#program_amount").val(row.program_amount);
+        $("#program-form-group").css("display", "block");
       }
     }
   }
@@ -2900,27 +3060,36 @@
   // update regular member Modal
   function updateDetailsRegular(el) {
     let id = el.getAttribute('data-id');
-
     // AJAX Request
-    
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
 
-        if (this.readyState == 4 && this.status == 200) {
-          display(JSON.parse(this.responseText));
-        }
+    let req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+
+      if (this.readyState == 4 && this.status == 200) {
+        display(JSON.parse(this.responseText));
       }
+    }
 
-      req.open('GET', 'update_regular_member.php?id=' + id, true);
-      req.send();
+    req.open('GET', 'update_regular_member.php?id=' + id, true);
+    req.send();
 
-      function display(row) {
-        document.getElementById("update_member_id").value = row.member_id;
-        document.getElementById("update_fullname").value = row.first_name + row.last_name;
-        document.getElementById("update_email").value = row.email;
-        document.getElementById("update_phone").value = row.phone;
-        document.getElementById("update_member_type").value = row.member_type;
-        document.getElementById("update_address").value = row.address;
+    function display(row) {
+      document.getElementById("update_member_id").value = row.member_id;
+      document.getElementById("update_fullname").value = row.first_name + row.last_name;
+      document.getElementById("update_email").value = row.email;
+      document.getElementById("update_phone").value = row.phone;
+      document.getElementById("update_member_type").value = row.member_type;
+      document.getElementById("update_address").value = row.address;
+      if (row.program_id == null) {
+        $("#has-no-program").css("display", "block");
+        $("#has-program").css("display", "none");
+      } else {
+        $("#update_program").val(row.program_id);
+        $("#has-no-program").css("display", "none");
+        $("#has-program").css("display", "block");
+      }
+      $("#avail-program-btn").attr("data-id", row.member_id);
+      $("#remove-program-btn").attr("data-id", row.member_id);
     }
   }
 
@@ -2968,7 +3137,7 @@
   //---------------------------------------------------------------------WALK IN DELETE JS
   function deleted_walkin(el) {
     let id = el.getAttribute('data-id');
-    
+
     // AJAX Request
     var r = confirm("Are you sure you want to delete this member from walk-in?");
     if (r == true) {
@@ -2995,8 +3164,7 @@
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText)
-          if(JSON.parse(this.responseText) == "failure") {
+          if (JSON.parse(this.responseText) == "failure") {
             alert("Can't activate account: User must have an active membership.");
           } else {
             alert("Account successfully activated!");
@@ -3124,8 +3292,8 @@
   });
 
 
-   // Show/Hide walkin Payment Calculator
-   document.getElementById('walkinshowCalc').addEventListener('click', () => {
+  // Show/Hide walkin Payment Calculator
+  document.getElementById('walkinshowCalc').addEventListener('click', () => {
     let walkincalc = document.getElementById('walkincalculator');
     if (walkincalc.style.display == 'none') {
       walkincalc.style.display = 'block';
@@ -3137,13 +3305,13 @@
     }
   });
 
-  
+
   // Calculating Change
   document.getElementById('walkinenterCalc').addEventListener('click', () => {
     let cash = document.getElementById('walkinpayment-cash');
     let change = document.getElementById('walkinpayment-change');
-    
-    
+
+
     let val = parseInt(cash.value);
     let amount = parseInt($("#walkinpayment-amount").val());
 
@@ -3154,7 +3322,7 @@
         alert('Insufficient cash!');
       } else {
         change.value = `₱${val - amount}.00`;
-       
+
       }
     } else {
       alert('Please enter an appropriate amount!');
@@ -3162,28 +3330,28 @@
   });
 
 
-  
+
 
   function logout(el) {
-      let id = el.getAttribute('data-id');
+    let id = el.getAttribute('data-id');
 
-      // AJAX Request
-    
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200 ) {
-          window.location.href = "./../logout_process.php";
-        }
+    // AJAX Request
+
+    let req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        window.location.href = "./../logout_process.php";
       }
-      req.open('GET', './../logout.php?id=' + id, true);
-      req.send(); 
     }
-    
+    req.open('GET', './../logout.php?id=' + id, true);
+    req.send();
+  }
+
 
   function displayProgramMembers(el) {
     let id = el.getAttribute('data-id');
     var data;
-    
+
     $.get("./member_program.php?id=" + id, function(res) {
       data = JSON.parse(res);
     }).then(() => {
@@ -3196,7 +3364,7 @@
         showNext: false,
         callback: function(data) {
           $("#member-program-tbody").empty();
-          if(data.length > 0) {
+          if (data.length > 0) {
             $("#no-data-div-program-members").css("display", "none");
             data.forEach(row => {
               let html = `<tr>
@@ -3214,8 +3382,6 @@
       });
     });
   }
-
-
 
   function display(res) {
     let tbody = document.getElementById('modal-tbody');
@@ -3243,7 +3409,7 @@
       dataSource: function(done) {
         let req = new XMLHttpRequest();
         req.onreadystatechange = function() {
-          if(this.readyState == 4 && this.status == 200) {
+          if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(this.responseText);
             done(data);
           }
@@ -3256,7 +3422,7 @@
       showPrevious: false,
       callback: function(data) {
         let tbody = document.getElementById('modal-tbody-payment-history');
-        if(data == 0) {
+        if (data == 0) {
           tbody.innerHTML = "";
         } else {
           tbody.innerHTML = "";
@@ -3282,7 +3448,7 @@
       dataSource: function(done) {
         let req = new XMLHttpRequest();
         req.onreadystatechange = function() {
-          if(this.readyState == 4 && this.status == 200) {
+          if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(this.responseText);
             done(data);
           }
@@ -3295,7 +3461,7 @@
       showNext: false,
       callback: function(data) {
         let tbody = document.getElementById('modal-tbody-walkin-payment-history');
-        if(data == 0) {
+        if (data == 0) {
           tbody.innerHTML = "";
         } else {
           tbody.innerHTML = "";
@@ -3313,6 +3479,289 @@
       }
     });
   }
+
+  // Program Checkbox
+  let div = $("#program-check-div");
+  let select = $("#program-form-check");
+  $("#program-yes").click(function() {
+    div.css("display", "block");
+    select.val("Yes");
+  });
+
+  $("#program-no").click(function() {
+    div.css("display", "none");
+    select.val("No");
+  })
+
+  // avail program modal
+  let availBtn = $("#avail-program-btn");
+  let availModal = $("#avail-program-modal");
+  let updateModal = $("#regular_update");
+  let memberId;
+
+  availBtn.click(function () {
+    memberId = availBtn.attr("data-id");
+    updateModal.modal("hide");
+    availModal.modal("show");
+  });
+
+  availModal.on("hide.bs.modal", function () {
+    $(".update-icon-btn[data-id=" + memberId + "]").click();
+  });
+
+  // avail program
+  let avail = $("#avail-btn");
+  let program = $("#avail-program-select");
+  let programVal = program.val();
+  let programName = $("#avail-program-select option[value=" + programVal + "]").html();
+
+  program.change(function () {
+    programVal = program.val();
+    programName = $("#avail-program-select option[value=" + programVal + "]").html();
+    $.get("./getprogramamount.php?id=" + programVal, function(res) {
+      $("#programpayment-amount").val(JSON.parse(res));
+    });
+  })
+
+  avail.click(function () {
+    $.confirm({
+      closeIcon: true,
+      title: "Confirm?",
+      content: `Avail ${programName} Program for this member?`,
+      buttons: {
+        confirm: {
+          btnClass: "btn-orange",
+          action: function () {
+            $.get("./check_sub.php?id=" + memberId, function (res) {
+              let data = JSON.parse(res);
+              if(data == "active") {
+                $.confirm({
+                  title: "Alert",
+                  content: "This member already has an active subscription. To continue availing the program, the member must pay for the amount. Proceed?",
+                  buttons: {
+                    ok: {
+                      btnClass: "btn-orange",
+                      action: function () {
+                        $.post("./avail_program.php", {memberId: memberId, programId: programVal, amount: $("#programpayment-amount").val(), isActive: "true"}, function(res) {
+                          if(JSON.parse(res) == "success") {
+                            $.alert({
+                              title: "Success!",
+                              type: 'green',
+                              content: `Member has successfully availed program.`,
+                              backgroundDismiss: function () {
+                                $("#avail-program-modal").modal("hide");
+                              },
+                              buttons: {
+                                ok: {
+                                  btnClass: "btn-success",
+                                  action: function () {
+                                    $("#avail-program-modal").modal("hide");
+                                  }
+                                }
+                              }
+                            });
+                          } else {
+                            $.alert({
+                              title: 'Error',
+                              type: 'red',
+                              content: JSON.parse(res)
+                            });
+                          }
+                        });
+                      }
+                    },
+                    cancel: {
+                      btnClass: "btn-grey",
+                      action: function () {}
+                    }
+                  }
+                });
+              } else {
+                $.post("./avail_program.php", {memberId: memberId, programId: programVal, amount: $("#programpayment-amount").val(), isActive: "false"}, function(res) {
+                  if(JSON.parse(res) == "success") {
+                    $.alert({
+                      title: "Success!",
+                      type: 'green',
+                      content: `Member has successfully availed program.`,
+                      backgroundDismiss: function () {
+                        $("#avail-program-modal").modal("hide");
+                      },
+                      buttons: {
+                        ok: {
+                          btnClass: "btn-success",
+                          action: function () {
+                            $("#avail-program-modal").modal("hide");
+                          }
+                        }
+                      }
+                    });
+                  } else {
+                    $.alert({
+                      title: 'Error',
+                      type: 'red',
+                      content: JSON.parse(res)
+                    });
+                  }
+                });
+              }
+            });
+          }
+        }
+      }
+    });
+  })
+
+  $("#remove-program-btn").click(function () {
+    let id = $(this).attr("data-id");
+    $.confirm({
+      title: "Remove?",
+      content: "Are you sure you want to remove this member from this program?",
+      buttons: {
+        confirm: {
+          btnClass: "btn-orange",
+          action: function () {
+            $.get("./remove_from_program.php?id=" + id, function (res) {
+              if(JSON.parse(res) == "success") {
+                $.alert({
+                  type: 'green',
+                  title: "Success",
+                  content: 'Member successfully removed from program.',
+                  buttons: {
+                    ok: {
+                      btnClass: 'btn-success',
+                      action: function () {
+                        window.location.reload();
+                      }
+                    }
+                  }
+                });
+              } else {
+                $.alert({
+                  type: 'red',
+                  title: 'Error',
+                  content: JSON.parse(res),
+                  buttons: {
+                    close: {
+                      btnClass: 'btn-danger',
+                      action: function () {}
+                    }
+                  }
+                });
+              }
+            });
+          }
+        },
+        cancel: {
+          btnClass: "btn-grey",
+          action: function () {}
+        }
+      }
+    });
+  });
+
+  document.getElementById('programshowCalc').addEventListener('click', () => {
+    let programcalc = document.getElementById('programcalculator');
+    if (programcalc.style.display == 'none') {
+      programcalc.style.display = 'block';
+      document.getElementById('programshowCalc').innerHTML =
+        '<span style="color:#DF3A01"> Hide Calculator </span>';
+    } else {
+      programcalc.style.display = 'none';
+      document.getElementById('programshowCalc').innerHTML = 'Show Calculator';
+    }
+  });
+
+  document.getElementById('programenterCalc').addEventListener('click', () => {
+    let cash = document.getElementById('program-cash');
+    let change = document.getElementById('program-change');
+
+
+    let val = parseInt(cash.value);
+    let amount = parseInt($("#programpayment-amount").val());
+
+    if (Number.isInteger(val) == true) {
+      if (val <= 0 || val >= 9999) {
+        alert('Please enter a valid amount!');
+      } else if (val < parseInt($("#programpayment-amount").val())) {
+        alert('Insufficient cash!');
+      } else {
+        change.value = `₱${val - amount}.00`;
+      }
+    } else {
+      alert('Please enter an appropriate amount!');
+    }
+  });
+
+  $("#memberType").change(function () {
+    if($(this).val() == "Walk-in") {
+      $("#enroll-program-div").css("display", "none");
+      $("#program-no").click();
+    } else {
+      $("#enroll-program-div").css("display", "block");
+    }
+  });
+
+  $("#regular_payment").on("hidden.bs.modal", function () {
+    $("#payment_description").prop("selectedIndex", 0);
+    $("#amount").val("");
+    let calc = document.getElementById('calculator');
+    calc.style.display = 'none';
+    document.getElementById('showCalc').innerHTML = 'Show Calculator';
+  });
+
+  $("#add-payment-btn-regular").click(function () {
+    $.post(
+      "./memberpayment_process.php",
+      {
+        member_id: $("#member_id").val(),
+        payment_description: $("#payment_description").val(),
+        promo_discount: $("#promo_discount").val(),
+        promo_availed: $("#promo_availed").val(),
+        program_enrolled: $("#program_enrolled").val(),
+        program_amount: $("#program_enrolled").val()
+      },
+      function (res) {
+        console.log(res);
+        let r = JSON.parse(res);
+        let message;
+        let type = 'green';
+        let title = 'Success';
+        let btnClass = 'btn-success';
+
+        if(r == "success monthly") {
+          message = "Monthly subscription payment successful.";
+        } else if(r == "success annual") {
+          message = "Annual membership payment successful.";
+        } else if(r == "success both") {
+          message = "Monthly subscription and annual membership payments successful.";
+        } else if(r == "success walkin") {
+          message = "Walk-in payment successful.";
+        } else {
+          message = JSON.parse(res);
+          type = 'red';
+          title = 'Error';
+          btnClass = 'btn-danger';
+        }
+
+        $.alert({
+          title: title,
+          type: type,
+          content: message,
+          backgroundDismiss: function () {
+            window.location.reload();
+          },
+          buttons: {
+            ok: {
+              btnClass: btnClass,
+              action: function () {
+                window.location.reload();
+              }
+            }
+          }
+        });
+      }
+    );
+  });
   </script>
 
 </body>
