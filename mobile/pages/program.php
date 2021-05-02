@@ -16,6 +16,7 @@ if(!isset($_SESSION["member_id"])) {
   <link rel="stylesheet" href="./../css/mediaquery.css">
   <link rel="icon" href="./../img/gym_logo.png">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
   <style>
     .main-cont {
@@ -123,7 +124,7 @@ if(!isset($_SESSION["member_id"])) {
       </div>
     </div>
     <div class="main-cont">
-      <div class="content">
+      <div class="content" id="has-program">
         <small>You are currently under the</small>
         <div style="display: flex">
           <h2 style="font-size: 1.8em" id="program-name"></h2>
@@ -147,62 +148,79 @@ if(!isset($_SESSION["member_id"])) {
         <hr style="width: 80vw;">
         <button class="btn" id="change-program">Change your program</button>
       </div>
+      <div class="content" id="has-no-program" style="display: none">
+        <div style="display: flex">
+          <h2 style="font-size: 1.2em" id="program-name" class="fw-700">You are currently not enrolled in a program.</h2>
+        </div>
+        <hr style="width: 80vw;">
+        <button class="btn" id="avail-program">Avail a program</button>
+      </div>
     </div>
   </main>
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
   <script src="./../js/sidebar.js"></script>
   <script>
     var program, routines;
 
-    $.get("./../functions/get_programs.php?day=1", function(res) {
-      program = JSON.parse(res);
+    let id = "<?= $_SESSION["member_id"] ?>";
 
-      $("#program-name").text(`${program.program_name} Program`);
-    });
+    $.get("./../functions/check_program.php?id=" + id, function (res) {
+      if(JSON.parse(res) == "true") {
+        $.get("./../functions/get_programs.php?day=1", function(res) {
+          program = JSON.parse(res);
 
-    $.get("./../functions/get_routines.php", function(res) {
-      routines = JSON.parse(res);
-      routines.unshift("");
-    }).then(() => {
-      $("#upper1").html(`${routines[program.upper_1_day_1].routine_name} &#183; ${routines[program.upper_1_day_1].routine_reps} reps &#183; ${routines[program.upper_1_day_1].routine_sets} sets`);
-      $("#upper2").html(`${routines[program.upper_2_day_1].routine_name} &#183; ${routines[program.upper_2_day_1].routine_reps} reps &#183; ${routines[program.upper_2_day_1].routine_sets} sets`);
-      $("#upper3").html(`${routines[program.upper_3_day_1].routine_name} &#183; ${routines[program.upper_3_day_1].routine_reps} reps &#183; ${routines[program.upper_3_day_1].routine_sets} sets`);
-      $("#lower1").html(`${routines[program.lower_1_day_1].routine_name} &#183; ${routines[program.lower_1_day_1].routine_reps} reps &#183; ${routines[program.lower_1_day_1].routine_sets} sets`);
-      $("#lower2").html(`${routines[program.lower_2_day_1].routine_name} &#183; ${routines[program.lower_2_day_1].routine_reps} reps &#183; ${routines[program.lower_2_day_1].routine_sets} sets`);
-      $("#lower3").html(`${routines[program.lower_3_day_1].routine_name} &#183; ${routines[program.lower_3_day_1].routine_reps} reps &#183; ${routines[program.lower_3_day_1].routine_sets} sets`);
-      $("#abdominal").html(`${routines[program.abdominal_day_1].routine_name} &#183; ${routines[program.abdominal_day_1].routine_reps} reps &#183; ${routines[program.abdominal_day_1].routine_sets} set(s)`);
+          $("#program-name").text(`${program.program_name} Program`);
+        });
+
+        $.get("./../functions/get_routines.php", function(res) {
+          routines = JSON.parse(res);
+          routines.unshift("");
+        }).then(() => {
+          $("#upper1").html(`${routines[program.upper_1_day_1].routine_name} &#183; ${routines[program.upper_1_day_1].routine_reps} reps &#183; ${routines[program.upper_1_day_1].routine_sets} sets`);
+          $("#upper2").html(`${routines[program.upper_2_day_1].routine_name} &#183; ${routines[program.upper_2_day_1].routine_reps} reps &#183; ${routines[program.upper_2_day_1].routine_sets} sets`);
+          $("#upper3").html(`${routines[program.upper_3_day_1].routine_name} &#183; ${routines[program.upper_3_day_1].routine_reps} reps &#183; ${routines[program.upper_3_day_1].routine_sets} sets`);
+          $("#lower1").html(`${routines[program.lower_1_day_1].routine_name} &#183; ${routines[program.lower_1_day_1].routine_reps} reps &#183; ${routines[program.lower_1_day_1].routine_sets} sets`);
+          $("#lower2").html(`${routines[program.lower_2_day_1].routine_name} &#183; ${routines[program.lower_2_day_1].routine_reps} reps &#183; ${routines[program.lower_2_day_1].routine_sets} sets`);
+          $("#lower3").html(`${routines[program.lower_3_day_1].routine_name} &#183; ${routines[program.lower_3_day_1].routine_reps} reps &#183; ${routines[program.lower_3_day_1].routine_sets} sets`);
+          $("#abdominal").html(`${routines[program.abdominal_day_1].routine_name} &#183; ${routines[program.abdominal_day_1].routine_reps} reps &#183; ${routines[program.abdominal_day_1].routine_sets} set(s)`);
+        });
+
+        $("#programDay").change(function() {
+          let val = $("#programDay").val();
+          if(val == "1") {
+            $("#upper1").html(`${routines[program.upper_1_day_1].routine_name} &#183; ${routines[program.upper_1_day_1].routine_reps} reps &#183; ${routines[program.upper_1_day_1].routine_sets} sets`);
+            $("#upper2").html(`${routines[program.upper_2_day_1].routine_name} &#183; ${routines[program.upper_2_day_1].routine_reps} reps &#183; ${routines[program.upper_2_day_1].routine_sets} sets`);
+            $("#upper3").html(`${routines[program.upper_3_day_1].routine_name} &#183; ${routines[program.upper_3_day_1].routine_reps} reps &#183; ${routines[program.upper_3_day_1].routine_sets} sets`);
+            $("#lower1").html(`${routines[program.lower_1_day_1].routine_name} &#183; ${routines[program.lower_1_day_1].routine_reps} reps &#183; ${routines[program.lower_1_day_1].routine_sets} sets`);
+            $("#lower2").html(`${routines[program.lower_2_day_1].routine_name} &#183; ${routines[program.lower_2_day_1].routine_reps} reps &#183; ${routines[program.lower_2_day_1].routine_sets} sets`);
+            $("#lower3").html(`${routines[program.lower_3_day_1].routine_name} &#183; ${routines[program.lower_3_day_1].routine_reps} reps &#183; ${routines[program.lower_3_day_1].routine_sets} sets`);
+            $("#abdominal").html(`${routines[program.abdominal_day_1].routine_name} &#183; ${routines[program.abdominal_day_1].routine_reps} reps &#183; ${routines[program.abdominal_day_1].routine_sets} set(s)`);
+          } else if(val == "2") {
+            $("#upper1").html(`${routines[program.upper_1_day_2].routine_name} &#183; ${routines[program.upper_1_day_2].routine_reps} reps &#183; ${routines[program.upper_1_day_2].routine_sets} sets`);
+            $("#upper2").html(`${routines[program.upper_2_day_2].routine_name} &#183; ${routines[program.upper_2_day_2].routine_reps} reps &#183; ${routines[program.upper_2_day_2].routine_sets} sets`);
+            $("#upper3").html(`${routines[program.upper_3_day_2].routine_name} &#183; ${routines[program.upper_3_day_2].routine_reps} reps &#183; ${routines[program.upper_3_day_2].routine_sets} sets`);
+            $("#lower1").html(`${routines[program.lower_1_day_2].routine_name} &#183; ${routines[program.lower_1_day_2].routine_reps} reps &#183; ${routines[program.lower_1_day_2].routine_sets} sets`);
+            $("#lower2").html(`${routines[program.lower_2_day_2].routine_name} &#183; ${routines[program.lower_2_day_2].routine_reps} reps &#183; ${routines[program.lower_2_day_2].routine_sets} sets`);
+            $("#lower3").html(`${routines[program.lower_3_day_2].routine_name} &#183; ${routines[program.lower_3_day_2].routine_reps} reps &#183; ${routines[program.lower_3_day_2].routine_sets} sets`);
+            $("#abdominal").html(`${routines[program.abdominal_day_2].routine_name} &#183; ${routines[program.abdominal_day_2].routine_reps} reps &#183; ${routines[program.abdominal_day_2].routine_sets} set(s)`);
+          } else {
+            $("#upper1").html(`${routines[program.upper_1_day_3].routine_name} &#183; ${routines[program.upper_1_day_3].routine_reps} reps &#183; ${routines[program.upper_1_day_3].routine_sets} sets`);
+            $("#upper2").html(`${routines[program.upper_2_day_3].routine_name} &#183; ${routines[program.upper_2_day_3].routine_reps} reps &#183; ${routines[program.upper_2_day_3].routine_sets} sets`);
+            $("#upper3").html(`${routines[program.upper_3_day_3].routine_name} &#183; ${routines[program.upper_3_day_3].routine_reps} reps &#183; ${routines[program.upper_3_day_3].routine_sets} sets`);
+            $("#lower1").html(`${routines[program.lower_1_day_3].routine_name} &#183; ${routines[program.lower_1_day_3].routine_reps} reps &#183; ${routines[program.lower_1_day_3].routine_sets} sets`);
+            $("#lower2").html(`${routines[program.lower_2_day_3].routine_name} &#183; ${routines[program.lower_2_day_3].routine_reps} reps &#183; ${routines[program.lower_2_day_3].routine_sets} sets`);
+            $("#lower3").html(`${routines[program.lower_3_day_3].routine_name} &#183; ${routines[program.lower_3_day_3].routine_reps} reps &#183; ${routines[program.lower_3_day_3].routine_sets} sets`);
+            $("#abdominal").html(`${routines[program.abdominal_day_3].routine_name} &#183; ${routines[program.abdominal_day_3].routine_reps} reps &#183; ${routines[program.abdominal_day_3].routine_sets} set(s)`);
+          }
+        });
+      } else {
+        $("#has-program").css("display", "none");
+        $("#has-no-program").css("display", "flex");
+      }
 
       $("#loader").css("display", "none");
-    });
-
-    $("#programDay").change(function() {
-      let val = $("#programDay").val();
-      if(val == "1") {
-        $("#upper1").html(`${routines[program.upper_1_day_1].routine_name} &#183; ${routines[program.upper_1_day_1].routine_reps} reps &#183; ${routines[program.upper_1_day_1].routine_sets} sets`);
-        $("#upper2").html(`${routines[program.upper_2_day_1].routine_name} &#183; ${routines[program.upper_2_day_1].routine_reps} reps &#183; ${routines[program.upper_2_day_1].routine_sets} sets`);
-        $("#upper3").html(`${routines[program.upper_3_day_1].routine_name} &#183; ${routines[program.upper_3_day_1].routine_reps} reps &#183; ${routines[program.upper_3_day_1].routine_sets} sets`);
-        $("#lower1").html(`${routines[program.lower_1_day_1].routine_name} &#183; ${routines[program.lower_1_day_1].routine_reps} reps &#183; ${routines[program.lower_1_day_1].routine_sets} sets`);
-        $("#lower2").html(`${routines[program.lower_2_day_1].routine_name} &#183; ${routines[program.lower_2_day_1].routine_reps} reps &#183; ${routines[program.lower_2_day_1].routine_sets} sets`);
-        $("#lower3").html(`${routines[program.lower_3_day_1].routine_name} &#183; ${routines[program.lower_3_day_1].routine_reps} reps &#183; ${routines[program.lower_3_day_1].routine_sets} sets`);
-        $("#abdominal").html(`${routines[program.abdominal_day_1].routine_name} &#183; ${routines[program.abdominal_day_1].routine_reps} reps &#183; ${routines[program.abdominal_day_1].routine_sets} set(s)`);
-      } else if(val == "2") {
-        $("#upper1").html(`${routines[program.upper_1_day_2].routine_name} &#183; ${routines[program.upper_1_day_2].routine_reps} reps &#183; ${routines[program.upper_1_day_2].routine_sets} sets`);
-        $("#upper2").html(`${routines[program.upper_2_day_2].routine_name} &#183; ${routines[program.upper_2_day_2].routine_reps} reps &#183; ${routines[program.upper_2_day_2].routine_sets} sets`);
-        $("#upper3").html(`${routines[program.upper_3_day_2].routine_name} &#183; ${routines[program.upper_3_day_2].routine_reps} reps &#183; ${routines[program.upper_3_day_2].routine_sets} sets`);
-        $("#lower1").html(`${routines[program.lower_1_day_2].routine_name} &#183; ${routines[program.lower_1_day_2].routine_reps} reps &#183; ${routines[program.lower_1_day_2].routine_sets} sets`);
-        $("#lower2").html(`${routines[program.lower_2_day_2].routine_name} &#183; ${routines[program.lower_2_day_2].routine_reps} reps &#183; ${routines[program.lower_2_day_2].routine_sets} sets`);
-        $("#lower3").html(`${routines[program.lower_3_day_2].routine_name} &#183; ${routines[program.lower_3_day_2].routine_reps} reps &#183; ${routines[program.lower_3_day_2].routine_sets} sets`);
-        $("#abdominal").html(`${routines[program.abdominal_day_2].routine_name} &#183; ${routines[program.abdominal_day_2].routine_reps} reps &#183; ${routines[program.abdominal_day_2].routine_sets} set(s)`);
-      } else {
-        $("#upper1").html(`${routines[program.upper_1_day_3].routine_name} &#183; ${routines[program.upper_1_day_3].routine_reps} reps &#183; ${routines[program.upper_1_day_3].routine_sets} sets`);
-        $("#upper2").html(`${routines[program.upper_2_day_3].routine_name} &#183; ${routines[program.upper_2_day_3].routine_reps} reps &#183; ${routines[program.upper_2_day_3].routine_sets} sets`);
-        $("#upper3").html(`${routines[program.upper_3_day_3].routine_name} &#183; ${routines[program.upper_3_day_3].routine_reps} reps &#183; ${routines[program.upper_3_day_3].routine_sets} sets`);
-        $("#lower1").html(`${routines[program.lower_1_day_3].routine_name} &#183; ${routines[program.lower_1_day_3].routine_reps} reps &#183; ${routines[program.lower_1_day_3].routine_sets} sets`);
-        $("#lower2").html(`${routines[program.lower_2_day_3].routine_name} &#183; ${routines[program.lower_2_day_3].routine_reps} reps &#183; ${routines[program.lower_2_day_3].routine_sets} sets`);
-        $("#lower3").html(`${routines[program.lower_3_day_3].routine_name} &#183; ${routines[program.lower_3_day_3].routine_reps} reps &#183; ${routines[program.lower_3_day_3].routine_sets} sets`);
-        $("#abdominal").html(`${routines[program.abdominal_day_3].routine_name} &#183; ${routines[program.abdominal_day_3].routine_reps} reps &#183; ${routines[program.abdominal_day_3].routine_sets} set(s)`);
-      }
     });
 
     $("#confirm-logout").on("click", function() {
@@ -218,6 +236,10 @@ if(!isset($_SESSION["member_id"])) {
 
     $("#change-program").click(function() {
       window.location.href = "./change_program.php";
+    });
+
+    $("#avail-program").click(function () {
+      window.location.href = "./avail_program.php";
     });
   </script>
 </body>

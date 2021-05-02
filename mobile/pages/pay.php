@@ -336,7 +336,6 @@ if($annualHasValue) {
   <script src="./../js/sidebar.js"></script>
   <script>
     function initPayPalButton(amt, items) {
-      console.log()
       paypal.Buttons({
         style: {
           shape: 'pill',

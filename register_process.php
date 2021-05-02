@@ -68,13 +68,12 @@ require('connect.php');
 	}else{
        /*Inserting the Data inputed*/
 		$passw=password_hash($pass, PASSWORD_DEFAULT);
-		$sql = "INSERT INTO `admin` ( admin_id,first_name,last_name,username,password)
-				VALUES ('$admin_id', '$fname', '$lname', '$user', '$passw')";
+		$sql = "INSERT INTO `admin` (first_name,last_name,username,password,code)
+				VALUES ('$fname', '$lname', '$user', '$passw', ".intval(rand(10000, 99999)).")";
 		$query_run = mysqli_query($conn, $sql);
 		if($query_run){
 			echo ("<script LANGUAGE='JavaScript'>
 				    window.alert('You are now Registered.');
-				    window.location.href='index_admin.php';
 				    </script>");
 		}else{	
 			echo "failure to register";	
