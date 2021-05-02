@@ -22,8 +22,58 @@ if(isset($_SESSION["admin_id"])) {
    <link href="css/index.css" rel="stylesheet">
    <script src="js/prefixfree.min.js"></script>
    <link href="index_admin.css" rel="stylesheet">
-</head>
 
+
+</head>
+<style>
+	h6{
+		color: white;
+		cursor: pointer;
+		text-decoration: underline;
+	}
+
+	.register{
+        position: absolute;
+        top: calc(30% - 75px);
+        left: calc(60% - 50px);
+        height: 150px;
+        width: 350px;
+        padding: 10px;
+        z-index: 2;
+        display:none;
+    }
+
+	.login{
+        position: absolute;
+        top: calc(30% - 75px);
+        left: calc(60% - 50px);
+        height: 150px;
+        width: 350px;
+        padding: 10px;
+        z-index: 2;
+    }
+
+	p{
+		font-size: 15px;
+	}
+
+	.login input[type=text]{
+        width: 350px;
+        height: 50px;
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.6);
+        border-radius: 2px;
+        color: #fff;
+        font-family: 'Exo', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        padding: 4px;
+    }
+	.login input[type=text]:focus{
+        outline: none;
+        border: 1px solid rgba(255,255,255,0.9);
+    }
+</style>
 <body>
   <div class="body"></div>
 		<div class="grad"></div><br>
@@ -46,9 +96,18 @@ if(isset($_SESSION["admin_id"])) {
 				<input name="password" type="password" required placeholder="Password"  class="input" data-type="password"><br>
 				<input type="submit" value="Let me in">
 			</form>
+			<br>
+
+			<h6 class="forgetpassword" id="forgot_password_text" onclick="forget_pass()" >Forgot password?</h6>
+			<div class="forgetpassword" style="display: none;" id="forgot_password">
+				<p>Please enter your email to search for your account.</p>
+				<form action="forgot_password_process.php" method="post">
+					<input name="email" type="email"  required  class="input" placeholder="Enter your email address">
+					<input  type="submit" value="Submit">
+				</form>	
+			</div>
+
 		</div>
-
-
 
 		<div class="register" id="signup">
 			<div class="header">
@@ -69,10 +128,17 @@ if(isset($_SESSION["admin_id"])) {
 				<input  type="submit" value="Register">
 			</form>	
 		</div>
+
+		
+
+
+
+
+</div>
+
 </body>
 
 <script>
-
 	function register(){
 		var x = document.getElementById("signup");
 		var y = document.getElementById("signin");
@@ -88,5 +154,25 @@ if(isset($_SESSION["admin_id"])) {
 		x.style.display = "none";
 		y.style.display = "block";
 	}
+
+
+	
+	function forget_pass(){
+		var x = document.getElementById("forgot_password");
+		var codeText = document.getElementById("code_text");
+
+    	if (x.style.display == 'none') {
+      		x.style.display = 'block';
+			codeText.style.display = 'none';
+   	 	 	document.getElementById("forgot_password_text").innerHTML = "Close forgot password"
+		}else{
+     		x.style.display = 'none';
+      		document.getElementById('forgot_password_text').innerHTML = 'Forgot password?';
+    	}
+	}
+
+
+
+
 </script>
 </html>

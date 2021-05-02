@@ -171,12 +171,7 @@ $res = mysqli_query($conn, $sql);
             <a data-toggle="modal" data-target="#add"><i style="color:#DF3A01; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Add New Promo" class="fas fa-plus mr-4"></i></a>
             Inventory
           </h4>
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" id="sort-cardio" class="btn btn-sm btn-outline-orange">cardio
-            </button>
-            <button type="button" id="sort-both" class="btn btn-sm btn-orange">Both</button>
-            <button type="button" id="sort-weights" class="btn btn-sm btn-outline-orange">weights</button>
-          </div>
+         
           <form class="d-flex justify-content-center">
             <input type="text" placeholder="Search equipment name" id="search-item" class="form-control">
           </form>
@@ -447,6 +442,7 @@ $res = mysqli_query($conn, $sql);
 
                   <th>Name</th>
                   <th>Category</th>
+                  <th>Deleted by</th>
                   <th>Date Added</th>
                   <th>Date deleted</th>
                   <th>Time deleted</th>
@@ -472,6 +468,7 @@ $res = mysqli_query($conn, $sql);
                 <tr>
                   <td><?php echo $row["inventory_name"]?></td>
                   <td><?php echo $row["inventory_category"]?></td>
+                  <td><?php echo $row["admin_delete"]?></td>
                   <td><?php echo $resultAdded?></td>
                   <td><?php echo $resultDelete?></td>
                   <td><?php echo $time_Deleted?></td>

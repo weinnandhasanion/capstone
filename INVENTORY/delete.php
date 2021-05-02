@@ -11,7 +11,17 @@ $id = $_REQUEST['id'];
 $date_deleted = date("Y-m-d");
 $time_deleted = date("h:i:s");
 
-$ox = "UPDATE inventory SET inventory_status = 'deleted', date_deleted = '$date_deleted', time_deleted = '$time_deleted' 
+$admin_sql = "SELECT first_name,last_name,admin_id FROM admin WHERE admin_id = $session_admin_id";
+$admin_query_run = mysqli_query($conn, $admin_sql);
+$rows_admin = mysqli_fetch_assoc($admin_query_run);
+
+$admin_delete_fullname = $rows_admin["first_name"]." ".$rows_admin["last_name"];;
+$admin_id = $rows_admin["admin_id"];
+
+$ox = "UPDATE inventory SET inventory_status = 'deleted', 
+                            date_deleted = '$date_deleted',
+                            time_deleted = '$time_deleted',
+                            admin_delete = '$admin_delete_fullname'
 WHERE inventory_id = " . intval($id) . "";     
  
 if(mysqli_query($conn, $ox))
