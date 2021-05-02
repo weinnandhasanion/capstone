@@ -19,7 +19,7 @@ $phone = $_POST['phone'];
 $member_type = $_POST['member_type'];
 $date_registered = date("Y-m-d");
 $program_id = $_POST['program_id'];
-$avail = $_POST["program-form-check"];
+$avail = $_POST["program_form_check"];
 $timeregistered = date("Y-m-d h:i:s");
 
 //---- query validations
@@ -42,139 +42,64 @@ $checkSpace = "/\\s/";
 
 //VALIDATION IF NAAY NUMBERS ANG GI INPUT NMO SA LASTNAME..
 if (preg_match($LnameNumregex, $last_name, $match)) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid last name. Please check, make sure no numbers...');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Invalid last name. Please make sure there are no numbers.");
 }
 //VALIDATION IF NAAY SPACE.. 
 else if (preg_match($checkSpace, $phone, $match)) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid Contact number. Please check, make sure no space...');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode('Invalid contact number. Please enter a valid phone number.');
 }
 //VALIDATION IF NAAY SPACE.. 
 else if (preg_match($checkSpace, $email, $match)) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid Email address. Please check, make sure no space...');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode('Invalid email. Please enter a valid email.');
 }
 
 //VALIDATION IF NAAY SPECIAL CHARACTER.. 
 else if (preg_match($specialCharacterRegex, $phone, $match)) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid  Contact number. Please check, make sure no special characters...');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode('Invalid contact number. Please enter a valid phone number.');
 }
 
 //VALIDATION IF NAAY NUMBERS ANG GI INPUT NMO SA FIRSTNAME.. 
 else if (preg_match($FnameNumregex, $first_name, $match)) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid first name. Please check, make sure no numbers...');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Invalid first name. Please make sure there are no numbers.");
 }
-//VALIDATION IF 20 LENGTH RA ANG GI INPUT NMO SA FIRSTNAME.. 
-else if (strlen($first_name) > 20) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid first name. Maximum of 20 letters only');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
-}
-//VALIDATION IF 20 LENGTH RA ANG GI INPUT NMO SA LASTNAME.. 
-else if (strlen($last_name) > 20) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid last name. Maximum of 20 letters only');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
-}
+
 //VALIDATION IF NAME IS ALREADY TAKEN.. 
 else if (mysqli_num_rows($duplicate_name) > 0) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Name is already Taken');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Name is already taken.");
 }
 //VALIDATION IF EMAIL IS ALREADY TAKEN.. 
 else if (mysqli_num_rows($duplicate_email) > 0) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Email address is already Taken');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
-}
-//VALIDATION IF 40 LENGTH RA ANG GI INPUT NMO SA EMAIL.. 
-else if (strlen($email) > 40) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid email address. Maximum of 40 letters only');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
-}
-//VALIDATION IF 60 LENGTH RA ANG GI INPUT NMO SA ADDRESS.. 
-else if (strlen($address) > 60) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid address. Maximum of 60 letters only');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Email is already taken.");
 }
 //VALIDATION IF 5 LENGTH RA ANG GI INPUT NMO SA ADDRESS.. 
 else if (strlen($address) < 5) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid address. Too short for a address');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Address is too short. Please enter a valid address.");
 }
 //VALIDATION IF CONTACT NUMBER IS ALREADY TAKEN.. 
 else if (mysqli_num_rows($duplicate_phone) > 0) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Contact number is already Taken');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Phone number is already taken.");
 }
 //VALIDATION IF NAAY LETTERS ANG GI INPUT NMO SA CONTACT NUMBER.. IF WALA MO PROCEED SHA SA NEXT CHECKING
 else if (preg_match($phoneregex, $phone, $match)) {
-    echo ("<script LANGUAGE='JavaScript'>
-        window.alert('Phone has letters.. pelase check ur inputs.');
-        window.location.href='./../MEMBERS/members.php';
-        </script>");
+    echo json_encode('Invalid contact number. Please enter a valid phone number.');
 } else if (strlen($phone) <= 10) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid contact number. lacking numbers inputed');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode('Invalid contact number. Please enter a valid phone number.');
 } else if (strlen($phone) > 11) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid contact number. morethan 11 numbers inputed');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode('Invalid contact number. Please enter a valid phone number.');
 } else if (!checkBirthdate($birthdate)) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid birthdate. You must be at least 15 years old to enter the gym!');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Invalid birthdate. User must be at least 15 years old to enter the gym.");
 } else if (!checkValidBdate($birthdate)) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid birthdate. Please enter a valid date.');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode('Invalid birthdate. Please enter a valid date.');
 } else {
     if (preg_match('/^[a-zA-Z]+( [a-zA-Z]+)*$/', $first_name)) {
         if (preg_match('/^[a-zA-Z]+( [a-zA-Z]+)*$/', $last_name)) {
-
             if ($avail == "Yes") {
                if($member_type == "Regular") {
                 $sql = "INSERT INTO `member` ( first_name,last_name,gender,birthdate,email,address,
-                phone,member_type,date_registered,program_id,time_registered )         
+                phone,member_type,date_registered,program_id )         
                 VALUES ( '$first_name', '$last_name', '$gender', '$birthdate', '$email', 
-                '$address', '$phone', '$member_type', '$date_registered','$program_id','$timeregistered')";
+                '$address', '$phone', '$member_type', '$date_registered','$program_id')";
                     $query_run = mysqli_query($conn, $sql);
-    
-                    echo ("<script LANGUAGE='JavaScript'>
-                window.alert('Successfully added a member');
-                window.location.href='./../MEMBERS/members.php';
-                </script>");
     
                     if ($_SESSION['admin_id']) {
                         $session_admin_id = $_SESSION['admin_id'];
@@ -255,34 +180,18 @@ else if (preg_match($phoneregex, $phone, $match)) {
                     $program_id_new = $rows5["program_id"];
                     $date_added = date("y-m-d");
     
-    
-                    if ($member_type == 'Regular') {
-                        $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
+                    $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
                     `description`, `identity`,`time`)
                     VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$regular_description','$identity', '$timeNow')";
                         mysqli_query($conn, $sql1);
-                    } else if ($member_type == 'Walk-in') {
-                        $sql2 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
-                    `description`, `identity`,`time`)
-                    VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$Walkin_description','$identity', '$timeNow')";
-                        mysqli_query($conn, $sql2);
-                    } else {
-                        echo ("<script LANGUAGE='JavaScript'>
-                    window.alert('ERROR');
-                    window.location.href='./../MEMBERS/members.php';
-                    </script>");
-                    }
+
+                    echo json_encode("success");
                } else {
                 $sql = "INSERT INTO `member` ( first_name,last_name,gender,birthdate,email,address,
-                phone,member_type,date_registered,time_registered)         
+                phone,member_type,date_registered)         
                 VALUES ( '$first_name', '$last_name', '$gender', '$birthdate', '$email', 
-                '$address', '$phone', '$member_type', '$date_registered','$timeregistered')";
+                '$address', '$phone', '$member_type', '$date_registered')";
                     $query_run = mysqli_query($conn, $sql);
-    
-                    echo ("<script LANGUAGE='JavaScript'>
-                window.alert('Successfully added a member');
-                window.location.href='./../MEMBERS/members.php';
-                </script>");
     
                     if ($_SESSION['admin_id']) {
                         $session_admin_id = $_SESSION['admin_id'];
@@ -363,29 +272,18 @@ else if (preg_match($phoneregex, $phone, $match)) {
                     $program_id_new = $rows5["program_id"];
                     $date_added = date("y-m-d");
     
-    
-                    if ($member_type == 'Regular') {
-                        $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
-                    `description`, `identity`,`time`)
-                    VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$regular_description','$identity', '$timeNow')";
-                        mysqli_query($conn, $sql1);
-                    } else if ($member_type == 'Walk-in') {
-                        $sql2 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
+                    $sql2 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
                     `description`, `identity`,`time`)
                     VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$Walkin_description','$identity', '$timeNow')";
                         mysqli_query($conn, $sql2);
-                    } else {
-                        echo ("<script LANGUAGE='JavaScript'>
-                    window.alert('ERROR');
-                    window.location.href='./../MEMBERS/members.php';
-                    </script>");
-                    }
+
+                    echo json_encode("success");
                }
             } else {
                 $sql = "INSERT INTO `member` ( first_name,last_name,gender,birthdate,email,address,
-            phone,member_type,date_registered ,time_registered)         
+            phone,member_type,date_registered )         
             VALUES ( '$first_name', '$last_name', '$gender', '$birthdate', '$email', 
-            '$address', '$phone', '$member_type', '$date_registered','$timeregistered')";
+            '$address', '$phone', '$member_type', '$date_registered')";
                 $query_run = mysqli_query($conn, $sql);
 
 
@@ -395,12 +293,6 @@ else if (preg_match($phoneregex, $phone, $match)) {
 
 
                 if ($query_run) {
-
-                    
-                echo ("<script LANGUAGE='JavaScript'>
-                    alert('success');
-                </script>");
-
                     //this is for puting member_id in the array
                     $data = array();
                     $sql3 = "SELECT * FROM member ORDER BY member_id DESC";
@@ -483,28 +375,19 @@ else if (preg_match($phoneregex, $phone, $match)) {
                 `description`, `identity`,`time`)
                 VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$Walkin_description','$identity', '$timeNow')";
                             mysqli_query($conn, $sql2);
-                        } else {
-                            echo ("<script LANGUAGE='JavaScript'>
-                window.alert('ERROR');
-                window.location.href='./../MEMBERS/members.php';
-                </script>");
                         }
+
+                        echo json_encode("success");
                     }
                 } else {
                     echo mysqli_error($conn);
                 }
             }
         } else {
-            echo ("<script LANGUAGE='JavaScript'>
-        window.alert('Invalid last name. Please check, make sure no special characters...');
-        window.location.href='./../MEMBERS/members.php';
-        </script>");
+            echo json_encode('Invalid last name. Please make sure there are no special characters.');
         }
     } else {
-        echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid fist name. Please check, make sure no special characters...');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+        echo json_encode('Invalid last name. Please make sure there are no special characters.');
     }
 }
 

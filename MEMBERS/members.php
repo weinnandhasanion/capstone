@@ -774,7 +774,7 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <center><label>Address</label></center>
-                  <input name="address" required id="update_address" type="text" class="form-control mb-1" id="address"
+                  <input name="address" required id="update_address" type="text" class="form-control mb-1" id="update_address"
                     oninput="checkIfValid(this)" onblur="checkIfValidupdate(this)">
                   <small class="validation text-danger" id="update_address-empty">Please fill out this field</small>
                 </div>
@@ -1052,121 +1052,120 @@
           <button type='button' class='close' id='close-paymentModal' data-dismiss='modal'>&times;</button>
         </div>
         <div class='modal-body'>
-          <form action="memberadd_process.php" method="post">
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <label>First Name</label>
-                  <input name="first_name" required="" type="text" id="fName" class="form-control mb-1"
-                    placeholder="First name" onblur="checkIfValid(this)">
-                  <small class="validation text-danger" id="fName-empty">Please fill out this field</small>
-                  <small class="validation text-danger" id="fName-invalid">Invalid input</small>
-                </div>
-                <div class="col-sm-6">
-                  <label>Last Name</label>
-                  <input name="last_name" required="" placeholder="Last name" type="text" id="lName"
-                    class="form-control mb-1" onblur="checkIfValid(this)">
-                  <small class="validation text-danger" id="lName-empty">Please fill out this field</small>
-                  <small class="validation text-danger" id="lName-invalid">Invalid input</small>
-                </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label>First Name</label>
+                <input name="first_name" required="" type="text" id="fName" class="form-control mb-1"
+                  placeholder="First name" onblur="checkIfValid(this)">
+                <small class="validation text-danger" id="fName-empty">Please fill out this field</small>
+                <small class="validation text-danger" id="fName-invalid">Invalid input</small>
+              </div>
+              <div class="col-sm-6">
+                <label>Last Name</label>
+                <input name="last_name" required="" placeholder="Last name" type="text" id="lName"
+                  class="form-control mb-1" onblur="checkIfValid(this)">
+                <small class="validation text-danger" id="lName-empty">Please fill out this field</small>
+                <small class="validation text-danger" id="lName-invalid">Invalid input</small>
               </div>
             </div>
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-sm-2">
-                  <label>Gender</label>
-                  <select name="gender" required="" id="sex" class="form-control">
-                    <option value="M">M</option>
-                    <option value="F">F</option>
-                  </select>
-                </div>
-                <div class="col-sm-5">
-                  <label>Birthdate</label>
-                  <input name="birthdate" required="" type="date" id="birthdate" class="form-control mb-1"
-                    onblur="checkDate(this)">
-                  <small class="validation text-danger" id="birthdate-invalid">Invalid birthdate</small>
-                  <small class="validation text-danger" id="birthdate-underage">Person must be at least 12 years old to
-                    join the gym</small>
-                </div>
-                <div class="col-sm-5">
-                  <label>Email</label>
-                  <input name="email" required="" placeholder="Email" type="email" class="form-control mb-1" id="email"
-                    onblur="checkEmail(this)">
-                  <small class="validation text-danger" id="email-empty">Please fill out this field</small>
-                  <small class="validation text-danger" id="email-invalid">Invalid email</small>
-                </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-2">
+                <label>Gender</label>
+                <select name="gender" required="" id="sex" class="form-control">
+                  <option value="M">M</option>
+                  <option value="F">F</option>
+                </select>
+              </div>
+              <div class="col-sm-5">
+                <label>Birthdate</label>
+                <input name="birthdate" required="" type="date" id="birthdate" class="form-control mb-1"
+                  onblur="checkDate(this)">
+                <small class="validation text-danger" id="birthdate-invalid">Invalid birthdate</small>
+                <small class="validation text-danger" id="birthdate-underage">Person must be at least 12 years old to
+                  join the gym</small>
+              </div>
+              <div class="col-sm-5">
+                <label>Email</label>
+                <input name="email" required="" placeholder="Email" type="email" class="form-control mb-1" id="email"
+                  onblur="checkEmail(this)">
+                <small class="validation text-danger" id="email-empty">Please fill out this field</small>
+                <small class="validation text-danger" id="email-invalid">Invalid email</small>
               </div>
             </div>
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-sm-12">
-                  <label>Address</label>
-                  <input name="address" placeholder="Address" required="" type="text" class="form-control mb-1"
-                    id="address" oninput="checkIfValid(this)" onblur="checkIfValid(this)">
-                  <small class="validation text-danger" id="address-empty">Please fill out this field</small>
-                </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-12">
+                <label>Address</label>
+                <input name="address" placeholder="Address" required="" type="text" class="form-control mb-1"
+                  id="address" oninput="checkIfValid(this)" onblur="checkIfValid(this)">
+                <small class="validation text-danger" id="address-empty">Please fill out this field</small>
               </div>
             </div>
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-sm-4">
-                  <label>Cellphone Number</label>
-                  <input name="phone" type="text" placeholder="Contact Number" required="" class="form-control mb-1"
-                    id="phone" onblur="checkNumber(this)">
-                  <small class="validation text-danger" id="phone-empty">Please fill out this field</small>
-                  <small class="validation text-danger" id="phone-invalid">Invalid input</small>
-                  <small class="validation text-danger" id="phone-length">Phone number must contain 11 digits</small>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-4">
+                <label>Cellphone Number</label>
+                <input name="phone" type="text" placeholder="Contact Number" required="" class="form-control mb-1"
+                  id="phone" onblur="checkNumber(this)">
+                <small class="validation text-danger" id="phone-empty">Please fill out this field</small>
+                <small class="validation text-danger" id="phone-invalid">Invalid input</small>
+                <small class="validation text-danger" id="phone-length">Phone number must contain 11 digits</small>
+              </div>
+              <div class="col-sm-4">
+                <label>Membership type</label>
+                <select name="member_type" required="" id="memberType" class="form-control">
+                  <option value="Regular" selected>Regular</option>
+                  <option value="Walk-in">Walk-in</option>
+                </select>
+              </div>
+              <div class="col-sm-4" id="enroll-program-div">
+                <label>Enroll in a program?</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="Yes" name="program-check" id="program-yes">
+                  <label class="form-check-label" for="program-yes">
+                    Yes
+                  </label>
                 </div>
-                <div class="col-sm-4">
-                  <label>Membership type</label>
-                  <select name="member_type" required="" id="memberType" class="form-control">
-                    <option value="Regular" selected>Regular</option>
-                    <option value="Walk-in">Walk-in</option>
-                  </select>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" value="No" name="program-check" id="program-no"
+                    checked>
+                  <label class="form-check-label" for="program-no">
+                    No
+                  </label>
                 </div>
-                <div class="col-sm-4" id="enroll-program-div">
-                  <label>Enroll in a program?</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" value="Yes" name="program-check" id="program-yes">
-                    <label class="form-check-label" for="program-yes">
-                      Yes
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" value="No" name="program-check" id="program-no"
-                      checked>
-                    <label class="form-check-label" for="program-no">
-                      No
-                    </label>
-                  </div>
-                  <input type="text" name="program-form-check" id="program-form-check" style="display: none">
-                </div>
+                <input type="text" name="program-form-check" id="program-form-check" style="display: none">
               </div>
             </div>
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-sm-4" id="program-check-div" style="display: none">
-                  <label>Program</label>
-                  <select name="program_id" required="" id="program" class="form-control">
-                    <?php 
-                    $sql = "SELECT * FROM program WHERE program_status = 'active'";
-                    $res = mysqli_query($conn, $sql);
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-4" id="program-check-div" style="display: none">
+                <label>Program</label>
+                <select name="program_id" required="" id="program" class="form-control">
+                  <?php 
+                  $sql = "SELECT * FROM program WHERE program_status = 'active'";
+                  $res = mysqli_query($conn, $sql);
 
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                    <option value="<?= $row["program_id"] ?>"><?= $row["program_name"] ?></option>
-                    <?php
-                      }
+                  if($res) {
+                    while($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                  <option value="<?= $row["program_id"] ?>"><?= $row["program_name"] ?></option>
+                  <?php
                     }
-                    ?>
-                  </select>
-                </div>
+                  }
+                  ?>
+                </select>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" class='btn btn-orange' id='addMemberBtn'>Submit</button>
-          </form>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class='btn btn-orange' id='addMemberBtn'>Submit</button>
+          </div>
         </div>
       </div>
     </div>
@@ -2859,7 +2858,6 @@
       document.getElementById("view_gender").value = row.gender;
       document.getElementById("view_username").value = checkUsername(row.username);
       document.getElementById("view_program").value = row.program_name;
-      document.getElementById("view_dateHired").value = row.date_registered;
     }
   }
 
@@ -3705,6 +3703,7 @@
     document.getElementById('showCalc').innerHTML = 'Show Calculator';
   });
 
+  // add payment ajax
   $("#add-payment-btn-regular").click(function () {
     $.post(
       "./memberpayment_process.php",
@@ -3714,7 +3713,7 @@
         promo_discount: $("#promo_discount").val(),
         promo_availed: $("#promo_availed").val(),
         program_enrolled: $("#program_enrolled").val(),
-        program_amount: $("#program_enrolled").val()
+        program_amount: $("#program_amount").val()
       },
       function (res) {
         console.log(res);
@@ -3755,6 +3754,58 @@
             }
           }
         });
+      }
+    );
+  });
+
+  // Add member ajax
+  $("#addMemberBtn").click(function () {
+    $.post(
+      "./memberadd_process.php",
+      {
+        first_name: $("#fName").val(),
+        last_name: $("#lName").val(),
+        gender: $("#sex").val(),
+        birthdate: $("#birthdate").val(),
+        email: $("#email").val(),
+        address: $("#address").val(),
+        phone: $("#phone").val(),
+        member_type: $("#memberType").val(),
+        program_form_check: $("#program-form-check").val(),
+        program_id: $("#program").val()
+      },
+      function (res) {
+        if(JSON.parse(res) == "success") {
+          $.alert({
+            title: "Success",
+            content: "Member successfully added.",
+            type: "green",
+            backgroundDismiss: function () {
+              window.location.reload();
+            },
+            buttons: {
+              ok: {
+                btnClass: "btn-success",
+                action: function () {
+                  window.location.reload();
+                }
+              }
+            }
+          });
+        } else {
+          $.alert({
+            title: "Error",
+            content: JSON.parse(res),
+            type: "red",
+            backgroundDismiss: true,
+            buttons: {
+              ok: {
+                btnClass: 'btn-danger',
+                action: function () {}
+              }
+            }
+          });
+        }
       }
     );
   });

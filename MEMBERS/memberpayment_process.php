@@ -283,7 +283,7 @@ $query_run123 = mysqli_query($conn, $klint);
 
     $sql2 = "INSERT INTO `paymentlog` ( `member_id`,`first_name`,`last_name`, `time_payment`, `date_payment`,
     `payment_description`,`payment_amount`,`member_type`, `promo_availed`, `program_enrolled`, `program_amount`)
-    VALUES ( '$id', '$first_name', '$last_name', '$timeNow', '$dateNow', 'Monthly subscription',". intval(750 - intval($discount) + intval($program_amount)) ."
+    VALUES ( '$id', '$first_name', '$last_name', '$timeNow', '$dateNow', 'Monthly Subscription',". intval(750 - intval($discount) + intval($program_amount)) ."
     ,'$member_type', '$promo_availed', '$program_enrolled', '$program_amount')";
     mysqli_query($conn, $sql2);
 
