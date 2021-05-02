@@ -852,24 +852,44 @@ $res = mysqli_query($conn, $sql);
     }
 
     //------------------------------------------------------------------------------ RECOVER JS 
+  
     function recover(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
       // AJAX Request
-      var r = confirm("Are you sure you want to recover this trainer?");
-      if (r == true) {
-        let req = new XMLHttpRequest();
-        req.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            console.log((this.responseText));
-            alert("Trainer successfully recover!");
-            window.location.reload()
+      $.confirm({
+        closeIcon: true,
+        title: "Recover?",
+        content: "Are you sure you want to recover this trainer?",
+        buttons: {
+          confirm: {
+            btnClass: "btn-orange",
+            action: function() {
+              let req = new XMLHttpRequest();
+              req.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  console.log((this.responseText));
+                  $.alert({
+                    title: 'Success',
+                    content: 'Trainer successfully recovered.',
+                    buttons: {
+                      ok: {
+                        text: 'OK',
+                        action: function() {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
+                }
+              }
+              req.open('GET', 'recover.php?id=' + id, true);
+              req.send();
+            }
           }
         }
-        req.open('GET', 'recover.php?id=' + id, true);
-        req.send();
-      }
+      });
     }
 
     function logout(el) {

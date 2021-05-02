@@ -74,6 +74,7 @@ require('connect.php');
 		if($query_run){
 			echo ("<script LANGUAGE='JavaScript'>
 				    window.alert('You are now Registered.');
+					window.location.href='index_admin.php';
 				    </script>");
 		}else{	
 			echo "failure to register";	

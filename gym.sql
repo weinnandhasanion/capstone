@@ -3,9 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2021 at 09:09 PM
+-- Generation Time: May 02, 2021 at 08:46 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
+
+CREATE DATABASE gym;
+USE gym;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -28,6 +31,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `admin_id` int(100) NOT NULL,
+  `code` int(5) NOT NULL,
   `username` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
   `first_name` varchar(100) DEFAULT NULL,
@@ -38,12 +42,13 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_id`, `username`, `password`, `first_name`, `last_name`) VALUES
-(87000, 'klintjohn60@gmail.com', '$2y$10$I5JX347ujLO4i566c8qFeOIyTRy0eSdmkY.rs8Jz40.TH/.7xYeEG', 'klintjohn', 'cagot'),
-(87001, 'weinnandhasanion@gmail.com', '$2y$10$gNnkz9JJ5nNYFRuMuPpFkuBha9A6KpXKZxcSES56MnJufxQDB/hLa', 'Weinnand', 'Hasanion'),
-(87002, 'babayaga@gmail.com', '$2y$10$aQT4kRsC5ZDz/ANKh4FsWOegfDzwcjWpz5la2dDxADVYObg8cYSga', 'baba', 'yaga'),
-(87003, 'johngaga@gmail.com', '$2y$10$nxC8Npzmdke8VdKSGlkbwubzZU/A8I51fSeJffKH9.HmMlE0qNQrG', 'john', 'gaga'),
-(87004, 'asddfsadfW@gmail.com', '$2y$10$JDl4LsFGus8aUJ0nLp49oeWjy0dMIAKlQbLRNzxOnnjAJXhhCe3Ce', 'asdfsadf', 'asdfasdfd');
+INSERT INTO `admin` (`admin_id`, `code`, `username`, `password`, `first_name`, `last_name`) VALUES
+(87000, 89260, 'klintjohn60@gmail.com', '$2y$10$Z.3YxbmENviUSDLVjoRe8.BsEa8h2hJkz54ELT1ChbnqKsnZJn4py', 'klintjohn', 'cagot'),
+(87001, 23123, 'weinnandhasanion@gmail.com', '$2y$10$gNnkz9JJ5nNYFRuMuPpFkuBha9A6KpXKZxcSES56MnJufxQDB/hLa', 'Weinnand', 'Hasanion'),
+(87002, 67452, 'babayaga@gmail.com', '$2y$10$aQT4kRsC5ZDz/ANKh4FsWOegfDzwcjWpz5la2dDxADVYObg8cYSga', 'baba', 'yaga'),
+(87003, 12345, 'johngaga@gmail.com', '$2y$10$nxC8Npzmdke8VdKSGlkbwubzZU/A8I51fSeJffKH9.HmMlE0qNQrG', 'john', 'gaga'),
+(87004, 12345, 'asddfsadfW@gmail.com', '$2y$10$JDl4LsFGus8aUJ0nLp49oeWjy0dMIAKlQbLRNzxOnnjAJXhhCe3Ce', 'asdfsadf', 'asdfasdfd'),
+(87005, 27306, 'johndoe@gmail.com', '$2y$10$0u2yJE.Xm75IDvcxzZ0HbuWPe43zx/agBnP5vAUNZwO15MtNWQ5ZG', 'john', 'doe');
 
 -- --------------------------------------------------------
 
@@ -84,7 +89,7 @@ INSERT INTO `inventory` (`inventory_id`, `inventory_name`, `inventory_category`,
 (2020, '25 lbs dumbbell', 'Weight Equipment', 12, NULL, NULL, '25 pound dumbbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '25dumbbell.jpg'),
 (2021, 'Barbell bar', 'Weight Equipment', 6, NULL, NULL, 'Adjustable barbell bars.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', 'barbell bar.jpg'),
 (2022, '5 lbs weight disc', 'Weight Equipment', 6, NULL, NULL, '5 pound weight discs for adjustable barbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '5 plate.jpg'),
-(2023, '10 lbs weight disc', 'Weight Equipment', 10, NULL, NULL, '10 pound weight discs for adjustable barbells.', 'deleted', '2021-05-02', 'klintjohn cagot', '02:39:46', '2021-03-20', '10plate.jpg');
+(2023, '10 lbs weight disc', 'Weight Equipment', 10, NULL, NULL, '10 pound weight discs for adjustable barbells.', 'notdeleted', NULL, 'klintjohn cagot', NULL, '2021-03-20', '10plate.jpg');
 
 -- --------------------------------------------------------
 
@@ -141,7 +146,10 @@ INSERT INTO `logtrail` (`login_id`, `admin_id`, `first_name`, `last_name`, `date
 (35, 87000, 'klintjohn', 'cagot', '2021-05-02 02:20:11', '2021-05-02 02:48:56'),
 (36, 87000, 'klintjohn', 'cagot', '2021-05-02 02:49:00', '2021-05-02 02:50:03'),
 (37, 87000, 'klintjohn', 'cagot', '2021-05-02 02:50:05', '2021-05-02 02:51:45'),
-(38, 87000, 'klintjohn', 'cagot', '2021-05-02 03:02:01', NULL);
+(38, 87000, 'klintjohn', 'cagot', '2021-05-02 03:02:01', '2021-05-02 05:20:10'),
+(39, 87000, 'klintjohn', 'cagot', '2021-05-03 02:14:07', '2021-05-03 02:39:23'),
+(40, 87000, 'klintjohn', 'cagot', '2021-05-03 02:42:56', '2021-05-03 02:44:23'),
+(41, 87000, 'klintjohn', 'cagot', '2021-05-03 02:44:34', '2021-05-03 04:40:23');
 
 -- --------------------------------------------------------
 
@@ -523,7 +531,21 @@ INSERT INTO `logtrail_doing` (`logtrail_doing_id`, `login_id`, `admin_id`, `memb
 (354, 38, 87000, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Recovered a trainer', 'Trainers', '03:09 AM', NULL, NULL, NULL, NULL),
 (355, 38, 87000, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Deleted a trainer', 'Trainers', '03:09 AM', NULL, NULL, NULL, NULL),
 (356, 38, 87000, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Deleted a trainer', 'Trainers', '03:09 AM', NULL, NULL, NULL, NULL),
-(357, 38, 87000, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Recovered a trainer', 'Trainers', '03:09 AM', NULL, NULL, NULL, NULL);
+(357, 38, 87000, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Recovered a trainer', 'Trainers', '03:09 AM', NULL, NULL, NULL, NULL),
+(358, 39, 87000, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Updated a Trainer ', 'Trainers', '02:14 AM', NULL, NULL, NULL, NULL),
+(359, 39, 87000, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Recovered a trainer', 'Trainers', '02:17 AM', NULL, NULL, NULL, NULL),
+(360, 39, 87000, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Deleted a trainer', 'Trainers', '02:17 AM', NULL, NULL, NULL, NULL),
+(361, 39, 87000, 1921681087, NULL, NULL, NULL, NULL, 'Elton', 'Lyons', 'Deleted an account from regular table', 'Members', '02:19 AM', NULL, NULL, NULL, NULL),
+(362, 39, 87000, 1921681102, NULL, NULL, NULL, NULL, 'george', 'harrison', 'Deleted an account from walk-in table', 'Members', '02:20 AM', NULL, NULL, NULL, NULL),
+(363, 39, 87000, 1921681092, NULL, NULL, NULL, NULL, 'Hammett', 'Vaughn', 'Deleted an account from walk-in table', 'Members', '02:21 AM', NULL, NULL, NULL, NULL),
+(364, 39, 87000, 1921681102, NULL, NULL, NULL, NULL, 'george', 'harrison', 'Recover an account to Walk-in table', 'Members', '02:21 AM', NULL, NULL, NULL, NULL),
+(365, 39, 87000, 1921681085, NULL, NULL, NULL, NULL, 'Ciaran', 'Kinney', 'Paid both Annual Membership and Monthly Subscription', 'Members', '02:23 AM', NULL, NULL, NULL, NULL),
+(366, 39, 87000, 1921681085, NULL, NULL, NULL, NULL, 'Ciaran', 'Kinney', 'Activated the account', 'Members', '02:23 AM', NULL, NULL, NULL, NULL),
+(367, 39, 87000, 1921681085, NULL, NULL, NULL, NULL, 'Ciaran', 'Kinney', 'Activated the account', 'Members', '02:23 AM', NULL, NULL, NULL, NULL),
+(368, 39, 87000, 1921681085, NULL, NULL, NULL, NULL, 'Ciaran', 'Kinney', 'Deactivated the Account', 'Members', '02:25 AM', NULL, NULL, NULL, NULL),
+(369, 39, 87000, NULL, 3, NULL, NULL, NULL, 'asfsafsaf', NULL, 'Deleted the program', 'Programs', '02:26 AM', NULL, NULL, NULL, NULL),
+(370, 39, 87000, 1921681092, NULL, NULL, NULL, NULL, 'Hammett', 'Vaughn', 'Recover an account to Walk-in table', 'Members', '02:27 AM', NULL, NULL, NULL, NULL),
+(371, 39, 87000, NULL, NULL, NULL, 2023, NULL, '10 lbs weight disc', NULL, 'Recover an inventory', 'Inventory', '02:36 AM', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -639,19 +661,19 @@ INSERT INTO `member` (`member_id`, `first_name`, `last_name`, `username`, `passw
 (1921681082, 'Jared', 'Mullins', NULL, NULL, 'M', '1999-11-22', 'in@semut.co.uk', '09808136994', 'Not Paid', '2019-02-28', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '661-542 Vulputate St.', 'active', 2, ''),
 (1921681083, 'Giacomo', 'Mcgowan', NULL, NULL, 'F', '1982-11-15', 'Nulla@eu.ca', '09380918963', 'Not Paid', '2020-08-26', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #340-2379 Massa. St.', 'active', 2, ''),
 (1921681084, 'Hamilton', 'Bernard', NULL, NULL, 'F', '1994-02-06', 'Donec.tempor.est@nequeseddictum.com', '09769927909', 'Not Paid', '2019-04-22', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '5262 Mi Road', 'active', 2, ''),
-(1921681085, 'Ciaran', 'Kinney', NULL, NULL, 'M', '1992-02-11', 'a@Etiamimperdiet.ca', '09692243138', 'Not Paid', '2020-01-15', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '526 Mollis Ave', 'active', 2, ''),
+(1921681085, 'Ciaran', 'Kinney', '1921681085', '$2y$10$QYj6r5trgIxw0HzGCthZ1OGY4JG.B5fYI59./S3W5f/dx8uVG.bCm', 'M', '1992-02-11', 'a@Etiamimperdiet.ca', '09692243138', 'Paid', '2020-01-15', NULL, NULL, 'false', 'false', '2021-05-03', '2021-05-03', '2021-06-02', '2021-05-03', '2022-05-03', NULL, 'Regular', '526 Mollis Ave', 'active', 2, ''),
 (1921681086, 'Ishmael', 'Davidson', NULL, NULL, 'F', '1973-03-05', 'massa.Mauris.vestibulum@Donecest.ca', '09315304442', 'Not Paid', '2019-04-29', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '6371 Malesuada St.', 'active', 1, ''),
-(1921681087, 'Elton', 'Lyons', NULL, NULL, 'M', '1973-10-21', 'in@gravidanunc.ca', '09276062812', 'Expired', '2020-07-24', NULL, NULL, 'false', 'false', NULL, '2021-02-23', '2021-03-25', '2021-02-23', '2022-02-23', NULL, 'Regular', 'P.O. Box 902, 1824 Tellus St.', 'active', 2, ''),
+(1921681087, 'Elton', 'Lyons', NULL, NULL, 'M', '1973-10-21', 'in@gravidanunc.ca', '09276062812', 'Expired', '2020-07-24', '2021-05-03', '02:19:22', 'false', 'true', NULL, '2021-02-23', '2021-03-25', '2021-02-23', '2022-02-23', 'klintjohn cagot', 'Regular', 'P.O. Box 902, 1824 Tellus St.', 'inactive', 2, ''),
 (1921681088, 'Burke', 'Good', NULL, NULL, 'M', '1990-08-06', 'orci.Phasellus@Proinsedturpis.org', '09905620678', 'Not Paid', '2021-01-21', NULL, '23:52:02', 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 923, 1396 Rhoncus. Road', 'active', 2, ''),
 (1921681089, 'Oleg', 'Whitley', NULL, NULL, 'F', '2000-02-12', 'penatibus.et@tellusnon.co.uk', '09872820215', 'Not Paid', '2020-10-03', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 417, 9010 Aliquam St.', 'active', 1, ''),
 (1921681090, 'Honorato', 'Barr', NULL, NULL, 'M', '1989-09-06', 'non.vestibulum@maurisid.com', '09170867269', 'Not Paid', '2019-03-15', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 672, 4154 Pede, St.', 'active', 1, ''),
 (1921681091, 'Josiah', 'Luna', NULL, NULL, 'F', '1985-02-26', 'a@nequeNullamnisl.edu', '09141565157', 'Expired', '2018-10-30', '2021-05-02', '03:08:38', 'false', 'true', NULL, '2021-02-23', '2021-03-25', '2021-02-23', '2022-02-23', 'klintjohn cagot', 'Regular', '7983 Elementum Avenue', 'inactive', 2, ''),
-(1921681092, 'Hammett', 'Vaughn', NULL, NULL, 'F', '1998-10-06', 'aliquet.Proin.velit@atarcu.com', '09495661215', 'Not Paid', '2018-12-16', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '676 Penatibus Avenue', 'active', 2, ''),
+(1921681092, 'Hammett', 'Vaughn', NULL, NULL, 'F', '1998-10-06', 'aliquet.Proin.velit@atarcu.com', '09495661215', 'Not Paid', '2018-12-16', '2021-05-03', '02:21:44', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'klintjohn cagot', 'Walk-in', '676 Penatibus Avenue', 'active', 2, ''),
 (1921681093, 'John', 'Lennon', NULL, NULL, 'M', '1985-01-01', 'john@gmail.com', '09135426654', 'Not Paid', '2021-04-30', '2021-05-02', '03:08:34', 'false', 'true', NULL, NULL, NULL, NULL, NULL, 'klintjohn cagot', 'Regular', 'Liverpool', 'inactive', 1, ''),
 (1921681094, 'Ringo', 'Star', NULL, NULL, 'M', '1999-01-01', 'ringo@gmail.com', '09203165455', 'Paid', '2021-04-30', '2021-05-02', '03:08:31', 'false', 'true', NULL, '2021-05-01', '2021-06-30', '2021-04-30', '2022-04-30', 'klintjohn cagot', 'Regular', 'Liverpool', 'inactive', 1, ''),
 (1921681100, 'check', 'check', NULL, NULL, 'M', '1999-11-11', 'check@check.com', '09000000001', 'Paid', '2021-05-01', '2021-05-02', '03:08:28', 'false', 'true', NULL, '2021-05-01', '2021-05-31', '2021-05-01', '2022-05-01', 'klintjohn cagot', 'Regular', 'check', 'inactive', NULL, ''),
 (1921681101, 'asdf', 'qwer', NULL, NULL, 'M', '1999-11-11', 'asdf@gmail.com', '09125124411', 'Not Paid', '2021-05-01', '2021-05-02', '03:02:40', 'false', 'true', NULL, NULL, NULL, NULL, NULL, 'klintjohn cagot', 'Regular', 'asdfqwer', 'inactive', 1, ''),
-(1921681102, 'george', 'harrison', NULL, NULL, 'M', '1988-01-01', 'geoarge@gmail.com', '09201115421', 'Not Paid', '2021-05-01', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'liverpool', 'active', NULL, '');
+(1921681102, 'george', 'harrison', NULL, NULL, 'M', '1988-01-01', 'geoarge@gmail.com', '09201115421', 'Not Paid', '2021-05-01', '2021-05-03', '02:20:16', 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'liverpool', 'active', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -827,7 +849,9 @@ INSERT INTO `paymentlog` (`payment_id`, `member_id`, `first_name`, `last_name`, 
 (79, 1921681100, 'check', 'check', 'Regular', 'Monthly Subscription', 'Cash', '2021-05-01', '10:16 PM', '750', NULL, NULL, 'N/A', NULL, NULL),
 (80, 1921681100, 'check', 'check', 'Regular', 'Annual Membership', 'Cash', '2021-05-01', '10:16 PM', '200', NULL, NULL, NULL, NULL, NULL),
 (81, 1921681100, 'check', 'check', 'Regular', 'Program Fee', 'Cash', '2021-05-01', '10:23 PM', '30', NULL, NULL, NULL, NULL, NULL),
-(83, 1921681094, 'Ringo', 'Star', 'Regular', 'Monthly Subscription', 'Cash', '2021-05-01', '11:17 PM', '705', 'Gaining', '30', 'March-May Promo', NULL, NULL);
+(83, 1921681094, 'Ringo', 'Star', 'Regular', 'Monthly Subscription', 'Cash', '2021-05-01', '11:17 PM', '705', 'Gaining', '30', 'March-May Promo', NULL, NULL),
+(84, 1921681085, 'Ciaran', 'Kinney', 'Regular', 'Monthly Subscription', 'Cash', '2021-05-03', '02:23 AM', '780', 'Reducing', '30', 'N/A', NULL, NULL),
+(85, 1921681085, 'Ciaran', 'Kinney', 'Regular', 'Annual Membership', 'Cash', '2021-05-03', '02:23 AM', '200', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -878,7 +902,7 @@ CREATE TABLE `program` (
 INSERT INTO `program` (`program_id`, `admin_id`, `trainer_id`, `program_name`, `program_description`, `program_status`, `date_added`, `time_added`, `admin_delete`, `date_deleted`, `time_deleted`, `amount`, `upper_1_day_1`, `upper_2_day_1`, `upper_3_day_1`, `upper_1_day_2`, `upper_2_day_2`, `upper_3_day_2`, `upper_1_day_3`, `upper_2_day_3`, `upper_3_day_3`, `lower_1_day_1`, `lower_2_day_1`, `lower_3_day_1`, `lower_1_day_2`, `lower_2_day_2`, `lower_3_day_2`, `lower_1_day_3`, `lower_2_day_3`, `lower_3_day_3`, `abdominal_day_1`, `abdominal_day_2`, `abdominal_day_3`) VALUES
 (1, 87001, 1512, 'Gaining', 'This is a program for members who aim to gain weight and mass.', 'active', '2021-02-09', '19:30:00', NULL, NULL, '00:00:00', 30, 1, 2, 3, 4, 5, 6, 7, 8, 2, 9, 10, 11, 12, 13, 14, 15, 9, 11, 16, 19, 20),
 (2, 87001, 1514, 'Reducing', 'This program is for reducing weight.', 'active', '2021-02-15', '12:14:00', NULL, NULL, '00:00:00', 30, 1, 2, 3, 4, 5, 6, 7, 8, 1, 9, 10, 11, 12, 13, 14, 15, 9, 10, 21, 20, 18),
-(3, 87001, 1514, 'asfsafsaf', 'sdfsadhfsadfhsladkfhsadflkashflsakhflaskhfadslfhsalkdfh', 'active', '2021-03-16', '06:04:00', NULL, NULL, '00:00:00', NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 16, 16, 16),
+(3, 87001, 1514, 'asfsafsaf', 'sdfsadhfsadfhsladkfhsadflkashflsakhflaskhfadslfhsalkdfh', 'inactive', '2021-03-16', '06:04:00', 'klintjohn cagot', '2021-05-03', '02:26:13', NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 16, 16, 16),
 (4, 87001, 1514, 'Crossfit', 'This is for members who want to try crossfit.', 'inactive', '2021-04-26', '11:32:00', 'klintjohn cagot', '2021-05-02', '03:08:46', 30, 1, 3, 2, 4, 7, 4, 8, 7, 6, 9, 10, 11, 12, 9, 10, 15, 14, 13, 16, 20, 23);
 
 -- --------------------------------------------------------
@@ -988,8 +1012,8 @@ CREATE TABLE `trainer` (
 
 INSERT INTO `trainer` (`trainer_id`, `trainer_status`, `trainer_position`, `first_name`, `last_name`, `address`, `gender`, `phone`, `email`, `file`, `admin_delete`, `birthdate`, `date_hired`, `date_deleted`, `time_deleted`) VALUES
 (1512, 'active', 'junior', 'George', 'Vasquez', '2nd floor G7 Suites', 'M', '09453216542', 'leeapple619@gmail.com', NULL, NULL, '1985-01-01', '2021-02-23', NULL, NULL),
-(1513, 'active', 'junior', 'Greg', 'Ivor', 'Cebu City', 'M', '09994562154', 'greg@gmail.com', NULL, 'klintjohn cagot', '1990-02-16', '2021-02-23', NULL, NULL),
-(1514, 'deleted', 'junior', 'Reyland', 'Nazareth', 'Lapulapu City', 'M', '09164543211', 'reylandbogo@gmail.com', NULL, 'klintjohn cagot', '1977-09-23', '2021-02-23', '2021-05-02', '03:09:19');
+(1513, 'active', 'junior', 'Greg', 'Ivor', 'Cebu City', 'M', '09994562151', 'greg@gmail.com', NULL, 'klintjohn cagot', '1990-02-16', '2021-02-23', NULL, NULL),
+(1514, 'deleted', 'junior', 'Reyland', 'Nazareth', 'Lapulapu City', 'M', '09164543211', 'reylandbogo@gmail.com', NULL, 'klintjohn cagot', '1977-09-23', '2021-02-23', '2021-05-03', '02:17:36');
 
 --
 -- Indexes for dumped tables
@@ -1100,7 +1124,7 @@ ALTER TABLE `trainer`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87005;
+  MODIFY `admin_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87006;
 --
 -- AUTO_INCREMENT for table `inventory`
 --
@@ -1110,12 +1134,12 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `logtrail`
 --
 ALTER TABLE `logtrail`
-  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT for table `logtrail_doing`
 --
 ALTER TABLE `logtrail_doing`
-  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=358;
+  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=372;
 --
 -- AUTO_INCREMENT for table `member`
 --
@@ -1140,7 +1164,7 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `paymentlog`
 --
 ALTER TABLE `paymentlog`
-  MODIFY `payment_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `payment_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 --
 -- AUTO_INCREMENT for table `program`
 --

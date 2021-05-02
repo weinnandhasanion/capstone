@@ -25,7 +25,7 @@ $res = mysqli_query($conn, $sql);
   <link href="css/style.min.css" rel="stylesheet">
   <link rel="icon" href="../mobile/img/gym_logo.png">
   <link href="css/theme-colors.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
   <style>
     .bat button {
       background-color: #DF3A01;
@@ -510,6 +510,7 @@ $res = mysqli_query($conn, $sql);
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/mdb.min.js"></script>
   <script type="text/javascript" src="addvalidation.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
   <script>
     function logout(el) {
@@ -788,45 +789,89 @@ $res = mysqli_query($conn, $sql);
       });
     });
 
-    function deleted(el) {
-    let id = el.getAttribute('data-id');
-    console.log(id);
+ 
 
-    // AJAX Request
-    var r = confirm("Are you sure you want to delete this inventory?");
-    if (r == true) {
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          console.log((this.responseText));
-          alert("inventory successfully deleted!");
-          window.location.reload()
+  function deleted(el) {
+      let id = el.getAttribute('data-id');
+      console.log(id);
+
+      // AJAX Request
+      $.confirm({
+        closeIcon: true,
+        title: "Delete?",
+        content: "Are you sure you want to delete this inventory?",
+        buttons: {
+          confirm: {
+            btnClass: "btn-orange",
+            action: function() {
+              let req = new XMLHttpRequest();
+              req.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  console.log((this.responseText));
+                  $.alert({
+                    title: 'Success',
+                    content: 'inventory successfully deleted.',
+                    buttons: {
+                      ok: {
+                        text: 'OK',
+                        action: function() {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
+                }
+              }
+              req.open('GET', 'delete.php?id=' + id, true);
+              req.send();
+            }
+          }
         }
-      }
-      req.open('GET', 'delete.php?id=' + id, true);
-      req.send();
+      });
     }
-  }
+
+
 
   function recover(el) {
-    let id = el.getAttribute('data-id');
-    console.log(id);
+      let id = el.getAttribute('data-id');
+      console.log(id);
 
-    // AJAX Request
-    var r = confirm("Are you sure you want to recover this inventory?");
-    if (r == true) {
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          console.log((this.responseText));
-          alert("Inventory successfully recover!");
-          window.location.reload()
+      // AJAX Request
+      $.confirm({
+        closeIcon: true,
+        title: "Recover?",
+        content: "Are you sure you want to recover this inventory?",
+        buttons: {
+          confirm: {
+            btnClass: "btn-orange",
+            action: function() {
+              let req = new XMLHttpRequest();
+              req.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  console.log((this.responseText));
+                  $.alert({
+                    title: 'Success',
+                    content: 'inventory successfully recovered!',
+                    buttons: {
+                      ok: {
+                        text: 'OK',
+                        action: function() {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
+                }
+              }
+              req.open('GET', 'recover.php?id=' + id, true);
+              req.send();
+            }
+          }
         }
-      }
-      req.open('GET', 'recover.php?id=' + id, true);
-      req.send();
+      });
     }
-  }
+
+
   </script>
 </body>
 
