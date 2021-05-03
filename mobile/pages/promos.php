@@ -370,13 +370,14 @@ if(!isset($_SESSION["member_id"])) {
                     var self = this;
 
                     return $.post("./../functions/avail_promo.php", {id: id}, function (res) {
+                      console.log(res);
                       if(res == 1) {
                         self.setContent('Promo has not yet started!');
                       } else if(res == 2) {
                         self.setContent('Promo has already ended!');
                       } else if(res == 3) {
                         self.setContent('You have already availed this promo!');
-                      } else if(JSON.parse(res) == "permanent") {
+                      } else if(res == 5) {
                         self.setTitle('Send Identification Card');
                         self.setContent('You are about to avail a permanent promo. Availing permanent promos require you to send a request to the gym admin by uploading a verified ID depending on the promo requirements. Proceed?');
                         self.setBoxWidth('325px');

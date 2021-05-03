@@ -26,13 +26,16 @@ if(mysqli_num_rows($res) > 0) {
     } else if($date > $end) {
       echo 2;
     } else {
-      $res = mysqli_query($con, $avail);
-      if($res) {
-        echo $row["promo_name"];
-      }
+      $sql = "UPDATE memberpromos SET status = 'Removed' WHERE member_id = $memberId AND status = 'Active'";
+      if(mysqli_query($con, $sql)) {
+        $res = mysqli_query($con, $avail);
+        if($res) {
+          echo $row["promo_name"];
+        }
+      } echo mysqli_error($con);
     }
   } else {
-    echo json_encode("permanent");
+    echo 5;
   }
 }
 ?>
