@@ -18,6 +18,7 @@ if(!isset($_SESSION["member_id"])) {
   <link rel="stylesheet" href="./../css/mediaquery.css">
   <link rel="icon" href="./../img/gym_logo.png">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
   <style>
     .sub-cont {
@@ -82,29 +83,6 @@ if(!isset($_SESSION["member_id"])) {
   </style>
 </head>
 <body>
-  <div class="modal" id="promo-modal">
-    <div class="modal-lg" id="promo-modal-check" style="padding-bottom: 0">
-      <div class="close-modal">
-        <span href="#" onclick="closeModal()">&#x2716;</span>
-      </div>
-      <h2 id="promo-name"></h2>
-      <h4></h4>
-      <h4 class="fw-100" id="promo-date"></h4>
-      <hr>
-      <p id="promo-description"></p>
-      <div class="modal-footer-btn" style="flex-direction: column; justify-content: center; align-items: center; text-align: center">
-        <button class="btn btn-green" style="margin-bottom: 5px" id="avail-promo" onclick="availPromo(this)">Avail promo</button>
-      </div>
-    </div>
-  </div>
-  <div class="modal" id="avail-success">
-    <div class="modal-sm">
-      <div class="close-modal">
-        <span href="#" onclick="closeModal()">&#x2716;</span>
-      </div>
-      <h4 id="avail-message"></h4>
-    </div>
-  </div>
   <!-- Logout confirmation modal -->
   <div class="modal" id="logout-modal">
     <div class="modal-sm">
@@ -188,25 +166,13 @@ if(!isset($_SESSION["member_id"])) {
                   INNER JOIN promo AS P ON MP.promo_id = P.promo_id 
                   WHERE MP.member_id = '".$_SESSION["member_id"]."' AND MP.status = 'Active'"; 
           $res = mysqli_query($con, $sql);
-          if(mysqli_num_rows($res) == 1) {
+          if(mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
           
           ?>
           <h1 class="text-green" id="availed-promo" style="text-decoration: underline">
             <?php echo $row["promo_name"] ?>
           </h1>
-          <?php
-          } else if(mysqli_num_rows($res) == 2) {
-            $sql = "SELECT MP.*, P.promo_name, P.promo_type, P.amount 
-                  FROM memberpromos AS MP 
-                  INNER JOIN promo AS P ON MP.promo_id = P.promo_id 
-                  WHERE MP.member_id = '".$_SESSION["member_id"]."' AND MP.status = 'Active' AND P.promo_type = 'Seasonal'"; 
-            $res = mysqli_query($con, $sql);
-          
-            $row = mysqli_fetch_assoc($res);
-          
-          ?>
-          <h1 class="text-green" style="text-decoration: underline"><?php echo $row["promo_name"] ?></h1>
           <?php
           } else {
           ?>
@@ -226,20 +192,28 @@ if(!isset($_SESSION["member_id"])) {
           ?>
           <div class="promo-list-div text-primary shadow-1">
             <h3><?php echo $row["promo_name"] ?></h3>
-            <p><strong>P<?php echo $row["amount"] ?> off &#x00B7 </strong> 
+            <p><strong><?= $row["promo_type"] ?> &#x00B7 P<?php echo $row["amount"] ?> off </strong> 
             <?php 
-            $startDate = date("M d", strtotime($row["promo_starting_date"]));
-            $endDate = date("M d", strtotime($row["promo_ending_date"]));
-            echo $startDate?> - <?php echo $endDate ?>
+            if($row["promo_type"] == "Seasonal") {
+              $startDate = date("M d", strtotime($row["promo_starting_date"]));
+              $endDate = date("M d", strtotime($row["promo_ending_date"]));
+            ?>
+            <br>
+            <?= $startDate ?> - <?= $endDate ?>
+            <?php
+            } else {
+              echo "";
+            }
+            ?>
             </p>
-            <button class="btn btn-reg btn-red" data-id="<?php echo $row["promo_id"] ?>" onclick="showPromo(this)">View promo details</button>
+            <button class="btn btn-reg btn-red" data-id="<?php echo $row["promo_id"] ?>" data-name="<?= $row["promo_name"] ?>" onclick="showPromo(this)">View promo details</button>
           </div>
           <?php
             endwhile;
           } else {
           ?>
           <div class="no-promos-div text-disabled">
-            There are no seasonal promos available as of the moment.
+            There are no promos available as of the moment.
           </div>
           <?php
           }
@@ -250,58 +224,193 @@ if(!isset($_SESSION["member_id"])) {
   </main>
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
   <script src="./../js/sidebar.js"></script>
   <script>
     window.onload = () => {
       showPromo = (elem) => {
-        let promoModal = $('#promo-modal');
-        let promoName = $('#promo-name');
-        let promoDate = $('#promo-date');
-        let promoDesc = $('#promo-description');
-        let availBtn = $('#avail-promo');
         let id = elem.getAttribute('data-id');
+        let name = elem.getAttribute('data-name');
 
-        $.get("./../functions/promo_details.php?id=" + id, function(res) {
-          let data = JSON.parse(res);
+        $.confirm({
+          backgroundDismiss: true,
+          theme: 'modern',
+          useBootstrap: false,
+          boxWidth: '325px',
+          buttons: {
+            avail: {
+              text: 'avail promo',
+              btnClass: 'btn-red',
+              action: function () {
+                availPromo(id, name);
+              }
+            }
+          },
+          content: function () {
+            var self = this;
+            return $.get("./../functions/promo_details.php?id=" + id, function(res) {
+              let data = JSON.parse(res);
 
-          promoName.text(data.promo_name);
-          promoDate.text(`${data.promo_starting_date} - ${data.promo_ending_date}`);
-          promoDesc.text(data.promo_description);
-          availBtn.attr("data-id", data.promo_id);
-        }).then(() => {
-          promoModal.css("display", "flex");
-        });
-      }
+              self.setTitle(data.promo_name);
 
-      availPromo = (el) => {
-        let id = el.getAttribute('data-id');
-        $.post("./../functions/avail_promo.php", {id: id}, function(res) {
-          if(res == 1) {
-            $("#avail-message").removeClass("text-green").addClass("text-red").text("ERROR: Promo has not yet started!");
-            $("#avail-success").css("display", "flex");
-          } else if(res == 2) {
-            $("#avail-message").removeClass("text-green").addClass("text-red").text("ERROR: Promo has already ended!");
-            $("#avail-success").css("display", "flex");
-          } else if(res == 3) {
-            $("#avail-message").removeClass("text-green").addClass("text-red").text("ERROR: You have already availed this promo!");
-            $("#avail-success").css("display", "flex");
-          } else {
-            $("#avail-message").removeClass("text-red").addClass("text-green").text("Successfully availed promo!");
-            $("#availed-promo").addClass("text-green").text(res);
-            $("#avail-success").css("display", "flex");
+              if(data.active == "true") {
+                self.buttons.avail.disable();
+                self.buttons.avail.addClass('btn-disabled');
+                self.buttons.avail.removeClass('btn-red');
+              }
+
+              if(data.promo_type == "Permanent") {
+                self.setContent(`
+                <h4 class="fw-400">${data.promo_type}</h4>
+                <hr>
+                <p>${data.promo_description}</p>
+                `);
+              } else {
+                self.setContent(`
+                <h4 class="fw-400">${data.promo_type}</h4>
+                ${data.promo_starting_date} - ${data.promo_ending_date}</h4>
+                <hr>
+                <p>${data.promo_description}</p>
+                `);
+              }
+            });
           }
         });
       }
 
-      closeModal = () => {
-        document.getElementById('promo-modal').style.display = 'none';
-        $("#avail-success").css("display", "none");
+      availPromo = (id, name) => {
+        $.confirm({
+          theme: 'material',
+          boxWidth: '250px',
+          useBootstrap: false,
+          title: '',
+          content: function () {
+            var self = this;
+            return $.get("./../functions/check_if_has_promo.php", function (res) {
+              if(JSON.parse(res) == "true") {
+                self.setBoxWidth('325px');
+                self.setContent("You have an existing promo. If you avail this promo, you will lose your current promo and will have to re-avail should you wish to avail it again next time. Proceed?");
+              } else if(JSON.parse(res) == "false") {
+                self.close();
+                $.alert({
+                  theme: 'material',
+                  boxWidth: '250px',
+                  useBootstrap: false,
+                  title: 'Error',
+                  backgroundDismiss: true,
+                  buttons: {
+                    ok: {
+                      isHidden: true,
+                      btnClass: 'btn-green'
+                    }
+                  },
+                  content: function () {
+                    var self = this;
+
+                    return $.post("./../functions/avail_promo.php", {id: id}, function (res) {
+                      if(res == 1) {
+                        self.setContent('Promo has not yet started!');
+                      } else if(res == 2) {
+                        self.setContent('Promo has already ended!');
+                      } else if(res == 3) {
+                        self.setContent('You have already availed this promo!');
+                      } else {
+                        self.backgroundDismiss = false;
+                        self.buttons.ok.show();
+                        self.buttons.ok.setText('close');
+                        self.buttons.ok.action = function () {
+                          $("#availed-promo").addClass("text-green");
+                          $("#availed-promo").css("text-decoration", "underline");
+                          $("#availed-promo").text(res);                        
+                        }
+                        self.setTitle('Success');
+                        self.setContent('Successfully availed promo!');
+                      }
+                    });
+                  }
+                });
+              } else {
+                self.setContent(JSON.parse(res));
+                self.backgroundDismiss = true;
+                self.closeIcon = true;
+                self.buttons.proceed.hide();
+                self.buttons.cancel.hide();
+              }
+            });
+          },
+          buttons: {
+            proceed: {
+              btnClass: 'btn-red',
+              action: function () {
+                $.alert({
+                  theme: 'material',
+                  boxWidth: '250px',
+                  useBootstrap: false,
+                  title: 'Error',
+                  backgroundDismiss: true,
+                  buttons: {
+                    ok: {
+                      isHidden: true,
+                      btnClass: 'btn-green'
+                    },
+                    proceed: {
+                      isHidden: true,
+                      btnClass: 'btn-green',
+                      action: function () {
+                        window.location.href = "./send_promo_request.php?id=" + id;
+                      }
+                    },
+                    cancel: {
+                      isHidden: true,
+                      btnClass: 'btn-secondary',
+                      action: function () {}
+                    }
+                  },
+                  content: function () {
+                    var self = this;
+
+                    return $.post("./../functions/avail_promo.php", {id: id}, function (res) {
+                      if(res == 1) {
+                        self.setContent('Promo has not yet started!');
+                      } else if(res == 2) {
+                        self.setContent('Promo has already ended!');
+                      } else if(res == 3) {
+                        self.setContent('You have already availed this promo!');
+                      } else if(JSON.parse(res) == "permanent") {
+                        self.setTitle('Send Identification Card');
+                        self.setContent('You are about to avail a permanent promo. Availing permanent promos require you to send a request to the gym admin by uploading a verified ID depending on the promo requirements. Proceed?');
+                        self.setBoxWidth('325px');
+                        self.buttons.proceed.show();
+                        self.buttons.cancel.show();
+                        self.backgroundDismiss = false;
+                        self.closeIcon = true;
+                      } else {
+                        self.backgroundDismiss = false;
+                        self.buttons.ok.show();
+                        self.buttons.ok.setText('close');
+                        self.buttons.ok.action = function () {
+                          $("#availed-promo").addClass("text-green");
+                          $("#availed-promo").css("text-decoration", "underline");
+                          $("#availed-promo").text(res);
+                        }
+                        self.setTitle('Success');
+                        self.setContent('Successfully availed promo!');
+                      }
+                    });
+                  }
+                });
+              }
+            },
+            cancel: {
+              btnClass: 'btn-secondary',
+              action: function () {}
+            },
+          },
+        });
       }
 
       document.addEventListener('click', (evt) => {
         let target = evt.target;
-        let modal = document.getElementById('promo-modal');
-        let resModal = document.getElementById("avail-success");
         let checkModal = document.getElementById('promo-modal-check')
         let buttons = document.getElementsByClassName('btn btn-reg');
 
@@ -314,8 +423,6 @@ if(!isset($_SESSION["member_id"])) {
 
           target = target.parentNode;
         } while(target);
-        modal.style.display = 'none';
-        resModal.style.display = 'none';
       });
 
       $("#confirm-logout").on("click", function() {
