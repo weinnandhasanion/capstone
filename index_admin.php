@@ -21,8 +21,6 @@ if (isset($_SESSION["admin_id"])) {
 	<link href="css/mdb.min.css" rel="stylesheet">
 	<link href="css/style.min.css" rel="stylesheet">
 	<link rel="icon" href="./mobile/img/gym_logo.png">
-	<link href="css/index.css" rel="stylesheet">
-	<script src="js/prefixfree.min.js"></script>
 	<link href="index_admin.css" rel="stylesheet">
 	<link href="css/theme-colors.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
@@ -31,6 +29,10 @@ if (isset($_SESSION["admin_id"])) {
 </head>
 <style>
 	.jconfirm-content, .jconfirm-title {
+		color: black;
+	}
+
+	.fa.fa-spinner.fa-spin {
 		color: black;
 	}
 
@@ -123,11 +125,10 @@ if (isset($_SESSION["admin_id"])) {
 			<button type="button" onclick="register()" id="sort-inactive" class="btn btn-sm btn-outline-white">Sign Up</button>
 		</div> <br><br><br>
 		<!-- login process -->
-		<form action="login_process.php" method="post">
-			<input name="username" type="email" required placeholder="Email Address" class="input"><br>
-			<input name="password" type="password" required placeholder="Password" class="input" data-type="password"><br>
-			<input type="submit" value="Let me in">
-		</form>
+		<input name="username" id="login-email" type="email" required placeholder="Email Address" class="input"><br>
+		<input name="password" id="login-pword" type="password" required placeholder="Password" class="input" data-type="password"><br>
+		<input type="submit" id="login" value="Let me in">
+		<br>
 		<br>
 
 		<div class="forget-div">
@@ -146,14 +147,14 @@ if (isset($_SESSION["admin_id"])) {
 			<div>Fitness Gym</div>
 		</div>
 		<div class="btn-group" role="group" aria-label="Basic example" style="position: relative; left: 152px; top: 30px; cursor: pointer; width: 203px;">
-			<button type="button" id="sort-active" onclick="login()" class="btn btn-sm btn-outline-white">Sign In</button>
+			<button type="button" id="sort-active-lol" onclick="login()" class="btn btn-sm btn-outline-white">Sign In</button>
 			<button type="button" id="sort-inactive" class="btn btn-sm btn-white">Sign Up</button>
 		</div> <br><br><br>
 		<!-- registration process -->
-		<input name="first_name" type="text" required class="input" placeholder="Enter First name">
-		<input name="last_name" id="lastname" type="text" required class="input" placeholder="Enter Last name"><br><br>
-		<input name="username" type="email" required class="input" placeholder="Enter your Email address"><br>
-		<input name="password" type="password" required class="input" placeholder="Create your password"><br>
+		<input name="first_name" id="register-fname" type="text" required class="input" placeholder="Enter First name">
+		<input name="last_name" id="register-lname" type="text" required class="input" placeholder="Enter Last name"><br><br>
+		<input name="username" type="email" id="register-email" required class="input" placeholder="Enter your Email address"><br>
+		<input name="password" type="password" id="register-pword" required class="input" placeholder="Create your password"><br>
 		<input type="submit" id="register-admin" value="Register">
 	</div>
 
@@ -165,9 +166,91 @@ if (isset($_SESSION["admin_id"])) {
   <script type="text/javascript" src="validation.js"></script>
   <script src="./../js/pagination.js"></script>
 	<script>
+		// login ajax
+		$("#login").click(function () {
+			$.confirm({
+				type: 'modern',
+				buttons: {
+					close: {
+						btnClass: 'btn-danger',
+						action: function () {
+							$("#login-pword").val('');
+						}
+					}
+				},
+				content: function () {
+					var self = this;
+					return $.post(
+						"./login_process.php",
+						{
+							username: $("#login-email").val(),
+							password: $("#login-pword").val()
+						},
+						function (res) {
+							if(JSON.parse(res) == "success") {
+								self.setTitle('Success');
+								self.setIcon('fa fa-spinner fa-spin');
+								self.setContent('Please wait. You will be redirected to the dashboard.');
+								self.buttons.close.hide();
+								setTimeout(() => {
+									window.location.href = "./DASHBOARD/dashboard.php";
+								}, 2000);
+							} else {
+								self.setType('red');
+								self.setTitle('Error');
+								self.setContent(JSON.parse(res));
+							}
+						}
+					);
+				}
+			});
+		});
+
 		// register ajax
 		$("#register-admin").click(function () {
-			
+			$.confirm({
+				theme: 'modern',
+				buttons: {
+					close: {
+						btnClass: 'btn-danger',
+						action: function () {
+							$("#register-pword").val("");
+						}
+					},
+					confirm: {
+						text: 'ok',
+						btnClass: 'btn-success',
+						action: function () {
+							$("#sort-active-lol").click();
+						}
+					}
+				},
+				content: function () {
+					var self = this;
+					return $.post(
+						"./register_process.php",
+						{
+							first_name: $("#register-fname").val(),
+							last_name: $("#register-lname").val(),
+							username: $("#register-email").val(),
+							password: $("#register-pword").val(),
+						},
+						function (res) {
+							if(JSON.parse(res) == "success") {
+								self.buttons.close.hide();
+								self.setType('green');
+								self.setTitle('Success');
+								self.setContent(`You have successfully registered. You may now log in.`);
+							} else {
+								self.buttons.confirm.hide();
+								self.setType('red');
+								self.setTitle('Error');
+								self.setContent(JSON.parse(res));
+							}
+						}
+					);
+				}
+			});
 		});
 
 		function register() {

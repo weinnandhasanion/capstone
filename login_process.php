@@ -10,10 +10,7 @@ $auth = "SELECT * FROM `admin` WHERE username = '$user'";
 $result = mysqli_query($conn,$auth);
 
 if(!mysqli_num_rows($result) > 0){
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Account does not exist');
-    window.location.href='./index_admin.php';
-    </script>");
+    echo json_encode("Account does not exist");
 }else{
     $row =  mysqli_fetch_assoc($result);
 
@@ -24,12 +21,13 @@ if(!mysqli_num_rows($result) > 0){
         VALUES('".$row["admin_id"]."','".$row["first_name"]."','".$row["last_name"]."','".date("Y-m-d H:i:s")."')";
         $query_run1 = mysqli_query($conn, $sql1); 
         
-        header('Location: ./DASHBOARD/dashboard.php?success');     
+        if($query_run1) {
+            echo json_encode("success");
+        } else {
+            echo json_encode(mysqli_error($conn));
+        }
     }else{
-        echo ("<script LANGUAGE='JavaScript'>
-        window.alert('Incorrect password');
-        window.location.href = './index_admin.php';
-        </script>");
+        echo json_encode("Incorrect password. Please try again.");
     }
 }
 ?>

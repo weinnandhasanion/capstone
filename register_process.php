@@ -21,50 +21,23 @@ require('connect.php');
 	$result1 = mysqli_query($conn, $check_duplicate_fullname);
 	$count1 = mysqli_num_rows($result1);
 
-	if($count > 0){
-		echo ("<script LANGUAGE='JavaScript'>
-				    window.alert('Username is already taken. Please use another username.');
-				    window.location.href='index_admin.php';
-				    </script>");
+	if($pass == "" || empty($pass)) {
+		echo json_encode("Please enter a password.");
+	}
+	else if($count > 0){
+		echo json_encode("Email is already taken. Please use another email.");
 		return false;
-    }else if($count1 > 0){
-		echo ("<script LANGUAGE='JavaScript'>
-				    window.alert('your first name and last name is already taken');
-				    window.location.href='index_admin.php';
-			</script>");
-			return false;
-	}else if(strlen($fname) > 20){
-    			echo ("<script LANGUAGE='JavaScript'>
-    			window.alert('Invalid first name. Maximum of 20 letters only');
-    			window.location.href='index_admin.php';
-    			</script>");
-	}else if(strlen($lname) > 20){
-    			echo ("<script LANGUAGE='JavaScript'>
-    			window.alert('Invalid last name. Maximum of 20 letters only');
-    			window.location.href='index_admin.php';
-    			</script>");
-	}else if(strlen($pass) > 40){
-    			echo ("<script LANGUAGE='JavaScript'>
-    			window.alert('Invalid password. Maximum of 40 letters only');
-    			window.location.href='index_admin.php';
-    			</script>");
-	}else if(strlen($user) > 40){
-    			echo ("<script LANGUAGE='JavaScript'>
-    			window.alert('Invalid email address. Maximum of 40 letters only');
-    			window.location.href='index_admin.php';
-    			</script>");
-    }else if (preg_match($fullnameRegex, $fname, $match)){
-        echo ("<script LANGUAGE='JavaScript'>
-            		window.alert('Your first name has numbers.. please check your inputs.');
-            		window.location.href='index_admin.php';
-            </script>");
-			return false;
+	}else if($count1 > 0){
+		echo json_encode("Your name is already taken. Please log in to your existing account.");
+		return false;
+	}else if(strlen($pass) > 20){
+		echo json_encode("Password is too long. Maximum of 20 characters only.");
+	}else if (preg_match($fullnameRegex, $fname, $match)){
+		echo json_encode("Please enter a valid first name.");
+		return false;
 	}else if (preg_match($fullnameRegex, $lname, $match)){
-        echo ("<script LANGUAGE='JavaScript'>
-           			window.alert('Your last name has numbers.. please check your inputs.');
-            		window.location.href='index_admin.php';
-            </script>");
-			return false;
+		echo json_encode("Please enter a valid last name.");
+		return false;
 	}else{
        /*Inserting the Data inputed*/
 		$passw=password_hash($pass, PASSWORD_DEFAULT);
@@ -72,12 +45,9 @@ require('connect.php');
 				VALUES ('$fname', '$lname', '$user', '$passw', ".intval(rand(10000, 99999)).")";
 		$query_run = mysqli_query($conn, $sql);
 		if($query_run){
-			echo ("<script LANGUAGE='JavaScript'>
-				    window.alert('You are now Registered.');
-					window.location.href='index_admin.php';
-				    </script>");
+			echo json_encode("success");
 		}else{	
-			echo "failure to register";	
+			echo json_encode(mysqli_error($conn));
 		};
 	}
 	
