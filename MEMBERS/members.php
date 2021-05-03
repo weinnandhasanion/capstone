@@ -2947,6 +2947,7 @@
 
   //---------------------------------------------------------------------------VIEW UPDATE PROGRAM INFO 
   // View member Modal
+
   function displayUpdateProgramInformation(el) {
     let id = el.getAttribute('data-id');
 
@@ -3091,27 +3092,46 @@
     }
   }
 
-  // update regular member Modal
+ 
+
   function updateDetailsWalkin(el) {
-    let id = el.getAttribute('data-id');
+      let id = el.getAttribute('data-id');
+      console.log(id);
 
-    // AJAX Request
-    var r = confirm("Are you sure you want to update to Regular member?");
-    if (r == true) {
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-
-        if (this.readyState == 4 && this.status == 200) {
-          alert("Member successfully update to Regular!");
-          window.location.reload()
+      // AJAX Request
+      $.confirm({
+        closeIcon: true,
+        title: "Update?",
+        content: "Are you sure you want to update to Regular member?",
+        buttons: {
+          confirm: {
+            btnClass: "btn-orange",
+            action: function() {
+              let req = new XMLHttpRequest();
+              req.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  console.log((this.responseText));
+                  $.alert({
+                    title: 'Success',
+                    content: 'Member successfully update to Regular!',
+                    buttons: {
+                      ok: {
+                        text: 'OK',
+                        action: function() {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
+                }
+              }
+              req.open('GET', 'update_walkin_member.php?id=' + id, true);
+              req.send();
+            }
+          }
         }
-      }
-
-      req.open('GET', 'update_walkin_member.php?id=' + id, true);
-      req.send();
-
+      });
     }
-  }
 
   //------------------------------------------------------------------------------ DELETE JS
 
@@ -3135,7 +3155,7 @@
                   console.log((this.responseText));
                   $.alert({
                     title: 'Success',
-                    content: 'Regular member successfully deleted.',
+                    content: 'Regular Member successfully deleted.',
                     buttons: {
                       ok: {
                         text: 'OK',
@@ -3154,9 +3174,9 @@
         }
       });
     }
-
   //---------------------------------------------------------------------WALK IN DELETE JS
-  
+ 
+
   function deleted_walkin(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
@@ -3176,7 +3196,7 @@
                   console.log((this.responseText));
                   $.alert({
                     title: 'Success',
-                    content: 'Walk-in member successfully deleted.',
+                    content: 'Walk-in Member successfully deleted.',
                     buttons: {
                       ok: {
                         text: 'OK',
@@ -3220,10 +3240,62 @@
     }
   }
 
- 
+  function activate_account(el) {
+      let id = el.getAttribute('data-id');
+      console.log(id);
 
+      // AJAX Request
+      $.confirm({
+        closeIcon: true,
+        title: "Delete?",
+        content: "Are you sure you want activate this account?",
+        buttons: {
+          confirm: {
+            btnClass: "btn-orange",
+            action: function() {
+              let req = new XMLHttpRequest();
+              req.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  console.log((this.responseText));
+                  if (JSON.parse(this.responseText) == "failure") {
+                    $.alert({
+                    title: 'failure',
+                    content: 'Can not activate account: User must have an active membership.',
+                    buttons: {
+                      ok: {
+                        text: 'OK',
+                        action: function() {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
+                  } else {
+                  $.alert({
+                    title: 'Success',
+                    content: 'Account successfully activated!',
+                    buttons: {
+                      ok: {
+                        text: 'OK',
+                        action: function() {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
+                  }
+
+                 
+                }
+              }
+              req.open('GET', 'activate_account.php?id=' + id, true);
+              req.send();
+            }
+          }
+        }
+      });
+    }
   //---------------------------------------------------------------------------Deactivate Account
- 
 
   function deactivate_account(el) {
       let id = el.getAttribute('data-id');
@@ -3263,6 +3335,7 @@
         }
       });
     }
+
 
   //------------------------------------------------------------------------REMOVE PROGRAM JS
 
@@ -3305,9 +3378,8 @@
       });
     }
 
-
-
   //------------------------------------------------------------------------------ RECOVER JS
+  
 
   function recover(el) {
       let id = el.getAttribute('data-id');
@@ -3328,7 +3400,7 @@
                   console.log((this.responseText));
                   $.alert({
                     title: 'Success',
-                    content: 'Member successfully recover!',
+                    content: 'Member successfully recovered!',
                     buttons: {
                       ok: {
                         text: 'OK',
@@ -3348,9 +3420,10 @@
       });
     }
 
-
   //------------------------------------------------------------------------------ RECOVERPROGRAM JS
 
+
+  
   function recoverProgram(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
@@ -3370,7 +3443,7 @@
                   console.log((this.responseText));
                   $.alert({
                     title: 'Success',
-                    content: 'Program successfully recover!',
+                    content: 'Program successfully recovered!',
                     buttons: {
                       ok: {
                         text: 'OK',
@@ -3389,6 +3462,7 @@
         }
       });
     }
+
   // Show/Hide Regular Monthly Payment Calculator
   document.getElementById('showCalc').addEventListener('click', () => {
     let calc = document.getElementById('calculator');
