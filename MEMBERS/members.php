@@ -3114,42 +3114,87 @@
   }
 
   //------------------------------------------------------------------------------ DELETE JS
-  function deleted(el) {
-    let id = el.getAttribute('data-id');
 
-    // AJAX Request
-    var r = confirm("Are you sure you want to delete this member from regular?");
-    if (r == true) {
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          alert("Member successfully deleted!");
-          window.location.reload()
+
+  function deleted(el) {
+      let id = el.getAttribute('data-id');
+      console.log(id);
+
+      // AJAX Request
+      $.confirm({
+        closeIcon: true,
+        title: "Delete?",
+        content: "Are you sure you want to delete this member from regular?",
+        buttons: {
+          confirm: {
+            btnClass: "btn-orange",
+            action: function() {
+              let req = new XMLHttpRequest();
+              req.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  console.log((this.responseText));
+                  $.alert({
+                    title: 'Success',
+                    content: 'Regular member successfully deleted.',
+                    buttons: {
+                      ok: {
+                        text: 'OK',
+                        action: function() {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
+                }
+              }
+              req.open('GET', 'delete.php?id=' + id, true);
+              req.send();
+            }
+          }
         }
-      }
-      req.open('GET', 'delete.php?id=' + id, true);
-      req.send();
+      });
     }
-  }
 
   //---------------------------------------------------------------------WALK IN DELETE JS
+  
   function deleted_walkin(el) {
-    let id = el.getAttribute('data-id');
+      let id = el.getAttribute('data-id');
+      console.log(id);
 
-    // AJAX Request
-    var r = confirm("Are you sure you want to delete this member from walk-in?");
-    if (r == true) {
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          alert("Member successfully deleted!");
-          window.location.reload()
+      // AJAX Request
+      $.confirm({
+        closeIcon: true,
+        title: "Delete?",
+        content: "Are you sure you want to delete this member from walk-in?",
+        buttons: {
+          confirm: {
+            btnClass: "btn-orange",
+            action: function() {
+              let req = new XMLHttpRequest();
+              req.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  console.log((this.responseText));
+                  $.alert({
+                    title: 'Success',
+                    content: 'Walk-in member successfully deleted.',
+                    buttons: {
+                      ok: {
+                        text: 'OK',
+                        action: function() {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
+                }
+              }
+              req.open('GET', 'delete_walkin.php?id=' + id, true);
+              req.send();
+            }
+          }
         }
-      }
-      req.open('GET', 'delete_walkin.php?id=' + id, true);
-      req.send();
+      });
     }
-  }
 
   //---------------------------------------------------------------------------Activate Account
   function activate_account(el) {
@@ -3174,85 +3219,176 @@
       req.send();
     }
   }
-  //---------------------------------------------------------------------------Deactivate Account
-  function deactivate_account(el) {
-    let id = el.getAttribute('data-id');
-    let lastnameID = el.getAttribute('lastname-id');
 
-    // AJAX Request
-    var r = confirm("Are you sure you want to Deactivate this member account?");
-    if (r == true) {
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          alert("Account successfully deactivated!");
-          window.location.reload()
+ 
+
+  //---------------------------------------------------------------------------Deactivate Account
+ 
+
+  function deactivate_account(el) {
+      let id = el.getAttribute('data-id');
+      console.log(id);
+
+      // AJAX Request
+      $.confirm({
+        closeIcon: true,
+        title: "Deactivate?",
+        content: "Are you sure you want to Deactivate this member account?",
+        buttons: {
+          confirm: {
+            btnClass: "btn-orange",
+            action: function() {
+              let req = new XMLHttpRequest();
+              req.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  console.log((this.responseText));
+                  $.alert({
+                    title: 'Success',
+                    content: 'Account successfully deactivated!',
+                    buttons: {
+                      ok: {
+                        text: 'OK',
+                        action: function() {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
+                }
+              }
+              req.open('GET', 'deactivate_account.php?id=' + id, true);
+              req.send();
+            }
+          }
         }
-      }
-      req.open('GET', 'deactivate_account.php?id=' + id, true);
-      req.send();
+      });
     }
-  }
 
   //------------------------------------------------------------------------REMOVE PROGRAM JS
-  function removeProgram(el) {
-    let id = el.getAttribute('data-id');
 
-    // AJAX Request
-    var r = confirm("Are you sure you want to delete this Program?");
-    if (r == true) {
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          alert("Program successfully deleted!");
-          window.location.reload()
+  function removeProgram(el) {
+      let id = el.getAttribute('data-id');
+      console.log(id);
+
+      // AJAX Request
+      $.confirm({
+        closeIcon: true,
+        title: "Delete?",
+        content: "Are you sure you want to delete this Program?",
+        buttons: {
+          confirm: {
+            btnClass: "btn-orange",
+            action: function() {
+              let req = new XMLHttpRequest();
+              req.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  console.log((this.responseText));
+                  $.alert({
+                    title: 'Success',
+                    content: 'Program successfully deleted!',
+                    buttons: {
+                      ok: {
+                        text: 'OK',
+                        action: function() {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
+                }
+              }
+              req.open('GET', 'removeProgram.php?id=' + id, true);
+              req.send();
+            }
+          }
         }
-      }
-      req.open('GET', 'removeProgram.php?id=' + id, true);
-      req.send();
+      });
     }
-  }
 
 
 
   //------------------------------------------------------------------------------ RECOVER JS
-  function recover(el) {
-    let id = el.getAttribute('data-id');
 
-    // AJAX Request
-    var r = confirm("Are you sure you want to recover this member?");
-    if (r == true) {
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          alert("Member successfully recover!");
-          window.location.reload()
+  function recover(el) {
+      let id = el.getAttribute('data-id');
+      console.log(id);
+
+      // AJAX Request
+      $.confirm({
+        closeIcon: true,
+        title: "Recover?",
+        content: "Are you sure you want to recover this member?",
+        buttons: {
+          confirm: {
+            btnClass: "btn-orange",
+            action: function() {
+              let req = new XMLHttpRequest();
+              req.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  console.log((this.responseText));
+                  $.alert({
+                    title: 'Success',
+                    content: 'Member successfully recover!',
+                    buttons: {
+                      ok: {
+                        text: 'OK',
+                        action: function() {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
+                }
+              }
+              req.open('GET', 'recover.php?id=' + id, true);
+              req.send();
+            }
+          }
         }
-      }
-      req.open('GET', 'recover.php?id=' + id, true);
-      req.send();
+      });
     }
-  }
+
 
   //------------------------------------------------------------------------------ RECOVERPROGRAM JS
+
   function recoverProgram(el) {
-    let id = el.getAttribute('data-id');
+      let id = el.getAttribute('data-id');
+      console.log(id);
 
-    // AJAX Request
-    var r = confirm("Are you sure you want to recover this program?");
-    if (r == true) {
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          alert("Program successfully recover!");
-          window.location.reload()
+      // AJAX Request
+      $.confirm({
+        closeIcon: true,
+        title: "Recover?",
+        content: "Are you sure you want to recover this program?",
+        buttons: {
+          confirm: {
+            btnClass: "btn-orange",
+            action: function() {
+              let req = new XMLHttpRequest();
+              req.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  console.log((this.responseText));
+                  $.alert({
+                    title: 'Success',
+                    content: 'Program successfully recover!',
+                    buttons: {
+                      ok: {
+                        text: 'OK',
+                        action: function() {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
+                }
+              }
+              req.open('GET', 'recoverProgram.php?id=' + id, true);
+              req.send();
+            }
+          }
         }
-      }
-      req.open('GET', 'recoverProgram.php?id=' + id, true);
-      req.send();
+      });
     }
-  }
-
   // Show/Hide Regular Monthly Payment Calculator
   document.getElementById('showCalc').addEventListener('click', () => {
     let calc = document.getElementById('calculator');
