@@ -57,6 +57,7 @@
   <link href="./../css/pagination.css" rel="stylesheet">
   <link rel="icon" href="../mobile/img/gym_logo.png">
   <link href="css/theme-colors.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
   <style>
     .card-body.promo {
@@ -157,6 +158,10 @@
       <button class="btn btn-sm btn-outline-orange mb-3" data-toggle="modal" data-target="#view-deleted-expired" id="view-deleted-promos-btn">
         <i class="fas fa-eye mr-2"></i>
         View Deleted/Expired Promos
+      </button>
+      <button class="btn btn-sm btn-outline-orange mb-3" data-toggle="modal" data-target="#view-requests" id="view-requests-btn">
+        <i class="fas fa-eye mr-2"></i>
+        View Promo Requests
       </button>
       <div class="card mb-4 wow fadeIn">
         <div class="card-body d-sm-flex justify-content-between">
@@ -485,6 +490,39 @@
           </div>
         </div>
         <div class="modal-footer" id="deleted-modal-footer"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Promo requests -->
+  <div class="modal fade" id="view-requests">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">View Promo Requests</h4>
+          <button type='button' class='close' id="close-view-requests" data-dismiss='modal'>&times;</button>
+        </div>
+        <div class="modal-body d-flex table-responsive p-0 justify-content-center flex-column" id="view-requests-cont">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Member Name</th>
+                <th>Requested Promo</th>
+                <th>Request Status</th>
+                <th>Date Requested</th>
+                <th>ID Photo</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="view-requests-tbody">
+            
+            </tbody>
+          </table>
+          <div class="no-data-div text-muted p-4 justify-content-center align-items-center" style="display: none; width: 100%" id="no-data-div-requests">
+            No data to show.
+          </div>
+        </div>
+        <div class="modal-footer" id="view-requests-footer"></div>
       </div>
     </div>
   </div>
@@ -962,6 +1000,123 @@
         }
       });
     }
+    
+    var requests;
+    $.get("./get_requests.php", function (res) {
+      console.log("requests: " + res)
+      requests = JSON.parse(res);
+      paginateRequests(requests);
+    });
+
+    function paginateRequests(data) {
+      $("#view-requests-footer").pagination({
+        dataSource: function (done) {
+          done(data);
+        },
+        pageSize: 5,
+        showPrevious: false,
+        showNext: false,
+        callback: function(data) {
+          $("#view-requests-tbody").empty();
+          if(data.length > 0) {
+            $("#no-data-div-requests").css("display", "none");
+            data.forEach(row => {
+              let html = `<tr>
+                <td>${row.member_name}</td>
+                <td>${row.promo_name}</td>
+                <td>${row.status}</td>
+                <td>${row.date_requested}</td>
+                <td>
+                  <a href="#" class="text-orange" data-name="${row.member_name}" data-id="${row.request_image}" onclick="viewID(this)">View</a>
+                </td>
+                <td>
+                  <i style="cursor: pointer; font-size: 25px;"
+                  class="fas fa-check-circle text-success" data-id="${row.id}"
+                  onclick="acceptRequest(this)"></i>
+                  <i style="cursor: pointer; font-size: 25px;"
+                  class="fas fa-times-circle text-danger" data-id="${row.id}"
+                  onclick="declineRequest(this)"></i>
+                </td>
+              </tr>`;
+
+              $("#view-requests-tbody").append(html);
+            });
+          } else {
+            $("#no-data-div-requests").css("display", "flex");
+          }
+        }
+      });
+    }
+
+    function acceptRequest(elem) {
+      let id = elem.getAttribute('data-id');
+      $.alert({
+        title: '',
+        type: 'green',
+        backgroundDismiss: function () {
+          window.location.reload();
+        },
+        buttons: {
+          ok: {
+            btnClass: 'btn-success',
+            action: function () {
+              window.location.reload();
+            }
+          }
+        },
+        content: function () {
+          var self = this;
+          return $.get("./promo_request_action.php?action=accept&id=" + id, function (res) {
+            if(JSON.parse(res) == "success") {
+              self.setContent('Request accepted.');
+            }
+          });
+        }
+      });
+    }
+
+    function declineRequest(elem) {
+      let id = elem.getAttribute('data-id');
+      $.alert({
+        title: '',
+        type: 'green',
+        backgroundDismiss: function () {
+          window.location.reload();
+        },
+        buttons: {
+          ok: {
+            btnClass: 'btn-success',
+            action: function () {
+              window.location.reload();
+            }
+          }
+        },
+        content: function () {
+          var self = this;
+          return $.get("./promo_request_action.php?action=decline&id=" + id, function (res) {
+            if(JSON.parse(res) == "success") {
+              self.setContent('Request declined.');
+            }
+          });
+        }
+      });
+    }
+
+    function viewID(elem) {
+      let path = elem.getAttribute("data-id");
+      let name = elem.getAttribute("data-name");
+      $.alert({
+        title: "",
+        content: "<img src='./../mobile/img/uploads/requests/" + path + "'>",
+        backgroundDismiss: true,
+        buttons: {
+          close: {
+            action: function () {},
+            isHidden: true
+          }
+        }
+      });
+    }
 
     var promos, data;
     $.get("./view_deleted.php", function(res) {
@@ -1085,8 +1240,6 @@
         });
       }
     }
-
-
 
     function viewDeletedDetails(el) {
       let id = el.getAttribute("data-id");
