@@ -150,13 +150,11 @@ if (isset($_SESSION["admin_id"])) {
 			<button type="button" id="sort-inactive" class="btn btn-sm btn-white">Sign Up</button>
 		</div> <br><br><br>
 		<!-- registration process -->
-		<form action="register_process.php" method="post">
-			<input name="first_name" type="text" required class="input" placeholder="Enter First name">
-			<input name="last_name" id="lastname" type="text" required class="input" placeholder="Enter Last name"><br><br>
-			<input name="username" type="email" required class="input" placeholder="Enter your Email address"><br>
-			<input name="password" type="password" required class="input" placeholder="Create your password"><br>
-			<input type="submit" value="Register">
-		</form>
+		<input name="first_name" type="text" required class="input" placeholder="Enter First name">
+		<input name="last_name" id="lastname" type="text" required class="input" placeholder="Enter Last name"><br><br>
+		<input name="username" type="email" required class="input" placeholder="Enter your Email address"><br>
+		<input name="password" type="password" required class="input" placeholder="Create your password"><br>
+		<input type="submit" id="register-admin" value="Register">
 	</div>
 
 	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
@@ -167,6 +165,11 @@ if (isset($_SESSION["admin_id"])) {
   <script type="text/javascript" src="validation.js"></script>
   <script src="./../js/pagination.js"></script>
 	<script>
+		// register ajax
+		$("#register-admin").click(function () {
+			
+		});
+
 		function register() {
 			var x = document.getElementById("signup");
 			var y = document.getElementById("signin");
@@ -228,6 +231,20 @@ if (isset($_SESSION["admin_id"])) {
 													title: '',
 													type: 'red',
 													content: 'Passwords do not match. Please try again.',
+													buttons: {
+														close: {
+															btnClass: 'btn-red',
+															action: function () {
+																successModal.open();
+															}
+														}
+													}
+												});
+											} else if(newPass == "" || confirm == "") {
+												$.alert({
+													title: '',
+													type: 'red',
+													content: 'Do not leave fields blank. Please try again.',
 													buttons: {
 														close: {
 															btnClass: 'btn-red',
