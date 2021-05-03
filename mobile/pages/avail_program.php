@@ -223,7 +223,7 @@ if ($res) {
                   if(JSON.parse(res) == "success") {
                     $.alert({
                       boxWidth: '250px',
-                      useBootstrap: 'false',
+                      useBootstrap: false,
                       type: 'green',
                       title: '',
                       backgroundDismiss: function () {
@@ -242,7 +242,7 @@ if ($res) {
                   } else {
                     $.alert({
                       boxWidth: '250px',
-                      useBootstrap: 'false',
+                      useBootstrap: false,
                       type: 'red',
                       title: '',
                       backgroundDismiss: true,
@@ -260,7 +260,7 @@ if ($res) {
             } else {
               $.alert({
                 boxWidth: '250px',
-                useBootstrap: 'false',
+                useBootstrap: false,
                 type: 'red',
                 title: 'Error',
                 content: 'Payment unsuccessful.',
@@ -301,23 +301,42 @@ if ($res) {
           });
         } else {
           $.post(
-            "./../functions/avail_program.php", {},
+            "./../functions/avail_program.php", 
+            {
+              program_id: $("#select-program").val()
+            },
             function (res) {
               if(JSON.parse(res) == "success") {
                 $.alert({
+                  title: '',
                   boxWidth: '250px',
-                  useBootstrap: 'false',
+                  useBootstrap: false,
                   type: 'green',
                   content: 'Successfully availed program!',
                   backgroundDismiss: function () {
-                    window.location.reload();
+                    window.location.href = "./program.php";
                   },
                   buttons: {
                     ok: {
                       btnClass: 'btn-green',
                       action: function () {
-                        window.location.reload();
+                        window.location.href = "./program.php";
                       }
+                    }
+                  }
+                });
+              } else {
+                $.alert({
+                  title: '',
+                  boxWidth: '250px',
+                  useBootstrap: false,
+                  type: 'red',
+                  content: JSON.parse(res),
+                  backgroundDismiss: function () {},
+                  buttons: {
+                    ok: {
+                      btnClass: 'btn-danger',
+                      action: function () {}
                     }
                   }
                 });

@@ -216,9 +216,9 @@ if(!isset($_SESSION["member_id"])) {
           ?>
         </span>
         <div class="promo-div">
-          <h3>Available seasonal promos</h3>
+          <h3>Available promos</h3>
           <?php 
-          $sql = "SELECT * FROM promo WHERE promo_type = 'Seasonal' AND status = 'Active' ORDER BY promo_starting_date ASC";
+          $sql = "SELECT * FROM promo WHERE status = 'Active' ORDER BY promo_starting_date ASC";
           $res = mysqli_query($con, $sql);
 
           if(mysqli_num_rows($res)) {
