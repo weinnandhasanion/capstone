@@ -283,7 +283,7 @@ if(!isset($_SESSION["member_id"])) {
           theme: 'material',
           boxWidth: '250px',
           useBootstrap: false,
-          title: '',
+          title: 'Replace current promo?',
           content: function () {
             var self = this;
             return $.get("./../functions/check_if_has_promo.php", function (res) {

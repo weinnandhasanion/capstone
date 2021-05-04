@@ -42,11 +42,6 @@ if (preg_match($letterRegex, $amount, $match)) {
   window.alert('Invalid promo name. Maximum of 25 letters only.');
   window.location.href='./promos.php';
   </script>");
-} else if (strlen($description) > 60) {
-  echo ("<script LANGUAGE='JavaScript'>
-  window.alert('Invalid description. Maximum of 60 letters only.');
-  window.location.href='./promos.php';
-  </script>");
 } else if (mysqli_num_rows($duplicate_name) > 0) {
   echo ("<script LANGUAGE='JavaScript'>
   window.alert('Promo name is already taken');
