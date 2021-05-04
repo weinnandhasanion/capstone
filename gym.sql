@@ -3,12 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 02, 2021 at 08:46 PM
+-- Generation Time: May 03, 2021 at 09:19 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
-
-CREATE DATABASE gym;
-USE gym;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -149,7 +146,10 @@ INSERT INTO `logtrail` (`login_id`, `admin_id`, `first_name`, `last_name`, `date
 (38, 87000, 'klintjohn', 'cagot', '2021-05-02 03:02:01', '2021-05-02 05:20:10'),
 (39, 87000, 'klintjohn', 'cagot', '2021-05-03 02:14:07', '2021-05-03 02:39:23'),
 (40, 87000, 'klintjohn', 'cagot', '2021-05-03 02:42:56', '2021-05-03 02:44:23'),
-(41, 87000, 'klintjohn', 'cagot', '2021-05-03 02:44:34', '2021-05-03 04:40:23');
+(41, 87000, 'klintjohn', 'cagot', '2021-05-03 02:44:34', '2021-05-03 04:40:23'),
+(42, 87000, 'klintjohn', 'cagot', '2021-05-03 02:51:55', '2021-05-04 02:30:57'),
+(43, 87000, 'klintjohn', 'cagot', '2021-05-04 02:31:39', '2021-05-04 02:31:45'),
+(44, 87000, 'klintjohn', 'cagot', '2021-05-04 02:31:49', NULL);
 
 -- --------------------------------------------------------
 
@@ -545,7 +545,19 @@ INSERT INTO `logtrail_doing` (`logtrail_doing_id`, `login_id`, `admin_id`, `memb
 (368, 39, 87000, 1921681085, NULL, NULL, NULL, NULL, 'Ciaran', 'Kinney', 'Deactivated the Account', 'Members', '02:25 AM', NULL, NULL, NULL, NULL),
 (369, 39, 87000, NULL, 3, NULL, NULL, NULL, 'asfsafsaf', NULL, 'Deleted the program', 'Programs', '02:26 AM', NULL, NULL, NULL, NULL),
 (370, 39, 87000, 1921681092, NULL, NULL, NULL, NULL, 'Hammett', 'Vaughn', 'Recover an account to Walk-in table', 'Members', '02:27 AM', NULL, NULL, NULL, NULL),
-(371, 39, 87000, NULL, NULL, NULL, 2023, NULL, '10 lbs weight disc', NULL, 'Recover an inventory', 'Inventory', '02:36 AM', NULL, NULL, NULL, NULL);
+(371, 39, 87000, NULL, NULL, NULL, 2023, NULL, '10 lbs weight disc', NULL, 'Recover an inventory', 'Inventory', '02:36 AM', NULL, NULL, NULL, NULL),
+(372, 44, 87000, NULL, NULL, NULL, NULL, 202112, 'Sebastian Farley', NULL, 'Added a member to Senior Discount', 'Promos', '02:34 AM', NULL, NULL, NULL, NULL),
+(373, 44, 87000, NULL, NULL, NULL, NULL, 202117, 'sample', NULL, 'Added new promo', 'Promos', '02:34 AM', NULL, NULL, NULL, NULL),
+(374, 44, 87000, NULL, NULL, NULL, NULL, 202117, 'sample', NULL, 'Deleted a promo', 'Promos', '02:34 AM', NULL, NULL, NULL, NULL),
+(375, 44, 87000, NULL, 2, NULL, NULL, NULL, 'Reducing', NULL, 'Updated the program', 'Programs', '02:38 AM', NULL, NULL, NULL, NULL),
+(376, 44, 87000, NULL, 1, NULL, NULL, NULL, 'Gaining', NULL, 'Deleted the program', 'Programs', '02:39 AM', NULL, NULL, NULL, NULL),
+(377, 44, 87000, NULL, 1, NULL, NULL, NULL, 'Gaining', NULL, 'Recover the program', 'Programs', '02:39 AM', NULL, NULL, NULL, NULL),
+(378, 44, 87000, 1921681085, NULL, NULL, NULL, NULL, 'Ciaran', 'Kinney', 'Activated the account', 'Members', '02:59 AM', NULL, NULL, NULL, NULL),
+(379, 44, 87000, 1921681079, NULL, NULL, NULL, NULL, 'Finn', 'Patterson', 'Paid both Annual Membership and Monthly Subscription', 'Members', '03:06 AM', NULL, NULL, NULL, NULL),
+(380, 44, 87000, 1921681079, NULL, NULL, NULL, NULL, 'Finn', 'Patterson', 'Activated the account', 'Members', '03:06 AM', NULL, NULL, NULL, NULL),
+(381, 44, 87000, 1921681079, NULL, NULL, NULL, NULL, 'Finn', 'Patterson', 'Activated the account', 'Members', '03:06 AM', NULL, NULL, NULL, NULL),
+(382, 44, 87000, 1921681079, NULL, NULL, NULL, NULL, 'Finn', 'Patterson', 'Deactivated the Account', 'Members', '03:07 AM', NULL, NULL, NULL, NULL),
+(383, 44, 87000, 1921681079, NULL, NULL, NULL, NULL, 'Finn', 'Patterson', 'Activated the account', 'Members', '03:07 AM', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -654,14 +666,14 @@ INSERT INTO `member` (`member_id`, `first_name`, `last_name`, `username`, `passw
 (1921681075, 'Samson', 'Harvey', NULL, NULL, 'M', '1997-04-28', 'In.faucibus@aliquetmolestietellus.co.uk', '09957764442', 'Not Paid', '2018-06-01', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'Ap #339-5086 Feugiat Road', 'active', 1, ''),
 (1921681076, 'Damon', 'Reynolds', NULL, NULL, 'M', '1978-07-20', 'erat@acrisusMorbi.com', '09760567029', 'Not Paid', '2020-10-20', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'Ap #183-587 Duis Av.', 'active', 1, ''),
 (1921681077, 'Ciaran', 'Vincent', NULL, NULL, 'M', '1996-01-20', 'vitae.posuere@Sedpharetra.net', '09354945184', 'Not Paid', '2019-01-18', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '909-1700 Cursus St.', 'active', 2, ''),
-(1921681078, 'Sebastian', 'Farley', NULL, NULL, 'F', '1989-12-21', 'Suspendisse@necimperdietnec.org', '09565747679', 'Not Paid', '2019-08-25', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'P.O. Box 587, 6935 Diam St.', 'active', 2, ''),
-(1921681079, 'Finn', 'Patterson', NULL, NULL, 'F', '1994-05-25', 'arcu.Sed@Vivamus.com', '09477503056', 'Not Paid', '2019-04-11', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '5332 Integer St.', 'active', 2, ''),
+(1921681078, 'Sebastian', 'Farley', NULL, NULL, 'F', '1989-12-21', 'Suspendisse@necimperdietnec.org', '09565747679', 'Not Paid', '2019-08-25', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', 'P.O. Box 587, 6935 Diam St.', 'active', 1, ''),
+(1921681079, 'Finn', 'Patterson', '1921681079', '$2y$10$fKOzDgY86NH2WPxqWUGGp.Evzrn2rL9fJPYpuYSIING2UA9jV4InC', 'F', '1994-05-25', 'arcu.Sed@Vivamus.com', '09477503056', 'Paid', '2019-04-11', NULL, NULL, 'true', 'false', '2021-05-04', '2021-05-04', '2021-06-03', '2021-05-04', '2022-05-04', NULL, 'Regular', '5332 Integer St.', 'active', 2, ''),
 (1921681080, 'Graham', 'Nunez', NULL, NULL, 'F', '1997-03-10', 'mus@aliquet.ca', '09634684992', 'Not Paid', '2018-05-06', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 591, 2996 Accumsan St.', 'active', 2, ''),
 (1921681081, 'Dane', 'Bird', NULL, NULL, 'F', '1982-02-18', 'vestibulum.massa.rutrum@metusfacilisislorem.edu', '09270804621', 'Not Paid', '2019-07-25', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #402-6538 Amet, Avenue', 'active', 1, ''),
 (1921681082, 'Jared', 'Mullins', NULL, NULL, 'M', '1999-11-22', 'in@semut.co.uk', '09808136994', 'Not Paid', '2019-02-28', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '661-542 Vulputate St.', 'active', 2, ''),
 (1921681083, 'Giacomo', 'Mcgowan', NULL, NULL, 'F', '1982-11-15', 'Nulla@eu.ca', '09380918963', 'Not Paid', '2020-08-26', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #340-2379 Massa. St.', 'active', 2, ''),
 (1921681084, 'Hamilton', 'Bernard', NULL, NULL, 'F', '1994-02-06', 'Donec.tempor.est@nequeseddictum.com', '09769927909', 'Not Paid', '2019-04-22', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Regular', '5262 Mi Road', 'active', 2, ''),
-(1921681085, 'Ciaran', 'Kinney', '1921681085', '$2y$10$QYj6r5trgIxw0HzGCthZ1OGY4JG.B5fYI59./S3W5f/dx8uVG.bCm', 'M', '1992-02-11', 'a@Etiamimperdiet.ca', '09692243138', 'Paid', '2020-01-15', NULL, NULL, 'false', 'false', '2021-05-03', '2021-05-03', '2021-06-02', '2021-05-03', '2022-05-03', NULL, 'Regular', '526 Mollis Ave', 'active', 2, ''),
+(1921681085, 'Ciaran', 'Kinney', '1921681085', '$2y$10$QYj6r5trgIxw0HzGCthZ1OGY4JG.B5fYI59./S3W5f/dx8uVG.bCm', 'M', '1992-02-11', 'a@Etiamimperdiet.ca', '09692243138', 'Paid', '2020-01-15', NULL, NULL, 'true', 'false', '2021-05-04', '2021-05-03', '2021-06-02', '2021-05-03', '2022-05-03', NULL, 'Regular', '526 Mollis Ave', 'active', 1, ''),
 (1921681086, 'Ishmael', 'Davidson', NULL, NULL, 'F', '1973-03-05', 'massa.Mauris.vestibulum@Donecest.ca', '09315304442', 'Not Paid', '2019-04-29', NULL, NULL, 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', '6371 Malesuada St.', 'active', 1, ''),
 (1921681087, 'Elton', 'Lyons', NULL, NULL, 'M', '1973-10-21', 'in@gravidanunc.ca', '09276062812', 'Expired', '2020-07-24', '2021-05-03', '02:19:22', 'false', 'true', NULL, '2021-02-23', '2021-03-25', '2021-02-23', '2022-02-23', 'klintjohn cagot', 'Regular', 'P.O. Box 902, 1824 Tellus St.', 'inactive', 2, ''),
 (1921681088, 'Burke', 'Good', NULL, NULL, 'M', '1990-08-06', 'orci.Phasellus@Proinsedturpis.org', '09905620678', 'Not Paid', '2021-01-21', NULL, '23:52:02', 'false', 'false', NULL, NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 923, 1396 Rhoncus. Road', 'active', 2, ''),
@@ -686,49 +698,52 @@ CREATE TABLE `memberpromos` (
   `promo_id` int(100) DEFAULT NULL,
   `member_id` int(100) DEFAULT NULL,
   `date_added` date DEFAULT NULL,
-  `status` enum('Active','Expired') NOT NULL DEFAULT 'Active',
-  `date_expired` date DEFAULT NULL
+  `date_requested` datetime DEFAULT NULL,
+  `admin_action_date` datetime DEFAULT NULL,
+  `status` enum('Active','Expired','Pending','Declined','Removed') NOT NULL DEFAULT 'Active',
+  `date_expired` date DEFAULT NULL,
+  `request_image` varchar(9999) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `memberpromos`
 --
 
-INSERT INTO `memberpromos` (`id`, `promo_id`, `member_id`, `date_added`, `status`, `date_expired`) VALUES
-(2, 202112, 1921681011, '2021-02-16', 'Expired', '2021-03-31'),
-(3, 202111, 1921681011, '2021-02-16', 'Expired', NULL),
-(4, 202111, 1921681022, '2021-02-18', 'Expired', NULL),
-(5, 202111, 1921681043, '2021-02-23', 'Expired', NULL),
-(6, 202112, 1921681013, '2021-02-23', 'Expired', NULL),
-(7, 202101, 1921681014, '2021-02-23', 'Active', NULL),
-(9, 202101, 1921681015, '2021-02-23', 'Expired', '2021-03-22'),
-(10, 202101, 1921681055, '2021-02-23', 'Active', NULL),
-(11, 202101, 1921681022, '2021-02-23', 'Active', NULL),
-(12, 202101, 1921681046, '2021-02-23', 'Active', NULL),
-(13, 202101, 1921681013, '2021-03-02', 'Expired', NULL),
-(14, 202112, 1921681013, '2021-03-02', 'Active', NULL),
-(15, 202113, 1921681015, '2021-03-05', 'Expired', '2021-03-22'),
-(16, 202113, 1921681014, '2021-03-05', 'Expired', NULL),
-(17, 202113, 1921681016, '2021-03-06', 'Expired', NULL),
-(18, 202112, 1921681030, '2021-03-18', 'Expired', '2021-04-29'),
-(19, 202101, 1921681026, '2021-03-18', 'Active', NULL),
-(20, 202101, 1921681047, '2021-03-18', 'Active', NULL),
-(21, 202113, 1921681024, '2021-03-22', 'Expired', NULL),
-(22, 202113, 1921681011, '2021-03-31', 'Expired', '2021-04-02'),
-(23, 202114, 1921681011, '2021-04-02', 'Expired', '2021-04-28'),
-(24, 202114, 1921681024, '2021-04-26', 'Expired', '2021-04-28'),
-(25, 202114, 1921681058, '2021-04-26', 'Expired', '2021-04-28'),
-(26, 202114, 1921681026, '2021-04-27', 'Expired', '2021-04-28'),
-(27, 202114, 1921681020, '2021-04-27', 'Expired', '2021-04-28'),
-(28, 202114, 1921681016, '2021-04-27', 'Expired', '2021-04-28'),
-(29, 202114, 1921681011, '2021-04-27', 'Expired', '2021-04-28'),
-(30, 202112, 1921681011, '2021-04-27', 'Active', NULL),
-(31, 202114, 1921681024, '2021-04-28', 'Expired', '2021-04-28'),
-(32, 202114, 1921681022, '2021-04-30', 'Expired', NULL),
-(33, 202100, 1921681033, '2021-04-30', 'Active', NULL),
-(34, 202100, 1921681071, '2021-04-30', 'Active', NULL),
-(35, 202100, 1921681034, '2021-04-30', 'Active', NULL),
-(36, 202100, 1921681094, '2021-04-30', 'Expired', '2021-05-02');
+INSERT INTO `memberpromos` (`id`, `promo_id`, `member_id`, `date_added`, `date_requested`, `admin_action_date`, `status`, `date_expired`, `request_image`) VALUES
+(2, 202112, 1921681011, '2021-02-16', NULL, NULL, 'Expired', '2021-03-31', NULL),
+(3, 202111, 1921681011, '2021-02-16', NULL, NULL, 'Expired', NULL, NULL),
+(5, 202111, 1921681043, '2021-02-23', NULL, NULL, 'Expired', NULL, NULL),
+(6, 202112, 1921681013, '2021-02-23', NULL, NULL, 'Expired', NULL, NULL),
+(7, 202101, 1921681014, '2021-02-23', NULL, NULL, 'Active', NULL, NULL),
+(9, 202101, 1921681015, '2021-02-23', NULL, NULL, 'Expired', '2021-03-22', NULL),
+(10, 202101, 1921681055, '2021-02-23', NULL, NULL, 'Active', NULL, NULL),
+(12, 202101, 1921681046, '2021-02-23', NULL, NULL, 'Active', NULL, NULL),
+(13, 202101, 1921681013, '2021-03-02', NULL, NULL, 'Expired', NULL, NULL),
+(14, 202112, 1921681013, '2021-03-02', NULL, NULL, 'Active', NULL, NULL),
+(15, 202113, 1921681015, '2021-03-05', NULL, NULL, 'Expired', '2021-03-22', NULL),
+(16, 202113, 1921681014, '2021-03-05', NULL, NULL, 'Expired', NULL, NULL),
+(17, 202113, 1921681016, '2021-03-06', NULL, NULL, 'Expired', NULL, NULL),
+(18, 202112, 1921681030, '2021-03-18', NULL, NULL, 'Expired', '2021-04-29', NULL),
+(19, 202101, 1921681026, '2021-03-18', NULL, NULL, 'Active', NULL, NULL),
+(20, 202101, 1921681047, '2021-03-18', NULL, NULL, 'Active', NULL, NULL),
+(21, 202113, 1921681024, '2021-03-22', NULL, NULL, 'Expired', NULL, NULL),
+(22, 202113, 1921681011, '2021-03-31', NULL, NULL, 'Expired', '2021-04-02', NULL),
+(23, 202114, 1921681011, '2021-04-02', NULL, NULL, 'Expired', '2021-04-28', NULL),
+(24, 202114, 1921681024, '2021-04-26', NULL, NULL, 'Expired', '2021-04-28', NULL),
+(25, 202114, 1921681058, '2021-04-26', NULL, NULL, 'Expired', '2021-04-28', NULL),
+(26, 202114, 1921681026, '2021-04-27', NULL, NULL, 'Expired', '2021-04-28', NULL),
+(27, 202114, 1921681020, '2021-04-27', NULL, NULL, 'Expired', '2021-04-28', NULL),
+(28, 202114, 1921681016, '2021-04-27', NULL, NULL, 'Expired', '2021-04-28', NULL),
+(29, 202114, 1921681011, '2021-04-27', NULL, NULL, 'Expired', '2021-04-28', NULL),
+(30, 202112, 1921681011, '2021-04-27', NULL, NULL, 'Active', NULL, NULL),
+(31, 202114, 1921681024, '2021-04-28', NULL, NULL, 'Expired', '2021-04-28', NULL),
+(33, 202100, 1921681033, '2021-04-30', NULL, NULL, 'Active', NULL, NULL),
+(34, 202100, 1921681071, '2021-04-30', NULL, NULL, 'Active', NULL, NULL),
+(36, 202100, 1921681094, '2021-04-30', NULL, NULL, 'Active', NULL, NULL),
+(62, 202101, 1921681022, '2021-05-03', NULL, NULL, 'Removed', NULL, NULL),
+(64, 202100, 1921681022, '2021-05-03', NULL, NULL, 'Removed', NULL, NULL),
+(65, 202101, 1921681022, NULL, '2021-05-03 09:45:35', '2021-05-04 02:32:34', 'Active', NULL, '1392947.jpg'),
+(66, 202112, 1921681078, '2021-05-04', NULL, NULL, 'Active', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -851,7 +866,10 @@ INSERT INTO `paymentlog` (`payment_id`, `member_id`, `first_name`, `last_name`, 
 (81, 1921681100, 'check', 'check', 'Regular', 'Program Fee', 'Cash', '2021-05-01', '10:23 PM', '30', NULL, NULL, NULL, NULL, NULL),
 (83, 1921681094, 'Ringo', 'Star', 'Regular', 'Monthly Subscription', 'Cash', '2021-05-01', '11:17 PM', '705', 'Gaining', '30', 'March-May Promo', NULL, NULL),
 (84, 1921681085, 'Ciaran', 'Kinney', 'Regular', 'Monthly Subscription', 'Cash', '2021-05-03', '02:23 AM', '780', 'Reducing', '30', 'N/A', NULL, NULL),
-(85, 1921681085, 'Ciaran', 'Kinney', 'Regular', 'Annual Membership', 'Cash', '2021-05-03', '02:23 AM', '200', NULL, NULL, NULL, NULL, NULL);
+(85, 1921681085, 'Ciaran', 'Kinney', 'Regular', 'Annual Membership', 'Cash', '2021-05-03', '02:23 AM', '200', NULL, NULL, NULL, NULL, NULL),
+(86, 1921681085, 'Ciaran', 'Kinney', 'Regular', 'Program Fee', 'Cash', '2021-05-03', '02:53 AM', '30', NULL, NULL, NULL, NULL, NULL),
+(87, 1921681079, 'Finn', 'Patterson', 'Regular', 'Monthly Subscription', 'Cash', '2021-05-04', '03:06 AM', '780', 'Reducing', '30', 'N/A', NULL, NULL),
+(88, 1921681079, 'Finn', 'Patterson', 'Regular', 'Annual Membership', 'Cash', '2021-05-04', '03:06 AM', '200', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -900,8 +918,8 @@ CREATE TABLE `program` (
 --
 
 INSERT INTO `program` (`program_id`, `admin_id`, `trainer_id`, `program_name`, `program_description`, `program_status`, `date_added`, `time_added`, `admin_delete`, `date_deleted`, `time_deleted`, `amount`, `upper_1_day_1`, `upper_2_day_1`, `upper_3_day_1`, `upper_1_day_2`, `upper_2_day_2`, `upper_3_day_2`, `upper_1_day_3`, `upper_2_day_3`, `upper_3_day_3`, `lower_1_day_1`, `lower_2_day_1`, `lower_3_day_1`, `lower_1_day_2`, `lower_2_day_2`, `lower_3_day_2`, `lower_1_day_3`, `lower_2_day_3`, `lower_3_day_3`, `abdominal_day_1`, `abdominal_day_2`, `abdominal_day_3`) VALUES
-(1, 87001, 1512, 'Gaining', 'This is a program for members who aim to gain weight and mass.', 'active', '2021-02-09', '19:30:00', NULL, NULL, '00:00:00', 30, 1, 2, 3, 4, 5, 6, 7, 8, 2, 9, 10, 11, 12, 13, 14, 15, 9, 11, 16, 19, 20),
-(2, 87001, 1514, 'Reducing', 'This program is for reducing weight.', 'active', '2021-02-15', '12:14:00', NULL, NULL, '00:00:00', 30, 1, 2, 3, 4, 5, 6, 7, 8, 1, 9, 10, 11, 12, 13, 14, 15, 9, 10, 21, 20, 18),
+(1, 87001, 1512, 'Gaining', 'This is a program for members who aim to gain weight and mass.', 'active', '2021-02-09', '19:30:00', 'klintjohn cagot', NULL, '00:00:00', 30, 1, 2, 3, 4, 5, 6, 7, 8, 2, 9, 10, 11, 12, 13, 14, 15, 9, 11, 16, 19, 20),
+(2, 87001, 1514, 'Reducing', 'This program is for reducing weight.', 'active', '2021-02-15', '12:14:00', NULL, NULL, '00:00:00', 30, 1, 2, 3, 4, 5, 6, 7, 8, 1, 9, 10, 11, 12, 9, 14, 15, 9, 10, 21, 20, 18),
 (3, 87001, 1514, 'asfsafsaf', 'sdfsadhfsadfhsladkfhsadflkashflsakhflaskhfadslfhsalkdfh', 'inactive', '2021-03-16', '06:04:00', 'klintjohn cagot', '2021-05-03', '02:26:13', NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 16, 16, 16),
 (4, 87001, 1514, 'Crossfit', 'This is for members who want to try crossfit.', 'inactive', '2021-04-26', '11:32:00', 'klintjohn cagot', '2021-05-02', '03:08:46', 30, 1, 3, 2, 4, 7, 4, 8, 7, 6, 9, 10, 11, 12, 9, 10, 15, 14, 13, 16, 20, 23);
 
@@ -936,7 +954,8 @@ INSERT INTO `promo` (`promo_id`, `promo_name`, `promo_type`, `promo_description`
 (202113, 'Back-to-school Promo', 'Seasonal', 'P75 discount to all who avail our back-to-school promo. This promo is only available starting March 1, 2021 until March 31, 2021.', '2021-02-23', '2021-03-01', '2021-03-31', 75, 'Expired', '2021-03-31'),
 (202114, 'April Promo', 'Seasonal', 'P50 off for monthly subscription for the whole month of April.', '2021-03-31', '2021-04-01', '2021-04-30', 50, 'Expired', '2021-04-30'),
 (202115, 'May Promo', 'Seasonal', 'may prom ohaha', '2021-04-13', '2021-05-05', '2021-05-04', 60, 'Deleted', '2021-04-13'),
-(202116, 'girl promo haha', 'Permanent', 'asfdsadfsd', '2021-04-13', '1970-01-01', '1970-01-01', 50, 'Deleted', '2021-04-13');
+(202116, 'girl promo haha', 'Permanent', 'asfdsadfsd', '2021-04-13', '1970-01-01', '1970-01-01', 50, 'Deleted', '2021-04-13'),
+(202117, 'sample', 'Permanent', 'qweqweq', '2021-05-04', '1970-01-01', '1970-01-01', 123, 'Deleted', '2021-05-04');
 
 -- --------------------------------------------------------
 
@@ -1134,12 +1153,12 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `logtrail`
 --
 ALTER TABLE `logtrail`
-  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `logtrail_doing`
 --
 ALTER TABLE `logtrail_doing`
-  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=372;
+  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=384;
 --
 -- AUTO_INCREMENT for table `member`
 --
@@ -1149,12 +1168,12 @@ ALTER TABLE `member`
 -- AUTO_INCREMENT for table `memberpromos`
 --
 ALTER TABLE `memberpromos`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 --
 -- AUTO_INCREMENT for table `member_notifs`
 --
 ALTER TABLE `member_notifs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 --
 -- AUTO_INCREMENT for table `notifications`
 --
@@ -1164,7 +1183,7 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `paymentlog`
 --
 ALTER TABLE `paymentlog`
-  MODIFY `payment_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `payment_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 --
 -- AUTO_INCREMENT for table `program`
 --
@@ -1174,7 +1193,7 @@ ALTER TABLE `program`
 -- AUTO_INCREMENT for table `promo`
 --
 ALTER TABLE `promo`
-  MODIFY `promo_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202117;
+  MODIFY `promo_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202118;
 --
 -- AUTO_INCREMENT for table `routines`
 --
