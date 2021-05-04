@@ -1,9 +1,9 @@
-<?php 
+<?php
 require "./../connect.php";
 session_start();
 date_default_timezone_set('Asia/Manila');
 
-if(isset($_GET["id"])) {
+if (isset($_GET["id"])) {
   $id = $_GET["id"];
 
   $sql = "SELECT * FROM member WHERE member_id = $id";
@@ -18,58 +18,70 @@ if(isset($_GET["id"])) {
   $monthlyPaid = true;
   $annualPaid = true;
 
-  if($res) {
-    if(mysqli_num_rows($res) > 0) {
+  if ($res) {
+    if (mysqli_num_rows($res) > 0) {
       $row = mysqli_fetch_assoc($res);
 
-      $earlier = new DateTime($row["monthly_end"]);
-      $later = new DateTime($today);
-      $diff = $later->diff($earlier)->format("%a");
+      if ($row["member_type"] == "Regular") {
+        $earlier = new DateTime($row["monthly_end"]);
+        $later = new DateTime($today);
+        $diff = $later->diff($earlier)->format("%a");
 
-      if(empty($row["monthly_start"])) {
-        $monthlyPaid = false;
-      } else if($row["monthly_end"] < $today) {
-        $monthlyPaid = false;
-      }
+        if (empty($row["monthly_start"])) {
+          $monthlyPaid = false;
+        } else if ($row["monthly_end"] < $today) {
+          $monthlyPaid = false;
+        }
 
-      if(empty($row["annual_start"])) {
-        $annualPaid = false;
-      } else if($row["annual_end"] < $today) {
-        $annualPaid = false;
-      }
+        if (empty($row["annual_start"])) {
+          $annualPaid = false;
+        } else if ($row["annual_end"] < $today) {
+          $annualPaid = false;
+        }
 
-      if(!$monthlyPaid && $annualPaid) {
-        if($diff > 7) {     
-          $message = $row["first_name"]." ".$row["last_name"]." is not eligible to enter the gym. Please pay monthly subscription first.";
+        if (!$monthlyPaid && $annualPaid) {
+          if ($diff > 7) {
+            $message = $row["first_name"] . " " . $row["last_name"] . " is not eligible to enter the gym. Please pay monthly subscription first.";
+            $type = "red";
+            $title = "Error";
+          } else {
+            $sql = "INSERT INTO member_logtrail (member_id, login_date, scanned_by)
+          VALUES $id, '$dateNow', $adminId";
+            $res = mysqli_query($conn, $sql);
+
+            $fn = $row["first_name"];
+            $ln = $row["last_name"];
+
+            $earlier = new DateTime($today);
+            $later = new DateTime(date("Y-m-d", strtotime($row["monthly_end"] . " + 7 days")));
+
+            $diff = $later->diff($earlier)->format("%a");
+            $message = "$fn $ln's monthly subscription is expired. $fn only has $diff day(s) left to pay for his/her monthly subscription. $fn can still enter the gym. Login successful.";
+            $type = "green";
+            $title = "Success";
+          }
+        } else if (!$monthlyPaid && !$annualPaid) {
+          $message = $row["first_name"] . " " . $row["last_name"] . " is not eligible to enter the gym. Please pay annual membership and monthly subscription.";
           $type = "red";
           $title = "Error";
-        } else {
+        } else if ($monthlyPaid && $annualPaid) {
           $sql = "INSERT INTO member_logtrail (member_id, login_date, scanned_by)
-          VALUES $id, '$dateNow', $adminId";
+                VALUES ($id, '$dateNow', $adminId)";
           $res = mysqli_query($conn, $sql);
 
-          $fn = $row["first_name"];
-          $ln = $row["last_name"];
-
-          $earlier = new DateTime($today);
-          $later = new DateTime(date("Y-m-d", strtotime($row["monthly_end"]. " + 7 days")));
-
-          $diff = $later->diff($earlier)->format("%a");
-          $message = "$fn $ln's monthly subscription is expired. $fn only has $diff day(s) left to pay for his/her monthly subscription. $fn can still enter the gym. Login successful.";
-          $type = "green";     
-          $title = "Success";        
+          if ($res) {
+            $message = $row["first_name"] . " " . $row["last_name"] . " is subscribed and is eligible to enter the gym. Login successful.";
+            $type = "green";
+            $title = "Success";
+          }
         }
-      } else if(!$monthlyPaid && !$annualPaid) {
-        $message = $row["first_name"]." ".$row["last_name"]." is not eligible to enter the gym. Please pay annual membership and monthly subscription.";
-        $type = "red";
-        $title = "Error";
-      } else if($monthlyPaid && $annualPaid) {
+      } else {
         $sql = "INSERT INTO member_logtrail (member_id, login_date, scanned_by)
-                VALUES ($id, '$dateNow', $adminId)";
+        VALUES ($id, '$dateNow', $adminId)";
         $res = mysqli_query($conn, $sql);
 
-        if($res) {
-          $message = $row["first_name"]." ".$row["last_name"]." is subscribed and is eligible to enter the gym. Login successful.";
+        if ($res) {
+          $message = $row["first_name"] . " " . $row["last_name"] . " is a walk-in member. Login successful.";
           $type = "green";
           $title = "Success";
         }
@@ -84,7 +96,7 @@ if(isset($_GET["id"])) {
     $type = "red";
     $title = "Error";
   }
-  
+
   $obj = (object) [
     "message" => $message,
     "type" => $type,
@@ -95,4 +107,3 @@ if(isset($_GET["id"])) {
 } else {
   echo json_encode("walay sulod");
 }
-?>
