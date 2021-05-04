@@ -96,14 +96,16 @@ if (isset($_GET["id"])) {
     $type = "red";
     $title = "Error";
   }
-
-  $obj = (object) [
-    "message" => $message,
-    "type" => $type,
-    "title" => $title
-  ];
-
-  echo json_encode($obj);
 } else {
-  echo json_encode("walay sulod");
+  $message = "Invalid QR Code.";
+  $type = "red";
+  $title = "Error";
 }
+
+$obj = (object) [
+  "message" => $message,
+  "type" => $type,
+  "title" => $title
+];
+
+echo json_encode($obj);
