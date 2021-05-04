@@ -340,6 +340,10 @@
         <i class="fas fa-trash mr-2"></i>
         View Deleted Programs
       </button>
+      <button class="btn btn-sm btn-outline-orange mb-3" data-toggle="modal" data-target="#scan-qr-modal">
+      <i class="fas fa-qrcode mr-2"></i>
+        Scan QR Code
+      </button>
       <div class='card'>
         <div class='card-content'>
           <div class='card-header flexHeader'>
@@ -1479,6 +1483,14 @@
         <div class="modal-header">
           <h4 class="modal-title">Scan QR Code</h4>
         </div>
+        <div class="modal-body d-flex justify-content-center align-items-center flex-column" id="qr-cont">
+        <button class="btn btn-sm btn-orange" id="btn-scan-qr">Open QR Scanner</button>
+        <button class="btn btn-sm btn-orange" hidden="" id="close-btn-scan-qr">Close QR Scanner</button>
+
+        <canvas hidden="" id="qr-canvas"></canvas>
+        </div>
+        <div class="modal-footer">
+        </div>
       </div>
     </div>
   </div>
@@ -2408,6 +2420,7 @@
   <script type="text/javascript" src="js/mdb.min.js"></script>
   <script type="text/javascript" src="validation.js"></script>
   <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+  <script src="./js/qrcode-scanner.js"></script>
 
   <script>
   function pay(elem) {
