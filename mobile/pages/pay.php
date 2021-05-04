@@ -380,8 +380,6 @@ if($annualHasValue) {
 
         onApprove: function(data, actions) {
           return actions.order.capture().then(function(details) {
-            console.log(details);
-
             let data = {
               paymentId: details.id,
               amount: details.purchase_units[0].amount.value,
@@ -415,7 +413,6 @@ if($annualHasValue) {
                       data: JSON.stringify(data)
                     },
                     success: function(data) {
-                      console.log(data);
                       if(data == 1 || data == 2) {
                         self.setTitle("Success");
                         self.setContent("Your payment is successful!");

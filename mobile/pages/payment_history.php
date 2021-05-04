@@ -153,6 +153,7 @@ if($res) {
   <link rel="stylesheet" href="./../css/mediaquery.css">
   <link rel="icon" href="./../img/gym_logo.png">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
   <style>
     main {
@@ -403,57 +404,46 @@ if($res) {
   </main>
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
   <script src="./../js/sidebar.js"></script>
   <script>
     function showDetailsModal(el) {
       let id = el.getAttribute("data-id");
 
-      $.ajax({
-        url: "./../functions/payment_details.php",
-        type: 'json',
-        method: 'POST',
-        data: {
-          id: id
-        },
-        success: function(res) {
-          data = JSON.parse(res);
-          $("#pmt-payer").html(`Payment for <b>${data.first_name} ${data.last_name}</b>`);
-          $("#pmt-id").html(data.payment_id);
-          $("#pmt-member-id").html(data.member_id);
-          $("#pmt-desc").html(data.payment_description);
-          if(data.payment_description == "Monthly Subscription") {
-            $("#promo-used").css("display", "block");
-            $("#pmt-promo").html(data.promo_availed)
-          } else {
-            $("#promo-used").css("display", "none");
-          }
-          $("#pmt-amount").html(`P${data.payment_amount}.00`);
-          $("#pmt-date-time").text(`${data.date_payment} ${data.time_payment}`);
-          $("#pmt-type").text(data.payment_type);
-          if(data.payment_type == "Online") {
-            $("#pmt-online-id").html(`Online payment ID: ${data.online_payment_id}`);
-          } else {
-            $("#pmt-online-id").text("");
-          }
-          $("#details-modal").css("display", "flex");
+      $.dialog({
+        theme: 'material',
+        boxWidth: '325px',
+        useBootstrap: false,
+        backgroundDismiss: true,
+        content: function () {
+          var self = this;
+          $.ajax({
+            url: "./../functions/payment_details.php",
+            type: 'json',
+            method: 'POST',
+            data: {
+              id: id
+            },
+            success: function(res) {
+              data = JSON.parse(res);
+
+              self.setTitle(`Payment for ${data.first_name} ${data.last_name}`);
+              self.setContent(`
+              <hr>
+              <p>Member ID: <i id="pmt-member-id">${data.member_id}</i></p>
+              <p>Payment ID: <i id="pmt-id">${data.payment_id}</i></p>
+              <p>Payment description: <i id="pmt-desc"${data.payment_description}></i></p>
+              <p id="promo-used">Promo used: <i id="pmt-promo">${(data.promo_availed) ? data.promo_availed : "N/A"}</i></p>
+              <p>Program fee: <i>${(data.program_enrolled == null || data.program_enrolled == "N/A") ? "N/A" : data.program_amount}</i></p>
+              <p>Amount: <i id="pmt-amount">P${data.payment_amount}.00</i></p>
+              <p>Date and time of payment: <i id="pmt-date-time">${data.date_payment} ${data.time_payment}</i></p>
+              <p>Payment type: <i id="pmt-type">${data.payment_type}</i></p>
+              <p id="pmt-online-id">Online Payment ID: <i>${(data.online_payment_id) ? data.online_payment_id : "N/A"}</i></p>
+              <hr>
+              `);
+            }
+          });
         }
-      });
-
-      $("#close-details").click(function() {
-        $("#details-modal").css("display", "none");
-      })
-
-      document.addEventListener("click", function(e) {
-        click = e.target;
-        target = document.querySelector("#target");
-        do {
-          if (click == target) {
-            return;
-          }
-          
-          click = click.parentNode;
-        } while (click);
-        $("#details-modal").css("display", "none");
       });
     }
     

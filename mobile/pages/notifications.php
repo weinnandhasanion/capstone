@@ -17,6 +17,7 @@ if(!isset($_SESSION["member_id"])) {
   <link rel="stylesheet" href="./../css/mediaquery.css">
   <link rel="icon" href="./../img/gym_logo.png">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
   <style>
     .main-cont {
@@ -216,17 +217,8 @@ if(!isset($_SESSION["member_id"])) {
     </div>
   </main>
 
-  <div class="modal" id="notifs-modal">
-    <div class="modal-md">
-      <div class="close-modal">
-        <span href="#" onclick="closeModal()">&#x2716;</span>
-      </div>
-      <h3 class="fw-400" id="notif-message"></h3>
-      <small class="text-disabled" id="notif-datetime"></small>
-    </div>
-  </div>
-
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
   <script src="./../js/sidebar.js"></script>
   <script>
     window.onload = () => {
@@ -282,7 +274,7 @@ if(!isset($_SESSION["member_id"])) {
       document.onpointerup = (e) => {
         let mores = $(".notif-more");
         if(e.target != popup && e.target != mores) {
-          if(popup.style.display == 'flex') {
+          if(popup.style.display == "flex") {
             popup.style.display = 'none';
           }
         }
@@ -290,19 +282,32 @@ if(!isset($_SESSION["member_id"])) {
 
       $(".mask").click(function(e) {
         e = e.target;
-        
-        $.get("./../functions/notif_details.php?id=" + e.id, function(res) {
-          let row = JSON.parse(res);
 
-          if(row.isUnread) {
-            $("#unread-" + row.id).remove();
-            $("#message-" + row.id).removeClass("fw-700").addClass("fw-400");
+        $.alert({
+          buttons: {
+            ok: {
+              isHidden: true
+            }
+          },
+          backgroundDismiss: true,
+          boxWidth: "325px",
+          useBootstrap: false,
+          title: "",
+          content: function () {
+            var self = this;
+
+            return $.get("./../functions/notif_details.php?id=" + e.id, function(res) {
+              let row = JSON.parse(res);
+
+              if(row.isUnread) {
+                $("#unread-" + row.id).remove();
+                $("#message-" + row.id).removeClass("fw-700").addClass("fw-400");
+              }
+
+              self.setContent(row.notif_message);
+              self.setContentAppend("<br /><small class='text-disabled'>" + row.date + "</small>");
+            });
           }
-
-          $("#notif-message").text(row.notif_message);
-          $("#notif-datetime").html(row.date);
-        }).then(() => {
-          $("#notifs-modal").css("display", "flex");
         });
       });
 

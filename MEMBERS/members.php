@@ -1470,7 +1470,16 @@
           <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
         </div>
       </div>
+    </div>
+  </div>
 
+  <div class="modal fade" id="scan-qr-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Scan QR Code</h4>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -2398,6 +2407,7 @@
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/mdb.min.js"></script>
   <script type="text/javascript" src="validation.js"></script>
+  <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
 
   <script>
   function pay(elem) {
