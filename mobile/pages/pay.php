@@ -82,6 +82,7 @@ if($annualHasValue) {
   <link rel="stylesheet" href="./../css/mediaquery.css">
   <link rel="icon" href="./../img/gym_logo.png">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
   <style>
     .sub-cont {
@@ -246,6 +247,17 @@ if($annualHasValue) {
             </div>
           </div>
         </div>
+        <div class="list-div" id="has-program">
+          <div class="list-item left" style="flex: 1">
+            <h4>Program fee</h4>
+          </div>
+          <div class="list-item right" style="flex: 2; display: flex; align-items: center !important; justify-content: flex-end;">
+            <div style="display: block">
+              <h4 id="program-name"></h4>
+              <small>P<span id="program-amount">0</span>.00</small>
+            </div>
+          </div>
+        </div>
         <div class="list-div">
           <div class="list-item left">
             <h4>Monthly Subscription</h4>
@@ -333,6 +345,7 @@ if($annualHasValue) {
 
   <script src="https://www.paypal.com/sdk/js?client-id=AYXeISRpvW_Zd2FLKTbdaTdMHrJLCGRoNeimz1g9SMBy-_mMNVduiP8fiSpvbd0QF8pXvSe-a7bZOgdn&currency=PHP&disable-funding=credit,card" data-sdk-integration-source="button-factory"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
   <script src="./../js/sidebar.js"></script>
   <script>
     function initPayPalButton(amt, items) {
@@ -375,28 +388,59 @@ if($annualHasValue) {
               paymentDate: details.create_time,
               status: details.status,
               items: details.purchase_units[0].items,
-              promo: ($("#promo-name").text().length > 0) ? $("#promo-name").text() : ""
+              promo: ($("#promo-name").text().length > 0) ? $("#promo-name").text() : "",
+              program_amount: $("#program-amount").text(),
+              program_enrolled: ($("#program-name").text().length > 0) ? $("#program-name").text() : "N/A",
             }
 
             if(data.status === "COMPLETED") {
-              console.log(data);
-              $.ajax({
-                url: "./../functions/process_paypal.php",
-                type: "json",
-                method: "POST",
-                data: {
-                  data: JSON.stringify(data)
-                },
-                success: function(data) {
-                  console.log(data);
-                  if(data == 1 || data == 2) {
-                    $("#payment-stat").addClass("text-green").text("Your payment is successful!");
-                    $("#post-payment").css("display", "flex");
-                  } else {
-                    $("#payment-stat").addClass("text-red").text("Your payment is unsuccessful. Please try again later.");
-                    $("#post-payment").css("display", "flex");
+              $.alert({
+                type: 'green',
+                boxWidth: '250px',
+                useBootstrap: false,
+                theme: 'material',
+                buttons: {
+                  ok: {
+                    isHidden: true
                   }
+                },
+                backgroundDismiss: true,
+                content: function () {
+                  var self = this;
+                  return  $.ajax({
+                    url: "./../functions/process_paypal.php",
+                    type: "json",
+                    method: "POST",
+                    data: {
+                      data: JSON.stringify(data)
+                    },
+                    success: function(data) {
+                      console.log(data);
+                      if(data == 1 || data == 2) {
+                        self.setTitle("Success");
+                        self.setContent("Your payment is successful!");
+                        self.backgroundDismiss = function () {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
                 }
+              });
+            } else {
+              $.alert({
+                theme: 'material',
+                type: 'red',
+                boxWidth: '250px',
+                useBootstrap: false,
+                title: 'Error',
+                content: 'Payment unsuccessful. Please try again later.',
+                buttons: {
+                  ok: {
+                    isHidden: true
+                  }
+                },
+                backgroundDismiss: true
               });
             }
           });
@@ -418,94 +462,106 @@ if($annualHasValue) {
         $("#promo-discount").text(data.amount)
       }
     }).then(() => {
-      $("#loader").css("display", "none");
-      $("#confirm-logout").on("click", function() {
-        $.ajax({
-          url: "./../functions/logout_process.php",
-          type: "json",
-          method: "post",
-          success: function() {
-            window.location.reload();
-          }
+      $.get("./../functions/check_member_program.php", function (res) {
+        if(!res) {
+          $("#has-program").css("display", "none");
+        } else {
+          data = $.parseJSON(res);
+          $("#has-program").css("display", "flex");
+          $("#program-name").text(data.program_name);
+          $("#program-amount").text(data.program_amount)
+        }
+      }).then(() => {
+        $("#loader").css("display", "none");
+        $("#confirm-logout").on("click", function() {
+          $.ajax({
+            url: "./../functions/logout_process.php",
+            type: "json",
+            method: "post",
+            success: function() {
+              window.location.reload();
+            }
+          });
         });
-      });
 
-      $("#close-post-payment").click(function() {
-        window.location.reload();
-      })
+        $("#close-post-payment").click(function() {
+          window.location.reload();
+        })
 
-      let m = $("#monthlypay").text();
-      let a = $("#annualpay").text();
-      let mp = parseInt($("#monthly-amount").text());
-      let ap = parseInt($("#annual-amount").text());
-      let pd = parseInt($("#promo-discount").text());
-
-      let toPay = $("#to-pay");
-      if(m == 'Due' && a == 'Paid') {
-        toPay.text(`P${(mp - pd)}.00`);
-      } else if(m == 'Paid' && a == 'Due') {
-        toPay.text(`P${ap}.00`);
-      } else if(m == 'Due' && a == 'Due') {
-        toPay.text(`P${ap + (mp - pd)}.00`);
-      } else {
-        toPay.text("P0.00");
-      }
-
-      if(document.querySelector("#to-pay").innerText != "P0.00") {
-        let amt = $("#to-pay").text();
-        let amount = amt.slice(1, amt.indexOf("."));
-        let items = getItems();
-        
-        initPayPalButton(amount, items);
-      }
-
-      function getItems() {
         let m = $("#monthlypay").text();
         let a = $("#annualpay").text();
+        let mp = parseInt($("#monthly-amount").text());
+        let ap = parseInt($("#annual-amount").text());
+        let pd = parseInt($("#promo-discount").text());
+        let pf = parseInt($("#program-amount").text());
 
+        let toPay = $("#to-pay");
         if(m == 'Due' && a == 'Paid') {
-          return [
-            {
-              "name": "Monthly Subscription",
-              "unit_amount": {
-                "currency_code": "PHP",
-                "value": (parseInt($("#monthly-amount").text()) - parseInt($("#promo-discount").text()))
-              },
-              "quantity": "1"
-            }
-          ];
+          toPay.text(`P${(mp + pf - pd)}.00`);
         } else if(m == 'Paid' && a == 'Due') {
-          return [
-            {
-              "name": "Annual Membership",
-              "unit_amount": {
-                "currency_code": "PHP",
-                "value": 200
-              },
-              "quantity": "1"
-            }
-          ];
+          toPay.text(`P${ap}.00`);
         } else if(m == 'Due' && a == 'Due') {
-          return [
-            {
-              "name": "Monthly Subscription",
-              "unit_amount": {
-                "currency_code": "PHP",
-                "value": (parseInt($("#monthly-amount").text()) - parseInt($("#promo-discount").text()))
-              },
-              "quantity": "1"
-            },
-            {
-              "name": "Annual Membership",
-              "unit_amount": {
-                "currency_code": "PHP",
-                "value": 200
-              },
-              "quantity": "1"
-            }
-          ]
+          toPay.text(`P${ap + (mp - pd)}.00`);
+        } else {
+          toPay.text("P0.00");
         }
-      };
+
+        if(document.querySelector("#to-pay").innerText != "P0.00") {
+          let amt = $("#to-pay").text();
+          let amount = amt.slice(1, amt.indexOf("."));
+          let items = getItems();
+          
+          initPayPalButton(amount, items);
+        }
+
+        function getItems() {
+          let m = $("#monthlypay").text();
+          let a = $("#annualpay").text();
+
+          if(m == 'Due' && a == 'Paid') {
+            return [
+              {
+                "name": "Monthly Subscription",
+                "unit_amount": {
+                  "currency_code": "PHP",
+                  "value": (parseInt($("#monthly-amount").text()) - parseInt($("#promo-discount").text()) + parseInt($("#program-amount").text()))
+                },
+                "quantity": "1"
+              }
+            ];
+          } else if(m == 'Paid' && a == 'Due') {
+            return [
+              {
+                "name": "Annual Membership",
+                "unit_amount": {
+                  "currency_code": "PHP",
+                  "value": 200
+                },
+                "quantity": "1"
+              }
+            ];
+          } else if(m == 'Due' && a == 'Due') {
+            return [
+              {
+                "name": "Monthly Subscription",
+                "unit_amount": {
+                  "currency_code": "PHP",
+                  "value": (parseInt($("#monthly-amount").text()) - parseInt($("#promo-discount").text()) + parseInt($("#program-amount").text()))
+                },
+                "quantity": "1"
+              },
+              {
+                "name": "Annual Membership",
+                "unit_amount": {
+                  "currency_code": "PHP",
+                  "value": 200
+                },
+                "quantity": "1"
+              }
+            ]
+          }
+        };
+      });
     });
     
   

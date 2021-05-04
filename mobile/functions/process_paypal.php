@@ -43,12 +43,14 @@ $paymentDate = date("Y-m-d", strtotime($data->paymentDate));
 $paymentTime = date("h:i A", strtotime($data->paymentDate));
 $onlinePaymentId = $data->paymentId;
 $promoAvailed = $data->promo ? $data->promo : null;
+$programName = $data->program_enrolled;
+$programAmount = $data->program_amount;
 $ok = 0;
 if(count($data->items) > 0) {
   foreach($data->items as $item) {
     $am = $item->unit_amount;
-    $sql = "INSERT INTO paymentlog (member_id, first_name, last_name, payment_amount, member_type, payment_description, payment_type, date_payment, time_payment, online_payment_id, promo_availed)
-            VALUES ($memberId, '$fname', '$lname', '".substr($am->value, 0, -3)."', 'Regular', '$item->name', 'Online', '$paymentDate', '$paymentTime', '$onlinePaymentId', '$promoAvailed')";
+    $sql = "INSERT INTO paymentlog (member_id, first_name, last_name, payment_amount, member_type, payment_description, payment_type, date_payment, time_payment, online_payment_id, promo_availed, program_enrolled, program_amount)
+            VALUES ($memberId, '$fname', '$lname', '".substr($am->value, 0, -3)."', 'Regular', '$item->name', 'Online', '$paymentDate', '$paymentTime', '$onlinePaymentId', '$promoAvailed', '$programName', '$programAmount')";
     $res = $con->query($sql);
     if($res) {
       if($item->name == "Monthly Subscription") {
