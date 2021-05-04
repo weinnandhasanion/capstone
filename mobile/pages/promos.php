@@ -255,6 +255,12 @@ if(!isset($_SESSION["member_id"])) {
 
               if(data.active == "true") {
                 self.buttons.avail.disable();
+                self.buttons.avail.setText('Promo availed');
+                self.buttons.avail.addClass('btn-disabled');
+                self.buttons.avail.removeClass('btn-red');
+              } else if(data.active == "pending") {
+                self.buttons.avail.disable();
+                self.buttons.avail.setText('Request pending');
                 self.buttons.avail.addClass('btn-disabled');
                 self.buttons.avail.removeClass('btn-red');
               }
@@ -302,6 +308,18 @@ if(!isset($_SESSION["member_id"])) {
                     ok: {
                       isHidden: true,
                       btnClass: 'btn-green'
+                    },
+                    proceed: {
+                      isHidden: true,
+                      btnClass: 'btn-green',
+                      action: function () {
+                        window.location.href = "./send_promo_request.php?id=" + id;
+                      }
+                    },
+                    cancel: {
+                      isHidden: true,
+                      btnClass: 'btn-secondary',
+                      action: function () {}
                     }
                   },
                   content: function () {
@@ -314,6 +332,16 @@ if(!isset($_SESSION["member_id"])) {
                         self.setContent('Promo has already ended!');
                       } else if(res == 3) {
                         self.setContent('You have already availed this promo!');
+                      } else if(res == 4) {
+                        self.setContent('You have a pending request for a permanent promo. You can only send one request at a time.');
+                      } else if(res == 5) {
+                        self.setTitle('Send Identification Card');
+                        self.setContent('You are about to avail a permanent promo. Availing permanent promos require you to send a request to the gym admin by uploading a verified ID depending on the promo requirements. Proceed?');
+                        self.setBoxWidth('325px');
+                        self.buttons.proceed.show();
+                        self.buttons.cancel.show();
+                        self.backgroundDismiss = false;
+                        self.closeIcon = true;
                       } else {
                         self.backgroundDismiss = false;
                         self.buttons.ok.show();
@@ -370,13 +398,8 @@ if(!isset($_SESSION["member_id"])) {
                     var self = this;
 
                     return $.post("./../functions/avail_promo.php", {id: id}, function (res) {
-                      console.log(res);
-                      if(res == 1) {
-                        self.setContent('Promo has not yet started!');
-                      } else if(res == 2) {
-                        self.setContent('Promo has already ended!');
-                      } else if(res == 3) {
-                        self.setContent('You have already availed this promo!');
+                      if(res == 4) {
+                        self.setContent('You have a pending request for a permanent promo. You can only send one request at a time.');
                       } else if(res == 5) {
                         self.setTitle('Send Identification Card');
                         self.setContent('You are about to avail a permanent promo. Availing permanent promos require you to send a request to the gym admin by uploading a verified ID depending on the promo requirements. Proceed?');

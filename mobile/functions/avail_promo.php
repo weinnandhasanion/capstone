@@ -32,10 +32,22 @@ if(mysqli_num_rows($res) > 0) {
         if($res) {
           echo $row["promo_name"];
         }
-      } echo mysqli_error($con);
+      } else {
+        echo mysqli_error($con);
+      }
     }
   } else {
-    echo 5;
+    $sql = "SELECT * FROM memberpromos WHERE member_id = $memberId AND status = 'Pending'";
+    $res = mysqli_query($con, $sql);
+    if($res) {
+      if(mysqli_num_rows($res) > 0) {
+        echo 4;
+      } else {
+        echo 5;
+      }
+    } else {
+      echo mysqli_error($con);
+    }
   }
 }
 ?>

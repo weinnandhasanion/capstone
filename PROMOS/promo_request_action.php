@@ -12,7 +12,7 @@ $dateNow = date("Y-m-d H:i:s");
 if($action == "accept") {
   $sql = "UPDATE memberpromos SET status = 'Removed' WHERE member_id = $member_id AND status = 'Active'";
   if(mysqli_query($conn, $sql)) {
-    $sql = "UPDATE memberpromos SET status = 'Active', admin_action_date = '$dateNow' WHERE id = $id";
+    $sql = "UPDATE memberpromos SET status = 'Active', admin_action_date = '$dateNow', date_added = '$dateNow' WHERE id = $id";
     $res = mysqli_query($conn, $sql);
 
     if($res) {
@@ -24,7 +24,7 @@ if($action == "accept") {
     }
   }
 } else {
-  $sql = "UPDATE memberpromos SET status = 'Declined' WHERE id = $id";
+  $sql = "UPDATE memberpromos SET status = 'Declined', admin_action_date = '$dateNow' WHERE id = $id";
   $res = mysqli_query($conn, $sql);
 
   if($res) {

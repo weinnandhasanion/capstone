@@ -1107,6 +1107,8 @@
       let name = elem.getAttribute("data-name");
       $.alert({
         title: "",
+        boxWidth: '400px',
+        useBootstrap: false,
         content: "<img src='./../mobile/img/uploads/requests/" + path + "'>",
         backgroundDismiss: true,
         buttons: {

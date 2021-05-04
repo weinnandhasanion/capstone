@@ -12,7 +12,19 @@ if(mysqli_query($con, $sql)) {
   if(mysqli_num_rows(mysqli_query($con, $sql)) > 0) {
     $active = "true";
   } else {
-    $active = "false";
+    $sql = "SELECT * FROM memberpromos WHERE promo_id = $id AND member_id = $memberId
+    AND status = 'Pending'";
+    $res = mysqli_query($con, $sql);
+
+    if($res) {
+      if(mysqli_num_rows($res) > 0) {
+        $active = "pending";
+      } else {
+        $active = "false";
+      }
+    } else {
+      $active = mysqli_error($con);
+    }
   }
 
   $sql = "SELECT * FROM promo WHERE promo_id = $id";
