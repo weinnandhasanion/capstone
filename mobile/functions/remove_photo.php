@@ -62,6 +62,7 @@ if(!$result) {
     }
 
     .icon-div img {
+      height: 35vh;
       min-height: 100%;
       max-width: 100%;
     }    

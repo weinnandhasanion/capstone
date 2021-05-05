@@ -58,6 +58,7 @@
     }
 
     .icon-div img {
+      height: 35vh;
       /* clip-path: circle(50.0% at 50% 50%); */
       min-height: 100%;
       min-width: 100%;

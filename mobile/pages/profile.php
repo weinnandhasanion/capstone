@@ -282,7 +282,7 @@
       $("#sidebar").css("display", "block");
     });
 
-    new QRCode(document.getElementById("qr-code"), "./../functions/check_if_paid_qr.php?id=<?php echo $_SESSION["member_id"] ?>");
+    new QRCode(document.getElementById("qr-code"), "./scan_qr.php?id=<?php echo $_SESSION["member_id"] ?>");
 
     $.ajax({
       url: "./../functions/subscription_details.php",

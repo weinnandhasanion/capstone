@@ -1,41 +1,41 @@
 <?php
-	session_start();
-    require('./../connect.php');
+session_start();
+require('./../connect.php');
 
-	if(isset($_SESSION['admin_id'])){
-		$id = $_SESSION['admin_id'];
-	} else {
-    header("Location: ./../index_admin.php");
-  }
+if (isset($_SESSION['admin_id'])) {
+  $id = $_SESSION['admin_id'];
+} else {
+  header("Location: ./../index_admin.php");
+}
 
-	$sql = "select * from admin where admin_id =".$id."";
-	$res = mysqli_query($conn, $sql);
+$sql = "select * from admin where admin_id =" . $id . "";
+$res = mysqli_query($conn, $sql);
 
-  if(isset($_GET["type"])) {
-    if($_GET["type"] == "regular") {
-      $sql = "SELECT * FROM member WHERE member_type = 'Regular' AND isDeleted = 'false' ORDER BY member_id DESC";
-      $res = mysqli_query($conn, $sql);
-      $data = array();
-      while($row = mysqli_fetch_assoc($res)) {
-        $row["fullname"] = $row["first_name"]." ".$row["last_name"];
-        $data[] = $row;
-      }
-
-      echo json_encode($data);
-      exit();
-    } else {
-      $sql = "SELECT * FROM member WHERE member_type = 'Walk-in' AND acc_status = 'active' ORDER BY member_id DESC";
-      $res = mysqli_query($conn, $sql);
-      $data = array();
-      while($row = mysqli_fetch_assoc($res)) {
-        $row["fullname"] = $row["first_name"]." ".$row["last_name"];
-        $data[] = $row;
-      }
-
-      echo json_encode($data);
-      exit();
+if (isset($_GET["type"])) {
+  if ($_GET["type"] == "regular") {
+    $sql = "SELECT * FROM member WHERE member_type = 'Regular' AND isDeleted = 'false' ORDER BY member_id DESC";
+    $res = mysqli_query($conn, $sql);
+    $data = array();
+    while ($row = mysqli_fetch_assoc($res)) {
+      $row["fullname"] = $row["first_name"] . " " . $row["last_name"];
+      $data[] = $row;
     }
+
+    echo json_encode($data);
+    exit();
+  } else {
+    $sql = "SELECT * FROM member WHERE member_type = 'Walk-in' AND acc_status = 'active' ORDER BY member_id DESC";
+    $res = mysqli_query($conn, $sql);
+    $data = array();
+    while ($row = mysqli_fetch_assoc($res)) {
+      $row["fullname"] = $row["first_name"] . " " . $row["last_name"];
+      $data[] = $row;
+    }
+
+    echo json_encode($data);
+    exit();
   }
+}
 ?>
 
 <!DOCTYPE html>
@@ -61,201 +61,205 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
   <style>
-  input[type=text],
-  input[type=email] {
-    text-align: center;
-  }
+    input[type=text],
+    input[type=email] {
+      text-align: center;
+    }
 
-  body::-webkit-scrollbar {
-    width: 0 !important;
-  }
+    body::-webkit-scrollbar {
+      width: 0 !important;
+    }
 
-  .john label {
-    font-family: Helvetica;
-    font-size: 18px;
-    position: relative;
-  }
+    .john label {
+      font-family: Helvetica;
+      font-size: 18px;
+      position: relative;
+    }
 
-  .table {
-    margin-bottom: 0 !important;
-  }
+    .table {
+      margin-bottom: 0 !important;
+    }
 
-  table>thead>tr>th {
-    font-weight: bold;
-    text-transform: uppercase;
-  }
+    table>thead>tr>th {
+      font-weight: bold;
+      text-transform: uppercase;
+    }
 
-  .card-header>.card-title {
-    margin-bottom: 0;
-  }
+    #routines-tbody td, #routines-thead th {
+      text-align: left;
+    }
 
-  .card-header>.card-title>h3 {
-    margin-block-end: 0;
-  }
+    .card-header>.card-title {
+      margin-bottom: 0;
+    }
 
-  .card-bodyzz {
-    overflow-y: auto;
-  }
+    .card-header>.card-title>h3 {
+      margin-block-end: 0;
+    }
 
-  .card-bodyzz::-webkit-scrollbar {
-    width: 0;
-  }
+    .card-bodyzz {
+      overflow-y: auto;
+    }
 
-  small {
-    color: grey;
-    margin-left: 5px;
-  }
+    .card-bodyzz::-webkit-scrollbar {
+      width: 0;
+    }
 
-  .add-members {
-    color: #DF3A01;
-  }
+    small {
+      color: grey;
+      margin-left: 5px;
+    }
 
-  .add-members:hover {
-    filter: brightness(70%);
-    cursor: pointer;
-  }
+    .add-members {
+      color: #DF3A01;
+    }
 
-  .flexHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+    .add-members:hover {
+      filter: brightness(70%);
+      cursor: pointer;
+    }
 
-  .flex {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+    .flexHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-  .logoutBtn:hover {
-    text-decoration: underline;
-  }
+    .flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-  th,
-  td {
-    text-align: center;
-  }
+    .logoutBtn:hover {
+      text-decoration: underline;
+    }
 
-  .form-row {
-    text-align: center;
-  }
+    th,
+    td {
+      text-align: center;
+    }
 
-  .new-code-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
+    .form-row {
+      text-align: center;
+    }
 
-  .qrcode-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    .new-code-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
 
-  .flexLa {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
+    .qrcode-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  .no-data-div {
-    display: none;
-    justify-content: center;
-    align-items: center;
-  }
+    .flexLa {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
 
-  .validation {
-    display: none;
-    margin-left: 0 !important;
-  }
+    .no-data-div {
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
 
-  .wait-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-radius: 25px;
-  }
+    .validation {
+      display: none;
+      margin-left: 0 !important;
+    }
 
-  .train input[type=text] {
-    text-align: center;
-  }
+    .wait-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      border-radius: 25px;
+    }
 
-  /* Customize the label (the container) */
-  .container {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 18px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
+    .train input[type=text] {
+      text-align: center;
+    }
 
-  /* Hide the browser's default radio button */
-  .container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
+    /* Customize the label (the container) */
+    .container {
+      display: block;
+      position: relative;
+      padding-left: 35px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      font-size: 18px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
 
-  /* Create a custom radio button */
-  .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: grey;
-    border-radius: 50%;
-  }
+    /* Hide the browser's default radio button */
+    .container input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
 
-  /* On mouse-over, add a grey background color */
-  .container:hover input~.checkmark {
-    background-color: #DF3A01;
-  }
+    /* Create a custom radio button */
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      background-color: grey;
+      border-radius: 50%;
+    }
 
-  /* When the radio button is checked, add a blue background */
-  .container input:checked~.checkmark {
-    background-color: #DF3A01;
-  }
+    /* On mouse-over, add a grey background color */
+    .container:hover input~.checkmark {
+      background-color: #DF3A01;
+    }
 
-  /* Create the indicator (the dot/circle - hidden when not checked) */
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
+    /* When the radio button is checked, add a blue background */
+    .container input:checked~.checkmark {
+      background-color: #DF3A01;
+    }
 
-  /* Show the indicator (dot/circle) when checked */
-  .container input:checked~.checkmark:after {
-    display: block;
-  }
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
 
-  /* Style the indicator (dot/circle) */
-  .container .checkmark:after {
-    top: 9px;
-    left: 9px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: white;
-  }
+    /* Show the indicator (dot/circle) when checked */
+    .container input:checked~.checkmark:after {
+      display: block;
+    }
 
-  textarea {
-    text-align: center;
-  }
+    /* Style the indicator (dot/circle) */
+    .container .checkmark:after {
+      top: 9px;
+      left: 9px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
+    }
 
-  .pagination .page-item.active .page-link {
-    background-color: #FF4500;
-  }
+    textarea {
+      text-align: center;
+    }
+
+    .pagination .page-item.active .page-link {
+      background-color: #FF4500;
+    }
   </style>
 </head>
 
@@ -267,27 +271,26 @@
         <h4 style="margin-bottom: 0 !important;">
           Welcome,
           <?php
-			    	$row = mysqli_fetch_array($res);
-			    	echo "<strong>".$row['first_name']."</strong>";
-		      ?>
+          $row = mysqli_fetch_array($res);
+          echo "<strong>" . $row['first_name'] . "</strong>";
+          ?>
         </h4>
         <div class="logout">
-          <?php 
-            $sql = "SELECT * FROM logtrail ORDER BY login_id DESC";
-            $result = mysqli_query($conn, $sql); 
-            $data = array();
-            if($result){
-              while($rows = mysqli_fetch_assoc($result)){
-                $data[] = $rows;
-              }
-
-              $row = $data[0];
+          <?php
+          $sql = "SELECT * FROM logtrail ORDER BY login_id DESC";
+          $result = mysqli_query($conn, $sql);
+          $data = array();
+          if ($result) {
+            while ($rows = mysqli_fetch_assoc($result)) {
+              $data[] = $rows;
             }
+
+            $row = $data[0];
+          }
           ?>
 
           <a href="#">
-            <button id="logoutBtn" type="button" class="btn btn-sm btn-danger" data-id="<?php echo $row['login_id'] ?>"
-              onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
+            <button id="logoutBtn" type="button" class="btn btn-sm btn-danger" data-id="<?php echo $row['login_id'] ?>" onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
         </div>
       </div>
     </nav>
@@ -299,8 +302,7 @@
       <center><img src="logo.png" class="img-fluid" alt="" style="width: 200px; height: 180px;"></center>
       <br>
       <div class="list-group list-group-flush">
-        <a href="./../DASHBOARD/dashboard.php"
-          class="list-group-item list-group-item-action waves-effect sidebar-items">
+        <a href="./../DASHBOARD/dashboard.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-chart-pie mr-3"></i>Dashboard
         </a>
         <a href="#" class="list-group-item list-group-item-action waves-effect sidebar-item-active">
@@ -308,8 +310,7 @@
         <a href="./../TRAINER/trainers.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-user-shield mr-3"></i>Trainers
         </a>
-        <a href="./../INVENTORY/inventory.php"
-          class="list-group-item list-group-item-action waves-effect sidebar-items">
+        <a href="./../INVENTORY/inventory.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-dumbbell  mr-3"></i>Inventory</a>
         <a href="./../PROMOS/promos.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-percent mr-3"></i>Promos
@@ -331,8 +332,7 @@
   <!--Main Navigation-->
   <main class='pt-5 mx-lg-5'>
     <div class='container-fluid mt-5'>
-      <button class="btn btn-sm btn-outline-orange mb-3" id="viewDeleted" data-toggle="modal"
-        data-target="#deleteModal">
+      <button class="btn btn-sm btn-outline-orange mb-3" id="viewDeleted" data-toggle="modal" data-target="#deleteModal">
         <i class="fas fa-trash mr-2"></i>
         View Deleted Members
       </button>
@@ -341,15 +341,18 @@
         View Deleted Programs
       </button>
       <button class="btn btn-sm btn-outline-orange mb-3" data-toggle="modal" data-target="#scan-qr-modal">
-      <i class="fas fa-qrcode mr-2"></i>
+        <i class="fas fa-qrcode mr-2"></i>
         Scan QR Code
+      </button>
+      <button class="btn btn-sm btn-outline-orange mb-3" data-toggle="modal" data-target="#member-log-modal">
+        <i class="fas fa-eye mr-2"></i>
+        View Member Log
       </button>
       <div class='card'>
         <div class='card-content'>
           <div class='card-header flexHeader'>
             <h3 class='card-title'>
-              <span class="add-members" data-toggle="tooltip" data-placement="top" title="Add new member"><i
-                  data-toggle="modal" data-target="#add" id="add-new-member-btn" class="fas fa-plus mr-2"></i></span>
+              <span class="add-members" data-toggle="tooltip" data-placement="top" title="Add new member"><i data-toggle="modal" data-target="#add" id="add-new-member-btn" class="fas fa-plus mr-2"></i></span>
               Regular Members
             </h3>
             <div>
@@ -435,12 +438,12 @@
         <div class="col-sm-6">
           <div class="card">
             <div class="card-content">
-              <div class="card-header">
+              <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title">
-                  <span class="add-members" data-toggle="tooltip" data-placement="top" title="Add new program"><i
-                      data-toggle="modal" data-target="#add-program" class="fas fa-plus mr-2"></i></span>
+                  <span class="add-members" data-toggle="tooltip" data-placement="top" title="Add new program"><i data-toggle="modal" data-target="#add-program" class="fas fa-plus mr-2"></i></span>
                   Programs
                 </h3>
+                <button class="btn btn-sm btn-outline-orange" data-toggle="modal" data-target="#routines-modal">View Routines</button>
               </div>
               <div class="card-body card-bodyzz table-responsive-0 p-0">
                 <table class="table table-hover">
@@ -551,6 +554,47 @@
     </div>
   </div>
 
+  <div class="modal fade" id="routines-modal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-between align-items-center" style="background-color: #DF3A01; color: white;">
+          <div class="d-flex justify-content-center align-items-center">
+            <span class="add-members" data-toggle="tooltip" data-placement="top" title="Add new routine">
+              <i style="font-size: 24px" id="add-routines-modal-btn" class="text-success fas fa-plus mr-2"></i>
+            </span>
+            <h4 class="modal-title">Workout Routines</h4>
+          </div>
+          <form class="d-flex justify-content-center">
+            <input type="text" placeholder="Search routine here" id="search-routines" class="form-control">
+          </form>
+        </div>
+        <div class="modal-body d-flex justify-content-center align-items-center flex-column">
+          <table class="table table-hover">
+            <thead id="routines-thead">
+              <tr>
+                <th>Routine Name</th>
+                <th>Routine Type</th>
+                <th>Sets</th>
+                <th>Reps</th>
+                <th>Link</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="routines-tbody">
+            
+            </tbody>
+          </table>
+          <div id="no-data-div-routines" class="no-data-div my-5 text-muted">
+            No data to show.
+          </div>
+        </div>
+        <div class="modal-footer" id="routines-footer">
+        
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!----------------------------------------------------display program modal -------------------------------------->
   <div id="viewinfo" class="modal fade" role="dialog">
@@ -593,8 +637,7 @@
                 <div class="form-row">
                   <div class="col-sm-10">
                     <label style="position: relative;left: 55px;">Program Description</label>
-                    <textarea name="program_description" type="text" required="" readonly class="form-control mb-1 "
-                      id="info_description" rows="3" style="resize:none; width:835px;"></textarea>
+                    <textarea name="program_description" type="text" required="" readonly class="form-control mb-1 " id="info_description" rows="3" style="resize:none; width:835px;"></textarea>
                   </div>
                 </div>
               </div>
@@ -747,8 +790,7 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Email</label>
-                  <input type="email" required name="email" class="form-control" id="update_email"
-                    onblur="checkEmail(this)">
+                  <input type="email" required name="email" class="form-control" id="update_email" onblur="checkEmail(this)">
                   <small class="validation text-danger" id="update_email-empty">Please fill out this field</small>
                   <small class="validation text-danger" id="update_email-invalid">Invalid email</small>
 
@@ -759,8 +801,7 @@
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Phone</label>
-                  <input type="text" name="phone" required class="form-control" id="update_phone"
-                    onblur="checkNumber(this)">
+                  <input type="text" name="phone" required class="form-control" id="update_phone" onblur="checkNumber(this)">
                   <small class="validation text-danger" id="update_phone-empty">Please fill out this field</small>
                   <small class="validation text-danger" id="update_phone-invalid">Invalid input</small>
                   <small class="validation text-danger" id="update_phone-length">Phone number must contain 11
@@ -779,8 +820,7 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <center><label>Address</label></center>
-                  <input name="address" required id="update_address" type="text" class="form-control mb-1" id="update_address"
-                    oninput="checkIfValid(this)" onblur="checkIfValidupdate(this)">
+                  <input name="address" required id="update_address" type="text" class="form-control mb-1" id="update_address" oninput="checkIfValid(this)" onblur="checkIfValidupdate(this)">
                   <small class="validation text-danger" id="update_address-empty">Please fill out this field</small>
                 </div>
               </div>
@@ -790,13 +830,13 @@
                 <div class="col-sm-6" id="has-program">
                   <label for="">Program &#183; <a href="#" class="text-danger" id="remove-program-btn">Remove</a></label>
                   <select id="update_program" class="form-control">
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM program WHERE program_status = 'active'";
                     $res = mysqli_query($conn, $sql);
 
-                    while($row = mysqli_fetch_assoc($res)) {
+                    while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?= $row["program_id"] ?>"><?= $row["program_name"] ?></option>
+                      <option value="<?= $row["program_id"] ?>"><?= $row["program_name"] ?></option>
                     <?php
                     }
                     ?>
@@ -831,27 +871,27 @@
               <div class="col-sm-6">
                 <label for="">Choose a program</label>
                 <select class="form-control" name="avail-program-select" id="avail-program-select">
-                <?php 
-                $sql = "SELECT * FROM program WHERE program_status = 'active'";
-                $res = mysqli_query($conn, $sql);
+                  <?php
+                  $sql = "SELECT * FROM program WHERE program_status = 'active'";
+                  $res = mysqli_query($conn, $sql);
 
-                while($row = mysqli_fetch_assoc($res)) {
-                ?>
-                <option value="<?= $row["program_id"] ?>"><?= $row["program_name"] ?></option>
-                <?php
-                }
-                ?>
+                  while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                    <option value="<?= $row["program_id"] ?>"><?= $row["program_name"] ?></option>
+                  <?php
+                  }
+                  ?>
                 </select>
               </div>
               <div class="col-sm-6">
                 <label for="">Amount</label>
                 <input type="text" id="programpayment-amount" value="
-                <?php 
+                <?php
                 $sql = "SELECT * FROM program WHERE program_status = 'active'";
                 $res = mysqli_query($conn, $sql);
 
                 $data = array();
-                while($row = mysqli_fetch_assoc($res)) {
+                while ($row = mysqli_fetch_assoc($res)) {
                   $data[] = $row;
                 }
 
@@ -939,8 +979,7 @@
             <div class="form-row">
               <div class="col-sm-6">
                 <label>Payment Description</label>
-                <select name="payment_description" id="payment_description" onchange="pay(this)" class="form-control"
-                  required="">
+                <select name="payment_description" id="payment_description" onchange="pay(this)" class="form-control" required="">
                   <option value="" selected>Select Payment</option>
                   <option value="Monthly Subscription">Monthly Subscription</option>
                   <option value="Annual Membership">Annual Membership</option>
@@ -1007,13 +1046,11 @@
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Payment Description</label>
-                  <input type="text" name="payment_description" value="Walk-in" class="form-control" readonly
-                    id="walkinpayment_description">
+                  <input type="text" name="payment_description" value="Walk-in" class="form-control" readonly id="walkinpayment_description">
                 </div>
                 <div class="col-sm-6">
                   <label>Amount</label>
-                  <input type="text" name="payment_amount" class="form-control" value="50" readonly
-                    id="walkinpayment-amount">
+                  <input type="text" name="payment_amount" class="form-control" value="50" readonly id="walkinpayment-amount">
                 </div>
               </div>
             </div>
@@ -1061,15 +1098,13 @@
             <div class="form-row">
               <div class="col-sm-6">
                 <label>First Name</label>
-                <input name="first_name" required="" type="text" id="fName" class="form-control mb-1"
-                  placeholder="First name" onblur="checkIfValid(this)">
+                <input name="first_name" required="" type="text" id="fName" class="form-control mb-1" placeholder="First name" onblur="checkIfValid(this)">
                 <small class="validation text-danger" id="fName-empty">Please fill out this field</small>
                 <small class="validation text-danger" id="fName-invalid">Invalid input</small>
               </div>
               <div class="col-sm-6">
                 <label>Last Name</label>
-                <input name="last_name" required="" placeholder="Last name" type="text" id="lName"
-                  class="form-control mb-1" onblur="checkIfValid(this)">
+                <input name="last_name" required="" placeholder="Last name" type="text" id="lName" class="form-control mb-1" onblur="checkIfValid(this)">
                 <small class="validation text-danger" id="lName-empty">Please fill out this field</small>
                 <small class="validation text-danger" id="lName-invalid">Invalid input</small>
               </div>
@@ -1086,16 +1121,14 @@
               </div>
               <div class="col-sm-5">
                 <label>Birthdate</label>
-                <input name="birthdate" required="" type="date" id="birthdate" class="form-control mb-1"
-                  onblur="checkDate(this)">
+                <input name="birthdate" required="" type="date" id="birthdate" class="form-control mb-1" onblur="checkDate(this)">
                 <small class="validation text-danger" id="birthdate-invalid">Invalid birthdate</small>
                 <small class="validation text-danger" id="birthdate-underage">Person must be at least 12 years old to
                   join the gym</small>
               </div>
               <div class="col-sm-5">
                 <label>Email</label>
-                <input name="email" required="" placeholder="Email" type="email" class="form-control mb-1" id="email"
-                  onblur="checkEmail(this)">
+                <input name="email" required="" placeholder="Email" type="email" class="form-control mb-1" id="email" onblur="checkEmail(this)">
                 <small class="validation text-danger" id="email-empty">Please fill out this field</small>
                 <small class="validation text-danger" id="email-invalid">Invalid email</small>
               </div>
@@ -1105,8 +1138,7 @@
             <div class="form-row">
               <div class="col-sm-12">
                 <label>Address</label>
-                <input name="address" placeholder="Address" required="" type="text" class="form-control mb-1"
-                  id="address" oninput="checkIfValid(this)" onblur="checkIfValid(this)">
+                <input name="address" placeholder="Address" required="" type="text" class="form-control mb-1" id="address" oninput="checkIfValid(this)" onblur="checkIfValid(this)">
                 <small class="validation text-danger" id="address-empty">Please fill out this field</small>
               </div>
             </div>
@@ -1115,8 +1147,7 @@
             <div class="form-row">
               <div class="col-sm-4">
                 <label>Cellphone Number</label>
-                <input name="phone" type="text" placeholder="Contact Number" required="" class="form-control mb-1"
-                  id="phone" onblur="checkNumber(this)">
+                <input name="phone" type="text" placeholder="Contact Number" required="" class="form-control mb-1" id="phone" onblur="checkNumber(this)">
                 <small class="validation text-danger" id="phone-empty">Please fill out this field</small>
                 <small class="validation text-danger" id="phone-invalid">Invalid input</small>
                 <small class="validation text-danger" id="phone-length">Phone number must contain 11 digits</small>
@@ -1137,8 +1168,7 @@
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="radio" value="No" name="program-check" id="program-no"
-                    checked>
+                  <input class="form-check-input" type="radio" value="No" name="program-check" id="program-no" checked>
                   <label class="form-check-label" for="program-no">
                     No
                   </label>
@@ -1152,14 +1182,14 @@
               <div class="col-sm-4" id="program-check-div" style="display: none">
                 <label>Program</label>
                 <select name="program_id" required="" id="program" class="form-control">
-                  <?php 
+                  <?php
                   $sql = "SELECT * FROM program WHERE program_status = 'active'";
                   $res = mysqli_query($conn, $sql);
 
-                  if($res) {
-                    while($row = mysqli_fetch_assoc($res)) {
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
                   ?>
-                  <option value="<?= $row["program_id"] ?>"><?= $row["program_name"] ?></option>
+                      <option value="<?= $row["program_id"] ?>"><?= $row["program_name"] ?></option>
                   <?php
                     }
                   }
@@ -1175,7 +1205,6 @@
       </div>
     </div>
   </div>
-  </div>
 
   <!----------------------------------------------------  View regular member modal -------------------------------------->
   <div class="modal fade" id="view">
@@ -1188,8 +1217,7 @@
         <div class="modal-body">
           <!----------------------------------------------------VIEW PROFILE PICTURE -------------------------------------->
           <div class="row d-flex mt-1 mb-3" style="flex-direction: row; position: relative;left: 70px;">
-            <div id="profilepic"
-              style="border-radius: 50px; height: 100px; width: 100px; overflow: hidden; background-position: 50% 50%; background-size: cover;  text-align: center;">
+            <div id="profilepic" style="border-radius: 50px; height: 100px; width: 100px; overflow: hidden; background-position: 50% 50%; background-size: cover;  text-align: center;">
               <img src="member.png" id="member_picture" alt="" style="height: 100%; width: 100%; object-fit: cover;">
             </div>
             <!------------------------------------------------------------------------------------------------------------>
@@ -1447,7 +1475,6 @@
       <div class="modal-content" style="width: 700px;">
         <div class="modal-header" style="background-color:#EB460D;color:white;">
           <h4 class="modal-title">Walk-in Payment History</h4>
-
         </div>
         <div class="modal-body">
           <div id='card-body' class='card-body table-responsive p-0 card-bodyzz'>
@@ -1477,19 +1504,161 @@
     </div>
   </div>
 
+  <!-- scan qr modal -->
   <div class="modal fade" id="scan-qr-modal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header" style="background-color:#EB460D;color:white;">
           <h4 class="modal-title">Scan QR Code</h4>
         </div>
         <div class="modal-body d-flex justify-content-center align-items-center flex-column" id="qr-cont">
-        <button class="btn btn-sm btn-orange" id="btn-scan-qr">Open QR Scanner</button>
-        <button class="btn btn-sm btn-orange" hidden="" id="close-btn-scan-qr">Close QR Scanner</button>
+          <button class="btn btn-sm btn-orange" id="btn-scan-qr">Open QR Scanner</button>
+          <button class="btn btn-sm btn-orange" hidden="" id="close-btn-scan-qr">Close QR Scanner</button>
 
-        <canvas hidden="" id="qr-canvas"></canvas>
+          <canvas hidden="" id="qr-canvas"></canvas>
         </div>
         <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="member-log-modal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#EB460D;color:white;">
+          <h4 class="modal-title">View Member Log</h4>
+        </div>
+        <div class="modal-body table-responsive p-0">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Member ID</th>
+                <th>Member Name</th>
+                <th>Member Type</th>
+                <th>Date in</th>
+                <th>Time in</th>
+                <th>Scanned by</th>
+              </tr>
+            </thead>
+            <tbody id="member-log-tbody">
+            
+            </tbody>
+          </table>
+          <div id="no-data-div-member-log" class="no-data-div my-3 text-muted">
+            No data to show.
+          </div>
+        </div>
+        <div class="modal-footer" id="member-log-footer">
+        
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- add routine modal -->
+  <div class="modal fade" id="add-routine">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#EB460D;color:white;">
+          <h4 class="modal-title" id="add-routine-title">Add New Routine</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label for="">Routine Name</label>
+                <input type="text" id="add-routine-name" class="form-control" placeholder="Enter name here">
+              </div>
+              <div class="col-sm-6">
+                <label for="">Routine Type</label>
+                <select name="" id="add-routine-type" class="form-control">
+                  <option value="Upper Body">Upper Body</option>
+                  <option value="Lower Body">Lower Body</option>
+                  <option value="Abdominal">Abdominal</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label for="">Sets</label>
+                <input type="number" min="1" max="5" id="add-routine-sets" class="form-control" placeholder="1-5">
+              </div>
+              <div class="col-sm-6">
+                <label for="">Repetitions</label>
+                <input type="number" min="5" max="100" id="add-routine-reps" class="form-control" placeholder="5-100">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-12">
+                <label for="">Tutorial YouTube Link</label>
+                <input type="text" class="form-control" id="add-routine-link" placeholder="e.g. https://www.youtube.com/watch?v=vT2GjY_Umpw">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-orange" onclick="addNewRoutine()">Add Routine</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- edit routine modal -->
+  <div class="modal fade" id="update-routine">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#EB460D;color:white;">
+          <h4 class="modal-title" id="update-routine-title"></h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label for="">Routine ID</label>
+                <input type="text" id="update-routine-id" readonly class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">Routine Name</label>
+                <input type="text" id="update-routine-name" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label for="">Routine Type</label>
+                <select id="update-routine-type" class="form-control">
+                  <option value="Upper Body">Upper Body</option>
+                  <option value="Lower Body">Lower Body</option>
+                  <option value="Abdominal">Abdominal</option>
+                </select>
+              </div>
+              <div class="col-sm-3">
+                <label for="">Sets</label>
+                <input type="number" max="5" min="1"  id="update-routine-sets" class="form-control">
+              </div>
+              <div class="col-sm-3">
+                <label for="">Reps</label>
+                <input type="number" min="5" max="100" id="update-routine-reps" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-12">
+                <label for="">Tutorial YouTube Link</label>
+                <input type="text" id="update-routine-link" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-orange" onclick="editRoutine()">Save changes</button>
         </div>
       </div>
     </div>
@@ -1509,24 +1678,23 @@
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Program Name</label>
-                  <input name="program_name" required type="text" id="prgram_name_update" class="form-control mb-1"
-                    placeholder="Enter program name here">
+                  <input name="program_name" required type="text" id="prgram_name_update" class="form-control mb-1" placeholder="Enter program name here">
                 </div>
                 <div class="col-sm-6">
                   <label>Trainer assigned</label>
                   <select class="form-control" name="trainer_id" id="trainer_name_update">
-                    <?php 
-                  $trainerSql = "SELECT * FROM trainer";
-                  $trainerQuery = mysqli_query($conn, $trainerSql);
+                    <?php
+                    $trainerSql = "SELECT * FROM trainer";
+                    $trainerQuery = mysqli_query($conn, $trainerSql);
 
-                  if($trainerQuery) {
-                    while($row = mysqli_fetch_assoc($trainerQuery)) {
-                  ?>
-                    <option value="<?= $row["trainer_id"] ?>"><?= $row["first_name"]." ".$row["last_name"] ?></option>
-                    <?php 
+                    if ($trainerQuery) {
+                      while ($row = mysqli_fetch_assoc($trainerQuery)) {
+                    ?>
+                        <option value="<?= $row["trainer_id"] ?>"><?= $row["first_name"] . " " . $row["last_name"] ?></option>
+                    <?php
+                      }
                     }
-                  }
-                  ?>
+                    ?>
                   </select>
                 </div>
               </div>
@@ -1535,9 +1703,7 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Program Description</label>
-                  <textarea name="program_description" required style="resize: none" rows="3" cols="0"
-                    class="form-control mb-1" id="program_desc_update"
-                    placeholder="Enter program desciption here"></textarea>
+                  <textarea name="program_description" required style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc_update" placeholder="Enter program desciption here"></textarea>
                 </div>
               </div>
             </div>
@@ -1547,13 +1713,13 @@
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
                   <select name="upper-1-day-1" required id="upper-1-day-1_update" class="form-control">
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1564,13 +1730,13 @@
                   <label>Upper Body 2</label>
                   <select name="upper-2-day-1" required id="upper-2-day-1_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1581,13 +1747,13 @@
                   <label>Upper Body 3</label>
                   <select name="upper-3-day-1" required id="upper-3-day-1_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1600,13 +1766,13 @@
                   <label>Lower Body 1</label>
                   <select name="lower-1-day-1" required id="lower-1-day-1_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1617,13 +1783,13 @@
                   <label>Lower Body 2</label>
                   <select name="lower-2-day-1" required id="lower-2-day-1_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1634,13 +1800,13 @@
                   <label>Lower Body 3</label>
                   <select name="lower-3-day-1" required id="lower-3-day-1_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1653,13 +1819,13 @@
                   <label>Abdominals</label>
                   <select name="abdominal-day-1" required id="abdominal-day-1_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1673,13 +1839,13 @@
                   <label>Upper Body 1</label>
                   <select name="upper-1-day-2" required id="upper-1-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1690,13 +1856,13 @@
                   <label>Upper Body 2</label>
                   <select name="upper-2-day-2" required id="upper-2-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1707,13 +1873,13 @@
                   <label>Upper Body 3</label>
                   <select name="upper-3-day-2" required id="upper-3-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1726,13 +1892,13 @@
                   <label>Lower Body 1</label>
                   <select name="lower-1-day-2" required id="lower-1-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1743,13 +1909,13 @@
                   <label>Lower Body 2</label>
                   <select name="lower-2-day-2" required id="lower-2-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1760,13 +1926,13 @@
                   <label>Lower Body 3</label>
                   <select name="lower-3-day-2" required id="lower-3-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1779,13 +1945,13 @@
                   <label>Abdominals</label>
                   <select name="abdominal-day-2" required id="abdominal-day-2_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1799,13 +1965,13 @@
                   <label>Upper Body 1</label>
                   <select name="upper-1-day-3" required id="upper-1-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1816,13 +1982,13 @@
                   <label>Upper Body 2</label>
                   <select name="upper-2-day-3" required id="upper-2-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1833,13 +1999,13 @@
                   <label>Upper Body 3</label>
                   <select name="upper-3-day-3" required id="upper-3-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1852,13 +2018,13 @@
                   <label>Lower Body 1</label>
                   <select name="lower-1-day-3" required id="lower-1-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1869,13 +2035,13 @@
                   <label>Lower Body 2</label>
                   <select name="lower-2-day-3" required id="lower-2-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1886,13 +2052,13 @@
                   <label>Lower Body 3</label>
                   <select name="lower-3-day-3" required id="lower-3-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1905,13 +2071,13 @@
                   <label>Abdominals</label>
                   <select name="abdominal-day-3" required id="abdominal-day-3_update" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -1934,7 +2100,6 @@
   <div class="modal fade" id="add-program">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form action="addprogram.php" method="post">
           <div class="modal-header" style="background-color: #DF3A01; color: white;">
             <h4 class="modal-title">Add Program</h4>
           </div>
@@ -1943,24 +2108,22 @@
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Program Name</label>
-                  <input name="program_name" required type="text" id="prgram_name" class="form-control mb-1"
-                    placeholder="Enter program name here" onblur="checkIfValid(this)">
+                  <input name="program_name" required type="text" id="program_name" class="form-control mb-1" placeholder="Enter program name here" onblur="checkIfValid(this)">
                   <small class="validation text-danger" id="prgram_name-empty">Please fill out this field</small>
                   <small class="validation text-danger" id="prgram_name-invalid">Invalid input</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Trainer to assign</label>
-                  <select style="width: 230px;" required name="trainer_id" id="trainer_name" class="form-control"
-                    oninput="checkIfValid(this)" onblur="checkIfValid(this)">
+                  <select style="width: 230px;" required name="trainer_id" id="trainer_id" class="form-control" oninput="checkIfValid(this)" onblur="checkIfValid(this)">
                     <option value="" selected disabled>Select here...</option>
                     <?php
                     $sql = "SELECT * FROM trainer";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["trainer_id"]?>">
-                      <?php echo $row["first_name"]." ".$row["last_name"] ?></option>
+                        <option value="<?php echo $row["trainer_id"] ?>">
+                          <?php echo $row["first_name"] . " " . $row["last_name"] ?></option>
                     <?php
                       }
                     }
@@ -1974,9 +2137,7 @@
               <div class="form-row">
                 <div class="col-sm-12">
                   <label>Program Description</label>
-                  <textarea name="program_description" oninput="checkIfValid(this)" onblur="checkIfValid(this)" required
-                    style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc"
-                    placeholder="Enter program desciption here"></textarea>
+                  <textarea name="program_description" oninput="checkIfValid(this)" onblur="checkIfValid(this)" required style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc" placeholder="Enter program desciption here"></textarea>
                   <small class="validation text-danger" id="program_desc-empty">Please fill out this field</small>
                 </div>
               </div>
@@ -1986,16 +2147,15 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
-                  <select name="upper-1-day-1" id="upper-1-day-1" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-1-day-1" id="upper-1-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2005,16 +2165,15 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 2</label>
-                  <select name="upper-2-day-1" id="upper-2-day-1" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-2-day-1" id="upper-2-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2024,16 +2183,15 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 3</label>
-                  <select name="upper-3-day-1" id="upper-3-day-1" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-3-day-1" id="upper-3-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2045,16 +2203,15 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Lower Body 1</label>
-                  <select name="lower-1-day-1" id="lower-1-day-1" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-1-day-1" id="lower-1-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2064,16 +2221,15 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 2</label>
-                  <select name="lower-2-day-1" id="lower-2-day-1" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-2-day-1" id="lower-2-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2083,16 +2239,15 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 3</label>
-                  <select name="lower-3-day-1" id="lower-3-day-1" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-3-day-1" id="lower-3-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2104,16 +2259,15 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Abdominals</label>
-                  <select name="abdominal-day-1" id="abdominal-day-1" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="abdominal-day-1" id="abdominal-day-1" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2126,16 +2280,15 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
-                  <select name="upper-1-day-2" id="upper-1-day-2" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-1-day-2" id="upper-1-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2145,16 +2298,15 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 2</label>
-                  <select name="upper-2-day-2" id="upper-2-day-2" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-2-day-2" id="upper-2-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2164,16 +2316,15 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 3</label>
-                  <select name="upper-3-day-2" id="upper-3-day-2" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-3-day-2" id="upper-3-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2185,16 +2336,15 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Lower Body 1</label>
-                  <select name="lower-1-day-2" id="lower-1-day-2" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-1-day-2" id="lower-1-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2204,16 +2354,15 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 2</label>
-                  <select name="lower-2-day-2" id="lower-2-day-2" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-2-day-2" id="lower-2-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2223,16 +2372,15 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 3</label>
-                  <select name="lower-3-day-2" id="lower-3-day-2" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-3-day-2" id="lower-3-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2244,16 +2392,15 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Abdominals</label>
-                  <select name="abdominal-day-2" id="abdominal-day-2" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="abdominal-day-2" id="abdominal-day-2" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2266,16 +2413,15 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Upper Body 1</label>
-                  <select name="upper-1-day-3" id="upper-1-day-3" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-1-day-3" id="upper-1-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2285,16 +2431,15 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 2</label>
-                  <select name="upper-2-day-3" id="upper-2-day-3" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-2-day-3" id="upper-2-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2304,16 +2449,15 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Upper Body 3</label>
-                  <select name="upper-3-day-3" id="upper-3-day-3" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="upper-3-day-3" id="upper-3-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2325,16 +2469,15 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Lower Body 1</label>
-                  <select name="lower-1-day-3" id="lower-1-day-3" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-1-day-3" id="lower-1-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2344,16 +2487,15 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 2</label>
-                  <select name="lower-2-day-3" id="lower-2-day-3" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-2-day-3" id="lower-2-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2363,16 +2505,15 @@
                 </div>
                 <div class="col-sm-4">
                   <label>Lower Body 3</label>
-                  <select name="lower-3-day-3" id="lower-3-day-3" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="lower-3-day-3" id="lower-3-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2384,16 +2525,15 @@
               <div class="form-row mb-3">
                 <div class="col-sm-4">
                   <label>Abdominals</label>
-                  <select name="abdominal-day-3" id="abdominal-day-3" oninput="checkIfValid(this)"
-                    onblur="checkIfValid(this)" class="form-control">
+                  <select name="abdominal-day-3" id="abdominal-day-3" oninput="checkIfValid(this)" onblur="checkIfValid(this)" class="form-control">
                     <option value="" disabled selected>Select here</option>
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
                     $res = mysqli_query($conn, $sql);
-                    if($res) {
-                      while($row = mysqli_fetch_assoc($res)) {
+                    if ($res) {
+                      while ($row = mysqli_fetch_assoc($res)) {
                     ?>
-                    <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"]?></option>
+                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
                     <?php
                       }
                     }
@@ -2405,9 +2545,8 @@
             </div>
           </div>
           <div class="modal-footer" style="height:70px;">
-            <button type="submit" class="btn btn-orange">Submit</button>
+            <button type="submit" onclick="addProgram()" class="btn btn-orange">Submit</button>
           </div>
-        </form>
       </div>
     </div>
   </div>
@@ -2423,130 +2562,142 @@
   <script src="./js/qrcode-scanner.js"></script>
 
   <script>
-  function pay(elem) {
-    let discount = $("#promo_discount").val();
-    let fee = $("#program_amount").val();
-    if (elem.value == 'Monthly Subscription') {
-      $("#amount").val(750 - parseInt(discount) + parseInt(fee));
-    } else if (elem.value == 'Annual Membership') {
-      $("#amount").val(200);
-    } else if (elem.value == 'both') {
-      $("#amount").val(950 - parseInt(discount) + parseInt(fee));
-    } else {
-      $("#amount").val("");
+    function pay(elem) {
+      let discount = $("#promo_discount").val();
+      let fee = $("#program_amount").val();
+      if (elem.value == 'Monthly Subscription') {
+        $("#amount").val(750 - parseInt(discount) + parseInt(fee));
+      } else if (elem.value == 'Annual Membership') {
+        $("#amount").val(200);
+      } else if (elem.value == 'both') {
+        $("#amount").val(950 - parseInt(discount) + parseInt(fee));
+      } else {
+        $("#amount").val("");
+      }
     }
-  }
 
-  var regs, walks, programs, deletedMembers, deletedPrograms;
+    var regs, walks, programs, deletedMembers, deletedPrograms, memberLog, routines;
 
-  $.get("./members.php?type=regular", function(res) {
-    // Gibutang nimo sa regs ang tanan members nga regular
-    regs = JSON.parse(res);
-  });
+    $.get("./members.php?type=regular", function(res) {
+      // Gibutang nimo sa regs ang tanan members nga regular
+      regs = JSON.parse(res);
+    });
 
-  $.get("./members.php?type=walkin", function(res) {
-    // Gibutang nimo sa walks ang tanan members nga walk-in
-    walks = JSON.parse(res);
-  });
+    $.get("./members.php?type=walkin", function(res) {
+      // Gibutang nimo sa walks ang tanan members nga walk-in
+      walks = JSON.parse(res);
+    });
 
-  $.get("./get_deleted_members.php", function(res) {
-    deletedMembers = JSON.parse(res);
-  }).then(() => {
-    paginateDeletedMembers(deletedMembers);
-  });
+    $.get("./get_deleted_members.php", function(res) {
+      deletedMembers = JSON.parse(res);
+    }).then(() => {
+      paginateDeletedMembers(deletedMembers);
+    });
 
-  $.get("./get_deleted_programs.php", function(res) {
-    deletedPrograms = JSON.parse(res);
-  }).then(() => {
-    paginateDeletedPrograms(deletedPrograms);
-  });
+    $.get("./get_deleted_programs.php", function(res) {
+      deletedPrograms = JSON.parse(res);
+    }).then(() => {
+      paginateDeletedPrograms(deletedPrograms);
+    });
 
-  // Regular members pagination after load sa page
-  $("#regular-pagination").pagination({
-    className: 'paginationjs-small',
-    dataSource: function(done) {
-      let data;
+    $.get("./get_member_log.php", function (res) {
+      memberLog = JSON.parse(res);
+    }).then(() => {
+      paginateMemberLog(memberLog);
+    });
+
+    $.get("./get_routines.php", function (res) {
+      routines = JSON.parse(res);
+    }).then(() => {
+      paginateRoutines(routines);
+    });
+
+    // Regular members pagination after load sa page
+    $("#regular-pagination").pagination({
+      className: 'paginationjs-small',
+      dataSource: function(done) {
+        let data;
+        let results;
+        $.get("./members.php?type=regular", function(res) {
+          data = JSON.parse(res);
+          done(data);
+        });
+      },
+      pageSize: 5,
+      showPrevious: false,
+      showNext: false,
+      callback: function(data) {
+        paginateRegular(data);
+        let h = $("#regular-body").height();
+        $("#regular-body").css("min-height", h);
+        $("#no-data-div").css("min-height", h - $("#regular-thead").height());
+      }
+    });
+
+    // Regular members pagination after type sa search bar
+    $("#search-member").keyup(function() {
+      let val = $("#search-member").val();
       let results;
-      $.get("./members.php?type=regular", function(res) {
-        data = JSON.parse(res);
-        done(data);
-      });
-    },
-    pageSize: 5,
-    showPrevious: false,
-    showNext: false,
-    callback: function(data) {
-      paginateRegular(data);
-      let h = $("#regular-body").height();
-      $("#regular-body").css("min-height", h);
-      $("#no-data-div").css("min-height", h - $("#regular-thead").height());
-    }
-  });
 
-  // Regular members pagination after type sa search bar
-  $("#search-member").keyup(function() {
-    let val = $("#search-member").val();
-    let results;
+      if (val != "") {
+        $("#regular-pagination").pagination({
+          dataSource: function(done) {
+            results = regs.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
+            done(results);
+          },
+          pageSize: 5,
+          showPrevious: false,
+          showNext: false,
+          callback: function(data) {
+            paginateRegular(data);
+          }
+        });
+      } else {
+        $("#regular-pagination").pagination({
+          dataSource: function(done) {
+            done(regs);
+          },
+          pageSize: 5,
+          showPrevious: false,
+          showNext: false,
+          callback: function(data) {
+            paginateRegular(data);
+          }
+        });
+      }
+    });
 
-    if (val != "") {
-      $("#regular-pagination").pagination({
-        dataSource: function(done) {
-          results = regs.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
-          done(results);
-        },
-        pageSize: 5,
-        showPrevious: false,
-        showNext: false,
-        callback: function(data) {
-          paginateRegular(data);
-        }
-      });
-    } else {
-      $("#regular-pagination").pagination({
-        dataSource: function(done) {
-          done(regs);
-        },
-        pageSize: 5,
-        showPrevious: false,
-        showNext: false,
-        callback: function(data) {
-          paginateRegular(data);
-        }
-      });
-    }
-  });
-
-  $(function() {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
+    $(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
 
 
 
-  // Function nga gitawag para mo render ug data sa regular table gamit pagination
-  function paginateRegular(data) {
-    $("#tbody").empty();
-    if (data.length > 0) {
-      $("#no-data-div").css("display", "none");
-      data.forEach(row => {
-        var span;
-        if (row.isActivated == "true") {
-          span = `<span  data-toggle="tooltip" data-placement="top" title="Deactivate ${row.last_name} Account?">
+    // Function nga gitawag para mo render ug data sa regular table gamit pagination
+    function paginateRegular(data) {
+      $("#tbody").empty();
+      if (data.length > 0) {
+        $("#no-data-div").css("display", "none");
+        data.forEach(row => {
+          var span;
+          if (row.isActivated == "true") {
+            span = `<span  data-toggle="tooltip" data-placement="top" title="Deactivate ${row.last_name} Account?">
                   <i style="cursor: pointer; color:#FF4500; font-size: 25px;"
                   class="fa fa-lock mx-1" data-id="${row.member_id}"lastname-id="${row.last_name}"
                   onclick="deactivate_account(this)"></i></span>`;
-        } else {
-          span = `<span  data-toggle="tooltip" data-placement="top" title="Activate ${row.last_name} Account?">
+          } else {
+            span = `<span  data-toggle="tooltip" data-placement="top" title="Activate ${row.last_name} Account?">
                   <i style="cursor: pointer; color:#FF4500; font-size: 25px;"
                   class="fa fa-key mx-1" data-id="${row.member_id}"lastname-id="${row.last_name}"
                   onclick="activate_account(this)"></i></span>`;
-        }
-        let html = `<tr>
+          }
+          let html = `<tr>
           <td>${row.last_name}</td>
           <td>${row.first_name}</td>
           <td>${row.member_id}</td>
           <td>${row.member_status}</td>
           <td>
-        
+
             <span   data-toggle="tooltip" data-placement="top" title="View ${row.last_name}">
               <i style="cursor: pointer; color:brown; font-size: 25px;"
               data-toggle="modal" data-target="#view"
@@ -2579,73 +2730,73 @@
             </span>
           </td>
           </tr>`;
-        $("#tbody").append(html);
+          $("#tbody").append(html);
+        });
+      } else {
+        $("#no-data-div").css("display", "flex");
+      }
+
+      $(function() {
+        $('[data-toggle="tooltip"]').tooltip();
       });
-    } else {
-      $("#no-data-div").css("display", "flex");
+
     }
 
-    $(function() {
-      $('[data-toggle="tooltip"]').tooltip();
+    // Walkin pagination after load sa page
+    $("#walkin-pagination").pagination({
+      dataSource: function(done) {
+        $.get("./members.php?type=walkin", function(res) {
+          done(JSON.parse(res));
+        });
+      },
+      pageSize: 3,
+      showPrevious: false,
+      showNext: false,
+      callback: function(data) {
+        paginateWalkin(data);
+      }
     });
 
-  }
+    // Walkin pagination after type sa search walkin
+    $("#search-walkin").keyup(function() {
+      let val = $("#search-walkin").val();
+      let results;
 
-  // Walkin pagination after load sa page
-  $("#walkin-pagination").pagination({
-    dataSource: function(done) {
-      $.get("./members.php?type=walkin", function(res) {
-        done(JSON.parse(res));
-      });
-    },
-    pageSize: 3,
-    showPrevious: false,
-    showNext: false,
-    callback: function(data) {
-      paginateWalkin(data);
-    }
-  });
+      if (val != "") {
+        $("#walkin-pagination").pagination({
+          dataSource: function(done) {
+            results = walks.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
+            done(results);
+          },
+          pageSize: 5,
+          showPrevious: false,
+          showNext: false,
+          callback: function(data) {
+            paginateWalkin(data);
+          }
+        });
+      } else {
+        $("#walkin-pagination").pagination({
+          dataSource: function(done) {
+            done(walks);
+          },
+          pageSize: 5,
+          showPrevious: false,
+          showNext: false,
+          callback: function(data) {
+            paginateWalkin(data);
+          }
+        });
+      }
+    });
 
-  // Walkin pagination after type sa search walkin
-  $("#search-walkin").keyup(function() {
-    let val = $("#search-walkin").val();
-    let results;
-
-    if (val != "") {
-      $("#walkin-pagination").pagination({
-        dataSource: function(done) {
-          results = walks.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
-          done(results);
-        },
-        pageSize: 5,
-        showPrevious: false,
-        showNext: false,
-        callback: function(data) {
-          paginateWalkin(data);
-        }
-      });
-    } else {
-      $("#walkin-pagination").pagination({
-        dataSource: function(done) {
-          done(walks);
-        },
-        pageSize: 5,
-        showPrevious: false,
-        showNext: false,
-        callback: function(data) {
-          paginateWalkin(data);
-        }
-      });
-    }
-  });
-
-  // Function nga tawagon ig render sa pagination sa walkin
-  function paginateWalkin(data) {
-    $("#tbody-walk-in").empty();
-    if (data.length > 0) {
-      $("#no-data-div-walkin").css("display", "none");
-      data.forEach(row => {
-        let html = `<tr>
+    // Function nga tawagon ig render sa pagination sa walkin
+    function paginateWalkin(data) {
+      $("#tbody-walk-in").empty();
+      if (data.length > 0) {
+        $("#no-data-div-walkin").css("display", "none");
+        data.forEach(row => {
+          let html = `<tr>
           <td>${row.fullname}</td>
           <td>
             <span data-toggle="tooltip" data-placement="top" title="View ${row.last_name}">
@@ -2676,29 +2827,29 @@
             </span>
           </td>
         </tr>`;
-        $("#tbody-walk-in").append(html);
-      });
-    } else {
-      $("#no-data-div-walkin").css("display", "flex");
+          $("#tbody-walk-in").append(html);
+        });
+      } else {
+        $("#no-data-div-walkin").css("display", "flex");
+      }
     }
-  }
 
-  // Pagination sa programs
-  $("#program-pagination").pagination({
-    dataSource: function(done) {
-      $.get("./getprograms.php", function(res) {
-        done(JSON.parse(res));
-      });
-    },
-    pageSize: 3,
-    showPrevious: false,
-    showNext: false,
-    callback: function(data) {
-      $("#program-tbody").empty();
-      if (data.length > 0) {
-        $("#no-data-div-programs").css("display", "none");
-        data.forEach(row => {
-          let html = `<tr>
+    // Pagination sa programs
+    $("#program-pagination").pagination({
+      dataSource: function(done) {
+        $.get("./getprograms.php", function(res) {
+          done(JSON.parse(res));
+        });
+      },
+      pageSize: 3,
+      showPrevious: false,
+      showNext: false,
+      callback: function(data) {
+        $("#program-tbody").empty();
+        if (data.length > 0) {
+          $("#no-data-div-programs").css("display", "none");
+          data.forEach(row => {
+            let html = `<tr>
             <td>${row.program_name}</td>
             <td>
               <span data-toggle="tooltip" data-placement="top" title="View ${row.program_name} members">
@@ -2723,28 +2874,28 @@
               </span>
             </td>
           <tr>`;
-          $("#program-tbody").append(html);
-        });
-      } else {
-        $("#no-data-div-programs").css("display", "flex");
+            $("#program-tbody").append(html);
+          });
+        } else {
+          $("#no-data-div-programs").css("display", "flex");
+        }
       }
-    }
-  });
+    });
 
-  function paginateDeletedMembers(data) {
-    $("#deleted-member-footer").pagination({
-      dataSource: function(done) {
-        done(data);
-      },
-      pageSize: 5,
-      showPrevious: false,
-      showNext: false,
-      callback: function(data) {
-        $("#deletetbody-members").empty();
-        if (data.length > 0) {
-          $("#no-data-div-deleted-members").css("display", "none");
-          data.forEach(row => {
-            let html = `<tr>
+    function paginateDeletedMembers(data) {
+      $("#deleted-member-footer").pagination({
+        dataSource: function(done) {
+          done(data);
+        },
+        pageSize: 5,
+        showPrevious: false,
+        showNext: false,
+        callback: function(data) {
+          $("#deletetbody-members").empty();
+          if (data.length > 0) {
+            $("#no-data-div-deleted-members").css("display", "none");
+            data.forEach(row => {
+              let html = `<tr>
               <td>${row.first_name} ${row.last_name}</td>
               <td>${row.member_type}</td>
               <td>${row.admin_delete}</td>
@@ -2756,40 +2907,40 @@
                   data-id="${row.member_id}" onclick="recover(this)"></i>
               </td>
             </tr>`;
-            $("#deletetbody-members").append(html);
-          });
-        } else {
-          $("#no-data-div-deleted-members").css("display", "flex");
+              $("#deletetbody-members").append(html);
+            });
+          } else {
+            $("#no-data-div-deleted-members").css("display", "flex");
+          }
         }
+      });
+    }
+
+    $("#search-deleted-members").on("keyup", function() {
+      let val = $("#search-deleted-members").val();
+
+      if (val != "") {
+        data = deletedMembers.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
+        paginateDeletedMembers(data);
+      } else {
+        paginateDeletedMembers(deletedMembers);
       }
     });
-  }
 
-  $("#search-deleted-members").on("keyup", function() {
-    let val = $("#search-deleted-members").val();
-
-    if (val != "") {
-      data = deletedMembers.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
-      paginateDeletedMembers(data);
-    } else {
-      paginateDeletedMembers(deletedMembers);
-    }
-  });
-
-  function paginateDeletedPrograms(data) {
-    $("#deleted-programs-footer").pagination({
-      dataSource: function(done) {
-        done(data);
-      },
-      pageSize: 5,
-      showPrevious: false,
-      showNext: false,
-      callback: function(data) {
-        $("#deletetbody-programs").empty();
-        if (data.length > 0) {
-          $("#no-data-div-programs-deleted").css("display", "none");
-          data.forEach(row => {
-            let html = `<tr>
+    function paginateDeletedPrograms(data) {
+      $("#deleted-programs-footer").pagination({
+        dataSource: function(done) {
+          done(data);
+        },
+        pageSize: 5,
+        showPrevious: false,
+        showNext: false,
+        callback: function(data) {
+          $("#deletetbody-programs").empty();
+          if (data.length > 0) {
+            $("#no-data-div-programs-deleted").css("display", "none");
+            data.forEach(row => {
+              let html = `<tr>
               <td>${row.program_name}</td>
               <td>${row.admin_delete}</td>
               <td>${row.date_added}</td>
@@ -2801,323 +2952,641 @@
                   data-id="${row.program_id}" onclick="recoverProgram(this)"></i>
               </td>
             </tr>`;
-            $("#deletetbody-programs").append(html);
-          });
-        } else {
-          $("#no-data-div-programs-deleted").css("display", "flex");
+              $("#deletetbody-programs").append(html);
+            });
+          } else {
+            $("#no-data-div-programs-deleted").css("display", "flex");
+          }
         }
+      });
+    }
+
+    $("#search-deleted-programs").on("keyup", function() {
+      let val = $(this).val();
+
+      if (val != "") {
+        data = deletedPrograms.filter(row => row.program_name.toLowerCase().includes(val.toLowerCase()));
+        paginateDeletedPrograms(data);
+      } else {
+        paginateDeletedPrograms(deletedPrograms);
       }
     });
-  }
 
-  $("#search-deleted-programs").on("keyup", function() {
-    let val = $(this).val();
-
-    if (val != "") {
-      data = deletedPrograms.filter(row => row.program_name.toLowerCase().includes(val.toLowerCase()));
-      paginateDeletedPrograms(data);
-    } else {
-      paginateDeletedPrograms(deletedPrograms);
+    function paginateMemberLog (data) {
+      $("#member-log-footer").pagination({
+        dataSource: function (done) {
+          done(data);
+        },
+        pageSize: 8,
+        showPrevious: false,
+        showNext: false,
+        callback: function (data) {
+          console.log(data);
+          $("#member-log-tbody").empty();
+          if (data.length > 0) {
+            $("#no-data-div-member-log").css("display", "none");
+            data.forEach(row => {
+              let html = `<tr>
+                <td>${row.member_id}</td>
+                <td>${row.member_name}</td>
+                <td>${row.member_type}</td>
+                <td>${row.date_in}</td>
+                <td>${row.time_in}</td>
+                <td>${row.admin}</td>
+              </tr>`;
+              $("#member-log-tbody").append(html);
+            });
+          } else {
+            $("#no-data-div-member-log").css("display", "flex");
+          }
+        }
+      });
     }
-  });
 
-  //checkbox only one check
-  $(document).ready(function() {
-    $('input:checkbox').each(function() {
-      //$('input:checkbox').click(function() {
-      $('input:checkbox').not(this).prop('checked', false);
+    function paginateRoutines (data) {
+      $("#routines-footer").pagination({
+        dataSource: function (done) {
+          done(data);
+        },
+        pageSize: 8,
+        showPrevious: false,
+        showNext: false,
+        callback: function (data) {
+          console.log(data);
+          $("#routines-tbody").empty();
+          if (data.length > 0) {
+            $("#no-data-div-routines").css("display", "none");
+            data.forEach(row => {
+              let html = `<tr>
+                <td>${row.routine_name}</td>
+                <td>${row.routine_type}</td>
+                <td>${row.routine_sets}</td>
+                <td>${row.routine_reps}</td>
+                <td>
+                  <a class="text-orange" href="${row.routine_link}" target="_blank">View</a>
+                </td>
+                <td>
+                <span data-toggle="tooltip" data-placement="top" title="Edit ${row.routine_name}">
+                  <i style="cursor: pointer; font-size: 25px;"
+                    class="fas fa-pencil-alt mx-1 get_id text-orange"
+                    data-id='${row.routine_id}' onclick="routineDetails(this)"></i>
+                </span>
+        
+                </td>
+              </tr>`;
+              // <span data-toggle="tooltip" data-placement="top"
+              //     title="Delete ${row.routine_name}">
+              //     <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-1"
+              //       data-id="${row.routine_id}" onclick="removeRoutine(this)"></i>
+              //   </span>
+              $("#routines-tbody").append(html);
+            });
+          } else {
+            $("#no-data-div-routines").css("display", "flex");
+          }
+        }
+      });
+    }
+
+    $("#search-routines").on("keyup", function () {
+      let val = $(this).val();
+
+      if (val != "") {
+        data = routines.filter(row => row.routine_name.toLowerCase().includes(val.toLowerCase()));
+        paginateRoutines(data);
+      } else {
+        paginateRoutines(routines);
+      }
     });
-  });
 
-  //------------------------------------------------------------------------------ VIEW JS
-  // View member Modal
-  function displayDetails(el) {
-    let id = el.getAttribute('data-id');
+    $("#add-routines-modal-btn").on("click", function () {
+      $("#routines-modal").modal("hide");
+      $("#add-routine").modal("show");
+    });
 
-    // AJAX Request
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        display(JSON.parse(this.responseText));
+    $("#add-routine").on("hide.bs.modal", function () {
+      $("#routines-modal").modal("show");
+    });
+
+    function addNewRoutine () {
+      let name = $("#add-routine-name").val();
+      let type = $("#add-routine-type").val();
+      let sets = $("#add-routine-sets").val();
+      let reps = $("#add-routine-reps").val();
+      let link = $("#add-routine-link").val();
+
+      $.dialog({
+        closeIcon: false,
+        backgroundDismiss: true,
+        content: function () {
+          var self = this;
+          return $.post(
+            "./add_routines.php",
+            {
+              name: name,
+              type: type,
+              sets: sets,
+              reps: reps,
+              link: link
+            },
+            function (res) {
+              if(JSON.parse(res) == "success") {
+                self.setTitle("Success");
+                self.setContent("Routine successfully added.");
+                self.setType("green");
+                self.backgroundDismiss = function () {
+                  window.location.reload();
+                }
+              } else {
+                self.setTitle("Error");
+                self.setContent(JSON.parse(res));
+                self.setType("red");
+              }
+            }
+          );
+        }
+      });
+    }
+
+    function routineDetails (el) {
+      let id = el.getAttribute('data-id');
+
+      $.get("./get_routine_details.php?id=" + id, function (res) {
+        let data = JSON.parse(res);
+
+        $("#update-routine-title").text("Edit " + data.routine_name);
+        $("#update-routine-id").val(data.routine_id);
+        $("#update-routine-name").val(data.routine_name);
+        $("#update-routine-type").val(data.routine_type);
+        $("#update-routine-sets").val(data.routine_sets);
+        $("#update-routine-reps").val(data.routine_reps);
+        $("#update-routine-link").val(data.routine_link);
+      }).then(() => {
+        $("#routines-modal").modal("hide");
+        $("#update-routine").modal("show");
+      });
+    }
+
+    function editRoutine () {
+      let id = $("#update-routine-id").val();
+      let name = $("#update-routine-name").val();
+      let type = $("#update-routine-type").val();
+      let sets = $("#update-routine-sets").val();
+      let reps = $("#update-routine-reps").val();
+      let link = $("#update-routine-link").val();
+
+      $.dialog({
+        backgroundDismiss: true,
+        closeIcon: false,
+        content: function () {
+          var self = this;
+          return $.post(
+            "./edit_routine.php",
+            {
+              id: id,
+              name: name,
+              type: type,
+              sets: sets,
+              reps: reps,
+              link: link
+            },
+            function (res) {
+              if(JSON.parse(res) == "success") {
+                self.setTitle("Success");
+                self.setContent("Routine successfully updated.");
+                self.setType("green");
+                self.backgroundDismiss = function () {
+                  window.location.reload();
+                }
+              } else {
+                self.setTitle("Error");
+                self.setContent(JSON.parse(res));
+                self.setType("red");
+              }
+            }
+          );
+        }
+      });
+    }
+
+    $("#update-routine").on("hide.bs.modal", function () {
+      $("#routines-modal").modal("show");
+    });
+
+    function removeRoutine (el) {
+      let id = el.getAttribute('data-id');
+
+      $.confirm({
+        title: "Delete",
+        content: "Are you sure you want to delete this routine?",
+        backgroundDismiss: true,
+        buttons: {
+          confirm: {
+            btnClass: "btn-danger",
+            action: function () {
+              $.dialog({
+                closeIcon: false,
+                backgroundDismiss: true,
+                content: function () {
+                  var self = this;
+                  return $.get("./remove_routine.php?id=" + id, function (res) {
+                    if(JSON.parse(res) == "success") {
+                      self.setTitle("Success");
+                      self.setContent("Routine deleted successfully.");
+                      self.setType("green");
+                      self.backgroundDismiss = function () {
+                        window.location.reload();
+                      }
+                    } else {
+                      self.setTitle("Error");
+                      self.setContent(JSON.parse(res));
+                      self.setType("red");
+                    }
+                  });
+                }
+              });
+            }
+          }
+        }
+      });
+    }
+
+    //checkbox only one check
+    $(document).ready(function() {
+      $('input:checkbox').each(function() {
+        //$('input:checkbox').click(function() {
+        $('input:checkbox').not(this).prop('checked', false);
+      });
+    });
+
+    // add program ajax
+    function addProgram() {
+      let program_name = $("#program_name").val();
+      let trainer_id = $("#trainer_id").val();
+      let program_desc = $("#program_desc").val();
+      let u1d1 = $("#upper-1-day-1").val();
+      let u2d1 = $("#upper-2-day-1").val();
+      let u3d1 = $("#upper-3-day-1").val();
+      let u1d2 = $("#upper-1-day-2").val();
+      let u2d2 = $("#upper-2-day-2").val();
+      let u3d2 = $("#upper-3-day-2").val();
+      let u1d3 = $("#upper-1-day-3").val();
+      let u2d3 = $("#upper-2-day-3").val();
+      let u3d3 = $("#upper-3-day-3").val();
+      let l1d1 = $("#lower-1-day-1").val();
+      let l2d1 = $("#lower-2-day-1").val();
+      let l3d1 = $("#lower-3-day-1").val();
+      let l1d2 = $("#lower-1-day-2").val();
+      let l2d2 = $("#lower-2-day-2").val();
+      let l3d2 = $("#lower-3-day-2").val();
+      let l1d3 = $("#lower-1-day-3").val();
+      let l2d3 = $("#lower-2-day-3").val();
+      let l3d3 = $("#lower-3-day-3").val();
+      let ad1 = $("#abdominal-day-1").val();
+      let ad2 = $("#abdominal-day-2").val();
+      let ad3 = $("#abdominal-day-3").val();
+
+      $.dialog({
+        backgroundDismiss: true,
+        closeIcon: false,
+        content: function () {
+          var self = this;
+          return $.post(
+            "./addprogram.php",
+            {
+              program_name: program_name,
+              program_description: program_desc,
+              trainer_id: trainer_id,
+              u1d1: u1d1,
+              u2d1: u2d1,
+              u3d1: u3d1,
+              u1d2: u1d2,
+              u2d2: u2d2,
+              u3d2: u3d2,
+              u1d3: u1d3,
+              u2d3: u2d3,
+              u3d3: u3d3,
+              l1d1: l1d1,
+              l2d1: l2d1,
+              l3d1: l3d1,
+              l1d2: l1d2,
+              l2d2: l2d2,
+              l3d2: l3d2,
+              l1d3: l1d3,
+              l2d3: l2d3,
+              l3d3: l3d3,
+              ad1: ad1,
+              ad2: ad2,
+              ad3: ad3
+            },
+            function (res) {
+              if(JSON.parse(res) == "success") {
+                self.setTitle("Success");
+                self.setContent("Program successfully added.");
+                self.setType("green");
+                self.backgroundDismiss = function () {
+                  window.location.reload();
+                }
+              } else {
+                self.setTitle("Error");
+                self.setContent(JSON.parse(res));
+                self.setType("red");
+              }
+            }
+          );
+        }
+      });
+    }
+
+    //------------------------------------------------------------------------------ VIEW JS
+    // View member Modal
+    function displayDetails(el) {
+      let id = el.getAttribute('data-id');
+
+      // AJAX Request
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          display(JSON.parse(this.responseText));
+        }
+      }
+      req.open('GET', 'viewmember.php?id=' + id, true);
+      req.send();
+
+      function display(row) {
+        function checkUsername(user) {
+          if (user === null) {
+            return "Not yet activated";
+          } else {
+            return user;
+          }
+        }
+
+        function checkDates(date) {
+          if (date === null) {
+            return "Not yet started";
+          } else {
+            return date;
+          }
+        }
+
+        if (row.image_pathname) {
+          $("#member_picture").attr("src", `./../mobile/img/uploads/${row.image_pathname}`);
+        } else {
+          $("#member_picture").attr("src", "./member.png");
+        }
+
+        document.getElementById("view_memberId").value = row.member_id;
+        document.getElementById("view_status").value = row.member_status;
+        document.getElementById("view_promo").value = row.promo_name;
+        document.getElementById("view_lastname").value = row.last_name;
+        document.getElementById("view_firstname").value = row.first_name;
+        document.getElementById("view_email").value = row.email;
+        document.getElementById("view_phone").value = row.phone;
+        document.getElementById("view_birthdate").value = row.birthdate;
+        document.getElementById("view_address").value = row.address;
+        document.getElementById("annual_start").value = checkDates(row.annual_start);
+        document.getElementById("annual_end").value = checkDates(row.annual_end);
+        document.getElementById("monthly_start").value = checkDates(row.monthly_start);
+        document.getElementById("monthly_end").value = checkDates(row.monthly_end);
+        document.getElementById("view_membertype").value = row.member_type;
+        document.getElementById("view_dateregistered").value = row.date_registered;
+        document.getElementById("view_gender").value = row.gender;
+        document.getElementById("view_username").value = checkUsername(row.username);
+        document.getElementById("view_program").value = row.program_name;
       }
     }
-    req.open('GET', 'viewmember.php?id=' + id, true);
-    req.send();
 
-    function display(row) {
-      function checkUsername(user) {
-        if (user === null) {
-          return "Not yet activated";
+
+    //------------------------------------------------------------------------------ VIEW JS
+    // View member Modal
+    function displayWalkinDetails(el) {
+      let id = el.getAttribute('data-id');
+
+      // AJAX Request
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          display(JSON.parse(this.responseText));
+        }
+      }
+      req.open('GET', 'viewmember.php?id=' + id, true);
+      req.send();
+
+      function display(row) {
+
+        document.getElementById("viewwalkin_memberId").value = row.member_id;
+        document.getElementById("viewwalkin_lastname").value = row.last_name;
+        document.getElementById("viewwalkin_firstname").value = row.first_name;
+        document.getElementById("viewwalkin_email").value = row.email;
+        document.getElementById("viewwalkin_phone").value = row.phone;
+        document.getElementById("viewwalkin_birthdate").value = row.birthdate;
+        document.getElementById("viewwalkin_address").value = row.address;
+        document.getElementById("viewwalkin_dateregistered").value = row.date_registered;
+        document.getElementById("viewwalkin_gender").value = row.gender;
+      }
+    }
+
+
+
+    //---------------------------------------------------------------------------VIEW PROGRAM INFO
+    // View member Modal
+    function displayProgramInformation(el) {
+      let id = el.getAttribute('data-id');
+
+      // AJAX Request
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          display(JSON.parse(this.responseText));
+        }
+      }
+      req.open('GET', 'viewprogram.php?id=' + id, true);
+      req.send();
+
+      function display(row) {
+        var digitDate = new Date(row.date_added);
+        var stringDate = digitDate.toDateString(digitDate);
+
+        document.getElementById("info_name").value = row.program_name;
+        document.getElementById("info_datetime").value = row.dateandtime_added;
+        document.getElementById("info_trainer").value = row.first_name + ' ' + row.last_name;
+        document.getElementById("info_stat").value = row.program_status;
+        document.getElementById("info_description").value = row.program_description;
+        document.getElementById("day1upper1").value = row.upper_1_day_1;
+        document.getElementById("day1upper2").value = row.upper_2_day_1;
+        document.getElementById("day1upper3").value = row.upper_3_day_1;
+        document.getElementById("day1lower1").value = row.lower_1_day_1;
+        document.getElementById("day1lower2").value = row.lower_2_day_1;
+        document.getElementById("day1lower3").value = row.lower_3_day_1;
+        document.getElementById("day1abdominal1").value = row.abdominal_day_1;
+        document.getElementById("day2upper1").value = row.upper_1_day_2;
+        document.getElementById("day2upper2").value = row.upper_2_day_2;
+        document.getElementById("day2upper3").value = row.upper_3_day_2;
+        document.getElementById("day2lower1").value = row.lower_1_day_2;
+        document.getElementById("day2lower2").value = row.lower_2_day_2;
+        document.getElementById("day2lower3").value = row.lower_3_day_2;
+        document.getElementById("day2abdominal2").value = row.abdominal_day_2;
+        document.getElementById("day3upper1").value = row.upper_1_day_3;
+        document.getElementById("day3upper2").value = row.upper_2_day_3;
+        document.getElementById("day3upper3").value = row.upper_3_day_3;
+        document.getElementById("day3lower1").value = row.lower_1_day_3;
+        document.getElementById("day3lower2").value = row.lower_2_day_3;
+        document.getElementById("day3lower3").value = row.lower_3_day_3;
+        document.getElementById("day3abdominal3").value = row.abdominal_day_3;
+      }
+    }
+
+    //---------------------------------------------------------------------------VIEW UPDATE PROGRAM INFO
+    // View member Modal
+
+    function displayUpdateProgramInformation(el) {
+      let id = el.getAttribute('data-id');
+
+      // AJAX Request
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          display(JSON.parse(this.responseText));
+        }
+      }
+      req.open('GET', 'viewprogram_update.php?id=' + id, true);
+      req.send();
+
+      function display(row) {
+        var digitDate = new Date(row.date_added);
+        var stringDate = digitDate.toDateString(digitDate);
+
+        $("#program-id-hidden").val(row.program_id);
+        document.getElementById("prgram_name_update").value = row.program_name;
+        document.getElementById("trainer_name_update").value = row.trainer_id;
+        document.getElementById("program_desc_update").value = row.program_description;
+        document.getElementById("upper-1-day-1_update").value = row.upper_1_day_1;
+        document.getElementById("upper-2-day-1_update").value = row.upper_2_day_1;
+        document.getElementById("upper-3-day-1_update").value = row.upper_3_day_1;
+        document.getElementById("lower-1-day-1_update").value = row.lower_1_day_1;
+        document.getElementById("lower-2-day-1_update").value = row.lower_2_day_1;
+        document.getElementById("lower-3-day-1_update").value = row.lower_3_day_1;
+        document.getElementById("abdominal-day-1_update").value = row.abdominal_day_1;
+        document.getElementById("upper-1-day-2_update").value = row.upper_1_day_2;
+        document.getElementById("upper-2-day-2_update").value = row.upper_2_day_2;
+        document.getElementById("upper-3-day-2_update").value = row.upper_3_day_2;
+        document.getElementById("lower-1-day-2_update").value = row.lower_1_day_2;
+        document.getElementById("lower-2-day-2_update").value = row.lower_2_day_2;
+        document.getElementById("lower-3-day-2_update").value = row.lower_3_day_2;
+        document.getElementById("abdominal-day-2_update").value = row.abdominal_day_2;
+        document.getElementById("upper-1-day-3_update").value = row.upper_1_day_3;
+        document.getElementById("upper-2-day-3_update").value = row.upper_2_day_3;
+        document.getElementById("upper-3-day-3_update").value = row.upper_3_day_3;
+        document.getElementById("lower-1-day-3_update").value = row.lower_1_day_3;
+        document.getElementById("lower-2-day-3_update").value = row.lower_2_day_3;
+        document.getElementById("lower-3-day-3_update").value = row.lower_3_day_3;
+        document.getElementById("abdominal-day-3_update").value = row.abdominal_day_3;
+      }
+    }
+
+
+
+    //------------------------------------------------------------------------------ PAYMENT REGULAR VIEW JS
+    // PAYMENT VIEW member Modal
+    function regularpaymentDetails(el) {
+      let id = el.getAttribute('data-id');
+
+      // AJAX Request
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          display(JSON.parse(this.responseText));
+        }
+      }
+      req.open('GET', 'paymentmember.php?id=' + id, true);
+      req.send();
+
+      function display(row) {
+        document.getElementById("member_id").value = row.member_id;
+        document.getElementById("member_lastname").value = row.last_name;
+        document.getElementById("promo_availed").value = row.promo_name;
+        document.getElementById("promo_discount").value = row.amount;
+        if (row.promo_name == "N/A") {
+          $("#promo-form-group").css("display", "none");
+          $("#promo-availed").val("N/A")
         } else {
-          return user;
+          $("#promo-form-group").css("display", "block");
+        }
+        if (row.program_id == null) {
+          $("#program-form-group").css("display", "none");
+          $("#program_enrolled").val("N/A");
+          $("#program_amount").val("0");
+        } else {
+          $("#program_enrolled").val(row.program_name);
+          $("#program_amount").val(row.program_amount);
+          $("#program-form-group").css("display", "block");
+        }
+      }
+    }
+
+    //------------------------------------------------------------------------------ PAYMENT WALKIN VIEW JS
+    // PAYMENT VIEW member Modal
+    function walkinpaymentDetails(el) {
+      let id = el.getAttribute('data-id');
+
+      // AJAX Request
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          display(JSON.parse(this.responseText));
+        }
+      }
+      req.open('GET', 'paymentmember.php?id=' + id, true);
+      req.send();
+
+      function display(row) {
+        document.getElementById("walkinmember_id").value = row.member_id;
+        document.getElementById("walkinmember_lastname").value = row.last_name;
+
+      }
+    }
+
+    //------------------------------------------------------------------------------ UPDATE REGULAR JS
+    // update regular member Modal
+    function updateDetailsRegular(el) {
+      let id = el.getAttribute('data-id');
+      // AJAX Request
+
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+
+        if (this.readyState == 4 && this.status == 200) {
+          display(JSON.parse(this.responseText));
         }
       }
 
-      function checkDates(date) {
-        if (date === null) {
-          return "Not yet started";
+      req.open('GET', 'update_regular_member.php?id=' + id, true);
+      req.send();
+
+      function display(row) {
+        document.getElementById("update_member_id").value = row.member_id;
+        document.getElementById("update_fullname").value = row.first_name + row.last_name;
+        document.getElementById("update_email").value = row.email;
+        document.getElementById("update_phone").value = row.phone;
+        document.getElementById("update_member_type").value = row.member_type;
+        document.getElementById("update_address").value = row.address;
+        if (row.program_id == null) {
+          $("#has-no-program").css("display", "block");
+          $("#has-program").css("display", "none");
         } else {
-          return date;
+          $("#update_program").val(row.program_id);
+          $("#has-no-program").css("display", "none");
+          $("#has-program").css("display", "block");
         }
-      }
-
-      if (row.image_pathname) {
-        $("#member_picture").attr("src", `./../mobile/img/uploads/${row.image_pathname}`);
-      } else {
-        $("#member_picture").attr("src", "./member.png");
-      }
-
-      document.getElementById("view_memberId").value = row.member_id;
-      document.getElementById("view_status").value = row.member_status;
-      document.getElementById("view_promo").value = row.promo_name;
-      document.getElementById("view_lastname").value = row.last_name;
-      document.getElementById("view_firstname").value = row.first_name;
-      document.getElementById("view_email").value = row.email;
-      document.getElementById("view_phone").value = row.phone;
-      document.getElementById("view_birthdate").value = row.birthdate;
-      document.getElementById("view_address").value = row.address;
-      document.getElementById("annual_start").value = checkDates(row.annual_start);
-      document.getElementById("annual_end").value = checkDates(row.annual_end);
-      document.getElementById("monthly_start").value = checkDates(row.monthly_start);
-      document.getElementById("monthly_end").value = checkDates(row.monthly_end);
-      document.getElementById("view_membertype").value = row.member_type;
-      document.getElementById("view_dateregistered").value = row.date_registered;
-      document.getElementById("view_gender").value = row.gender;
-      document.getElementById("view_username").value = checkUsername(row.username);
-      document.getElementById("view_program").value = row.program_name;
-    }
-  }
-
-
-  //------------------------------------------------------------------------------ VIEW JS
-  // View member Modal
-  function displayWalkinDetails(el) {
-    let id = el.getAttribute('data-id');
-
-    // AJAX Request
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        display(JSON.parse(this.responseText));
-      }
-    }
-    req.open('GET', 'viewmember.php?id=' + id, true);
-    req.send();
-
-    function display(row) {
-
-      document.getElementById("viewwalkin_memberId").value = row.member_id;
-      document.getElementById("viewwalkin_lastname").value = row.last_name;
-      document.getElementById("viewwalkin_firstname").value = row.first_name;
-      document.getElementById("viewwalkin_email").value = row.email;
-      document.getElementById("viewwalkin_phone").value = row.phone;
-      document.getElementById("viewwalkin_birthdate").value = row.birthdate;
-      document.getElementById("viewwalkin_address").value = row.address;
-      document.getElementById("viewwalkin_dateregistered").value = row.date_registered;
-      document.getElementById("viewwalkin_gender").value = row.gender;
-    }
-  }
-
-
-
-  //---------------------------------------------------------------------------VIEW PROGRAM INFO
-  // View member Modal
-  function displayProgramInformation(el) {
-    let id = el.getAttribute('data-id');
-
-    // AJAX Request
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        display(JSON.parse(this.responseText));
-      }
-    }
-    req.open('GET', 'viewprogram.php?id=' + id, true);
-    req.send();
-
-    function display(row) {
-      var digitDate = new Date(row.date_added);
-      var stringDate = digitDate.toDateString(digitDate);
-
-      document.getElementById("info_name").value = row.program_name;
-      document.getElementById("info_datetime").value = row.dateandtime_added;
-      document.getElementById("info_trainer").value = row.first_name + ' ' + row.last_name;
-      document.getElementById("info_stat").value = row.program_status;
-      document.getElementById("info_description").value = row.program_description;
-      document.getElementById("day1upper1").value = row.upper_1_day_1;
-      document.getElementById("day1upper2").value = row.upper_2_day_1;
-      document.getElementById("day1upper3").value = row.upper_3_day_1;
-      document.getElementById("day1lower1").value = row.lower_1_day_1;
-      document.getElementById("day1lower2").value = row.lower_2_day_1;
-      document.getElementById("day1lower3").value = row.lower_3_day_1;
-      document.getElementById("day1abdominal1").value = row.abdominal_day_1;
-      document.getElementById("day2upper1").value = row.upper_1_day_2;
-      document.getElementById("day2upper2").value = row.upper_2_day_2;
-      document.getElementById("day2upper3").value = row.upper_3_day_2;
-      document.getElementById("day2lower1").value = row.lower_1_day_2;
-      document.getElementById("day2lower2").value = row.lower_2_day_2;
-      document.getElementById("day2lower3").value = row.lower_3_day_2;
-      document.getElementById("day2abdominal2").value = row.abdominal_day_2;
-      document.getElementById("day3upper1").value = row.upper_1_day_3;
-      document.getElementById("day3upper2").value = row.upper_2_day_3;
-      document.getElementById("day3upper3").value = row.upper_3_day_3;
-      document.getElementById("day3lower1").value = row.lower_1_day_3;
-      document.getElementById("day3lower2").value = row.lower_2_day_3;
-      document.getElementById("day3lower3").value = row.lower_3_day_3;
-      document.getElementById("day3abdominal3").value = row.abdominal_day_3;
-    }
-  }
-
-  //---------------------------------------------------------------------------VIEW UPDATE PROGRAM INFO 
-  // View member Modal
-
-  function displayUpdateProgramInformation(el) {
-    let id = el.getAttribute('data-id');
-
-    // AJAX Request
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        display(JSON.parse(this.responseText));
-      }
-    }
-    req.open('GET', 'viewprogram_update.php?id=' + id, true);
-    req.send();
-
-    function display(row) {
-      var digitDate = new Date(row.date_added);
-      var stringDate = digitDate.toDateString(digitDate);
-
-      $("#program-id-hidden").val(row.program_id);
-      document.getElementById("prgram_name_update").value = row.program_name;
-      document.getElementById("trainer_name_update").value = row.trainer_id;
-      document.getElementById("program_desc_update").value = row.program_description;
-      document.getElementById("upper-1-day-1_update").value = row.upper_1_day_1;
-      document.getElementById("upper-2-day-1_update").value = row.upper_2_day_1;
-      document.getElementById("upper-3-day-1_update").value = row.upper_3_day_1;
-      document.getElementById("lower-1-day-1_update").value = row.lower_1_day_1;
-      document.getElementById("lower-2-day-1_update").value = row.lower_2_day_1;
-      document.getElementById("lower-3-day-1_update").value = row.lower_3_day_1;
-      document.getElementById("abdominal-day-1_update").value = row.abdominal_day_1;
-      document.getElementById("upper-1-day-2_update").value = row.upper_1_day_2;
-      document.getElementById("upper-2-day-2_update").value = row.upper_2_day_2;
-      document.getElementById("upper-3-day-2_update").value = row.upper_3_day_2;
-      document.getElementById("lower-1-day-2_update").value = row.lower_1_day_2;
-      document.getElementById("lower-2-day-2_update").value = row.lower_2_day_2;
-      document.getElementById("lower-3-day-2_update").value = row.lower_3_day_2;
-      document.getElementById("abdominal-day-2_update").value = row.abdominal_day_2;
-      document.getElementById("upper-1-day-3_update").value = row.upper_1_day_3;
-      document.getElementById("upper-2-day-3_update").value = row.upper_2_day_3;
-      document.getElementById("upper-3-day-3_update").value = row.upper_3_day_3;
-      document.getElementById("lower-1-day-3_update").value = row.lower_1_day_3;
-      document.getElementById("lower-2-day-3_update").value = row.lower_2_day_3;
-      document.getElementById("lower-3-day-3_update").value = row.lower_3_day_3;
-      document.getElementById("abdominal-day-3_update").value = row.abdominal_day_3;
-    }
-  }
-
-
-
-  //------------------------------------------------------------------------------ PAYMENT REGULAR VIEW JS
-  // PAYMENT VIEW member Modal
-  function regularpaymentDetails(el) {
-    let id = el.getAttribute('data-id');
-
-    // AJAX Request
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        display(JSON.parse(this.responseText));
-      }
-    }
-    req.open('GET', 'paymentmember.php?id=' + id, true);
-    req.send();
-
-    function display(row) {
-      document.getElementById("member_id").value = row.member_id;
-      document.getElementById("member_lastname").value = row.last_name;
-      document.getElementById("promo_availed").value = row.promo_name;
-      document.getElementById("promo_discount").value = row.amount;
-      if (row.promo_name == "N/A") {
-        $("#promo-form-group").css("display", "none");
-        $("#promo-availed").val("N/A")
-      } else {
-        $("#promo-form-group").css("display", "block");
-      }
-      if(row.program_id == null) {
-        $("#program-form-group").css("display", "none");
-        $("#program_enrolled").val("N/A");
-        $("#program_amount").val("0");
-      } else {
-        $("#program_enrolled").val(row.program_name);
-        $("#program_amount").val(row.program_amount);
-        $("#program-form-group").css("display", "block");
-      }
-    }
-  }
-
-  //------------------------------------------------------------------------------ PAYMENT WALKIN VIEW JS
-  // PAYMENT VIEW member Modal
-  function walkinpaymentDetails(el) {
-    let id = el.getAttribute('data-id');
-
-    // AJAX Request
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        display(JSON.parse(this.responseText));
-      }
-    }
-    req.open('GET', 'paymentmember.php?id=' + id, true);
-    req.send();
-
-    function display(row) {
-      document.getElementById("walkinmember_id").value = row.member_id;
-      document.getElementById("walkinmember_lastname").value = row.last_name;
-
-    }
-  }
-
-  //------------------------------------------------------------------------------ UPDATE REGULAR JS
-  // update regular member Modal
-  function updateDetailsRegular(el) {
-    let id = el.getAttribute('data-id');
-    // AJAX Request
-
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-
-      if (this.readyState == 4 && this.status == 200) {
-        display(JSON.parse(this.responseText));
+        $("#avail-program-btn").attr("data-id", row.member_id);
+        $("#remove-program-btn").attr("data-id", row.member_id);
       }
     }
 
-    req.open('GET', 'update_regular_member.php?id=' + id, true);
-    req.send();
 
-    function display(row) {
-      document.getElementById("update_member_id").value = row.member_id;
-      document.getElementById("update_fullname").value = row.first_name + row.last_name;
-      document.getElementById("update_email").value = row.email;
-      document.getElementById("update_phone").value = row.phone;
-      document.getElementById("update_member_type").value = row.member_type;
-      document.getElementById("update_address").value = row.address;
-      if (row.program_id == null) {
-        $("#has-no-program").css("display", "block");
-        $("#has-program").css("display", "none");
-      } else {
-        $("#update_program").val(row.program_id);
-        $("#has-no-program").css("display", "none");
-        $("#has-program").css("display", "block");
-      }
-      $("#avail-program-btn").attr("data-id", row.member_id);
-      $("#remove-program-btn").attr("data-id", row.member_id);
-    }
-  }
 
- 
-
-  function updateDetailsWalkin(el) {
+    function updateDetailsWalkin(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
@@ -3156,10 +3625,10 @@
       });
     }
 
-  //------------------------------------------------------------------------------ DELETE JS
+    //------------------------------------------------------------------------------ DELETE JS
 
 
-  function deleted(el) {
+    function deleted(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
@@ -3197,10 +3666,10 @@
         }
       });
     }
-  //---------------------------------------------------------------------WALK IN DELETE JS
- 
+    //---------------------------------------------------------------------WALK IN DELETE JS
 
-  function deleted_walkin(el) {
+
+    function deleted_walkin(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
@@ -3239,38 +3708,14 @@
       });
     }
 
-  //---------------------------------------------------------------------------Activate Account
-  function activate_account(el) {
-    let id = el.getAttribute('data-id');
-    let lastnameID = el.getAttribute('lastname-id');
-
-    // AJAX Request
-    var r = confirm("Are you sure you want to activate this member account?");
-    if (r == true) {
-      let req = new XMLHttpRequest();
-      req.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          if (JSON.parse(this.responseText) == "failure") {
-            alert("Can't activate account: User must have an active membership.");
-          } else {
-            alert("Account successfully activated!");
-            window.location.reload()
-          }
-        }
-      }
-      req.open('GET', 'activate_account.php?id=' + id, true);
-      req.send();
-    }
-  }
-
-  function activate_account(el) {
+    //---------------------------------------------------------------------------Activate Account
+    function activate_account(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       $.confirm({
-        closeIcon: true,
-        title: "Delete?",
+        backgroundDismiss: true,
+        title: "Activate?",
         content: "Are you sure you want activate this account?",
         buttons: {
           confirm: {
@@ -3279,48 +3724,47 @@
               let req = new XMLHttpRequest();
               req.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  console.log((this.responseText));
                   if (JSON.parse(this.responseText) == "failure") {
                     $.alert({
-                    title: 'failure',
-                    content: 'Can not activate account: User must have an active membership.',
-                    buttons: {
-                      ok: {
-                        text: 'OK',
-                        action: function() {
-                          window.location.reload();
+                      type: "red",
+                      title: "Error",
+                      content: "Can not activate account: User must have an active membership.",
+                      buttons: {
+                        ok: {
+                          btnClass: "btn-danger",
+                          text: "OK",
+                          action: function() {}
                         }
                       }
-                    }
-                  });
+                    });
                   } else {
-                  $.alert({
-                    title: 'Success',
-                    content: 'Account successfully activated!',
-                    buttons: {
-                      ok: {
-                        text: 'OK',
-                        action: function() {
-                          window.location.reload();
+                    $.alert({
+                      type: "green",
+                      title: "Success",
+                      content: "Account successfully activated!",
+                      buttons: {
+                        ok: {
+                          btnClass: "green",
+                          text: "OK",
+                          action: function() {
+                            window.location.reload();
+                          }
                         }
                       }
-                    }
-                  });
+                    });
                   }
-
-                 
                 }
               }
-              req.open('GET', 'activate_account.php?id=' + id, true);
+              req.open("GET", "activate_account.php?id=" + id, true);
               req.send();
             }
           }
         }
       });
     }
-  //---------------------------------------------------------------------------Deactivate Account
+    //---------------------------------------------------------------------------Deactivate Account
 
-  function deactivate_account(el) {
+    function deactivate_account(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
@@ -3360,11 +3804,9 @@
     }
 
 
-  //------------------------------------------------------------------------REMOVE PROGRAM JS
-
-  function removeProgram(el) {
+    //------------------------------------------------------------------------REMOVE PROGRAM JS
+    function removeProgram(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       $.confirm({
@@ -3373,38 +3815,40 @@
         content: "Are you sure you want to delete this Program?",
         buttons: {
           confirm: {
-            btnClass: "btn-orange",
-            action: function() {
-              let req = new XMLHttpRequest();
-              req.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  console.log((this.responseText));
-                  $.alert({
-                    title: 'Success',
-                    content: 'Program successfully deleted!',
-                    buttons: {
-                      ok: {
-                        text: 'OK',
-                        action: function() {
-                          window.location.reload();
-                        }
+            btnClass: "btn-danger",
+            action: function () {
+              $.dialog({
+                backgroundDismiss: true,
+                closeIcon: false,
+                content: function () {
+                  var self = this;
+                  $.get("./removeProgram.php?id=" + id, function (res) {
+                    console.log(res);
+                    if(JSON.parse(res) == "success") {
+                      self.setTitle("Success");
+                      self.setContent("Successfully deleted program.");
+                      self.setType('green');
+                      self.backgroundDismiss = function () {
+                        window.location.reload();
                       }
+                    } else {
+                      self.setTitle("Error");
+                      self.setContent(JSON.parse(res));
+                      self.setType('red');
                     }
                   });
                 }
-              }
-              req.open('GET', 'removeProgram.php?id=' + id, true);
-              req.send();
+              });
             }
           }
         }
       });
     }
 
-  //------------------------------------------------------------------------------ RECOVER JS
-  
+    //------------------------------------------------------------------------------ RECOVER JS
 
-  function recover(el) {
+
+    function recover(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
@@ -3443,11 +3887,11 @@
       });
     }
 
-  //------------------------------------------------------------------------------ RECOVERPROGRAM JS
+    //------------------------------------------------------------------------------ RECOVERPROGRAM JS
 
 
-  
-  function recoverProgram(el) {
+
+    function recoverProgram(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
@@ -3486,566 +3930,574 @@
       });
     }
 
-  // Show/Hide Regular Monthly Payment Calculator
-  document.getElementById('showCalc').addEventListener('click', () => {
-    let calc = document.getElementById('calculator');
-    if (calc.style.display == 'none') {
-      calc.style.display = 'block';
-      document.getElementById('showCalc').innerHTML =
-        '<span style="color:#DF3A01"> Hide Calculator </span>';
-    } else {
-      calc.style.display = 'none';
-      document.getElementById('showCalc').innerHTML = 'Show Calculator';
-    }
-  });
-
-  // Calculating Change for Monthly
-  document.getElementById('enterCalc').addEventListener('click', () => {
-    let cash = document.getElementById('payment-cash');
-    let change = document.getElementById('payment-change');
-
-    let val = parseInt(cash.value);
-    let amt = parseInt($("#amount").val());
-
-    if (Number.isInteger(val) == true) {
-      if (val <= 0 || val >= 9999) {
-        alert('Please enter a valid amount!');
-      } else if (val < parseInt($("#amount").val())) {
-        alert('Insufficient cash!');
-      } else if ($("#amount").val() == "") {
-        alert('Please select payment description!');
+    // Show/Hide Regular Monthly Payment Calculator
+    document.getElementById('showCalc').addEventListener('click', () => {
+      let calc = document.getElementById('calculator');
+      if (calc.style.display == 'none') {
+        calc.style.display = 'block';
+        document.getElementById('showCalc').innerHTML =
+          '<span style="color:#DF3A01"> Hide Calculator </span>';
       } else {
-        change.value = `₱${val - amt}.00`;
+        calc.style.display = 'none';
+        document.getElementById('showCalc').innerHTML = 'Show Calculator';
       }
-    } else {
-      alert('Please enter an appropriate amount!');
-    }
-  });
+    });
 
+    // Calculating Change for Monthly
+    document.getElementById('enterCalc').addEventListener('click', () => {
+      let cash = document.getElementById('payment-cash');
+      let change = document.getElementById('payment-change');
 
-  // Show/Hide walkin Payment Calculator
-  document.getElementById('walkinshowCalc').addEventListener('click', () => {
-    let walkincalc = document.getElementById('walkincalculator');
-    if (walkincalc.style.display == 'none') {
-      walkincalc.style.display = 'block';
-      document.getElementById('walkinshowCalc').innerHTML =
-        '<span style="color:#DF3A01"> Hide Calculator </span>';
-    } else {
-      walkincalc.style.display = 'none';
-      document.getElementById('walkinshowCalc').innerHTML = 'Show Calculator';
-    }
-  });
+      let val = parseInt(cash.value);
+      let amt = parseInt($("#amount").val());
 
-
-  // Calculating Change
-  document.getElementById('walkinenterCalc').addEventListener('click', () => {
-    let cash = document.getElementById('walkinpayment-cash');
-    let change = document.getElementById('walkinpayment-change');
-
-
-    let val = parseInt(cash.value);
-    let amount = parseInt($("#walkinpayment-amount").val());
-
-    if (Number.isInteger(val) == true) {
-      if (val <= 0 || val >= 9999) {
-        alert('Please enter a valid amount!');
-      } else if (val < parseInt($("#walkinpayment-amount").val())) {
-        alert('Insufficient cash!');
+      if (Number.isInteger(val) == true) {
+        if (val <= 0 || val >= 9999) {
+          alert('Please enter a valid amount!');
+        } else if (val < parseInt($("#amount").val())) {
+          alert('Insufficient cash!');
+        } else if ($("#amount").val() == "") {
+          alert('Please select payment description!');
+        } else {
+          change.value = `₱${val - amt}.00`;
+        }
       } else {
-        change.value = `₱${val - amount}.00`;
-
+        alert('Please enter an appropriate amount!');
       }
-    } else {
-      alert('Please enter an appropriate amount!');
-    }
-  });
+    });
 
 
-
-
-  function logout(el) {
-    let id = el.getAttribute('data-id');
-
-    // AJAX Request
-
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        window.location.href = "./../logout_process.php";
+    // Show/Hide walkin Payment Calculator
+    document.getElementById('walkinshowCalc').addEventListener('click', () => {
+      let walkincalc = document.getElementById('walkincalculator');
+      if (walkincalc.style.display == 'none') {
+        walkincalc.style.display = 'block';
+        document.getElementById('walkinshowCalc').innerHTML =
+          '<span style="color:#DF3A01"> Hide Calculator </span>';
+      } else {
+        walkincalc.style.display = 'none';
+        document.getElementById('walkinshowCalc').innerHTML = 'Show Calculator';
       }
+    });
+
+
+    // Calculating Change
+    document.getElementById('walkinenterCalc').addEventListener('click', () => {
+      let cash = document.getElementById('walkinpayment-cash');
+      let change = document.getElementById('walkinpayment-change');
+
+
+      let val = parseInt(cash.value);
+      let amount = parseInt($("#walkinpayment-amount").val());
+
+      if (Number.isInteger(val) == true) {
+        if (val <= 0 || val >= 9999) {
+          alert('Please enter a valid amount!');
+        } else if (val < parseInt($("#walkinpayment-amount").val())) {
+          alert('Insufficient cash!');
+        } else {
+          change.value = `₱${val - amount}.00`;
+
+        }
+      } else {
+        alert('Please enter an appropriate amount!');
+      }
+    });
+
+
+
+
+    function logout(el) {
+      let id = el.getAttribute('data-id');
+
+      // AJAX Request
+
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          window.location.href = "./../logout_process.php";
+        }
+      }
+      req.open('GET', './../logout.php?id=' + id, true);
+      req.send();
     }
-    req.open('GET', './../logout.php?id=' + id, true);
-    req.send();
-  }
 
 
-  function displayProgramMembers(el) {
-    let id = el.getAttribute('data-id');
-    var data;
+    function displayProgramMembers(el) {
+      let id = el.getAttribute('data-id');
+      var data;
 
-    $.get("./member_program.php?id=" + id, function(res) {
-      data = JSON.parse(res);
-    }).then(() => {
-      $("#program-members-footer").pagination({
-        dataSource: function(done) {
-          done(data);
-        },
-        pageSize: 8,
-        showPrevious: false,
-        showNext: false,
-        callback: function(data) {
-          $("#member-program-tbody").empty();
-          if (data.length > 0) {
-            $("#no-data-div-program-members").css("display", "none");
-            data.forEach(row => {
-              let html = `<tr>
+      $.get("./member_program.php?id=" + id, function(res) {
+        data = JSON.parse(res);
+      }).then(() => {
+        $("#program-members-footer").pagination({
+          dataSource: function(done) {
+            done(data);
+          },
+          pageSize: 8,
+          showPrevious: false,
+          showNext: false,
+          callback: function(data) {
+            $("#member-program-tbody").empty();
+            if (data.length > 0) {
+              $("#no-data-div-program-members").css("display", "none");
+              data.forEach(row => {
+                let html = `<tr>
                 <td>${row.member_id}</td>
                 <td>${row.member_type}</td>
                 <td>${row.first_name} ${row.last_name}</td>
               </tr>`;
 
-              $("#member-program-tbody").append(html);
-            });
-          } else {
-            $("#no-data-div-program-members").css("display", "flex");
+                $("#member-program-tbody").append(html);
+              });
+            } else {
+              $("#no-data-div-program-members").css("display", "flex");
+            }
           }
-        }
+        });
       });
-    });
-  }
+    }
 
-  function display(res) {
-    let tbody = document.getElementById('modal-tbody');
-    if (res == 0) {
-      tbody.innerHTML = "";
-    } else {
-      let data = JSON.parse(res);
-      tbody.innerHTML = "";
-      data.forEach(row => {
-        var html = `<tr>
+    function display(res) {
+      let tbody = document.getElementById('modal-tbody');
+      if (res == 0) {
+        tbody.innerHTML = "";
+      } else {
+        let data = JSON.parse(res);
+        tbody.innerHTML = "";
+        data.forEach(row => {
+          var html = `<tr>
             <td>${row.member_id}</td>
             <td>${row.member_type}</td>
             <td>${row.first_name} ${row.last_name}</td>
           </tr>`;
 
-        tbody.innerHTML += html;
-      });
-    }
-  }
-
-  function regularPaymentHistory(el) {
-    let id = el.getAttribute('data-id');
-
-    $("#payment-history-footer").pagination({
-      dataSource: function(done) {
-        let req = new XMLHttpRequest();
-        req.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            let data = JSON.parse(this.responseText);
-            done(data);
-          }
-        }
-        req.open('GET', 'payment_history.php?id=' + id, true);
-        req.send();
-      },
-      pageSize: 5,
-      showNext: false,
-      showPrevious: false,
-      callback: function(data) {
-        let tbody = document.getElementById('modal-tbody-payment-history');
-        if (data == 0) {
-          tbody.innerHTML = "";
-        } else {
-          tbody.innerHTML = "";
-          data.forEach(row => {
-            var html = `<tr>
-              <td>${row.payment_id}</td>
-              <td>${row.payment_description}</td>
-              <td>${row.payment_amount}</td>
-              <td>${row.date_payment} ${row.time_payment}</td>
-              <td>${row.payment_type}</td>
-            </tr>`;
-            tbody.innerHTML += html;
-          });
-        }
-      }
-    });
-  }
-
-  function walkinPaymentHistory(el) {
-    let id = el.getAttribute('data-id');
-
-    $("#payment-walkin-history-footer").pagination({
-      dataSource: function(done) {
-        let req = new XMLHttpRequest();
-        req.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            let data = JSON.parse(this.responseText);
-            done(data);
-          }
-        }
-        req.open('GET', 'walkin_payment_history.php?id=' + id, true);
-        req.send();
-      },
-      pageSize: 5,
-      showPrevious: false,
-      showNext: false,
-      callback: function(data) {
-        let tbody = document.getElementById('modal-tbody-walkin-payment-history');
-        if (data == 0) {
-          tbody.innerHTML = "";
-        } else {
-          tbody.innerHTML = "";
-          data.forEach(row => {
-            var html = `<tr>
-              <td>${row.payment_id}</td>
-              <td>${row.payment_description}</td>
-              <td>${row.payment_amount}</td>
-              <td>${row.date_payment} ${row.time_payment}</td>
-              <td>${row.payment_type}</td>
-            </tr>`;
-            tbody.innerHTML += html;
-          });
-        }
-      }
-    });
-  }
-
-  // Program Checkbox
-  let div = $("#program-check-div");
-  let select = $("#program-form-check");
-  $("#program-yes").click(function() {
-    div.css("display", "block");
-    select.val("Yes");
-  });
-
-  $("#program-no").click(function() {
-    div.css("display", "none");
-    select.val("No");
-  })
-
-  // avail program modal
-  let availBtn = $("#avail-program-btn");
-  let availModal = $("#avail-program-modal");
-  let updateModal = $("#regular_update");
-  let memberId;
-
-  availBtn.click(function () {
-    memberId = availBtn.attr("data-id");
-    updateModal.modal("hide");
-    availModal.modal("show");
-  });
-
-  availModal.on("hide.bs.modal", function () {
-    $(".update-icon-btn[data-id=" + memberId + "]").click();
-  });
-
-  // avail program
-  let avail = $("#avail-btn");
-  let program = $("#avail-program-select");
-  let programVal = program.val();
-  let programName = $("#avail-program-select option[value=" + programVal + "]").html();
-
-  program.change(function () {
-    programVal = program.val();
-    programName = $("#avail-program-select option[value=" + programVal + "]").html();
-    $.get("./getprogramamount.php?id=" + programVal, function(res) {
-      $("#programpayment-amount").val(JSON.parse(res));
-    });
-  })
-
-  avail.click(function () {
-    $.confirm({
-      closeIcon: true,
-      title: "Confirm?",
-      content: `Avail ${programName} Program for this member?`,
-      buttons: {
-        confirm: {
-          btnClass: "btn-orange",
-          action: function () {
-            $.get("./check_sub.php?id=" + memberId, function (res) {
-              let data = JSON.parse(res);
-              if(data == "active") {
-                $.confirm({
-                  title: "Alert",
-                  content: "This member already has an active subscription. To continue availing the program, the member must pay for the amount. Proceed?",
-                  buttons: {
-                    ok: {
-                      btnClass: "btn-orange",
-                      action: function () {
-                        $.post("./avail_program.php", {memberId: memberId, programId: programVal, amount: $("#programpayment-amount").val(), isActive: "true"}, function(res) {
-                          if(JSON.parse(res) == "success") {
-                            $.alert({
-                              title: "Success!",
-                              type: 'green',
-                              content: `Member has successfully availed program.`,
-                              backgroundDismiss: function () {
-                                $("#avail-program-modal").modal("hide");
-                              },
-                              buttons: {
-                                ok: {
-                                  btnClass: "btn-success",
-                                  action: function () {
-                                    $("#avail-program-modal").modal("hide");
-                                  }
-                                }
-                              }
-                            });
-                          } else {
-                            $.alert({
-                              title: 'Error',
-                              type: 'red',
-                              content: JSON.parse(res)
-                            });
-                          }
-                        });
-                      }
-                    },
-                    cancel: {
-                      btnClass: "btn-grey",
-                      action: function () {}
-                    }
-                  }
-                });
-              } else {
-                $.post("./avail_program.php", {memberId: memberId, programId: programVal, amount: $("#programpayment-amount").val(), isActive: "false"}, function(res) {
-                  if(JSON.parse(res) == "success") {
-                    $.alert({
-                      title: "Success!",
-                      type: 'green',
-                      content: `Member has successfully availed program.`,
-                      backgroundDismiss: function () {
-                        $("#avail-program-modal").modal("hide");
-                      },
-                      buttons: {
-                        ok: {
-                          btnClass: "btn-success",
-                          action: function () {
-                            $("#avail-program-modal").modal("hide");
-                          }
-                        }
-                      }
-                    });
-                  } else {
-                    $.alert({
-                      title: 'Error',
-                      type: 'red',
-                      content: JSON.parse(res)
-                    });
-                  }
-                });
-              }
-            });
-          }
-        }
-      }
-    });
-  })
-
-  $("#remove-program-btn").click(function () {
-    let id = $(this).attr("data-id");
-    $.confirm({
-      title: "Remove?",
-      content: "Are you sure you want to remove this member from this program?",
-      buttons: {
-        confirm: {
-          btnClass: "btn-orange",
-          action: function () {
-            $.get("./remove_from_program.php?id=" + id, function (res) {
-              if(JSON.parse(res) == "success") {
-                $.alert({
-                  type: 'green',
-                  title: "Success",
-                  content: 'Member successfully removed from program.',
-                  buttons: {
-                    ok: {
-                      btnClass: 'btn-success',
-                      action: function () {
-                        window.location.reload();
-                      }
-                    }
-                  }
-                });
-              } else {
-                $.alert({
-                  type: 'red',
-                  title: 'Error',
-                  content: JSON.parse(res),
-                  buttons: {
-                    close: {
-                      btnClass: 'btn-danger',
-                      action: function () {}
-                    }
-                  }
-                });
-              }
-            });
-          }
-        },
-        cancel: {
-          btnClass: "btn-grey",
-          action: function () {}
-        }
-      }
-    });
-  });
-
-  document.getElementById('programshowCalc').addEventListener('click', () => {
-    let programcalc = document.getElementById('programcalculator');
-    if (programcalc.style.display == 'none') {
-      programcalc.style.display = 'block';
-      document.getElementById('programshowCalc').innerHTML =
-        '<span style="color:#DF3A01"> Hide Calculator </span>';
-    } else {
-      programcalc.style.display = 'none';
-      document.getElementById('programshowCalc').innerHTML = 'Show Calculator';
-    }
-  });
-
-  document.getElementById('programenterCalc').addEventListener('click', () => {
-    let cash = document.getElementById('program-cash');
-    let change = document.getElementById('program-change');
-
-
-    let val = parseInt(cash.value);
-    let amount = parseInt($("#programpayment-amount").val());
-
-    if (Number.isInteger(val) == true) {
-      if (val <= 0 || val >= 9999) {
-        alert('Please enter a valid amount!');
-      } else if (val < parseInt($("#programpayment-amount").val())) {
-        alert('Insufficient cash!');
-      } else {
-        change.value = `₱${val - amount}.00`;
-      }
-    } else {
-      alert('Please enter an appropriate amount!');
-    }
-  });
-
-  $("#memberType").change(function () {
-    if($(this).val() == "Walk-in") {
-      $("#enroll-program-div").css("display", "none");
-      $("#program-no").click();
-    } else {
-      $("#enroll-program-div").css("display", "block");
-    }
-  });
-
-  $("#regular_payment").on("hidden.bs.modal", function () {
-    $("#payment_description").prop("selectedIndex", 0);
-    $("#amount").val("");
-    let calc = document.getElementById('calculator');
-    calc.style.display = 'none';
-    document.getElementById('showCalc').innerHTML = 'Show Calculator';
-  });
-
-  // add payment ajax
-  $("#add-payment-btn-regular").click(function () {
-    $.post(
-      "./memberpayment_process.php",
-      {
-        member_id: $("#member_id").val(),
-        payment_description: $("#payment_description").val(),
-        promo_discount: $("#promo_discount").val(),
-        promo_availed: $("#promo_availed").val(),
-        program_enrolled: $("#program_enrolled").val(),
-        program_amount: $("#program_amount").val()
-      },
-      function (res) {
-        console.log(res);
-        let r = JSON.parse(res);
-        let message;
-        let type = 'green';
-        let title = 'Success';
-        let btnClass = 'btn-success';
-
-        if(r == "success monthly") {
-          message = "Monthly subscription payment successful.";
-        } else if(r == "success annual") {
-          message = "Annual membership payment successful.";
-        } else if(r == "success both") {
-          message = "Monthly subscription and annual membership payments successful.";
-        } else if(r == "success walkin") {
-          message = "Walk-in payment successful.";
-        } else {
-          message = JSON.parse(res);
-          type = 'red';
-          title = 'Error';
-          btnClass = 'btn-danger';
-        }
-
-        $.alert({
-          title: title,
-          type: type,
-          content: message,
-          backgroundDismiss: function () {
-            window.location.reload();
-          },
-          buttons: {
-            ok: {
-              btnClass: btnClass,
-              action: function () {
-                window.location.reload();
-              }
-            }
-          }
+          tbody.innerHTML += html;
         });
       }
-    );
-  });
+    }
 
-  // Add member ajax
-  $("#addMemberBtn").click(function () {
-    $.post(
-      "./memberadd_process.php",
-      {
-        first_name: $("#fName").val(),
-        last_name: $("#lName").val(),
-        gender: $("#sex").val(),
-        birthdate: $("#birthdate").val(),
-        email: $("#email").val(),
-        address: $("#address").val(),
-        phone: $("#phone").val(),
-        member_type: $("#memberType").val(),
-        program_form_check: $("#program-form-check").val(),
-        program_id: $("#program").val()
-      },
-      function (res) {
-        if(JSON.parse(res) == "success") {
+    function regularPaymentHistory(el) {
+      let id = el.getAttribute('data-id');
+
+      $("#payment-history-footer").pagination({
+        dataSource: function(done) {
+          let req = new XMLHttpRequest();
+          req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              let data = JSON.parse(this.responseText);
+              done(data);
+            }
+          }
+          req.open('GET', 'payment_history.php?id=' + id, true);
+          req.send();
+        },
+        pageSize: 5,
+        showNext: false,
+        showPrevious: false,
+        callback: function(data) {
+          let tbody = document.getElementById('modal-tbody-payment-history');
+          if (data == 0) {
+            tbody.innerHTML = "";
+          } else {
+            tbody.innerHTML = "";
+            data.forEach(row => {
+              var html = `<tr>
+              <td>${row.payment_id}</td>
+              <td>${row.payment_description}</td>
+              <td>${row.payment_amount}</td>
+              <td>${row.date_payment} ${row.time_payment}</td>
+              <td>${row.payment_type}</td>
+            </tr>`;
+              tbody.innerHTML += html;
+            });
+          }
+        }
+      });
+    }
+
+    function walkinPaymentHistory(el) {
+      let id = el.getAttribute('data-id');
+
+      $("#payment-walkin-history-footer").pagination({
+        dataSource: function(done) {
+          let req = new XMLHttpRequest();
+          req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              let data = JSON.parse(this.responseText);
+              done(data);
+            }
+          }
+          req.open('GET', 'walkin_payment_history.php?id=' + id, true);
+          req.send();
+        },
+        pageSize: 5,
+        showPrevious: false,
+        showNext: false,
+        callback: function(data) {
+          let tbody = document.getElementById('modal-tbody-walkin-payment-history');
+          if (data == 0) {
+            tbody.innerHTML = "";
+          } else {
+            tbody.innerHTML = "";
+            data.forEach(row => {
+              var html = `<tr>
+              <td>${row.payment_id}</td>
+              <td>${row.payment_description}</td>
+              <td>${row.payment_amount}</td>
+              <td>${row.date_payment} ${row.time_payment}</td>
+              <td>${row.payment_type}</td>
+            </tr>`;
+              tbody.innerHTML += html;
+            });
+          }
+        }
+      });
+    }
+
+    // Program Checkbox
+    let div = $("#program-check-div");
+    let select = $("#program-form-check");
+    $("#program-yes").click(function() {
+      div.css("display", "block");
+      select.val("Yes");
+    });
+
+    $("#program-no").click(function() {
+      div.css("display", "none");
+      select.val("No");
+    })
+
+    // avail program modal
+    let availBtn = $("#avail-program-btn");
+    let availModal = $("#avail-program-modal");
+    let updateModal = $("#regular_update");
+    let memberId;
+
+    availBtn.click(function() {
+      memberId = availBtn.attr("data-id");
+      updateModal.modal("hide");
+      availModal.modal("show");
+    });
+
+    availModal.on("hide.bs.modal", function() {
+      $(".update-icon-btn[data-id=" + memberId + "]").click();
+    });
+
+    // avail program
+    let avail = $("#avail-btn");
+    let program = $("#avail-program-select");
+    let programVal = program.val();
+    let programName = $("#avail-program-select option[value=" + programVal + "]").html();
+
+    program.change(function() {
+      programVal = program.val();
+      programName = $("#avail-program-select option[value=" + programVal + "]").html();
+      $.get("./getprogramamount.php?id=" + programVal, function(res) {
+        $("#programpayment-amount").val(JSON.parse(res));
+      });
+    })
+
+    avail.click(function() {
+      $.confirm({
+        closeIcon: true,
+        title: "Confirm?",
+        content: `Avail ${programName} Program for this member?`,
+        buttons: {
+          confirm: {
+            btnClass: "btn-orange",
+            action: function() {
+              $.get("./check_sub.php?id=" + memberId, function(res) {
+                let data = JSON.parse(res);
+                if (data == "active") {
+                  $.confirm({
+                    title: "Alert",
+                    content: "This member already has an active subscription. To continue availing the program, the member must pay for the amount. Proceed?",
+                    buttons: {
+                      ok: {
+                        btnClass: "btn-orange",
+                        action: function() {
+                          $.post("./avail_program.php", {
+                            memberId: memberId,
+                            programId: programVal,
+                            amount: $("#programpayment-amount").val(),
+                            isActive: "true"
+                          }, function(res) {
+                            if (JSON.parse(res) == "success") {
+                              $.alert({
+                                title: "Success!",
+                                type: 'green',
+                                content: `Member has successfully availed program.`,
+                                backgroundDismiss: function() {
+                                  $("#avail-program-modal").modal("hide");
+                                },
+                                buttons: {
+                                  ok: {
+                                    btnClass: "btn-success",
+                                    action: function() {
+                                      $("#avail-program-modal").modal("hide");
+                                    }
+                                  }
+                                }
+                              });
+                            } else {
+                              $.alert({
+                                title: 'Error',
+                                type: 'red',
+                                content: JSON.parse(res)
+                              });
+                            }
+                          });
+                        }
+                      },
+                      cancel: {
+                        btnClass: "btn-grey",
+                        action: function() {}
+                      }
+                    }
+                  });
+                } else {
+                  $.post("./avail_program.php", {
+                    memberId: memberId,
+                    programId: programVal,
+                    amount: $("#programpayment-amount").val(),
+                    isActive: "false"
+                  }, function(res) {
+                    if (JSON.parse(res) == "success") {
+                      $.alert({
+                        title: "Success!",
+                        type: 'green',
+                        content: `Member has successfully availed program.`,
+                        backgroundDismiss: function() {
+                          $("#avail-program-modal").modal("hide");
+                        },
+                        buttons: {
+                          ok: {
+                            btnClass: "btn-success",
+                            action: function() {
+                              $("#avail-program-modal").modal("hide");
+                            }
+                          }
+                        }
+                      });
+                    } else {
+                      $.alert({
+                        title: 'Error',
+                        type: 'red',
+                        content: JSON.parse(res)
+                      });
+                    }
+                  });
+                }
+              });
+            }
+          }
+        }
+      });
+    })
+
+    $("#remove-program-btn").click(function() {
+      let id = $(this).attr("data-id");
+      $.confirm({
+        title: "Remove?",
+        content: "Are you sure you want to remove this member from this program?",
+        buttons: {
+          confirm: {
+            btnClass: "btn-orange",
+            action: function() {
+              $.get("./remove_from_program.php?id=" + id, function(res) {
+                if (JSON.parse(res) == "success") {
+                  $.alert({
+                    type: 'green',
+                    title: "Success",
+                    content: 'Member successfully removed from program.',
+                    buttons: {
+                      ok: {
+                        btnClass: 'btn-success',
+                        action: function() {
+                          window.location.reload();
+                        }
+                      }
+                    }
+                  });
+                } else {
+                  $.alert({
+                    type: 'red',
+                    title: 'Error',
+                    content: JSON.parse(res),
+                    buttons: {
+                      close: {
+                        btnClass: 'btn-danger',
+                        action: function() {}
+                      }
+                    }
+                  });
+                }
+              });
+            }
+          },
+          cancel: {
+            btnClass: "btn-grey",
+            action: function() {}
+          }
+        }
+      });
+    });
+
+    document.getElementById('programshowCalc').addEventListener('click', () => {
+      let programcalc = document.getElementById('programcalculator');
+      if (programcalc.style.display == 'none') {
+        programcalc.style.display = 'block';
+        document.getElementById('programshowCalc').innerHTML =
+          '<span style="color:#DF3A01"> Hide Calculator </span>';
+      } else {
+        programcalc.style.display = 'none';
+        document.getElementById('programshowCalc').innerHTML = 'Show Calculator';
+      }
+    });
+
+    document.getElementById('programenterCalc').addEventListener('click', () => {
+      let cash = document.getElementById('program-cash');
+      let change = document.getElementById('program-change');
+
+
+      let val = parseInt(cash.value);
+      let amount = parseInt($("#programpayment-amount").val());
+
+      if (Number.isInteger(val) == true) {
+        if (val <= 0 || val >= 9999) {
+          alert('Please enter a valid amount!');
+        } else if (val < parseInt($("#programpayment-amount").val())) {
+          alert('Insufficient cash!');
+        } else {
+          change.value = `₱${val - amount}.00`;
+        }
+      } else {
+        alert('Please enter an appropriate amount!');
+      }
+    });
+
+    $("#memberType").change(function() {
+      if ($(this).val() == "Walk-in") {
+        $("#enroll-program-div").css("display", "none");
+        $("#program-no").click();
+      } else {
+        $("#enroll-program-div").css("display", "block");
+      }
+    });
+
+    $("#regular_payment").on("hidden.bs.modal", function() {
+      $("#payment_description").prop("selectedIndex", 0);
+      $("#amount").val("");
+      let calc = document.getElementById('calculator');
+      calc.style.display = 'none';
+      document.getElementById('showCalc').innerHTML = 'Show Calculator';
+    });
+
+    // add payment ajax
+    $("#add-payment-btn-regular").click(function() {
+      $.post(
+        "./memberpayment_process.php", {
+          member_id: $("#member_id").val(),
+          payment_description: $("#payment_description").val(),
+          promo_discount: $("#promo_discount").val(),
+          promo_availed: $("#promo_availed").val(),
+          program_enrolled: $("#program_enrolled").val(),
+          program_amount: $("#program_amount").val()
+        },
+        function(res) {
+          console.log(res);
+          let r = JSON.parse(res);
+          let message;
+          let type = 'green';
+          let title = 'Success';
+          let btnClass = 'btn-success';
+
+          if (r == "success monthly") {
+            message = "Monthly subscription payment successful.";
+          } else if (r == "success annual") {
+            message = "Annual membership payment successful.";
+          } else if (r == "success both") {
+            message = "Monthly subscription and annual membership payments successful.";
+          } else if (r == "success walkin") {
+            message = "Walk-in payment successful.";
+          } else {
+            message = JSON.parse(res);
+            type = 'red';
+            title = 'Error';
+            btnClass = 'btn-danger';
+          }
+
           $.alert({
-            title: "Success",
-            content: "Member successfully added.",
-            type: "green",
-            backgroundDismiss: function () {
+            title: title,
+            type: type,
+            content: message,
+            backgroundDismiss: function() {
               window.location.reload();
             },
             buttons: {
               ok: {
-                btnClass: "btn-success",
-                action: function () {
+                btnClass: btnClass,
+                action: function() {
                   window.location.reload();
                 }
               }
             }
           });
-        } else {
-          $.alert({
-            title: "Error",
-            content: JSON.parse(res),
-            type: "red",
-            backgroundDismiss: true,
-            buttons: {
-              ok: {
-                btnClass: 'btn-danger',
-                action: function () {}
-              }
-            }
-          });
         }
-      }
-    );
-  });
+      );
+    });
+
+    // Add member ajax
+    $("#addMemberBtn").click(function() {
+      $.post(
+        "./memberadd_process.php", {
+          first_name: $("#fName").val(),
+          last_name: $("#lName").val(),
+          gender: $("#sex").val(),
+          birthdate: $("#birthdate").val(),
+          email: $("#email").val(),
+          address: $("#address").val(),
+          phone: $("#phone").val(),
+          member_type: $("#memberType").val(),
+          program_form_check: $("#program-form-check").val(),
+          program_id: $("#program").val()
+        },
+        function(res) {
+          if (JSON.parse(res) == "success") {
+            $.alert({
+              title: "Success",
+              content: "Member successfully added.",
+              type: "green",
+              backgroundDismiss: function() {
+                window.location.reload();
+              },
+              buttons: {
+                ok: {
+                  btnClass: "btn-success",
+                  action: function() {
+                    window.location.reload();
+                  }
+                }
+              }
+            });
+          } else {
+            $.alert({
+              title: "Error",
+              content: JSON.parse(res),
+              type: "red",
+              backgroundDismiss: true,
+              buttons: {
+                ok: {
+                  btnClass: 'btn-danger',
+                  action: function() {}
+                }
+              }
+            });
+          }
+        }
+      );
+    });
   </script>
 
 </body>
