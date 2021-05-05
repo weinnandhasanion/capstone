@@ -6,6 +6,9 @@
 -- Generation Time: May 04, 2021 at 04:57 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.13
+CREATE DATABASE gym;
+USE gym;
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
