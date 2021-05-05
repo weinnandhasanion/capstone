@@ -3033,13 +3033,14 @@ if (isset($_GET["type"])) {
                     class="fas fa-pencil-alt mx-1 get_id text-orange"
                     data-id='${row.routine_id}' onclick="routineDetails(this)"></i>
                 </span>
-                <span data-toggle="tooltip" data-placement="top"
-                  title="Delete ${row.routine_name}">
-                  <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-1"
-                    data-id="${row.routine_id}" onclick="removeRoutine(this)"></i>
-                </span>
+        
                 </td>
               </tr>`;
+              // <span data-toggle="tooltip" data-placement="top"
+              //     title="Delete ${row.routine_name}">
+              //     <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-1"
+              //       data-id="${row.routine_id}" onclick="removeRoutine(this)"></i>
+              //   </span>
               $("#routines-tbody").append(html);
             });
           } else {
@@ -3063,6 +3064,10 @@ if (isset($_GET["type"])) {
     $("#add-routines-modal-btn").on("click", function () {
       $("#routines-modal").modal("hide");
       $("#add-routine").modal("show");
+    });
+
+    $("#add-routine").on("hide.bs.modal", function () {
+      $("#routines-modal").modal("show");
     });
 
     function addNewRoutine () {
@@ -3629,35 +3634,11 @@ if (isset($_GET["type"])) {
     //---------------------------------------------------------------------------Activate Account
     function activate_account(el) {
       let id = el.getAttribute('data-id');
-      let lastnameID = el.getAttribute('lastname-id');
-
-      // AJAX Request
-      var r = confirm("Are you sure you want to activate this member account?");
-      if (r == true) {
-        let req = new XMLHttpRequest();
-        req.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            if (JSON.parse(this.responseText) == "failure") {
-              alert("Can't activate account: User must have an active membership.");
-            } else {
-              alert("Account successfully activated!");
-              window.location.reload()
-            }
-          }
-        }
-        req.open('GET', 'activate_account.php?id=' + id, true);
-        req.send();
-      }
-    }
-
-    function activate_account(el) {
-      let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       $.confirm({
-        closeIcon: true,
-        title: "Delete?",
+        backgroundDismiss: true,
+        title: "Activate?",
         content: "Are you sure you want activate this account?",
         buttons: {
           confirm: {
@@ -3666,27 +3647,28 @@ if (isset($_GET["type"])) {
               let req = new XMLHttpRequest();
               req.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  console.log((this.responseText));
                   if (JSON.parse(this.responseText) == "failure") {
                     $.alert({
-                      title: 'failure',
-                      content: 'Can not activate account: User must have an active membership.',
+                      type: "red",
+                      title: "Error",
+                      content: "Can not activate account: User must have an active membership.",
                       buttons: {
                         ok: {
-                          text: 'OK',
-                          action: function() {
-                            window.location.reload();
-                          }
+                          btnClass: "btn-danger",
+                          text: "OK",
+                          action: function() {}
                         }
                       }
                     });
                   } else {
                     $.alert({
-                      title: 'Success',
-                      content: 'Account successfully activated!',
+                      type: "green",
+                      title: "Success",
+                      content: "Account successfully activated!",
                       buttons: {
                         ok: {
-                          text: 'OK',
+                          btnClass: "green",
+                          text: "OK",
                           action: function() {
                             window.location.reload();
                           }
@@ -3694,11 +3676,9 @@ if (isset($_GET["type"])) {
                       }
                     });
                   }
-
-
                 }
               }
-              req.open('GET', 'activate_account.php?id=' + id, true);
+              req.open("GET", "activate_account.php?id=" + id, true);
               req.send();
             }
           }
@@ -3748,7 +3728,6 @@ if (isset($_GET["type"])) {
 
 
     //------------------------------------------------------------------------REMOVE PROGRAM JS
-
     function removeProgram(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
@@ -3760,28 +3739,29 @@ if (isset($_GET["type"])) {
         content: "Are you sure you want to delete this Program?",
         buttons: {
           confirm: {
-            btnClass: "btn-orange",
-            action: function() {
-              let req = new XMLHttpRequest();
-              req.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  console.log((this.responseText));
-                  $.alert({
-                    title: 'Success',
-                    content: 'Program successfully deleted!',
-                    buttons: {
-                      ok: {
-                        text: 'OK',
-                        action: function() {
-                          window.location.reload();
-                        }
+            btnClass: "btn-danger",
+            action: function () {
+              $.dialog({
+                backgroundDismiss: true,
+                closeIcon: false,
+                content: function () {
+                  var self = this;
+                  $.get("./removeProgram.php?id=" + id, function (res) {
+                    if(JSON.parse(res) == "success") {
+                      self.setTitle("Success");
+                      self.setContent("Successfully deleted program.");
+                      self.setType('green');
+                      self.backgroundDismiss = function () {
+                        window.location.reload();
                       }
+                    } else {
+                      self.setTitle("Error");
+                      self.setContent(JSON.parse(res));
+                      self.setType('red');
                     }
                   });
                 }
-              }
-              req.open('GET', 'removeProgram.php?id=' + id, true);
-              req.send();
+              });
             }
           }
         }

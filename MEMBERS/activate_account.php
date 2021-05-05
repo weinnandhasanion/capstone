@@ -55,7 +55,7 @@ if (empty($row["annual_start"]) || $today > $row["annual_end"]) {
             $member_id_new = $rows2["member_id"];
             $user_fname = $rows2["first_name"];
             $user_lname = $rows2["last_name"];
-            $first_name = $rows["first_name"];
+            $first_name = $rows2["first_name"];
             $description = "Activated the account";
             $identity = "Members";
             $timeNow = date("h:i A");
