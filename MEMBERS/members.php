@@ -2554,7 +2554,7 @@
               onclick="displayDetails(this)"></i>
             </span>
             ${span}
-            <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name} to Walk-in">
+            <span data-toggle="tooltip" data-placement="top" title="Update ${row.last_name}">
               <i style="cursor: pointer; color:#C71585; font-size: 25px;"
               class="fas fa-pencil-alt mx-1 update-icon-btn" data-id="${row.member_id}"
               data-toggle="modal" data-target="#regular_update"
