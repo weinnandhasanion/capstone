@@ -2100,7 +2100,6 @@ if (isset($_GET["type"])) {
   <div class="modal fade" id="add-program">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form action="addprogram.php" method="post">
           <div class="modal-header" style="background-color: #DF3A01; color: white;">
             <h4 class="modal-title">Add Program</h4>
           </div>
@@ -2109,13 +2108,13 @@ if (isset($_GET["type"])) {
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Program Name</label>
-                  <input name="program_name" required type="text" id="prgram_name" class="form-control mb-1" placeholder="Enter program name here" onblur="checkIfValid(this)">
+                  <input name="program_name" required type="text" id="program_name" class="form-control mb-1" placeholder="Enter program name here" onblur="checkIfValid(this)">
                   <small class="validation text-danger" id="prgram_name-empty">Please fill out this field</small>
                   <small class="validation text-danger" id="prgram_name-invalid">Invalid input</small>
                 </div>
                 <div class="col-sm-4">
                   <label>Trainer to assign</label>
-                  <select style="width: 230px;" required name="trainer_id" id="trainer_name" class="form-control" oninput="checkIfValid(this)" onblur="checkIfValid(this)">
+                  <select style="width: 230px;" required name="trainer_id" id="trainer_id" class="form-control" oninput="checkIfValid(this)" onblur="checkIfValid(this)">
                     <option value="" selected disabled>Select here...</option>
                     <?php
                     $sql = "SELECT * FROM trainer";
@@ -2546,9 +2545,8 @@ if (isset($_GET["type"])) {
             </div>
           </div>
           <div class="modal-footer" style="height:70px;">
-            <button type="submit" class="btn btn-orange">Submit</button>
+            <button type="submit" onclick="addProgram()" class="btn btn-orange">Submit</button>
           </div>
-        </form>
       </div>
     </div>
   </div>
@@ -3221,6 +3219,85 @@ if (isset($_GET["type"])) {
       });
     });
 
+    // add program ajax
+    function addProgram() {
+      let program_name = $("#program_name").val();
+      let trainer_id = $("#trainer_id").val();
+      let program_desc = $("#program_desc").val();
+      let u1d1 = $("#upper-1-day-1").val();
+      let u2d1 = $("#upper-2-day-1").val();
+      let u3d1 = $("#upper-3-day-1").val();
+      let u1d2 = $("#upper-1-day-2").val();
+      let u2d2 = $("#upper-2-day-2").val();
+      let u3d2 = $("#upper-3-day-2").val();
+      let u1d3 = $("#upper-1-day-3").val();
+      let u2d3 = $("#upper-2-day-3").val();
+      let u3d3 = $("#upper-3-day-3").val();
+      let l1d1 = $("#lower-1-day-1").val();
+      let l2d1 = $("#lower-2-day-1").val();
+      let l3d1 = $("#lower-3-day-1").val();
+      let l1d2 = $("#lower-1-day-2").val();
+      let l2d2 = $("#lower-2-day-2").val();
+      let l3d2 = $("#lower-3-day-2").val();
+      let l1d3 = $("#lower-1-day-3").val();
+      let l2d3 = $("#lower-2-day-3").val();
+      let l3d3 = $("#lower-3-day-3").val();
+      let ad1 = $("#abdominal-day-1").val();
+      let ad2 = $("#abdominal-day-2").val();
+      let ad3 = $("#abdominal-day-3").val();
+
+      $.dialog({
+        backgroundDismiss: true,
+        closeIcon: false,
+        content: function () {
+          var self = this;
+          return $.post(
+            "./addprogram.php",
+            {
+              program_name: program_name,
+              program_description: program_desc,
+              trainer_id: trainer_id,
+              u1d1: u1d1,
+              u2d1: u2d1,
+              u3d1: u3d1,
+              u1d2: u1d2,
+              u2d2: u2d2,
+              u3d2: u3d2,
+              u1d3: u1d3,
+              u2d3: u2d3,
+              u3d3: u3d3,
+              l1d1: l1d1,
+              l2d1: l2d1,
+              l3d1: l3d1,
+              l1d2: l1d2,
+              l2d2: l2d2,
+              l3d2: l3d2,
+              l1d3: l1d3,
+              l2d3: l2d3,
+              l3d3: l3d3,
+              ad1: ad1,
+              ad2: ad2,
+              ad3: ad3
+            },
+            function (res) {
+              if(JSON.parse(res) == "success") {
+                self.setTitle("Success");
+                self.setContent("Program successfully added.");
+                self.setType("green");
+                self.backgroundDismiss = function () {
+                  window.location.reload();
+                }
+              } else {
+                self.setTitle("Error");
+                self.setContent(JSON.parse(res));
+                self.setType("red");
+              }
+            }
+          );
+        }
+      });
+    }
+
     //------------------------------------------------------------------------------ VIEW JS
     // View member Modal
     function displayDetails(el) {
@@ -3730,7 +3807,6 @@ if (isset($_GET["type"])) {
     //------------------------------------------------------------------------REMOVE PROGRAM JS
     function removeProgram(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       $.confirm({
@@ -3747,6 +3823,7 @@ if (isset($_GET["type"])) {
                 content: function () {
                   var self = this;
                   $.get("./removeProgram.php?id=" + id, function (res) {
+                    console.log(res);
                     if(JSON.parse(res) == "success") {
                       self.setTitle("Success");
                       self.setContent("Successfully deleted program.");
