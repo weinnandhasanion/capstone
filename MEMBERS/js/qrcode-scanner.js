@@ -33,8 +33,12 @@ qrCode.callback = (res) => {
             self.setType(data.type);
           });
         } else {
-          self.setTitle("Invalid QR Code");
-          self.setType("red");
+          return $.get("./invalid_qr.php", function (resp) {
+            data = JSON.parse(resp);
+            self.setTitle(data.title);
+            self.setContent(data.message);
+            self.setType(data.type);
+          });
         }
       }
     });
