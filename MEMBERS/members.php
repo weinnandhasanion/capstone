@@ -3171,7 +3171,41 @@ if (isset($_GET["type"])) {
     });
 
     function removeRoutine (el) {
+      let id = el.getAttribute('data-id');
 
+      $.confirm({
+        title: "Delete",
+        content: "Are you sure you want to delete this routine?",
+        backgroundDismiss: true,
+        buttons: {
+          confirm: {
+            btnClass: "btn-danger",
+            action: function () {
+              $.dialog({
+                closeIcon: false,
+                backgroundDismiss: true,
+                content: function () {
+                  var self = this;
+                  return $.get("./remove_routine.php?id=" + id, function (res) {
+                    if(JSON.parse(res) == "success") {
+                      self.setTitle("Success");
+                      self.setContent("Routine deleted successfully.");
+                      self.setType("green");
+                      self.backgroundDismiss = function () {
+                        window.location.reload();
+                      }
+                    } else {
+                      self.setTitle("Error");
+                      self.setContent(JSON.parse(res));
+                      self.setType("red");
+                    }
+                  });
+                }
+              });
+            }
+          }
+        }
+      });
     }
 
     //checkbox only one check
