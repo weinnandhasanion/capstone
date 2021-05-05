@@ -85,6 +85,10 @@ if (isset($_GET["type"])) {
       text-transform: uppercase;
     }
 
+    #routines-tbody td, #routines-thead th {
+      text-align: left;
+    }
+
     .card-header>.card-title {
       margin-bottom: 0;
     }
@@ -434,11 +438,12 @@ if (isset($_GET["type"])) {
         <div class="col-sm-6">
           <div class="card">
             <div class="card-content">
-              <div class="card-header">
+              <div class="card-header d-flex justify-content-between align-items-center">
                 <h3 class="card-title">
                   <span class="add-members" data-toggle="tooltip" data-placement="top" title="Add new program"><i data-toggle="modal" data-target="#add-program" class="fas fa-plus mr-2"></i></span>
                   Programs
                 </h3>
+                <button class="btn btn-sm btn-outline-orange" data-toggle="modal" data-target="#routines-modal">View Routines</button>
               </div>
               <div class="card-body card-bodyzz table-responsive-0 p-0">
                 <table class="table table-hover">
@@ -544,6 +549,39 @@ if (isset($_GET["type"])) {
         </div>
         <div class="modal-footer d-flex flex-row-reverse justify-content-between" id="program-members-footer">
           <button class="btn btn-sm btn-orange" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="routines-modal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-start align-items-center" style="background-color: #DF3A01; color: white;">
+          <span class="add-members" data-toggle="tooltip" data-placement="top" title="Add new routine">
+            <i style="font-size: 24px" id="add-routines-modal-btn" class="text-success fas fa-plus mr-2"></i>
+          </span>
+          <h4 class="modal-title">Workout Routines</h4>
+        </div>
+        <div class="modal-body d-flex justify-content-center align-items-center flex-column">
+          <table class="table table-hover">
+            <thead id="routines-thead">
+              <tr>
+                <th>Routine Name</th>
+                <th>Routine Type</th>
+                <th>Sets</th>
+                <th>Reps</th>
+                <th>Link</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="routines-tbody">
+            
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer" id="routines-footer">
+        
         </div>
       </div>
     </div>
@@ -1510,6 +1548,83 @@ if (isset($_GET["type"])) {
     </div>
   </div>
 
+  <!-- add routine modal -->
+  <div class="modal fade" id="add-routine">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color:#EB460D;color:white;">
+          <h4 class="modal-title" id="add-routine-title">Add New Routine</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label for="">Routine Name</label>
+                <input type="text" id="add-routine-name" class="form-control" placeholder="Enter name here">
+              </div>
+              <div class="col-sm-6">
+                <label for="">Routine Type</label>
+                <select name="" id="add-routine-type" class="form-control">
+                  <option value="Upper Body">Upper Body</option>
+                  <option value="Lower Body">Lower Body</option>
+                  <option value="Abdominal">Abdominal</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label for="">Sets</label>
+                <input type="number" min="1" max="5" id="add-routine-sets" class="form-control" placeholder="1-5">
+              </div>
+              <div class="col-sm-6">
+                <label for="">Repetitions</label>
+                <input type="number" min="5" max="100" id="add-routine-reps" class="form-control" placeholder="5-100">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-12">
+                <label for="">Tutorial YouTube Link</label>
+                <input type="text" class="form-control" id="add-routine-link" placeholder="e.g. https://www.youtube.com/watch?v=vT2GjY_Umpw">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-orange" onclick="addNewRoutine()">Add Routine</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- edit routine modal -->
+  <div class="modal fade" id="update-routine">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="update-routine-title"></h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label for="">Routine ID</label>
+                <input type="text" id="update-routine-id" readonly class="form-control">
+              </div>
+              <div class="col-sm-6">
+                <label for="">Routine Name</label>
+                <input type="text" id="update-routine-name" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!---------------------------------------------------- UPDATE program modal -------------------------------------->
   <div class="modal fade" id="programUpdate">
     <div class="modal-dialog">
@@ -2424,7 +2539,7 @@ if (isset($_GET["type"])) {
       }
     }
 
-    var regs, walks, programs, deletedMembers, deletedPrograms, memberLog;
+    var regs, walks, programs, deletedMembers, deletedPrograms, memberLog, routines;
 
     $.get("./members.php?type=regular", function(res) {
       // Gibutang nimo sa regs ang tanan members nga regular
@@ -2452,6 +2567,12 @@ if (isset($_GET["type"])) {
       memberLog = JSON.parse(res);
     }).then(() => {
       paginateMemberLog(memberLog);
+    });
+
+    $.get("./get_routines.php", function (res) {
+      routines = JSON.parse(res);
+    }).then(() => {
+      paginateRoutines(routines);
     });
 
     // Regular members pagination after load sa page
@@ -2803,6 +2924,17 @@ if (isset($_GET["type"])) {
       });
     }
 
+    $("#search-deleted-programs").on("keyup", function() {
+      let val = $(this).val();
+
+      if (val != "") {
+        data = deletedPrograms.filter(row => row.program_name.toLowerCase().includes(val.toLowerCase()));
+        paginateDeletedPrograms(data);
+      } else {
+        paginateDeletedPrograms(deletedPrograms);
+      }
+    });
+
     function paginateMemberLog (data) {
       $("#member-log-footer").pagination({
         dataSource: function (done) {
@@ -2834,16 +2966,94 @@ if (isset($_GET["type"])) {
       });
     }
 
-    $("#search-deleted-programs").on("keyup", function() {
-      let val = $(this).val();
+    function paginateRoutines (data) {
+      $("#routines-footer").pagination({
+        dataSource: function (done) {
+          done(data);
+        },
+        pageSize: 8,
+        showPrevious: false,
+        showNext: false,
+        callback: function (data) {
+          console.log(data);
+          $("#routines-tbody").empty();
+          if (data.length > 0) {
+            $("#no-data-div-routines").css("display", "none");
+            data.forEach(row => {
+              let html = `<tr>
+                <td>${row.routine_name}</td>
+                <td>${row.routine_type}</td>
+                <td>${row.routine_sets}</td>
+                <td>${row.routine_reps}</td>
+                <td>
+                  <a class="text-orange" href="${row.routine_link}" target="_blank">View</a>
+                </td>
+                <td>
+                <span data-toggle="tooltip" data-placement="top" title="Edit ${row.routine_name}">
+                  <i style="cursor: pointer; font-size: 25px;"
+                    class="fas fa-pencil-alt mx-1 get_id text-orange" data-toggle="modal" data-target="#update-routine"
+                    data-id='${row.routine_id}' onclick="routineDetails(this)"></i>
+                </span>
+                <span data-toggle="tooltip" data-placement="top"
+                  title="Delete ${row.routine_name}">
+                  <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-1"
+                    data-id="${row.routine_id}" onclick="removeRoutine(this)"></i>
+                </span>
+                </td>
+              </tr>`;
+              $("#routines-tbody").append(html);
+            });
+          } else {
+            $("#no-data-div-routines").css("display", "flex");
+          }
+        }
+      });
+    }
 
-      if (val != "") {
-        data = deletedPrograms.filter(row => row.program_name.toLowerCase().includes(val.toLowerCase()));
-        paginateDeletedPrograms(data);
-      } else {
-        paginateDeletedPrograms(deletedPrograms);
-      }
+    $("#add-routines-modal-btn").on("click", function () {
+      $("#routines-modal").modal("hide");
+      $("#add-routine").modal("show");
     });
+
+    function addNewRoutine () {
+      let name = $("#add-routine-name").val();
+      let type = $("#add-routine-type").val();
+      let sets = $("#add-routine-sets").val();
+      let reps = $("#add-routine-reps").val();
+      let link = $("#add-routine-link").val();
+
+      $.dialog({
+        closeIcon: false,
+        backgroundDismiss: true,
+        content: function () {
+          var self = this;
+          return $.post(
+            "./add_routines.php",
+            {
+              name: name,
+              type: type,
+              sets: sets,
+              reps: reps,
+              link: link
+            },
+            function (res) {
+              if(JSON.parse(res) == "success") {
+                self.setTitle("Success");
+                self.setContent("Routine successfully added.");
+                self.setType("green");
+                self.backgroundDismiss = function () {
+                  window.location.reload();
+                }
+              } else {
+                self.setTitle("Error");
+                self.setContent(JSON.parse(res));
+                self.setType("red");
+              }
+            }
+          );
+            }
+          });
+    }
 
     //checkbox only one check
     $(document).ready(function() {
