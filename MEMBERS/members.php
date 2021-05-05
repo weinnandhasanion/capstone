@@ -557,11 +557,16 @@ if (isset($_GET["type"])) {
   <div class="modal fade" id="routines-modal">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <div class="modal-header d-flex justify-content-start align-items-center" style="background-color: #DF3A01; color: white;">
-          <span class="add-members" data-toggle="tooltip" data-placement="top" title="Add new routine">
-            <i style="font-size: 24px" id="add-routines-modal-btn" class="text-success fas fa-plus mr-2"></i>
-          </span>
-          <h4 class="modal-title">Workout Routines</h4>
+        <div class="modal-header d-flex justify-content-between align-items-center" style="background-color: #DF3A01; color: white;">
+          <div class="d-flex justify-content-center align-items-center">
+            <span class="add-members" data-toggle="tooltip" data-placement="top" title="Add new routine">
+              <i style="font-size: 24px" id="add-routines-modal-btn" class="text-success fas fa-plus mr-2"></i>
+            </span>
+            <h4 class="modal-title">Workout Routines</h4>
+          </div>
+          <form class="d-flex justify-content-center">
+            <input type="text" placeholder="Search routine here" id="search-routines" class="form-control">
+          </form>
         </div>
         <div class="modal-body d-flex justify-content-center align-items-center flex-column">
           <table class="table table-hover">
@@ -579,6 +584,9 @@ if (isset($_GET["type"])) {
             
             </tbody>
           </table>
+          <div id="no-data-div-routines" class="no-data-div my-5 text-muted">
+            No data to show.
+          </div>
         </div>
         <div class="modal-footer" id="routines-footer">
         
@@ -1604,7 +1612,7 @@ if (isset($_GET["type"])) {
   <div class="modal fade" id="update-routine">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header" style="background-color:#EB460D;color:white;">
           <h4 class="modal-title" id="update-routine-title"></h4>
         </div>
         <div class="modal-body">
@@ -1620,6 +1628,37 @@ if (isset($_GET["type"])) {
               </div>
             </div>
           </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label for="">Routine Type</label>
+                <select id="update-routine-type" class="form-control">
+                  <option value="Upper Body">Upper Body</option>
+                  <option value="Lower Body">Lower Body</option>
+                  <option value="Abdominal">Abdominal</option>
+                </select>
+              </div>
+              <div class="col-sm-3">
+                <label for="">Sets</label>
+                <input type="number" max="5" min="1"  id="update-routine-sets" class="form-control">
+              </div>
+              <div class="col-sm-3">
+                <label for="">Reps</label>
+                <input type="number" min="5" max="100" id="update-routine-reps" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-12">
+                <label for="">Tutorial YouTube Link</label>
+                <input type="text" id="update-routine-link" class="form-control">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-orange" onclick="editRoutine()">Save changes</button>
         </div>
       </div>
     </div>
@@ -2991,7 +3030,7 @@ if (isset($_GET["type"])) {
                 <td>
                 <span data-toggle="tooltip" data-placement="top" title="Edit ${row.routine_name}">
                   <i style="cursor: pointer; font-size: 25px;"
-                    class="fas fa-pencil-alt mx-1 get_id text-orange" data-toggle="modal" data-target="#update-routine"
+                    class="fas fa-pencil-alt mx-1 get_id text-orange"
                     data-id='${row.routine_id}' onclick="routineDetails(this)"></i>
                 </span>
                 <span data-toggle="tooltip" data-placement="top"
@@ -3009,6 +3048,17 @@ if (isset($_GET["type"])) {
         }
       });
     }
+
+    $("#search-routines").on("keyup", function () {
+      let val = $(this).val();
+
+      if (val != "") {
+        data = routines.filter(row => row.routine_name.toLowerCase().includes(val.toLowerCase()));
+        paginateRoutines(data);
+      } else {
+        paginateRoutines(routines);
+      }
+    });
 
     $("#add-routines-modal-btn").on("click", function () {
       $("#routines-modal").modal("hide");
@@ -3051,8 +3101,77 @@ if (isset($_GET["type"])) {
               }
             }
           );
+        }
+      });
+    }
+
+    function routineDetails (el) {
+      let id = el.getAttribute('data-id');
+
+      $.get("./get_routine_details.php?id=" + id, function (res) {
+        let data = JSON.parse(res);
+
+        $("#update-routine-title").text("Edit " + data.routine_name);
+        $("#update-routine-id").val(data.routine_id);
+        $("#update-routine-name").val(data.routine_name);
+        $("#update-routine-type").val(data.routine_type);
+        $("#update-routine-sets").val(data.routine_sets);
+        $("#update-routine-reps").val(data.routine_reps);
+        $("#update-routine-link").val(data.routine_link);
+      }).then(() => {
+        $("#routines-modal").modal("hide");
+        $("#update-routine").modal("show");
+      });
+    }
+
+    function editRoutine () {
+      let id = $("#update-routine-id").val();
+      let name = $("#update-routine-name").val();
+      let type = $("#update-routine-type").val();
+      let sets = $("#update-routine-sets").val();
+      let reps = $("#update-routine-reps").val();
+      let link = $("#update-routine-link").val();
+
+      $.dialog({
+        backgroundDismiss: true,
+        closeIcon: false,
+        content: function () {
+          var self = this;
+          return $.post(
+            "./edit_routine.php",
+            {
+              id: id,
+              name: name,
+              type: type,
+              sets: sets,
+              reps: reps,
+              link: link
+            },
+            function (res) {
+              if(JSON.parse(res) == "success") {
+                self.setTitle("Success");
+                self.setContent("Routine successfully updated.");
+                self.setType("green");
+                self.backgroundDismiss = function () {
+                  window.location.reload();
+                }
+              } else {
+                self.setTitle("Error");
+                self.setContent(JSON.parse(res));
+                self.setType("red");
+              }
             }
-          });
+          );
+        }
+      });
+    }
+
+    $("#update-routine").on("hide.bs.modal", function () {
+      $("#routines-modal").modal("show");
+    });
+
+    function removeRoutine (el) {
+
     }
 
     //checkbox only one check
