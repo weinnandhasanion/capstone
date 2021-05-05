@@ -22,7 +22,10 @@ qrCode.callback = (res) => {
 
     $.dialog({
       theme: 'modern',
-      closeIcon: true,
+      closeIcon: false,
+      backgroundDismiss: function () {
+        window.location.reload();
+      },
       content: function () {
         var self = this;
         if(res.search("scan_qr.php") > 0) {
