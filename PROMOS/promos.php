@@ -476,8 +476,8 @@
                 <th>Promo ID</th>
                 <th>Promo Name</th>
                 <th>Promo Type</th>
-                <th>Promo Status</th>
                 <th id="datedeleted">Date Deleted</th>
+                <th id="deletedby">Deleted By</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -1252,6 +1252,7 @@
     $("#sort-deleted").click(function() {
       $(this).addClass("btn-orange").removeClass("btn-outline-orange");
       $("#sort-expired").addClass("btn-outline-orange").removeClass("btn-orange");
+      $("#deletedby").css("display", "block");
 
       data = promos.filter(row => row.status == "Deleted");
       paginateDeleted(data);
@@ -1260,6 +1261,7 @@
     $("#sort-expired").click(function() {
       $(this).addClass("btn-orange").removeClass("btn-outline-orange");
       $("#sort-deleted").addClass("btn-outline-orange").removeClass("btn-orange");
+      $("#deletedby").css("display", "none");
 
       data = promos.filter(row => row.status == "Expired");
       paginateExpired(data);
@@ -1283,8 +1285,8 @@
                 <td>${row.promo_id}</td>
                 <td>${row.promo_name}</td>
                 <td>${row.promo_type}</td>
-                <td>${row.status}</td>
                 <td>${row.date_deleted}</td>
+                <td>${row.admin_delete}</td>
                 <td>
                   <a href="#" class="text-warning" data-id="${row.promo_id}" onclick="viewDeletedDetails(this)">Details</a>
                   &#183;
@@ -1319,7 +1321,6 @@
                 <td>${row.promo_id}</td>
                 <td>${row.promo_name}</td>
                 <td>${row.promo_type}</td>
-                <td>${row.status}</td>
                 <td>${row.date_deleted}</td>
                 <td>
                   <a href="#" class="text-warning" data-id="${row.promo_id}" onclick="viewDeletedDetails(this)">Details</a>

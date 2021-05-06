@@ -6,14 +6,19 @@ if ($_SESSION['admin_id']) {
   $session_admin_id = $_SESSION['admin_id'];
 }
 
+$sql = "SELECT first_name, last_name FROM admin WHERE admin_id = $session_admin_id";
+$res = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($res);
+$admin_name = $row["first_name"]." ".$row["last_name"];
+
 $id = $_REQUEST["id"];
 $date = date("Y-m-d");
 
-$sql = "UPDATE promo SET status = 'Deleted', date_deleted = '$date' WHERE promo_id = $id";
+$sql = "UPDATE promo SET status = 'Deleted', date_deleted = '$date', admin_delete = '$admin_name' WHERE promo_id = $id";
 $res = mysqli_query($conn, $sql);
 
 if ($res) {
-  $sql = "UPDATE memberpromos SET status = 'Expired', date_expired = '$date' WHERE promo_id = $id";
+  $sql = "UPDATE memberpromos SET status = 'Removed', date_expired = '$date' WHERE promo_id = $id";
   $res = mysqli_query($conn, $sql);
 
   $data = array();
