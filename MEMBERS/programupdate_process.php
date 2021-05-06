@@ -8,34 +8,34 @@ if($_SESSION['admin_id']){
 }
 
 //----------------------------------------------------------------------------------- UPDATE
-$id = $_REQUEST['id'];
+$id = $_POST['program_id'];
 $program_name = $_POST['program_name'];
 $program_description = $_POST['program_description'];  
 $trainer_id = $_POST["trainer_id"];
 
-$upper1day1 = $_POST['upper-1-day-1'];
-$upper2day1 = $_POST['upper-2-day-1']; 
-$upper3day1 = $_POST['upper-3-day-1']; 
-$lower1day1 = $_POST['lower-1-day-1'];
-$lower2day1 = $_POST['lower-2-day-1']; 
-$lower3day1 = $_POST['lower-3-day-1'];  
-$abdominalday1 = $_POST['abdominal-day-1']; 
+$upper1day1 = $_POST['u1d1'];
+$upper2day1 = $_POST['u2d1']; 
+$upper3day1 = $_POST['u3d1']; 
+$lower1day1 = $_POST['l1d1'];
+$lower2day1 = $_POST['l2d1']; 
+$lower3day1 = $_POST['l3d1'];  
+$abdominalday1 = $_POST['ad1']; 
 
-$upper1day2 = $_POST['upper-1-day-2'];
-$upper2day2 = $_POST['upper-2-day-2']; 
-$upper3day2 = $_POST['upper-3-day-2']; 
-$lower1day2 = $_POST['lower-1-day-2'];
-$lower2day2 = $_POST['lower-2-day-2']; 
-$lower3day2 = $_POST['lower-3-day-2'];  
-$abdominalday2 = $_POST['abdominal-day-2']; 
+$upper1day2 = $_POST['u1d2'];
+$upper2day2 = $_POST['u2d2']; 
+$upper3day2 = $_POST['u3d2']; 
+$lower1day2 = $_POST['l1d2'];
+$lower2day2 = $_POST['l2d2']; 
+$lower3day2 = $_POST['l3d2'];  
+$abdominalday2 = $_POST['ad2']; 
 
-$upper1day3 = $_POST['upper-1-day-3'];
-$upper2day3 = $_POST['upper-2-day-3']; 
-$upper3day3 = $_POST['upper-3-day-3']; 
-$lower1day3 = $_POST['lower-1-day-3'];
-$lower2day3 = $_POST['lower-2-day-3']; 
-$lower3day3 = $_POST['lower-3-day-3'];  
-$abdominalday3 = $_POST['abdominal-day-3']; 
+$upper1day3 = $_POST['u1d3'];
+$upper2day3 = $_POST['u2d3']; 
+$upper3day3 = $_POST['u3d3']; 
+$lower1day3 = $_POST['l1d3'];
+$lower2day3 = $_POST['l2d3']; 
+$lower3day3 = $_POST['l3d3'];  
+$abdominalday3 = $_POST['ad3']; 
 $NumberRegex = "/[0-9]/";
 $specialCharacterRegex  = "/[\\W_]/";
 $checkSpace = "/\\s/";

@@ -773,7 +773,6 @@ if (isset($_GET["type"])) {
           <button type='button' class='close' id='close-paymentModal' data-dismiss='modal'>&times;</button>
         </div>
         <div class="modal-body">
-          <form action="regular_update.php" method="post">
             <div class="form-group">
               <div class="form-row">
                 <div class="col-sm-6">
@@ -849,10 +848,8 @@ if (isset($_GET["type"])) {
               </div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-orange">UPDATE</button>
+              <button class="btn btn-orange" onclick="updateRegular()">UPDATE</button>
             </div>
-          </form>
-
         </div>
       </div>
     </div>
@@ -1668,429 +1665,427 @@ if (isset($_GET["type"])) {
   <div class="modal fade" id="programUpdate">
     <div class="modal-dialog">
       <div class="modal-content">
-        <form action="programupdate_process.php" method="post">
-          <input type="hidden" name="id" id="program-id-hidden">
-          <div class="modal-header" style="background-color: #DF3A01; color: white;">
-            <h4 class="modal-title">Update Program</h4>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <label>Program Name</label>
-                  <input name="program_name" required type="text" id="prgram_name_update" class="form-control mb-1" placeholder="Enter program name here">
-                </div>
-                <div class="col-sm-6">
-                  <label>Trainer assigned</label>
-                  <select class="form-control" name="trainer_id" id="trainer_name_update">
-                    <?php
-                    $trainerSql = "SELECT * FROM trainer";
-                    $trainerQuery = mysqli_query($conn, $trainerSql);
+        <input type="hidden" name="id" id="program-id-hidden">
+        <div class="modal-header" style="background-color: #DF3A01; color: white;">
+          <h4 class="modal-title">Update Program</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label>Program Name</label>
+                <input name="program_name" required type="text" id="program_name_update" class="form-control mb-1" placeholder="Enter program name here">
+              </div>
+              <div class="col-sm-6">
+                <label>Trainer assigned</label>
+                <select class="form-control" name="trainer_id" id="trainer_name_update">
+                  <?php
+                  $trainerSql = "SELECT * FROM trainer";
+                  $trainerQuery = mysqli_query($conn, $trainerSql);
 
-                    if ($trainerQuery) {
-                      while ($row = mysqli_fetch_assoc($trainerQuery)) {
-                    ?>
-                        <option value="<?= $row["trainer_id"] ?>"><?= $row["first_name"] . " " . $row["last_name"] ?></option>
-                    <?php
-                      }
+                  if ($trainerQuery) {
+                    while ($row = mysqli_fetch_assoc($trainerQuery)) {
+                  ?>
+                      <option value="<?= $row["trainer_id"] ?>"><?= $row["first_name"] . " " . $row["last_name"] ?></option>
+                  <?php
                     }
-                    ?>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-sm-12">
-                  <label>Program Description</label>
-                  <textarea name="program_description" required style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc_update" placeholder="Enter program desciption here"></textarea>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <h5>Day 1</h5>
-              <div class="form-row mb-3">
-                <div class="col-sm-4">
-                  <label>Upper Body 1</label>
-                  <select name="upper-1-day-1" required id="upper-1-day-1_update" class="form-control">
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  <label>Upper Body 2</label>
-                  <select name="upper-2-day-1" required id="upper-2-day-1_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  <label>Upper Body 3</label>
-                  <select name="upper-3-day-1" required id="upper-3-day-1_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row mb-3">
-                <div class="col-sm-4">
-                  <label>Lower Body 1</label>
-                  <select name="lower-1-day-1" required id="lower-1-day-1_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  <label>Lower Body 2</label>
-                  <select name="lower-2-day-1" required id="lower-2-day-1_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  <label>Lower Body 3</label>
-                  <select name="lower-3-day-1" required id="lower-3-day-1_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row mb-3">
-                <div class="col-sm-4">
-                  <label>Abdominals</label>
-                  <select name="abdominal-day-1" required id="abdominal-day-1_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-              </div>
-              <h5>Day 2</h5>
-              <div class="form-row mb-3">
-                <div class="col-sm-4">
-                  <label>Upper Body 1</label>
-                  <select name="upper-1-day-2" required id="upper-1-day-2_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  <label>Upper Body 2</label>
-                  <select name="upper-2-day-2" required id="upper-2-day-2_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  <label>Upper Body 3</label>
-                  <select name="upper-3-day-2" required id="upper-3-day-2_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row mb-3">
-                <div class="col-sm-4">
-                  <label>Lower Body 1</label>
-                  <select name="lower-1-day-2" required id="lower-1-day-2_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  <label>Lower Body 2</label>
-                  <select name="lower-2-day-2" required id="lower-2-day-2_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  <label>Lower Body 3</label>
-                  <select name="lower-3-day-2" required id="lower-3-day-2_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row mb-3">
-                <div class="col-sm-4">
-                  <label>Abdominals</label>
-                  <select name="abdominal-day-2" required id="abdominal-day-2_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-              </div>
-              <h5>Day 3</h5>
-              <div class="form-row mb-3">
-                <div class="col-sm-4">
-                  <label>Upper Body 1</label>
-                  <select name="upper-1-day-3" required id="upper-1-day-3_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  <label>Upper Body 2</label>
-                  <select name="upper-2-day-3" required id="upper-2-day-3_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  <label>Upper Body 3</label>
-                  <select name="upper-3-day-3" required id="upper-3-day-3_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row mb-3">
-                <div class="col-sm-4">
-                  <label>Lower Body 1</label>
-                  <select name="lower-1-day-3" required id="lower-1-day-3_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  <label>Lower Body 2</label>
-                  <select name="lower-2-day-3" required id="lower-2-day-3_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  <label>Lower Body 3</label>
-                  <select name="lower-3-day-3" required id="lower-3-day-3_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row mb-3">
-                <div class="col-sm-4">
-                  <label>Abdominals</label>
-                  <select name="abdominal-day-3" required id="abdominal-day-3_update" class="form-control">
-                    <option value="" disabled selected>Select here</option>
-                    <?php
-                    $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
-                    $res = mysqli_query($conn, $sql);
-                    if ($res) {
-                      while ($row = mysqli_fetch_assoc($res)) {
-                    ?>
-                        <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
-                    <?php
-                      }
-                    }
-                    ?>
-                  </select>
-                </div>
+                  }
+                  ?>
+                </select>
               </div>
             </div>
           </div>
-          <div class="modal-footer" style="height:70px;">
-            <button type="submit" class="btn btn-orange">Submit</button>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-12">
+                <label>Program Description</label>
+                <textarea name="program_description" required style="resize: none" rows="3" cols="0" class="form-control mb-1" id="program_desc_update" placeholder="Enter program desciption here"></textarea>
+              </div>
+            </div>
           </div>
-        </form>
+          <div class="form-group">
+            <h5>Day 1</h5>
+            <div class="form-row mb-3">
+              <div class="col-sm-4">
+                <label>Upper Body 1</label>
+                <select name="upper-1-day-1" required id="upper-1-day-1_update" class="form-control">
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label>Upper Body 2</label>
+                <select name="upper-2-day-1" required id="upper-2-day-1_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label>Upper Body 3</label>
+                <select name="upper-3-day-1" required id="upper-3-day-1_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-row mb-3">
+              <div class="col-sm-4">
+                <label>Lower Body 1</label>
+                <select name="lower-1-day-1" required id="lower-1-day-1_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label>Lower Body 2</label>
+                <select name="lower-2-day-1" required id="lower-2-day-1_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label>Lower Body 3</label>
+                <select name="lower-3-day-1" required id="lower-3-day-1_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-row mb-3">
+              <div class="col-sm-4">
+                <label>Abdominals</label>
+                <select name="abdominal-day-1" required id="abdominal-day-1_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+            </div>
+            <h5>Day 2</h5>
+            <div class="form-row mb-3">
+              <div class="col-sm-4">
+                <label>Upper Body 1</label>
+                <select name="upper-1-day-2" required id="upper-1-day-2_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label>Upper Body 2</label>
+                <select name="upper-2-day-2" required id="upper-2-day-2_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label>Upper Body 3</label>
+                <select name="upper-3-day-2" required id="upper-3-day-2_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-row mb-3">
+              <div class="col-sm-4">
+                <label>Lower Body 1</label>
+                <select name="lower-1-day-2" required id="lower-1-day-2_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label>Lower Body 2</label>
+                <select name="lower-2-day-2" required id="lower-2-day-2_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label>Lower Body 3</label>
+                <select name="lower-3-day-2" required id="lower-3-day-2_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-row mb-3">
+              <div class="col-sm-4">
+                <label>Abdominals</label>
+                <select name="abdominal-day-2" required id="abdominal-day-2_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+            </div>
+            <h5>Day 3</h5>
+            <div class="form-row mb-3">
+              <div class="col-sm-4">
+                <label>Upper Body 1</label>
+                <select name="upper-1-day-3" required id="upper-1-day-3_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label>Upper Body 2</label>
+                <select name="upper-2-day-3" required id="upper-2-day-3_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label>Upper Body 3</label>
+                <select name="upper-3-day-3" required id="upper-3-day-3_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Upper Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-row mb-3">
+              <div class="col-sm-4">
+                <label>Lower Body 1</label>
+                <select name="lower-1-day-3" required id="lower-1-day-3_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label>Lower Body 2</label>
+                <select name="lower-2-day-3" required id="lower-2-day-3_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label>Lower Body 3</label>
+                <select name="lower-3-day-3" required id="lower-3-day-3_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Lower Body'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-row mb-3">
+              <div class="col-sm-4">
+                <label>Abdominals</label>
+                <select name="abdominal-day-3" required id="abdominal-day-3_update" class="form-control">
+                  <option value="" disabled selected>Select here</option>
+                  <?php
+                  $sql = "SELECT * FROM routines WHERE routine_type = 'Abdominal'";
+                  $res = mysqli_query($conn, $sql);
+                  if ($res) {
+                    while ($row = mysqli_fetch_assoc($res)) {
+                  ?>
+                      <option value="<?php echo $row["routine_id"] ?>"><?php echo $row["routine_name"] ?></option>
+                  <?php
+                    }
+                  }
+                  ?>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="height:70px;">
+          <button type="submit" onclick="updateProgram()" class="btn btn-orange">Submit</button>
+        </div>
       </div>
     </div>
   </div>
@@ -3298,6 +3293,86 @@ if (isset($_GET["type"])) {
       });
     }
 
+    function updateProgram () {
+      let program_id = $("#program-id-hidden").val();
+      let program_name = $("#program_name_update").val();
+      let trainer_id = $("#trainer_name_update").val();
+      let program_desc = $("#program_desc_update").val();
+      let u1d1 = $("#upper-1-day-1_update").val();
+      let u2d1 = $("#upper-2-day-1_update").val();
+      let u3d1 = $("#upper-3-day-1_update").val();
+      let u1d2 = $("#upper-1-day-2_update").val();
+      let u2d2 = $("#upper-2-day-2_update").val();
+      let u3d2 = $("#upper-3-day-2_update").val();
+      let u1d3 = $("#upper-1-day-3_update").val();
+      let u2d3 = $("#upper-2-day-3_update").val();
+      let u3d3 = $("#upper-3-day-3_update").val();
+      let l1d1 = $("#lower-1-day-1_update").val();
+      let l2d1 = $("#lower-2-day-1_update").val();
+      let l3d1 = $("#lower-3-day-1_update").val();
+      let l1d2 = $("#lower-1-day-2_update").val();
+      let l2d2 = $("#lower-2-day-2_update").val();
+      let l3d2 = $("#lower-3-day-2_update").val();
+      let l1d3 = $("#lower-1-day-3_update").val();
+      let l2d3 = $("#lower-2-day-3_update").val();
+      let l3d3 = $("#lower-3-day-3_update").val();
+      let ad1 = $("#abdominal-day-1_update").val();
+      let ad2 = $("#abdominal-day-2_update").val();
+      let ad3 = $("#abdominal-day-3_update").val();
+
+      $.dialog({
+        backgroundDismiss: true,
+        closeIcon: false,
+        content: function () {
+          var self = this;
+          return $.post(
+            "./programupdate_process.php",
+            {
+              program_id: program_id,
+              program_name: program_name,
+              program_description: program_desc,
+              trainer_id: trainer_id,
+              u1d1: u1d1,
+              u2d1: u2d1,
+              u3d1: u3d1,
+              u1d2: u1d2,
+              u2d2: u2d2,
+              u3d2: u3d2,
+              u1d3: u1d3,
+              u2d3: u2d3,
+              u3d3: u3d3,
+              l1d1: l1d1,
+              l2d1: l2d1,
+              l3d1: l3d1,
+              l1d2: l1d2,
+              l2d2: l2d2,
+              l3d2: l3d2,
+              l1d3: l1d3,
+              l2d3: l2d3,
+              l3d3: l3d3,
+              ad1: ad1,
+              ad2: ad2,
+              ad3: ad3
+            },
+            function (res) {
+              if(JSON.parse(res) == "success") {
+                self.setTitle("Success");
+                self.setContent("Program successfully updated.");
+                self.setType("green");
+                self.backgroundDismiss = function () {
+                  window.location.reload();
+                }
+              } else {
+                self.setTitle("Error");
+                self.setContent(JSON.parse(res));
+                self.setType("red");
+              }
+            }
+          );
+        }
+      });
+    }
+
     //------------------------------------------------------------------------------ VIEW JS
     // View member Modal
     function displayDetails(el) {
@@ -4166,7 +4241,7 @@ if (isset($_GET["type"])) {
     $("#program-no").click(function() {
       div.css("display", "none");
       select.val("No");
-    })
+    });
 
     // avail program modal
     let availBtn = $("#avail-program-btn");
@@ -4498,6 +4573,51 @@ if (isset($_GET["type"])) {
         }
       );
     });
+
+    // update member ajax
+    function updateRegular () {
+      $.dialog({
+        backgroundDismiss: true,
+        closeIcon: false,
+        content: function () {
+          var self = this;
+          let program_id;
+
+          if($("#has-program").css("display") == "block") {
+            program_id = $("#update_program").val();
+          } else {
+            program_id = null;
+          }
+
+          return $.post(
+            "./regular_update.php",
+            {
+              member_id: $("#update_member_id").val(),
+              email: $("#update_email").val(),
+              phone: $("#update_phone").val(),
+              member_type: $("#update_member_type").val(),
+              address: $("#update_address").val(),
+              program_id: program_id
+            },
+            function (res) {
+              console.log(res);
+              if(JSON.parse(res) == "success") {
+                self.setTitle("Success");
+                self.setContent("Member successfully updated.");
+                self.setType("green");
+                self.backgroundDismiss = function () {
+                  window.location.reload();
+                }
+              } else {
+                self.setTitle("Error");
+                self.setContent(JSON.parse(res));
+                self.setType("red");
+              }
+            }
+          );
+        }
+      });
+    }
   </script>
 
 </body>
