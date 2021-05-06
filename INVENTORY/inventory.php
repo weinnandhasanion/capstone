@@ -168,48 +168,23 @@ $res = mysqli_query($conn, $sql);
             <a data-toggle="modal" data-target="#add"><i style="color:#DF3A01; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Add New Promo" class="fas fa-plus mr-4"></i></a>
             Inventory
           </h4>
-
+          <form action="#">
+            <select name="" id="sort-inventory" class="form-control">
+              <option value="All">All</option>
+              <option value="Cardio">Cardio</option>
+              <option value="Free Weights">Free Weights</option>
+              <option value="Calisthenics">Calisthenics</option>
+              <option value="Strength">Strength</option>
+              <option value="Supplies">Supplies</option>
+            </select>
+          </form>
           <form class="d-flex justify-content-center">
             <input type="text" placeholder="Search equipment name" id="search-item" class="form-control">
           </form>
         </div>
       </div>
       <div class="row" id="inventory-cont">
-        <?php
-        $sql = "SELECT * FROM inventory WHERE inventory_status = 'notdeleted' ORDER BY inventory_id DESC";
-        $res = mysqli_query($conn, $sql);
-        if ($res) {
-          while ($row = mysqli_fetch_assoc($res)) {
-        ?>
-            <div class="col-sm-4">
-              <div class="card inventory-cards mx-3 my-3">
-                <img class="card-img-top" <?php if (!$row["image_pathname"] == null) {
-                                          ?> src="./img/<?= $row["image_pathname"] ?>" <?php
-                                                                                      } else {
-                                                                                        ?> src="./blank.png" <?php
-                                                                                                            } ?> alt="Card image cap">
-                <div class="card-body inventory">
-                  <h3 class="card-title font-weight-bold text-orange"><?php echo $row["inventory_name"] ?></h3>
-                  <h6 class="card-subtitle text-muted font-weight-bold"><?php echo $row["inventory_category"] ?></h6>
-                  <p class="card-text mt-2"><?php echo $row["inventory_description"] ?></p>
-                </div>
-                <div class="card-footer d-flex">
-                  <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View <?= $row["inventory_name"] ?>">
-                    <i style="cursor: pointer; color:white; font-size: 20px;" data-toggle="modal" data-target="#view" class=" fas fa-eye mx-2 get_id" data-id="<?php echo $row["inventory_id"] ?>" onclick="viewDetails(this)"></i>
-                  </div>
-                  <div class="d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update <?= $row["inventory_name"] ?>">
-                    <i style="cursor: pointer; color:white; font-size: 20px;" class="fas fa-pencil-alt mx-2" data-id="<?php echo $row["inventory_id"] ?>" data-toggle="modal" data-target="#regular_update" onclick="viewUpdate(this)"></i>
-                  </div>
-                  <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete <?= $row["inventory_name"] ?>">
-                    <i style="cursor: pointer; color:white; font-size: 20px;" class=" far fa-trash-alt mx-2" data-id="<?php echo $row["inventory_id"] ?>" onclick="deleted(this)"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-        <?php
-          }
-        }
-        ?>
+ 
       </div>
     </div>
   </main>
@@ -584,14 +559,38 @@ $res = mysqli_query($conn, $sql);
       let results;
       $.get("./sort_inventory.php?type=both", function(res) {
         data = JSON.parse(res);
+        let sortVal = $("#sort-inventory").val();
 
-        if (val == "") {
-          renderItems(data);
+        if(sortVal == "All") {
+          if(val == "") {
+            renderItems(items);
+          } else {
+            results = data.filter(row => row.inventory_name.toLowerCase().includes(val.toLowerCase()));
+            renderItems(results);
+          }
         } else {
-          results = data.filter(row => row.inventory_name.toLowerCase().includes(val.toLowerCase()));
+          results = data.filter(row => row.inventory_name.toLowerCase().includes(val.toLowerCase()) && row.inventory_category == sortVal);
           renderItems(results);
         }
       });
+    });
+
+    var items;
+    $.get("./sort_inventory.php?type=both", function (res) {
+      items = JSON.parse(res);
+    }).then(() => {
+      renderItems(items);
+    });
+
+    $("#sort-inventory").change(function () {
+      let val = $(this).val();
+
+      if(val == "All") {
+        renderItems(items);
+      } else {
+        let results = items.filter(row => row.inventory_category == val);
+        renderItems(results);
+      }
     });
 
     function renderItems(data) {
