@@ -47,35 +47,17 @@ $exist1 = "SELECT * FROM program WHERE program_id != '$id' AND program_descripti
 $existProgramDescription = mysqli_query($conn, $exist1);
 
 if (preg_match($NumberRegex, $program_name, $match)) {
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Program name has numbers.. pelase check ur inputs.');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Invalid program name. Please make sure there are no numbers.");
 }else if(preg_match($NumberRegex, $program_description, $match)){
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Program description has numbers.. pelase check ur inputs.');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Invalid program description. Please make sure there are no numbers.");
 }else if(mysqli_num_rows($existProgramName)>0){
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Program name is already taken');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Program name is already taken");
 }else if(mysqli_num_rows($existProgramDescription)>0){
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Program description is already taken');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Program description is already taken");
 }else if(strlen($program_name) > 20){
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid program name. Maximum of 20 letters only');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Invalid program name. Maximum of 20 letters only");
 }else if(strlen($program_description) > 100){
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid program name. Maximum of 100 letters only');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Invalid program discription. Maximum of 100 letters only");
 }else{
     if(preg_match('/^[a-zA-Z]+( [a-zA-Z]+)*$/', $program_name, $match)){
     $sql_update = "UPDATE program 
@@ -137,10 +119,7 @@ if (preg_match($NumberRegex, $program_name, $match)) {
                mysqli_query($conn, $sql1);
 
 }else{
-    echo ("<script LANGUAGE='JavaScript'>
-    window.alert('Invalid program name, make sure no special characters...');
-    window.location.href='./../MEMBERS/members.php';
-    </script>");
+    echo json_encode("Invalid program name, make sure no special characters.");
 }
 }
    

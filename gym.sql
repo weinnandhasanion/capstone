@@ -1,14 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2021 at 04:16 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.13
+-- Generation Time: May 06, 2021 at 07:30 PM
+-- Server version: 10.1.9-MariaDB
+-- PHP Version: 5.6.15
+create database gym;
+use gym;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -99,7 +100,7 @@ CREATE TABLE `logtrail` (
   `admin_id` int(100) DEFAULT NULL,
   `first_name` varchar(100) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
-  `dateandtime_login` datetime DEFAULT current_timestamp(),
+  `dateandtime_login` datetime DEFAULT CURRENT_TIMESTAMP,
   `dateandtime_logout` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -108,39 +109,39 @@ CREATE TABLE `logtrail` (
 --
 
 INSERT INTO `logtrail` (`login_id`, `admin_id`, `first_name`, `last_name`, `dateandtime_login`, `dateandtime_logout`) VALUES
-(1, 87001, 'Weinnand', 'Hasanion', '2021-03-18 00:10:20', NULL),
+(1, 87001, 'Weinnand', 'Hasanion', '2021-03-18 00:10:20', '2021-03-18 01:23:10'),
 (2, 87001, 'Weinnand', 'Hasanion', '2021-03-18 04:30:51', '2021-03-18 04:31:25'),
-(3, 87001, 'Weinnand', 'Hasanion', '2021-03-18 04:31:32', NULL),
+(3, 87001, 'Weinnand', 'Hasanion', '2021-03-18 04:31:32', '2021-03-18 04:50:20'),
 (4, 87001, 'Weinnand', 'Hasanion', '2021-03-18 11:44:15', '2021-03-18 18:28:44'),
 (5, 87002, 'baba', 'yaga', '2021-03-18 18:28:54', '2021-03-18 18:57:09'),
 (6, 87001, 'Weinnand', 'Hasanion', '2021-03-18 18:57:57', '2021-03-18 19:00:04'),
-(7, 87002, 'baba', 'yaga', '2021-03-18 20:57:32', NULL),
-(8, 87002, 'baba', 'yaga', '2021-03-19 02:10:53', NULL),
-(9, 87002, 'baba', 'yaga', '2021-03-19 18:21:50', NULL),
-(10, 87001, 'Weinnand', 'Hasanion', '2021-03-20 11:14:38', NULL),
-(11, 87001, 'Weinnand', 'Hasanion', '2021-03-21 19:21:41', NULL),
-(12, 87001, 'Weinnand', 'Hasanion', '2021-03-22 10:25:08', NULL),
-(13, 87001, 'Weinnand', 'Hasanion', '2021-03-25 12:18:12', NULL),
-(14, 87001, 'Weinnand', 'Hasanion', '2021-03-29 10:20:06', NULL),
-(15, 87001, 'Weinnand', 'Hasanion', '2021-03-29 16:45:18', NULL),
-(16, 87001, 'Weinnand', 'Hasanion', '2021-03-31 13:34:03', NULL),
-(17, 87001, 'Weinnand', 'Hasanion', '2021-04-02 14:21:53', NULL),
-(18, 87001, 'Weinnand', 'Hasanion', '2021-04-09 12:03:37', NULL),
+(7, 87002, 'baba', 'yaga', '2021-03-18 20:57:32', '2021-03-18 21:00:23'),
+(8, 87002, 'baba', 'yaga', '2021-03-19 02:10:53', '2021-03-19 03:23:00'),
+(9, 87002, 'baba', 'yaga', '2021-03-19 18:21:50', '2021-03-19 19:23:52'),
+(10, 87001, 'Weinnand', 'Hasanion', '2021-03-20 11:14:38', '2021-03-20 11:32:02'),
+(11, 87001, 'Weinnand', 'Hasanion', '2021-03-21 19:21:41', '2021-03-21 19:53:00'),
+(12, 87001, 'Weinnand', 'Hasanion', '2021-03-22 10:25:08', '2021-03-22 10:43:32'),
+(13, 87001, 'Weinnand', 'Hasanion', '2021-03-25 12:18:12', '2021-03-25 12:52:00'),
+(14, 87001, 'Weinnand', 'Hasanion', '2021-03-29 10:20:06', '2021-03-29 10:53:05'),
+(15, 87001, 'Weinnand', 'Hasanion', '2021-03-29 16:45:18', '2021-03-29 16:56:24'),
+(16, 87001, 'Weinnand', 'Hasanion', '2021-03-31 13:34:03', '2021-03-31 13:54:02'),
+(17, 87001, 'Weinnand', 'Hasanion', '2021-04-02 14:21:53', '2021-04-02 14:54:02'),
+(18, 87001, 'Weinnand', 'Hasanion', '2021-04-09 12:03:37', '2021-04-09 12:42:04'),
 (19, 87001, 'Weinnand', 'Hasanion', '2021-04-12 11:10:22', '2021-04-12 14:26:38'),
-(20, 87001, 'Weinnand', 'Hasanion', '2021-04-12 17:24:01', NULL),
-(21, 87001, 'Weinnand', 'Hasanion', '2021-04-13 20:44:17', NULL),
-(22, 87001, 'Weinnand', 'Hasanion', '2021-04-15 09:23:32', NULL),
-(23, 87001, 'Weinnand', 'Hasanion', '2021-04-26 14:30:25', NULL),
-(24, 87001, 'Weinnand', 'Hasanion', '2021-04-26 23:30:27', NULL),
-(25, 87001, 'Weinnand', 'Hasanion', '2021-04-27 00:09:56', NULL),
-(26, 87001, 'Weinnand', 'Hasanion', '2021-04-27 19:44:42', NULL),
-(27, 87001, 'Weinnand', 'Hasanion', '2021-04-28 22:07:23', NULL),
+(20, 87001, 'Weinnand', 'Hasanion', '2021-04-12 17:24:01', '2021-04-12 17:56:02'),
+(21, 87001, 'Weinnand', 'Hasanion', '2021-04-13 20:44:17', '2021-04-13 21:56:02'),
+(22, 87001, 'Weinnand', 'Hasanion', '2021-04-15 09:23:32', '2021-04-15 09:54:00'),
+(23, 87001, 'Weinnand', 'Hasanion', '2021-04-26 14:30:25', '2021-04-26 15:32:00'),
+(24, 87001, 'Weinnand', 'Hasanion', '2021-04-26 23:30:27', '2021-04-26 23:00:00'),
+(25, 87001, 'Weinnand', 'Hasanion', '2021-04-27 00:09:56', '2021-04-27 02:42:04'),
+(26, 87001, 'Weinnand', 'Hasanion', '2021-04-27 19:44:42', '2021-04-28 20:54:02'),
+(27, 87001, 'Weinnand', 'Hasanion', '2021-04-28 22:07:23', '2021-04-28 22:45:52'),
 (28, 87001, 'Weinnand', 'Hasanion', '2021-04-30 20:41:03', '2021-04-30 21:45:06'),
 (29, 87001, 'Weinnand', 'Hasanion', '2021-04-30 21:45:09', '2021-04-30 21:47:39'),
 (30, 87001, 'Weinnand', 'Hasanion', '2021-04-30 22:36:45', '2021-04-30 23:20:28'),
 (31, 87001, 'Weinnand', 'Hasanion', '2021-04-30 23:24:18', '2021-05-01 01:01:43'),
 (32, 87001, 'Weinnand', 'Hasanion', '2021-05-01 01:06:23', '2021-05-02 01:30:09'),
-(33, 87001, 'Weinnand', 'Hasanion', '2021-05-02 01:30:15', NULL),
+(33, 87001, 'Weinnand', 'Hasanion', '2021-05-02 01:30:15', '2021-05-02 02:45:23'),
 (34, 87001, 'Weinnand', 'Hasanion', '2021-05-02 15:14:07', '2021-05-02 18:13:01'),
 (35, 87001, 'Weinnand', 'Hasanion', '2021-05-02 18:13:39', '2021-05-02 18:15:00'),
 (36, 87001, 'Weinnand', 'Hasanion', '2021-05-02 20:41:55', '2021-05-02 20:42:02'),
@@ -148,10 +149,10 @@ INSERT INTO `logtrail` (`login_id`, `admin_id`, `first_name`, `last_name`, `date
 (38, 87001, 'Weinnand', 'Hasanion', '2021-05-02 22:19:49', '2021-05-02 23:01:56'),
 (39, 87001, 'Weinnand', 'Hasanion', '2021-05-02 23:22:57', '2021-05-02 23:23:07'),
 (40, 87008, 'Miz', 'Stereo', '2021-05-03 01:02:31', '2021-05-03 01:02:40'),
-(41, 87001, 'Weinnand', 'Hasanion', '2021-05-03 01:21:56', NULL),
+(41, 87001, 'Weinnand', 'Hasanion', '2021-05-03 01:21:56', '2021-05-03 05:25:03'),
 (42, 87008, 'Miz', 'Stereo', '2021-05-03 16:15:51', '2021-05-03 16:15:52'),
 (43, 87008, 'Miz', 'Stereo', '2021-05-03 16:18:17', '2021-05-03 16:19:00'),
-(44, 87001, 'Weinnand', 'Hasanion', '2021-05-03 16:48:38', NULL),
+(44, 87001, 'Weinnand', 'Hasanion', '2021-05-03 16:48:38', '2021-05-03 17:23:42'),
 (45, 87001, 'Weinnand', 'Hasanion', '2021-05-03 16:48:38', '2021-05-03 16:48:43'),
 (46, 87001, 'Weinnand', 'Hasanion', '2021-05-03 16:49:04', '2021-05-03 16:49:19'),
 (47, 87001, 'Weinnand', 'Hasanion', '2021-05-03 16:49:38', '2021-05-03 16:49:40'),
@@ -161,10 +162,11 @@ INSERT INTO `logtrail` (`login_id`, `admin_id`, `first_name`, `last_name`, `date
 (51, 87001, 'Weinnand', 'Hasanion', '2021-05-03 16:52:28', '2021-05-03 16:52:31'),
 (52, 87001, 'Weinnand', 'Hasanion', '2021-05-03 16:52:42', '2021-05-03 16:52:52'),
 (53, 87001, 'Weinnand', 'Hasanion', '2021-05-03 16:53:52', '2021-05-03 16:54:39'),
-(54, 87001, 'Weinnand', 'Hasanion', '2021-05-03 19:38:38', NULL),
-(55, 87001, 'Weinnand', 'Hasanion', '2021-05-04 11:21:45', NULL),
-(56, 87001, 'Weinnand', 'Hasanion', '2021-05-05 14:04:54', NULL),
-(57, 87012, 'Alvin', 'Arnibal', '2021-05-06 11:04:20', NULL);
+(54, 87001, 'Weinnand', 'Hasanion', '2021-05-03 19:38:38', '2021-05-03 19:56:00'),
+(55, 87001, 'Weinnand', 'Hasanion', '2021-05-04 11:21:45', '2021-05-04 12:52:02'),
+(56, 87001, 'Weinnand', 'Hasanion', '2021-05-05 14:04:54', '2021-05-05 15:24:00'),
+(57, 87012, 'Alvin', 'Arnibal', '2021-05-06 11:04:20', '2021-05-07 00:11:59'),
+(58, 87000, 'klintjohn', 'cagot', '2021-05-07 00:12:10', '2021-05-07 01:29:39');
 
 -- --------------------------------------------------------
 
@@ -586,7 +588,8 @@ INSERT INTO `logtrail_doing` (`logtrail_doing_id`, `login_id`, `admin_id`, `memb
 (402, 57, 87012, NULL, NULL, NULL, NULL, 202115, 'May Promo', NULL, 'Deleted a promo', 'Promos', '07:31 PM', NULL, NULL, NULL, NULL),
 (405, 57, 87012, 1921681011, NULL, NULL, NULL, NULL, '', '', 'Declined promo request', 'Promos', '07:50 PM', NULL, NULL, NULL, NULL),
 (406, 57, 87012, 1921681011, NULL, NULL, NULL, NULL, 'John', 'Doe', 'Declined promo request', 'Promos', '07:51 PM', NULL, NULL, NULL, NULL),
-(407, 57, 87012, 1921681011, NULL, NULL, NULL, NULL, 'John Doe', NULL, 'Declined promo request', 'Promos', '07:54 PM', NULL, NULL, NULL, NULL);
+(407, 57, 87012, 1921681011, NULL, NULL, NULL, NULL, 'John Doe', NULL, 'Declined promo request', 'Promos', '07:54 PM', NULL, NULL, NULL, NULL),
+(408, 58, 87000, NULL, NULL, 1517, NULL, NULL, 'Dexter', 'Inso', 'Updated a Trainer ', 'Trainers', '12:22 AM', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -991,7 +994,7 @@ CREATE TABLE `program` (
   `date_deleted` date DEFAULT NULL,
   `time_deleted` time NOT NULL,
   `admin_delete` varchar(50) DEFAULT NULL,
-  `amount` int(11) DEFAULT 30,
+  `amount` int(11) DEFAULT '30',
   `upper_1_day_1` int(11) DEFAULT NULL,
   `upper_2_day_1` int(11) DEFAULT NULL,
   `upper_3_day_1` int(11) DEFAULT NULL,
@@ -1120,7 +1123,7 @@ CREATE TABLE `trainer` (
   `gender` enum('M','F') DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `file` blob DEFAULT NULL,
+  `file` blob,
   `birthdate` date DEFAULT NULL,
   `date_hired` date DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
@@ -1138,7 +1141,7 @@ INSERT INTO `trainer` (`trainer_id`, `trainer_status`, `trainer_position`, `firs
 (1514, 'deleted', 'junior', 'Reyland', 'Nazareth', 'Lapulapu City', 'M', '09164543211', 'reylandbogo@gmail.com', NULL, '1977-09-23', '2021-02-23', '2021-05-06', '14:48:22', 'Alvin Arnibal'),
 (1515, 'active', 'junior', 'Raian', 'Miro', 'Banilad, Cebu', 'M', '09453215422', 'raianmiro@gmail.com', NULL, '1998-01-01', '2021-05-06', NULL, NULL, NULL),
 (1516, 'deleted', 'junior', 'asdfsaaaaaaaaaaaaaa', 'wtf', 'Cebu City', 'M', '09455611241', 'tarongni@gmail.com', NULL, '1921-05-04', '2021-05-06', '2021-05-06', '14:30:55', 'Alvin Arnibal'),
-(1517, 'active', 'junior', 'Dexter', 'Inso', 'Tabok, Mandaue City', 'M', '09451214451', 'dexterinso@gmail.com', NULL, '1987-01-01', '2021-05-06', NULL, NULL, NULL);
+(1517, 'active', 'junior', 'Dexter', 'Inso', 'Tabok, Mandaue City', 'M', '09451214450', 'dexterinso@gmail.com', NULL, '1987-01-01', '2021-05-06', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1257,146 +1260,71 @@ ALTER TABLE `trainer`
 --
 ALTER TABLE `admin`
   MODIFY `admin_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87013;
-
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
   MODIFY `inventory_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2025;
-
 --
 -- AUTO_INCREMENT for table `logtrail`
 --
 ALTER TABLE `logtrail`
-  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
-
+  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 --
 -- AUTO_INCREMENT for table `logtrail_doing`
 --
 ALTER TABLE `logtrail_doing`
-  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=408;
-
+  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=409;
 --
 -- AUTO_INCREMENT for table `member`
 --
 ALTER TABLE `member`
   MODIFY `member_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1921681106;
-
 --
 -- AUTO_INCREMENT for table `memberpromos`
 --
 ALTER TABLE `memberpromos`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
-
 --
 -- AUTO_INCREMENT for table `member_logtrail`
 --
 ALTER TABLE `member_logtrail`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
 --
 -- AUTO_INCREMENT for table `member_notifs`
 --
 ALTER TABLE `member_notifs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
-
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
   MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
 -- AUTO_INCREMENT for table `paymentlog`
 --
 ALTER TABLE `paymentlog`
   MODIFY `payment_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
-
 --
 -- AUTO_INCREMENT for table `program`
 --
 ALTER TABLE `program`
   MODIFY `program_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
 --
 -- AUTO_INCREMENT for table `promo`
 --
 ALTER TABLE `promo`
   MODIFY `promo_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202120;
-
 --
 -- AUTO_INCREMENT for table `routines`
 --
 ALTER TABLE `routines`
   MODIFY `routine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
 --
 -- AUTO_INCREMENT for table `trainer`
 --
 ALTER TABLE `trainer`
   MODIFY `trainer_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1518;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `logtrail`
---
-ALTER TABLE `logtrail`
-  ADD CONSTRAINT `logtrail_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`);
-
---
--- Constraints for table `logtrail_doing`
---
-ALTER TABLE `logtrail_doing`
-  ADD CONSTRAINT `logtrail_doing_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`),
-  ADD CONSTRAINT `logtrail_doing_ibfk_2` FOREIGN KEY (`login_id`) REFERENCES `logtrail` (`login_id`),
-  ADD CONSTRAINT `logtrail_doing_ibfk_3` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
-  ADD CONSTRAINT `logtrail_doing_ibfk_4` FOREIGN KEY (`trainer_id`) REFERENCES `trainer` (`trainer_id`),
-  ADD CONSTRAINT `logtrail_doing_ibfk_5` FOREIGN KEY (`inventory_id`) REFERENCES `inventory` (`inventory_id`),
-  ADD CONSTRAINT `logtrail_doing_ibfk_6` FOREIGN KEY (`promo_id`) REFERENCES `promo` (`promo_id`),
-  ADD CONSTRAINT `logtrail_doing_ibfk_7` FOREIGN KEY (`program_id`) REFERENCES `program` (`program_id`);
-
---
--- Constraints for table `member`
---
-ALTER TABLE `member`
-  ADD CONSTRAINT `member_ibfk_1` FOREIGN KEY (`program_id`) REFERENCES `program` (`program_id`);
-
---
--- Constraints for table `memberpromos`
---
-ALTER TABLE `memberpromos`
-  ADD CONSTRAINT `memberpromos_ibfk_1` FOREIGN KEY (`promo_id`) REFERENCES `promo` (`promo_id`),
-  ADD CONSTRAINT `memberpromos_ibfk_2` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`);
-
---
--- Constraints for table `member_logtrail`
---
-ALTER TABLE `member_logtrail`
-  ADD CONSTRAINT `member_id_fk` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`);
-
---
--- Constraints for table `member_notifs`
---
-ALTER TABLE `member_notifs`
-  ADD CONSTRAINT `fk_member_id` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`),
-  ADD CONSTRAINT `fk_notif_id` FOREIGN KEY (`notif_id`) REFERENCES `notifications` (`notif_id`);
-
---
--- Constraints for table `paymentlog`
---
-ALTER TABLE `paymentlog`
-  ADD CONSTRAINT `paymentlog_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`);
-
---
--- Constraints for table `program`
---
-ALTER TABLE `program`
-  ADD CONSTRAINT `program_admin_fk` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`);
-COMMIT;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

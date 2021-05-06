@@ -631,6 +631,10 @@ $res = mysqli_query($conn, $sql);
       } else {
         $("#inventory-cont").empty();
       }
+
+      $(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
     }
 
     function deleted(el) {

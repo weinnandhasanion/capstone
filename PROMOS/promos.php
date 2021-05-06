@@ -745,6 +745,10 @@
       });
     }
 
+    $(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+
     // Sorting
     let perm = $("#sort-permanent");
     let seas = $("#sort-seasonal");

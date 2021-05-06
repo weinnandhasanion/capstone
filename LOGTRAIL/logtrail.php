@@ -401,6 +401,10 @@ function paginateLogtrail(data) {
       }
     }
   });
+  
+  $(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
 }
 
   function paginateDoings(data) {
@@ -466,6 +470,7 @@ function paginateLogtrail(data) {
         }
       }
     });
+    
   }
 
   // logtrail pagination after type sa search bar

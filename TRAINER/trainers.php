@@ -563,6 +563,7 @@ $res = mysqli_query($conn, $sql);
   <script src="./../js/pagination.js"></script>
 
   <script>
+  
     var trainers, deleted;
     $.get("./gettrainers.php", function(res) {
       trainers = JSON.parse(res);
@@ -623,6 +624,11 @@ $res = mysqli_query($conn, $sql);
           }
         }
       });
+
+
+      $(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
     }
 
     // Sorting

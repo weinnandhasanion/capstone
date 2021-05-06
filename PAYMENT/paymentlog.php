@@ -481,6 +481,10 @@
       }
     }
   });  
+
+  $(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
   } 
 
   $("#search-paymentlog").keyup(function() {
