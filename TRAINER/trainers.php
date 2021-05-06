@@ -277,7 +277,7 @@ $res = mysqli_query($conn, $sql);
   <div class="modal fade" id="add">
     <div class="modal-dialog">
       <div class="modal-content" style="width:600px;">
-        <form action="./traineradd_process.php" method="post">
+        <form action="./traineradd_process.php" method="post" id="add-trainer-form">
           <div class="modal-header" style="background-color:#EB460D;color:white;">
             <h4 class="modal-title">ADD NEW TRAINER</h4>
           </div>
@@ -477,7 +477,7 @@ $res = mysqli_query($conn, $sql);
   <div class="modal fade" id="updateModal">
     <div class="modal-dialog">
       <div class="modal-content" style="width:450px; top: 50px;">
-        <form action="trainerupdate_process.php" method="post">
+        <form action="trainerupdate_process.php" method="post" id="update-trainer-form">
           <div class="modal-header" style="background-color: #DF3A01; color: white;">
             <h4 class="modal-title">Update trainer</h4>
           </div>
@@ -553,10 +553,6 @@ $res = mysqli_query($conn, $sql);
     </div>
   </div>
   </div>
-  <!----------------------------------------------------------------------------------------------------------->
-  <!----------------------------------------------------------------------------------------------------------->
-  <!----------------------------------------------------------------------------------------------------------->
-
 
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
@@ -684,7 +680,7 @@ $res = mysqli_query($conn, $sql);
         data = trainers.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
         paginateTrainers(data);
       } else {
-        both.click();
+        paginateTrainers(trainers);
       }
     });
 
@@ -747,7 +743,6 @@ $res = mysqli_query($conn, $sql);
       $('[data-toggle="tooltip"]').tooltip();
     });
 
-    //------------------------------------------------------------------------------ VIEW JS 
     // View Trainer Modal
     function displayDetails(el) {
       let id = el.getAttribute('data-id');
@@ -811,10 +806,71 @@ $res = mysqli_query($conn, $sql);
       }
     }
 
+    // adding trainer ajax
+    $("#add-trainer-form").submit(function (e) {
+      e.preventDefault();
+
+      let data = $(this).serialize();
+      let url = $(this).attr("action");
+
+      $.dialog({
+        backgroundDismiss: true,
+        closeIcon: false,
+        content: function () {
+          var self = this;
+          return $.post(url, data, function (res) {
+            if(JSON.parse(res) == "success") {
+              self.setTitle("Success");
+              self.setContent("Trainer successfully added.");
+              self.setType("green");
+              self.backgroundDismiss = function () {
+                window.location.reload();
+              }
+            } else {
+              self.setTitle("Error");
+              self.setContent(JSON.parse(res));
+              self.setType("red");
+            }
+            }
+          );
+        }
+      });
+    });
+
+    // updating trainer ajax
+    $("#update-trainer-form").submit(function (e) {
+      e.preventDefault();
+
+      let data = $(this).serialize();
+      let url = $(this).attr("action");
+
+      $.dialog({
+        backgroundDismiss: true,
+        closeIcon: false,
+        content: function () {
+          var self = this;
+          return $.post(url, data, function (res) {
+            if(JSON.parse(res) == "success") {
+              self.setTitle("Success");
+              self.setContent("Trainer successfully updated.");
+              self.setType("green");
+              self.backgroundDismiss = function () {
+                window.location.reload();
+              }
+            } else {
+              self.setTitle("Error");
+              self.setContent(JSON.parse(res));
+              self.setType("red");
+            }
+            }
+          );
+        }
+      });
+    });
+
     //------------------------------------------------------------------------------ DELETE JS 
     function deleteTrainer(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       $.confirm({
@@ -828,13 +884,13 @@ $res = mysqli_query($conn, $sql);
               let req = new XMLHttpRequest();
               req.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  console.log((this.responseText));
                   $.alert({
                     title: 'Success',
                     content: 'Trainer successfully deleted.',
                     buttons: {
                       ok: {
                         text: 'OK',
+                        btnClass: 'btn-orange',
                         action: function() {
                           window.location.reload();
                         }
@@ -876,6 +932,7 @@ $res = mysqli_query($conn, $sql);
                     buttons: {
                       ok: {
                         text: 'OK',
+                        btnClass: 'btn-orange',
                         action: function() {
                           window.location.reload();
                         }
