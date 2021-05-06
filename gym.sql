@@ -3,12 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2021 at 04:57 PM
+-- Generation Time: May 06, 2021 at 01:34 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.13
-CREATE DATABASE gym;
-USE gym;
-
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -23,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `gym`
 --
-CREATE DATABASE IF NOT EXISTS `gym` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `gym`;
 
 -- --------------------------------------------------------
 
@@ -48,7 +43,8 @@ CREATE TABLE `admin` (
 INSERT INTO `admin` (`admin_id`, `username`, `password`, `first_name`, `last_name`, `code`) VALUES
 (87000, 'klintjohn60@gmail.com', '$2y$10$I5JX347ujLO4i566c8qFeOIyTRy0eSdmkY.rs8Jz40.TH/.7xYeEG', 'klintjohn', 'cagot', 84522),
 (87001, 'weinnandhasanion@gmail.com', '$2y$10$sy5uIhi2sPX730cGyS4R4.6NaTuI4OQgzHyeoVtSqLzudczCtDWR2', 'Weinnand', 'Hasanion', 21755),
-(87008, 'mizstereo@gmail.com', '$2y$10$6u3ql0yj5PuffYN9WffvSuQ3.CihCzWFEuZP0iH3ShIAbEf9Y8OW.', 'Miz', 'Stereo', 20289);
+(87008, 'mizstereo@gmail.com', '$2y$10$6u3ql0yj5PuffYN9WffvSuQ3.CihCzWFEuZP0iH3ShIAbEf9Y8OW.', 'Miz', 'Stereo', 20289),
+(87012, 'alvinarnibal@gmail.com', '$2y$10$EU5XXNZIhbU87joNEKgAYeVNYGlrkcUdr.HBW7lAZ86XdQ8dLcoXC', 'Alvin', 'Arnibal', 82424);
 
 -- --------------------------------------------------------
 
@@ -59,7 +55,7 @@ INSERT INTO `admin` (`admin_id`, `username`, `password`, `first_name`, `last_nam
 CREATE TABLE `inventory` (
   `inventory_id` int(100) NOT NULL,
   `inventory_name` varchar(100) DEFAULT NULL,
-  `inventory_category` enum('Cardio Equipment','Weight Equipment') DEFAULT NULL,
+  `inventory_category` enum('Cardio','Free Weights','Calisthenics','Strength','Supplies') DEFAULT NULL,
   `inventory_qty` int(255) DEFAULT NULL,
   `inventory_damage` int(255) DEFAULT NULL,
   `inventory_working` int(255) DEFAULT NULL,
@@ -67,6 +63,7 @@ CREATE TABLE `inventory` (
   `inventory_status` enum('notdeleted','deleted') NOT NULL,
   `date_deleted` date DEFAULT NULL,
   `time_deleted` time DEFAULT NULL,
+  `admin_delete` varchar(50) DEFAULT NULL,
   `date_added` date DEFAULT NULL,
   `image_pathname` varchar(9999) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -75,20 +72,21 @@ CREATE TABLE `inventory` (
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`inventory_id`, `inventory_name`, `inventory_category`, `inventory_qty`, `inventory_damage`, `inventory_working`, `inventory_description`, `inventory_status`, `date_deleted`, `time_deleted`, `date_added`, `image_pathname`) VALUES
-(2010, '5 lbs dumbbell', 'Weight Equipment', 10, 2, NULL, '5 pound dumbbells.', 'notdeleted', NULL, NULL, '2021-03-20', '5lbdumbell.jpg'),
-(2012, 'Treadmill', 'Cardio Equipment', 3, 1, NULL, 'Nordic TrackSeries T', 'notdeleted', NULL, NULL, '2021-03-06', '710XQC8XqpL._AC_SL1500_.jpg'),
-(2013, 'charot', 'Cardio Equipment', 5, 1, NULL, 'hi cagot', 'deleted', '2021-03-18', '01:03:46', '2021-03-06', 'localhost_capstoneMobile_pages_pay.php(iPhone X).png'),
-(2014, 'Rowing machine', 'Cardio Equipment', 3, 0, NULL, 'Concept2 Model D Indoor Rowing Machine with PM5', 'notdeleted', NULL, NULL, '2021-03-20', 'rowing machine.jpg'),
-(2015, 'Exercise stationary bike', 'Cardio Equipment', 4, 0, NULL, 'Exercise stationary bikes good for cardio exercise.', 'notdeleted', NULL, NULL, '2021-03-20', 'exercise bike.png'),
-(2016, '10 lbs dumbbell', 'Weight Equipment', 10, 0, NULL, '10 pound dumbbells.', 'notdeleted', NULL, NULL, '2021-03-20', '10dumbbell.png'),
-(2017, '15 lbs weight disc', 'Weight Equipment', 8, NULL, NULL, '15 pound weight discs for adjustable barbells.', 'notdeleted', NULL, NULL, '2021-03-20', '15 plate.jpg'),
-(2018, '15 lbs dumbbell', 'Weight Equipment', 12, NULL, NULL, '15 pound dumbbells.', 'notdeleted', NULL, NULL, '2021-03-20', '15dumbbell.jpg'),
-(2019, '20 lbs dumbbell', 'Weight Equipment', 8, NULL, NULL, '20 pound dumbbells.', 'notdeleted', NULL, NULL, '2021-03-20', '20dumbbell.jpg'),
-(2020, '25 lbs dumbbell', 'Weight Equipment', 12, NULL, NULL, '25 pound dumbbells.', 'notdeleted', NULL, NULL, '2021-03-20', '25dumbbell.jpg'),
-(2021, 'Barbell bar', 'Weight Equipment', 6, NULL, NULL, 'Adjustable barbell bars.', 'notdeleted', NULL, NULL, '2021-03-20', 'barbell bar.jpg'),
-(2022, '5 lbs weight disc', 'Weight Equipment', 6, NULL, NULL, '5 pound weight discs for adjustable barbells.', 'notdeleted', NULL, NULL, '2021-03-20', '5 plate.jpg'),
-(2023, '10 lbs weight disc', 'Weight Equipment', 10, NULL, NULL, '10 pound weight discs for adjustable barbells.', 'notdeleted', NULL, NULL, '2021-03-20', '10plate.jpg');
+INSERT INTO `inventory` (`inventory_id`, `inventory_name`, `inventory_category`, `inventory_qty`, `inventory_damage`, `inventory_working`, `inventory_description`, `inventory_status`, `date_deleted`, `time_deleted`, `admin_delete`, `date_added`, `image_pathname`) VALUES
+(2010, '5 lbs dumbbell', 'Free Weights', 10, 2, NULL, '5 pound dumbbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '5lbdumbell.jpg'),
+(2012, 'Treadmill', 'Cardio', 3, 1, NULL, 'Nordic TrackSeries T', 'notdeleted', NULL, NULL, NULL, '2021-03-06', '710XQC8XqpL._AC_SL1500_.jpg'),
+(2013, 'charot', '', 5, 1, NULL, 'hi cagot', 'deleted', '2021-05-06', '05:20:47', 'Alvin Arnibal', '2021-03-06', 'localhost_capstoneMobile_pages_pay.php(iPhone X).png'),
+(2014, 'Rowing machine', 'Calisthenics', 3, 0, NULL, 'Concept2 Model D Indoor Rowing Machine with PM5', 'notdeleted', NULL, NULL, NULL, '2021-03-20', 'rowing machine.jpg'),
+(2015, 'Exercise stationary bike', 'Cardio', 4, 0, NULL, 'Exercise stationary bikes good for cardio exercise.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', 'exercise bike.png'),
+(2016, '10 lbs dumbbell', 'Free Weights', 10, 0, NULL, '10 pound dumbbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '10dumbbell.png'),
+(2017, '15 lbs weight disc', 'Free Weights', 8, NULL, NULL, '15 pound weight discs for adjustable barbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '15 plate.jpg'),
+(2018, '15 lbs dumbbell', 'Free Weights', 12, NULL, NULL, '15 pound dumbbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '15dumbbell.jpg'),
+(2019, '20 lbs dumbbell', 'Free Weights', 8, NULL, NULL, '20 pound dumbbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '20dumbbell.jpg'),
+(2020, '25 lbs dumbbell', 'Free Weights', 12, NULL, NULL, '25 pound dumbbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '25dumbbell.jpg'),
+(2021, 'Barbell bar', 'Strength', 6, NULL, NULL, 'Adjustable barbell bars.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', 'barbell bar.jpg'),
+(2022, '5 lbs weight disc', 'Free Weights', 6, NULL, NULL, '5 pound weight discs for adjustable barbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '5 plate.jpg'),
+(2023, '10 lbs weight disc', 'Free Weights', 10, NULL, NULL, '10 pound weight discs for adjustable barbells.', 'notdeleted', NULL, NULL, NULL, '2021-03-20', '10plate.jpg'),
+(2024, 'Pull up Machine', 'Calisthenics', 1, 0, NULL, 'Pull-up machine for calisthenics.', 'notdeleted', NULL, NULL, NULL, '2021-05-06', 'pull up.jpg');
 
 -- --------------------------------------------------------
 
@@ -164,7 +162,9 @@ INSERT INTO `logtrail` (`login_id`, `admin_id`, `first_name`, `last_name`, `date
 (52, 87001, 'Weinnand', 'Hasanion', '2021-05-03 16:52:42', '2021-05-03 16:52:52'),
 (53, 87001, 'Weinnand', 'Hasanion', '2021-05-03 16:53:52', '2021-05-03 16:54:39'),
 (54, 87001, 'Weinnand', 'Hasanion', '2021-05-03 19:38:38', NULL),
-(55, 87001, 'Weinnand', 'Hasanion', '2021-05-04 11:21:45', NULL);
+(55, 87001, 'Weinnand', 'Hasanion', '2021-05-04 11:21:45', NULL),
+(56, 87001, 'Weinnand', 'Hasanion', '2021-05-05 14:04:54', NULL),
+(57, 87012, 'Alvin', 'Arnibal', '2021-05-06 11:04:20', NULL);
 
 -- --------------------------------------------------------
 
@@ -217,7 +217,6 @@ INSERT INTO `logtrail_doing` (`logtrail_doing_id`, `login_id`, `admin_id`, `memb
 (18, 1, 87001, 1921681015, NULL, NULL, NULL, NULL, 'Kim', 'Jorolan', 'Updated a member', 'Members', '12:58 AM', NULL, NULL, NULL, NULL),
 (19, 1, 87001, 1921681016, NULL, NULL, NULL, NULL, 'Michael', 'Antiporta', 'Updated a member', 'Members', '12:59 AM', NULL, NULL, NULL, NULL),
 (20, 1, 87001, NULL, 1, NULL, NULL, NULL, 'Gaining', NULL, 'Recover the program', 'Programs', '01:00 AM', NULL, NULL, NULL, NULL),
-(21, 1, 87001, NULL, 3, NULL, NULL, NULL, 'asfsafsaf', NULL, 'Added a new program', 'Programs', '01:00 AM', NULL, NULL, NULL, NULL),
 (22, 1, 87001, NULL, NULL, NULL, 2013, NULL, 'charot', NULL, 'Deleted an inventory', 'Inventory', '01:03 AM', NULL, NULL, NULL, NULL),
 (23, 1, 87001, NULL, NULL, NULL, 2013, NULL, 'charot', NULL, 'Recover an inventory', 'Inventory', '01:03 AM', NULL, NULL, NULL, NULL),
 (24, 1, 87001, NULL, NULL, NULL, 2013, NULL, 'charot', NULL, 'Deleted an inventory', 'Inventory', '01:03 AM', NULL, NULL, NULL, NULL),
@@ -322,8 +321,6 @@ INSERT INTO `logtrail_doing` (`logtrail_doing_id`, `login_id`, `admin_id`, `memb
 (124, 16, 87001, NULL, NULL, NULL, NULL, 202114, 'May Promo', NULL, 'Restore a promo', 'Promos', '01:56 PM', NULL, NULL, NULL, NULL),
 (125, 17, 87001, NULL, NULL, NULL, NULL, 202113, 'John Doe', NULL, 'Remove a member from Back-to-school Promo promo', 'Promos', '02:22 PM', NULL, NULL, NULL, NULL),
 (126, 17, 87001, NULL, NULL, NULL, NULL, 202114, 'April Promo', NULL, 'Update a promo', 'Promos', '02:25 PM', NULL, NULL, NULL, NULL),
-(127, 18, 87001, NULL, 3, NULL, NULL, NULL, 'asfsafsaf', NULL, 'Recover the program', 'Programs', '01:02 PM', NULL, NULL, NULL, NULL),
-(128, 18, 87001, NULL, 3, NULL, NULL, NULL, 'asfsafsaf', NULL, 'Deleted the program', 'Programs', '01:02 PM', NULL, NULL, NULL, NULL),
 (129, 19, 87001, NULL, 2, NULL, NULL, NULL, 'Reducing', NULL, 'Updated the program', 'Programs', '11:10 AM', NULL, NULL, NULL, NULL),
 (130, 21, 87001, NULL, NULL, NULL, NULL, 202115, 'May Promo', NULL, 'Added new promo', 'Promos', '08:51 PM', NULL, NULL, NULL, NULL),
 (131, 21, 87001, NULL, NULL, NULL, NULL, 202115, 'May Promo', NULL, 'Update a promo', 'Promos', '08:52 PM', NULL, NULL, NULL, NULL),
@@ -513,15 +510,80 @@ INSERT INTO `logtrail_doing` (`logtrail_doing_id`, `login_id`, `admin_id`, `memb
 (323, 55, 87001, 1921681025, NULL, NULL, NULL, NULL, 'Dante', 'Phillips', 'Recover an account to Walk-in table', 'Members', '11:27 AM', NULL, NULL, NULL, NULL),
 (324, 55, 87001, 1921681043, NULL, NULL, NULL, NULL, 'Clarke', 'Jacobson', 'Recover an account to Regular table', 'Members', '11:27 AM', NULL, NULL, NULL, NULL),
 (325, 55, 87001, 1921681032, NULL, NULL, NULL, NULL, 'Rigel', 'Wilson', 'Recover an account to Walk-in table', 'Members', '11:27 AM', NULL, NULL, NULL, NULL),
-(326, 55, 87001, 1921681093, NULL, NULL, NULL, NULL, 'John', 'Lennon', 'Deleted an account from regular table', 'Members', '11:27 AM', NULL, NULL, NULL, NULL);
-INSERT INTO `logtrail_doing` (`logtrail_doing_id`, `login_id`, `admin_id`, `member_id`, `program_id`, `trainer_id`, `inventory_id`, `promo_id`, `user_fname`, `user_lname`, `description`, `identity`, `time`, `trainer_status`, `trainer_phone`, `trainer_position`, `trainer_address`) VALUES
+(326, 55, 87001, 1921681093, NULL, NULL, NULL, NULL, 'John', 'Lennon', 'Deleted an account from regular table', 'Members', '11:27 AM', NULL, NULL, NULL, NULL),
 (327, 55, 87001, 1921681090, NULL, NULL, NULL, NULL, 'Honorato', 'Barr', 'Deleted an account from walk-in table', 'Members', '11:28 AM', NULL, NULL, NULL, NULL),
-(328, 55, 87001, NULL, NULL, NULL, NULL, 202117, 'Paul McCartney', NULL, 'Remove a member from Front-liner Discount promo', 'Promos', '11:29 AM', NULL, NULL, NULL, NULL),
+(328, 55, 87001, NULL, NULL, NULL, NULL, 202117, 'Paul McCartney', NULL, 'Remove a member from Front-liner Discount promo', 'Promos', '11:29 AM', NULL, NULL, NULL, NULL);
+INSERT INTO `logtrail_doing` (`logtrail_doing_id`, `login_id`, `admin_id`, `member_id`, `program_id`, `trainer_id`, `inventory_id`, `promo_id`, `user_fname`, `user_lname`, `description`, `identity`, `time`, `trainer_status`, `trainer_phone`, `trainer_position`, `trainer_address`) VALUES
 (329, 55, 87001, NULL, NULL, NULL, NULL, 202100, 'March-May Promo', NULL, 'Update a promo', 'Promos', '11:30 AM', NULL, NULL, NULL, NULL),
 (330, 55, 87001, NULL, NULL, NULL, NULL, 202117, 'Frontliner Discount', NULL, 'Update a promo', 'Promos', '11:38 AM', NULL, NULL, NULL, NULL),
 (331, 55, 87001, NULL, NULL, NULL, NULL, 202101, 'Weinnand Hasanion', NULL, 'Remove a member from Student Discount promo', 'Promos', '12:37 PM', NULL, NULL, NULL, NULL),
 (332, 55, 87001, NULL, NULL, NULL, NULL, 202101, 'John Doe', NULL, 'Remove a member from Student Discount promo', 'Promos', '12:39 PM', NULL, NULL, NULL, NULL),
-(333, 55, 87001, 1921681016, NULL, NULL, NULL, NULL, 'Michael', 'Antiporta', 'Activated the account', 'Members', '01:31 PM', NULL, NULL, NULL, NULL);
+(333, 55, 87001, 1921681016, NULL, NULL, NULL, NULL, 'Michael', 'Antiporta', 'Activated the account', 'Members', '01:31 PM', NULL, NULL, NULL, NULL),
+(334, 56, 87001, 1921681048, NULL, NULL, NULL, NULL, 'Wang', 'Bradshaw', 'Paid both Annual Membership and Monthly Subscription', 'Members', '02:19 PM', NULL, NULL, NULL, NULL),
+(335, 56, 87001, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Recover the program', 'Programs', '08:10 PM', NULL, NULL, NULL, NULL),
+(336, 56, 87001, 1921681094, NULL, NULL, NULL, NULL, 'Ringo', 'Star', 'Activated the account', 'Members', '08:18 PM', NULL, NULL, NULL, NULL),
+(337, 56, 87001, 1921681091, NULL, NULL, NULL, NULL, 'Josiah', 'Luna', 'Activated the account', 'Members', '08:19 PM', NULL, NULL, NULL, NULL),
+(338, 56, 87001, 1921681082, NULL, NULL, NULL, NULL, 'Jared', 'Mullins', 'Activated the account', 'Members', '08:22 PM', NULL, NULL, NULL, NULL),
+(339, 56, 87001, 1921681105, NULL, NULL, NULL, NULL, 'Chrisly', 'Caliso', 'Added a regular member ', 'Members', '08:48 PM', NULL, NULL, NULL, NULL),
+(340, 56, 87001, 1921681105, NULL, NULL, NULL, NULL, 'Chrisly', 'Caliso', 'Paid Annual Membership', 'Members', '08:48 PM', NULL, NULL, NULL, NULL),
+(341, 56, 87001, 1921681105, NULL, NULL, NULL, NULL, 'Chrisly', 'Caliso', 'Activated the account', 'Members', '08:48 PM', NULL, NULL, NULL, NULL),
+(342, 56, 87001, 1921681103, NULL, NULL, NULL, NULL, 'Paul', 'McCartney', 'Updated a member', 'Members', '09:20 PM', NULL, NULL, NULL, NULL),
+(343, 56, 87001, 1921681103, NULL, NULL, NULL, NULL, 'Paul', 'McCartney', 'Updated a member', 'Members', '09:20 PM', NULL, NULL, NULL, NULL),
+(344, 56, 87001, 1921681047, NULL, NULL, NULL, NULL, 'Graiden', 'Knight', 'Deleted an account from regular table', 'Members', '09:20 PM', NULL, NULL, NULL, NULL),
+(345, 56, 87001, 1921681061, NULL, NULL, NULL, NULL, 'Ulric', 'Rollins', 'Deleted an account from walk-in table', 'Members', '09:20 PM', NULL, NULL, NULL, NULL),
+(346, 56, 87001, NULL, 8, NULL, NULL, NULL, 'Weightlifting', NULL, 'Added a new program', 'Programs', '09:47 PM', NULL, NULL, NULL, NULL),
+(348, 56, 87001, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Recover the program', 'Programs', '09:52 PM', NULL, NULL, NULL, NULL),
+(350, 56, 87001, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Recover the program', 'Programs', '09:56 PM', NULL, NULL, NULL, NULL),
+(351, 56, 87001, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Deleted the program', 'Programs', '09:56 PM', NULL, NULL, NULL, NULL),
+(354, 57, 87012, 1921681105, NULL, NULL, NULL, NULL, 'Chrisly', 'Caliso', 'Updated a member', 'Members', '11:56 AM', NULL, NULL, NULL, NULL),
+(355, 57, 87012, 1921681105, NULL, NULL, NULL, NULL, 'Chrisly', 'Caliso', 'Updated a member', 'Members', '11:57 AM', NULL, NULL, NULL, NULL),
+(356, 57, 87012, 1921681105, NULL, NULL, NULL, NULL, 'Chrisly', 'Caliso', 'Updated a member', 'Members', '11:58 AM', NULL, NULL, NULL, NULL),
+(357, 57, 87012, 1921681105, NULL, NULL, NULL, NULL, 'Chrisly', 'Caliso', 'Updated a member', 'Members', '11:58 AM', NULL, NULL, NULL, NULL),
+(358, 57, 87012, 1921681105, NULL, NULL, NULL, NULL, 'Chrisly', 'Caliso', 'Updated a member', 'Members', '11:58 AM', NULL, NULL, NULL, NULL),
+(359, 57, 87012, 1921681105, NULL, NULL, NULL, NULL, 'Chrisly', 'Caliso', 'Updated a member', 'Members', '12:02 PM', NULL, NULL, NULL, NULL),
+(360, 57, 87012, 1921681104, NULL, NULL, NULL, NULL, 'Kenan', 'Hasanion', 'Updated a member', 'Members', '12:04 PM', NULL, NULL, NULL, NULL),
+(361, 57, 87012, 1921681104, NULL, NULL, NULL, NULL, 'Kenan', 'Hasanion', 'Updated a member', 'Members', '12:09 PM', NULL, NULL, NULL, NULL),
+(362, 57, 87012, 1921681105, NULL, NULL, NULL, NULL, 'Chrisly', 'Caliso', 'Updated a member', 'Members', '12:09 PM', NULL, NULL, NULL, NULL),
+(363, 57, 87012, NULL, 1, NULL, NULL, NULL, 'Gaining', NULL, 'Updated the program', 'Programs', '12:22 PM', NULL, NULL, NULL, NULL),
+(364, 57, 87012, NULL, 4, NULL, NULL, NULL, 'Crossfit', NULL, 'Recover the program', 'Programs', '12:22 PM', NULL, NULL, NULL, NULL),
+(365, 57, 87012, 1921681070, NULL, NULL, NULL, NULL, 'Thomas', 'Thornton', 'Paid Walk-in', 'Members', '12:23 PM', NULL, NULL, NULL, NULL),
+(366, 57, 87012, 1921681029, NULL, NULL, NULL, NULL, 'Graham', 'Vang', 'Paid Walk-in', 'Members', '12:31 PM', NULL, NULL, NULL, NULL),
+(367, 57, 87012, 1921681031, NULL, NULL, NULL, NULL, 'Lance', 'Calderon', 'Paid Walk-in', 'Members', '12:32 PM', NULL, NULL, NULL, NULL),
+(368, 57, 87012, 1921681041, NULL, NULL, NULL, NULL, 'Rafael', 'Witt', 'Paid Walk-in', 'Members', '12:32 PM', NULL, NULL, NULL, NULL),
+(369, 57, 87012, NULL, NULL, 1515, NULL, NULL, 'Raian', 'Miro', 'Added a trainer', 'Trainers', '01:43 PM', NULL, NULL, NULL, NULL),
+(370, 57, 87012, NULL, NULL, 1516, NULL, NULL, 'asdfsaaaaaaaaaaaaaa', 'wtf', 'Added a trainer', 'Trainers', '01:44 PM', NULL, NULL, NULL, NULL),
+(371, 57, 87012, NULL, NULL, 1516, NULL, NULL, 'asdfsaaaaaaaaaaaaaa', 'wtf', 'Deleted a trainer', 'Trainers', '01:45 PM', NULL, NULL, NULL, NULL),
+(372, 57, 87012, NULL, NULL, 1516, NULL, NULL, 'asdfsaaaaaaaaaaaaaa', 'wtf', 'Deleted a trainer', 'Trainers', '01:45 PM', NULL, NULL, NULL, NULL),
+(373, 57, 87012, NULL, NULL, 1517, NULL, NULL, 'Dexter', 'Inso', 'Added a trainer', 'Trainers', '01:51 PM', NULL, NULL, NULL, NULL),
+(374, 57, 87012, NULL, NULL, 1516, NULL, NULL, 'asdfsaaaaaaaaaaaaaa', 'wtf', 'Updated a Trainer ', 'Trainers', '02:29 PM', NULL, NULL, NULL, NULL),
+(375, 57, 87012, NULL, NULL, 1516, NULL, NULL, 'asdfsaaaaaaaaaaaaaa', 'wtf', 'Updated a Trainer ', 'Trainers', '02:30 PM', NULL, NULL, NULL, NULL),
+(376, 57, 87012, NULL, NULL, 1516, NULL, NULL, 'asdfsaaaaaaaaaaaaaa', 'wtf', 'Updated a Trainer ', 'Trainers', '02:30 PM', NULL, NULL, NULL, NULL),
+(377, 57, 87012, NULL, NULL, 1516, NULL, NULL, 'asdfsaaaaaaaaaaaaaa', 'wtf', 'Updated a Trainer ', 'Trainers', '02:30 PM', NULL, NULL, NULL, NULL),
+(378, 57, 87012, NULL, NULL, 1516, NULL, NULL, 'asdfsaaaaaaaaaaaaaa', 'wtf', 'Deleted a trainer', 'Trainers', '02:30 PM', NULL, NULL, NULL, NULL),
+(379, 57, 87012, NULL, NULL, 1516, NULL, NULL, 'asdfsaaaaaaaaaaaaaa', 'wtf', 'Deleted a trainer', 'Trainers', '02:30 PM', NULL, NULL, NULL, NULL),
+(380, 57, 87012, NULL, NULL, 1513, NULL, NULL, 'Greg', 'Ivor', 'Recovered a trainer', 'Trainers', '02:32 PM', NULL, NULL, NULL, NULL),
+(381, 57, 87012, NULL, NULL, NULL, NULL, NULL, 'list of promos', NULL, 'Generated a report for list of promos', 'Reports', '02:35 PM', NULL, NULL, NULL, NULL),
+(382, 57, 87012, NULL, NULL, NULL, NULL, NULL, 'list of promos', NULL, 'Generated a report for list of promos', 'Reports', '02:36 PM', NULL, NULL, NULL, NULL),
+(383, 57, 87012, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Recovered a trainer', 'Trainers', '02:48 PM', NULL, NULL, NULL, NULL),
+(384, 57, 87012, NULL, NULL, 1514, NULL, NULL, 'Reyland', 'Nazareth', 'Deleted a trainer', 'Trainers', '02:48 PM', NULL, NULL, NULL, NULL),
+(385, 57, 87012, NULL, NULL, NULL, 2024, NULL, 'Pull up Machine', NULL, 'Added new equipment', 'Inventory', '04:54 PM', NULL, NULL, NULL, NULL),
+(386, 57, 87012, NULL, NULL, NULL, 2024, NULL, 'Pull up Machine', NULL, 'Update equipment', 'Inventory', '05:13 PM', NULL, NULL, NULL, NULL),
+(387, 57, 87012, NULL, NULL, NULL, 2024, NULL, 'Pull up Machine', NULL, 'Update equipment', 'Inventory', '05:14 PM', NULL, NULL, NULL, NULL),
+(388, 57, 87012, NULL, NULL, NULL, 2013, NULL, 'charot', NULL, 'Recover an inventory', 'Inventory', '05:17 PM', NULL, NULL, NULL, NULL),
+(389, 57, 87012, NULL, NULL, NULL, 2013, NULL, 'charot', NULL, 'Deleted an inventory', 'Inventory', '05:20 PM', NULL, NULL, NULL, NULL),
+(390, 57, 87012, NULL, NULL, NULL, NULL, 202118, 'asfdasdf asdfasdf', NULL, 'Added new promo', 'Promos', '06:15 PM', NULL, NULL, NULL, NULL),
+(391, 57, 87012, NULL, NULL, NULL, NULL, 202119, 'asdfsadfsadfsadfdasf', NULL, 'Added new promo', 'Promos', '06:17 PM', NULL, NULL, NULL, NULL),
+(392, 57, 87012, NULL, NULL, NULL, NULL, 202100, 'March-May Promo', NULL, 'Update a promo', 'Promos', '06:45 PM', NULL, NULL, NULL, NULL),
+(393, 57, 87012, NULL, NULL, NULL, NULL, 202101, 'Phelan Blackwell', NULL, 'Remove a member from Student Discount promo', 'Promos', '06:52 PM', NULL, NULL, NULL, NULL),
+(394, 57, 87012, NULL, NULL, NULL, NULL, 202115, 'May Promo', NULL, 'Restore a promo', 'Promos', '06:54 PM', NULL, NULL, NULL, NULL),
+(395, 57, 87012, NULL, NULL, NULL, NULL, 202115, 'May Promo', NULL, 'Deleted a promo', 'Promos', '06:54 PM', NULL, NULL, NULL, NULL),
+(396, 57, 87012, NULL, NULL, NULL, NULL, 202100, 'Jonas Garza', NULL, 'Added a member to March-May Promo', 'Promos', '07:03 PM', NULL, NULL, NULL, NULL),
+(397, 57, 87012, NULL, NULL, NULL, NULL, 202100, 'Jonas Garza', NULL, 'Added a member to March-May Promo', 'Promos', '07:11 PM', NULL, NULL, NULL, NULL),
+(398, 57, 87012, NULL, NULL, NULL, NULL, 202101, 'Steven Deleon', NULL, 'Added a member to Student Discount', 'Promos', '07:14 PM', NULL, NULL, NULL, NULL),
+(399, 57, 87012, NULL, NULL, NULL, NULL, 202112, 'Wallace Velasquez', NULL, 'Added a member to Senior Discount', 'Promos', '07:15 PM', NULL, NULL, NULL, NULL),
+(400, 57, 87012, NULL, NULL, NULL, NULL, 202112, 'Wallace Velasquez', NULL, 'Remove a member from Senior Discount promo', 'Promos', '07:15 PM', NULL, NULL, NULL, NULL),
+(401, 57, 87012, NULL, NULL, NULL, NULL, 202115, 'May Promo', NULL, 'Restore a promo', 'Promos', '07:30 PM', NULL, NULL, NULL, NULL),
+(402, 57, 87012, NULL, NULL, NULL, NULL, 202115, 'May Promo', NULL, 'Deleted a promo', 'Promos', '07:31 PM', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -574,7 +636,7 @@ INSERT INTO `member` (`member_id`, `first_name`, `last_name`, `username`, `passw
 (1921681019, 'Romhel', 'Ceniza', NULL, NULL, 'M', '1998-01-21', 'aldiceniza@gmail.com', '09234561121', 'Not Paid', '2021-02-17', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'Pit-os, Talamban, Cebu City', 'active', 1, ''),
 (1921681020, 'Jade', 'Tibon', NULL, NULL, 'M', '1999-12-15', 'jadetibones@gmail.com', '09334651320', 'Not Paid', '2021-02-17', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'Jagobiao, Mandaue City', 'active', 1, ''),
 (1921681021, 'Francis', 'Vasquez', NULL, NULL, 'M', '1997-02-14', 'bogoorven@gmail.com', '09164562230', 'Expired', '2021-02-17', NULL, NULL, '', 'false', 'false', NULL, '2021-02-22', '2021-04-23', '2021-02-22', '2022-02-22', 'Regular', 'Bacolod City', 'active', 2, ''),
-(1921681022, 'Weinnand', 'Hasanion', 'weinnandhasanion', '$2y$10$jLfDlT0Jiy3fA.yPQhSU3eulsrULRtJesHNVbR25YXaakhqM4ZiTi', 'M', '1999-08-04', 'weinnandhasanion@gmail.com', '09206013530', 'Paid', '2021-02-17', NULL, NULL, '', 'true', 'false', '2021-03-29', '2021-05-04', '2021-06-03', '2021-02-18', '2022-02-18', 'Regular', 'Lapulapu City, Cebu', 'active', 4, '23120087_2028065854089081_3898487251116680559_o.jpg'),
+(1921681022, 'Weinnand', 'Hasanion', 'weinnandhasanion', '$2y$10$jLfDlT0Jiy3fA.yPQhSU3eulsrULRtJesHNVbR25YXaakhqM4ZiTi', 'M', '1999-08-04', 'weinnandhasanion@gmail.com', '09206013530', 'Paid', '2021-02-17', NULL, NULL, '', 'true', 'false', '2021-03-29', '2021-05-04', '2021-06-03', '2021-02-18', '2022-02-18', 'Regular', 'Lapulapu City, Cebu', 'active', 1, '23120087_2028065854089081_3898487251116680559_o.jpg'),
 (1921681023, 'Ivanne', 'Candano', NULL, NULL, 'M', '1998-03-16', 'vancandano@gmail.com', '09455641010', 'Expired', '2021-02-17', NULL, NULL, '', 'false', 'false', NULL, '2021-02-18', '2021-03-20', '2021-02-18', '2022-02-18', 'Regular', 'Pagadian, Philippines', 'active', 1, ''),
 (1921681024, 'Clint', 'Lapera', 'febieclint', '$2y$10$96uGA7tAS5TSAchRuLlPcu6kFQpBB9oUvkXfVmbvItAYY2E4uBgTK', 'M', '2000-02-10', 'clintlapera@gmail.com', '09165433165', 'Paid', '2021-02-18', '2021-02-23', NULL, '', 'true', 'false', '2021-03-10', '2021-04-26', '2021-05-26', '2021-02-18', '2022-02-18', 'Regular', 'Masulog, Lapu-Lapu City', 'active', 2, '121773513_3617406608324077_306887283432560114_o.jpg'),
 (1921681025, 'Dante', 'Phillips', NULL, NULL, 'F', '1988-04-09', 'blandit.congue.In@vitaeeratVivamus.edu', '09503661490', 'Not Paid', '2020-12-26', '2021-03-18', '13:06:15', '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '4979 A Ave', 'active', 1, ''),
@@ -599,8 +661,8 @@ INSERT INTO `member` (`member_id`, `first_name`, `last_name`, `username`, `passw
 (1921681044, 'Alvin', 'Vance', NULL, NULL, 'M', '1983-02-05', 'Sed.pharetra@temporbibendum.co.uk', '09334981692', 'Not Paid', '2018-11-19', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '746-313 Orci Road', 'active', 1, ''),
 (1921681045, 'Xavier', 'Ellis', NULL, NULL, 'F', '1991-05-14', 'nisi@Duis.ca', '09905178265', 'Not Paid', '2019-02-14', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '2242 Neque Av.', 'active', 2, ''),
 (1921681046, 'Wallace', 'Velasquez', NULL, NULL, 'F', '1991-04-28', 'at.pretium@euismodenimEtiam.co.uk', '09917962390', 'Not Paid', '2020-07-19', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '253-1786 Lectus Rd.', 'active', 2, ''),
-(1921681047, 'Graiden', 'Knight', NULL, NULL, 'M', '1988-04-28', 'ridiculus.mus.Aenean@ultricesVivamusrhoncus.net', '09449699878', 'Not Paid', '2020-01-09', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '975-3806 A, Rd.', 'active', 2, ''),
-(1921681048, 'Wang', 'Bradshaw', NULL, NULL, 'F', '1997-01-25', 'nisl.Nulla@sodales.co.uk', '09875369629', 'Not Paid', '2018-03-29', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '5884 Egestas Ave', 'active', 2, ''),
+(1921681047, 'Graiden', 'Knight', NULL, NULL, 'M', '1988-04-28', 'ridiculus.mus.Aenean@ultricesVivamusrhoncus.net', '09449699878', 'Not Paid', '2020-01-09', '2021-05-05', '21:20:26', 'Weinnand Hasanion', 'false', 'true', NULL, NULL, NULL, NULL, NULL, 'Regular', '975-3806 A, Rd.', 'inactive', 2, ''),
+(1921681048, 'Wang', 'Bradshaw', NULL, NULL, 'F', '1997-01-25', 'nisl.Nulla@sodales.co.uk', '09875369629', 'Paid', '2018-03-29', NULL, NULL, '', 'false', 'false', NULL, '2021-05-05', '2021-06-04', '2021-05-05', '2022-05-05', 'Regular', '5884 Egestas Ave', 'active', 2, ''),
 (1921681049, 'Chandler', 'Lowery', NULL, NULL, 'M', '1976-02-08', 'neque.vitae@inconsequat.edu', '09944567659', 'Not Paid', '2019-05-21', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '570-6336 Quam, Av.', 'active', 1, ''),
 (1921681050, 'Caesar', 'Maxwell', NULL, NULL, 'F', '1999-07-27', 'molestie.arcu.Sed@adipiscingelitEtiam.com', '09691967540', 'Not Paid', '2018-04-16', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 432, 9045 Morbi St.', 'active', 1, ''),
 (1921681051, 'Akeem', 'Pollard', NULL, NULL, 'M', '1978-09-06', 'hymenaeos@felisNulla.edu', '09983166627', 'Not Paid', '2020-04-10', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '1030 Orci St.', 'active', 1, ''),
@@ -613,7 +675,7 @@ INSERT INTO `member` (`member_id`, `first_name`, `last_name`, `username`, `passw
 (1921681058, 'Asher', 'Mcclure', NULL, NULL, 'M', '1979-05-25', 'eros@molestiepharetra.edu', '09127396138', 'Not Paid', '2019-07-17', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '445-9684 Sem St.', 'active', 2, ''),
 (1921681059, 'Basil', 'Hodges', NULL, NULL, 'F', '1986-03-30', 'eu.metus.In@uteros.co.uk', '09115474709', 'Not Paid', '2019-06-27', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 182, 725 Libero Rd.', 'active', 1, ''),
 (1921681060, 'Boris', 'Hopkins', NULL, NULL, 'F', '1992-05-01', 'blandit.congue.In@lorem.co.uk', '09249104148', 'Not Paid', '2018-04-26', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', '5548 Nec, Ave', 'active', 1, ''),
-(1921681061, 'Ulric', 'Rollins', NULL, NULL, 'M', '2000-05-19', 'non.lobortis.quis@pedeCrasvulputate.com', '09598153405', 'Not Paid', '2018-12-18', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '756-1186 Phasellus Rd.', 'active', 1, ''),
+(1921681061, 'Ulric', 'Rollins', NULL, NULL, 'M', '2000-05-19', 'non.lobortis.quis@pedeCrasvulputate.com', '09598153405', 'Not Paid', '2018-12-18', '2021-05-05', '21:20:48', 'Weinnand Hasanion', 'false', 'true', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '756-1186 Phasellus Rd.', 'inactive', 1, ''),
 (1921681062, 'William', 'Suarez', NULL, NULL, 'M', '1981-05-30', 'dui.Cum@tempusmauris.ca', '09930619290', 'Not Paid', '2020-01-29', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Regular', 'P.O. Box 608, 8662 Ornare St.', 'active', 2, ''),
 (1921681063, 'Lucian', 'Slater', NULL, NULL, 'F', '2000-03-28', 'cursus.purus@Praesent.edu', '09781339342', 'Not Paid', '2020-10-29', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 508, 6827 Tincidunt. Road', 'active', 1, ''),
 (1921681064, 'Cedric', 'Raymond', NULL, NULL, 'M', '1997-05-16', 'sem.Nulla.interdum@adipiscingenimmi.co.uk', '09372214862', 'Not Paid', '2019-06-22', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #497-8148 Faucibus Rd.', 'active', 1, ''),
@@ -634,7 +696,7 @@ INSERT INTO `member` (`member_id`, `first_name`, `last_name`, `username`, `passw
 (1921681079, 'Finn', 'Patterson', NULL, NULL, 'F', '1994-05-25', 'arcu.Sed@Vivamus.com', '09477503056', 'Paid', '2019-04-11', NULL, NULL, '', 'false', 'false', NULL, '2021-05-02', '2021-06-01', '2021-05-02', '2022-05-02', 'Regular', '5332 Integer St.', 'active', 2, ''),
 (1921681080, 'Graham', 'Nunez', NULL, NULL, 'F', '1997-03-10', 'mus@aliquet.ca', '09634684992', 'Not Paid', '2018-05-06', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 591, 2996 Accumsan St.', 'active', 2, ''),
 (1921681081, 'Dane', 'Bird', NULL, NULL, 'F', '1982-02-18', 'vestibulum.massa.rutrum@metusfacilisislorem.edu', '09270804621', 'Not Paid', '2019-07-25', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #402-6538 Amet, Avenue', 'active', 1, ''),
-(1921681082, 'Jared', 'Mullins', NULL, NULL, 'M', '1999-11-22', 'in@semut.co.uk', '09808136994', 'Paid', '2019-02-28', NULL, NULL, '', 'false', 'false', NULL, '2021-05-02', '2021-06-01', '2021-05-02', '2022-05-02', 'Regular', '661-542 Vulputate St.', 'active', 2, ''),
+(1921681082, 'Jared', 'Mullins', '1921681082', '$2y$10$cTwssZP5DtZeRY3C4yapM.VzfhcLD3M4gjQ34hOUL9bCLJuDNvQ8K', 'M', '1999-11-22', 'in@semut.co.uk', '09808136994', 'Paid', '2019-02-28', NULL, NULL, '', 'true', 'false', '2021-05-05', '2021-05-02', '2021-06-01', '2021-05-02', '2022-05-02', 'Regular', '661-542 Vulputate St.', 'active', 2, ''),
 (1921681083, 'Giacomo', 'Mcgowan', NULL, NULL, 'F', '1982-11-15', 'Nulla@eu.ca', '09380918963', 'Not Paid', '2020-08-26', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'Ap #340-2379 Massa. St.', 'active', 2, ''),
 (1921681084, 'Hamilton', 'Bernard', NULL, NULL, 'F', '1994-02-06', 'Donec.tempor.est@nequeseddictum.com', '09769927909', 'Paid', '2019-04-22', NULL, NULL, '', 'false', 'false', NULL, '2021-05-02', '2021-06-01', '2021-05-02', '2022-05-02', 'Regular', '5262 Mi Road', 'active', 2, ''),
 (1921681085, 'Ciaran', 'Kinney', NULL, NULL, 'M', '1992-02-11', 'a@Etiamimperdiet.ca', '09692243138', 'Paid', '2020-01-15', NULL, NULL, '', 'false', 'false', NULL, '2021-05-02', '2021-06-01', '2021-05-02', '2022-05-02', 'Regular', '526 Mollis Ave', 'active', 2, ''),
@@ -643,15 +705,16 @@ INSERT INTO `member` (`member_id`, `first_name`, `last_name`, `username`, `passw
 (1921681088, 'Burke', 'Good', NULL, NULL, 'M', '1990-08-06', 'orci.Phasellus@Proinsedturpis.org', '09905620678', 'Not Paid', '2021-01-21', NULL, '23:52:02', '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 923, 1396 Rhoncus. Road', 'active', 2, ''),
 (1921681089, 'Oleg', 'Whitley', NULL, NULL, 'F', '2000-02-12', 'penatibus.et@tellusnon.co.uk', '09872820215', 'Not Paid', '2020-10-03', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 417, 9010 Aliquam St.', 'active', 1, ''),
 (1921681090, 'Honorato', 'Barr', NULL, NULL, 'M', '1989-09-06', 'non.vestibulum@maurisid.com', '09170867269', 'Not Paid', '2019-03-15', '2021-05-04', '11:28:49', 'Weinnand Hasanion', 'false', 'true', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'P.O. Box 672, 4154 Pede, St.', 'inactive', 1, ''),
-(1921681091, 'Josiah', 'Luna', NULL, NULL, 'F', '1985-02-26', 'a@nequeNullamnisl.edu', '09141565157', 'Paid', '2018-10-30', '2021-03-18', '12:50:21', '', 'false', 'false', NULL, '2021-05-02', '2021-06-01', '2021-05-02', '2022-05-02', 'Regular', '7983 Elementum Avenue', 'active', 4, ''),
+(1921681091, 'Josiah', 'Luna', '1921681091', '$2y$10$SpYGqx9.iCYAOyVw25ppCeLe2JJ0q4R.vuCayhRI/4KK77FJvIvX6', 'F', '1985-02-26', 'a@nequeNullamnisl.edu', '09141565157', 'Paid', '2018-10-30', '2021-03-18', '12:50:21', '', 'true', 'false', '2021-05-05', '2021-05-02', '2021-06-01', '2021-05-02', '2022-05-02', 'Regular', '7983 Elementum Avenue', 'active', 1, ''),
 (1921681092, 'Hammett', 'Vaughn', NULL, NULL, 'F', '1998-10-06', 'aliquet.Proin.velit@atarcu.com', '09495661215', 'Not Paid', '2018-12-16', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', '676 Penatibus Avenue', 'active', 2, ''),
 (1921681093, 'John', 'Lennon', NULL, NULL, 'M', '1985-01-01', 'john@gmail.com', '09135426654', 'Not Paid', '2021-04-30', '2021-05-04', '11:27:58', 'Weinnand Hasanion', 'false', 'true', NULL, NULL, NULL, NULL, NULL, 'Regular', 'Liverpool', 'inactive', 1, ''),
-(1921681094, 'Ringo', 'Star', NULL, NULL, 'M', '1999-01-01', 'ringo@gmail.com', '09203165455', 'Paid', '2021-04-30', NULL, NULL, '', 'false', 'false', NULL, '2021-05-01', '2021-06-30', '2021-04-30', '2022-04-30', 'Regular', 'Liverpool', 'active', 1, ''),
+(1921681094, 'Ringo', 'Star', '1921681094', '$2y$10$wyMp7vnDwQ872qmHy1..Puqw0Ou/ZVQEsWS7Sjs3grd4QMaw9XYH6', 'M', '1999-01-01', 'ringo@gmail.com', '09203165455', 'Paid', '2021-04-30', NULL, NULL, '', 'true', 'false', '2021-05-05', '2021-05-01', '2021-06-30', '2021-04-30', '2022-04-30', 'Regular', 'Liverpool', 'active', 1, ''),
 (1921681100, 'check', 'check', NULL, NULL, 'M', '1999-11-11', 'check@check.com', '09000000001', 'Paid', '2021-05-01', '2021-05-04', '11:27:07', 'Weinnand Hasanion', 'false', 'true', NULL, '2021-05-01', '2021-05-31', '2021-05-01', '2022-05-01', 'Regular', 'check', 'inactive', NULL, ''),
 (1921681101, 'asdf', 'qwer', NULL, NULL, 'M', '1999-11-11', 'asdf@gmail.com', '09125124411', 'Paid', '2021-05-01', '2021-05-04', '11:26:43', 'Weinnand Hasanion', 'false', 'true', NULL, '2021-05-02', '2021-06-01', '2021-05-02', '2022-05-02', 'Regular', 'asdfqwer', 'inactive', NULL, ''),
 (1921681102, 'george', 'harrison', NULL, NULL, 'M', '1988-01-01', 'geoarge@gmail.com', '09201115421', 'Not Paid', '2021-05-01', NULL, NULL, '', 'false', 'false', NULL, NULL, NULL, NULL, NULL, 'Walk-in', 'liverpool', 'active', NULL, ''),
-(1921681103, 'Paul', 'McCartney', '1921681103', '$2y$10$lWZF.9/C.9KaB29e67MROOumvxjG/Z8uMpAwAitgT4u8rctqqCPHK', 'M', '1975-01-12', 'paul@beatles.com', '09201354465', 'Paid', '2021-05-02', NULL, NULL, '', 'true', 'false', '2021-05-02', '2021-05-02', '2021-07-01', '2021-05-02', '2022-05-02', 'Regular', 'Liverpool', 'active', 4, ''),
-(1921681104, 'Kenan', 'Hasanion', NULL, NULL, 'M', '2001-08-30', 'kenanhasanion@gmail.com', '09301245514', 'Paid', '2021-05-02', NULL, NULL, '', 'false', 'false', NULL, '2021-05-02', '2021-07-01', '2021-05-02', '2022-05-02', 'Regular', 'Gun-ob, LLC', 'active', 1, '');
+(1921681103, 'Paul', 'McCartney', '1921681103', '$2y$10$lWZF.9/C.9KaB29e67MROOumvxjG/Z8uMpAwAitgT4u8rctqqCPHK', 'M', '1975-01-12', 'paul@beatles.com', '09201354465', 'Paid', '2021-05-02', NULL, NULL, '', 'true', 'false', '2021-05-02', '2021-05-02', '2021-07-01', '2021-05-02', '2022-05-02', 'Regular', 'Liverpool', 'active', 1, ''),
+(1921681104, 'Kenan', 'Hasanion', NULL, NULL, 'M', '2001-08-30', 'kenanhasanion@gmail.com', '09301245514', 'Paid', '2021-05-02', NULL, NULL, '', 'false', 'false', NULL, '2021-05-02', '2021-07-01', '2021-05-02', '2022-05-02', 'Regular', 'Gun-ob, LLC', 'active', 2, ''),
+(1921681105, 'Chrisly', 'Caliso', '1921681105', '$2y$10$2mFVvy5gdlieHWsJnaJjuO0.isP37O0cJP3B5wxmKN7EcQXUGhZr6', 'F', '1999-12-25', 'calisochrisly@gmail.com', '09208032961', 'Not Paid', '2021-05-05', NULL, NULL, '', 'true', 'false', '2021-05-05', NULL, NULL, '2021-05-05', '2022-05-05', 'Regular', 'Lapulapu City, Cebu', 'active', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -682,16 +745,16 @@ INSERT INTO `memberpromos` (`id`, `promo_id`, `member_id`, `date_added`, `date_r
 (6, 202112, 1921681013, '2021-02-23', NULL, NULL, 'Expired', NULL, NULL),
 (7, 202101, 1921681014, '2021-02-23', NULL, NULL, 'Active', NULL, NULL),
 (9, 202101, 1921681015, '2021-02-23', NULL, NULL, 'Expired', '2021-03-22', NULL),
-(10, 202101, 1921681055, '2021-02-23', NULL, NULL, 'Active', NULL, NULL),
-(12, 202101, 1921681046, '2021-02-23', NULL, NULL, 'Active', NULL, NULL),
+(10, 202101, 1921681055, '2021-02-23', NULL, NULL, 'Removed', NULL, NULL),
+(12, 202101, 1921681046, '2021-02-23', NULL, NULL, 'Removed', NULL, NULL),
 (13, 202101, 1921681013, '2021-03-02', NULL, NULL, 'Expired', NULL, NULL),
 (14, 202112, 1921681013, '2021-03-02', NULL, NULL, 'Active', NULL, NULL),
 (15, 202113, 1921681015, '2021-03-05', NULL, NULL, 'Expired', '2021-03-22', NULL),
 (16, 202113, 1921681014, '2021-03-05', NULL, NULL, 'Expired', NULL, NULL),
 (17, 202113, 1921681016, '2021-03-06', NULL, NULL, 'Expired', NULL, NULL),
 (18, 202112, 1921681030, '2021-03-18', NULL, NULL, 'Expired', '2021-04-29', NULL),
-(19, 202101, 1921681026, '2021-03-18', NULL, NULL, 'Active', NULL, NULL),
-(20, 202101, 1921681047, '2021-03-18', NULL, NULL, 'Active', NULL, NULL),
+(19, 202101, 1921681026, '2021-03-18', NULL, NULL, 'Removed', '2021-05-06', NULL),
+(20, 202101, 1921681047, '2021-03-18', NULL, NULL, 'Expired', '2021-05-05', NULL),
 (21, 202113, 1921681024, '2021-03-22', NULL, NULL, 'Expired', NULL, NULL),
 (22, 202113, 1921681011, '2021-03-31', NULL, NULL, 'Expired', '2021-04-02', NULL),
 (23, 202114, 1921681011, '2021-04-02', NULL, NULL, 'Expired', '2021-04-28', NULL),
@@ -704,7 +767,7 @@ INSERT INTO `memberpromos` (`id`, `promo_id`, `member_id`, `date_added`, `date_r
 (30, 202112, 1921681011, '2021-04-27', NULL, NULL, 'Removed', NULL, NULL),
 (31, 202114, 1921681024, '2021-04-28', NULL, NULL, 'Expired', '2021-04-28', NULL),
 (33, 202100, 1921681033, '2021-04-30', NULL, NULL, 'Active', NULL, NULL),
-(34, 202100, 1921681071, '2021-04-30', NULL, NULL, 'Active', NULL, NULL),
+(34, 202100, 1921681071, '2021-04-30', NULL, NULL, 'Removed', NULL, NULL),
 (36, 202100, 1921681094, '2021-04-30', NULL, NULL, 'Active', NULL, NULL),
 (62, 202101, 1921681022, '2021-05-03', NULL, NULL, 'Expired', '2021-05-04', NULL),
 (64, 202100, 1921681022, '2021-05-03', NULL, NULL, 'Removed', NULL, NULL),
@@ -718,7 +781,10 @@ INSERT INTO `memberpromos` (`id`, `promo_id`, `member_id`, `date_added`, `date_r
 (74, 202100, 1921681103, '2021-05-04', NULL, NULL, 'Removed', NULL, NULL),
 (76, 202101, 1921681022, NULL, '2021-05-04 12:40:38', '2021-05-04 12:41:01', 'Declined', NULL, '119656503_1125123494556495_6798268467851074616_n.jpg'),
 (77, 202101, 1921681022, '2021-05-04', '2021-05-04 12:47:57', '2021-05-04 12:48:03', 'Active', NULL, 'diagram - Copy.png'),
-(78, 202112, 1921681022, NULL, '2021-05-04 12:51:46', '2021-05-04 12:52:17', 'Declined', NULL, '179309544_924144008420873_3664081796755861232_n.jpg');
+(78, 202112, 1921681022, NULL, '2021-05-04 12:51:46', '2021-05-04 12:52:17', 'Declined', NULL, '179309544_924144008420873_3664081796755861232_n.jpg'),
+(80, 202100, 1921681055, '2021-05-06', NULL, NULL, 'Active', NULL, NULL),
+(81, 202101, 1921681071, '2021-05-06', NULL, NULL, 'Active', NULL, NULL),
+(82, 202112, 1921681046, '2021-05-06', NULL, NULL, 'Removed', '2021-05-06', NULL);
 
 -- --------------------------------------------------------
 
@@ -738,7 +804,9 @@ CREATE TABLE `member_logtrail` (
 --
 
 INSERT INTO `member_logtrail` (`id`, `member_id`, `login_date`, `scanned_by`) VALUES
-(6, 1921681022, '2021-05-04 22:48:11', 87001);
+(6, 1921681022, '2021-05-04 22:48:11', 87001),
+(7, 1921681022, '2021-05-05 14:09:29', 87001),
+(9, 1921681011, '2021-05-05 14:49:18', 87001);
 
 -- --------------------------------------------------------
 
@@ -883,7 +951,14 @@ INSERT INTO `paymentlog` (`payment_id`, `member_id`, `first_name`, `last_name`, 
 (116, 1921681012, 'George', 'Duterte', 'Regular', 'Annual Membership', 'Cash', '2021-05-04', '11:24 AM', '200', NULL, NULL, NULL, NULL, NULL),
 (117, 1921681103, 'Paul', 'McCartney', 'Regular', 'Program Fee', 'Online', '2021-05-04', '12:53 PM', '30', NULL, NULL, NULL, '29F5708896572833D', NULL),
 (120, 1921681016, 'Michael', 'Antiporta', 'Regular', 'Monthly Subscription', 'Online', '2021-05-04', '01:40 PM', '780', 'Reducing', '30', '', '6H231400400861406', NULL),
-(121, 1921681011, 'John', 'Doe', 'Regular', 'Monthly Subscription', 'Online', '2021-05-04', '01:46 PM', '780', 'Gaining', '30', '', '9K735057XY908071F', NULL);
+(121, 1921681011, 'John', 'Doe', 'Regular', 'Monthly Subscription', 'Online', '2021-05-04', '01:46 PM', '780', 'Gaining', '30', '', '9K735057XY908071F', NULL),
+(122, 1921681048, 'Wang', 'Bradshaw', 'Regular', 'Monthly Subscription', 'Cash', '2021-05-05', '02:19 PM', '780', 'Reducing', '30', 'N/A', NULL, NULL),
+(123, 1921681048, 'Wang', 'Bradshaw', 'Regular', 'Annual Membership', 'Cash', '2021-05-05', '02:19 PM', '200', NULL, NULL, NULL, NULL, NULL),
+(124, 1921681105, 'Chrisly', 'Caliso', 'Regular', 'Annual Membership', 'Cash', '2021-05-05', '08:48 PM', '200', NULL, NULL, NULL, NULL, NULL),
+(125, 1921681070, 'Thomas', 'Thornton', 'Walk-in', 'Walk-in', 'Cash', '2021-05-06', '12:23 PM', '50', NULL, NULL, NULL, NULL, NULL),
+(126, 1921681029, 'Graham', 'Vang', 'Walk-in', 'Walk-in', 'Cash', '2021-05-06', '12:31 PM', '50', NULL, NULL, NULL, NULL, NULL),
+(127, 1921681031, 'Lance', 'Calderon', 'Walk-in', 'Walk-in', 'Cash', '2021-05-06', '12:32 PM', '50', NULL, NULL, NULL, NULL, NULL),
+(128, 1921681041, 'Rafael', 'Witt', 'Walk-in', 'Walk-in', 'Cash', '2021-05-06', '12:32 PM', '50', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -902,7 +977,8 @@ CREATE TABLE `program` (
   `time_added` time NOT NULL,
   `date_deleted` date DEFAULT NULL,
   `time_deleted` time NOT NULL,
-  `amount` int(11) DEFAULT NULL,
+  `admin_delete` varchar(50) DEFAULT NULL,
+  `amount` int(11) DEFAULT 30,
   `upper_1_day_1` int(11) DEFAULT NULL,
   `upper_2_day_1` int(11) DEFAULT NULL,
   `upper_3_day_1` int(11) DEFAULT NULL,
@@ -930,11 +1006,11 @@ CREATE TABLE `program` (
 -- Dumping data for table `program`
 --
 
-INSERT INTO `program` (`program_id`, `admin_id`, `trainer_id`, `program_name`, `program_description`, `program_status`, `date_added`, `time_added`, `date_deleted`, `time_deleted`, `amount`, `upper_1_day_1`, `upper_2_day_1`, `upper_3_day_1`, `upper_1_day_2`, `upper_2_day_2`, `upper_3_day_2`, `upper_1_day_3`, `upper_2_day_3`, `upper_3_day_3`, `lower_1_day_1`, `lower_2_day_1`, `lower_3_day_1`, `lower_1_day_2`, `lower_2_day_2`, `lower_3_day_2`, `lower_1_day_3`, `lower_2_day_3`, `lower_3_day_3`, `abdominal_day_1`, `abdominal_day_2`, `abdominal_day_3`) VALUES
-(1, 87001, 1512, 'Gaining', 'This is a program for members who aim to gain weight and mass.', 'active', '2021-02-09', '19:30:00', NULL, '00:00:00', 30, 1, 2, 3, 4, 5, 6, 7, 8, 2, 9, 10, 11, 12, 13, 14, 15, 9, 11, 16, 19, 20),
-(2, 87001, 1514, 'Reducing', 'This program is for reducing weight.', 'active', '2021-02-15', '12:14:00', NULL, '00:00:00', 30, 1, 2, 3, 4, 5, 6, 7, 8, 1, 9, 10, 11, 12, 13, 14, 15, 9, 10, 21, 20, 18),
-(3, 87001, 1514, 'asfsafsaf', 'sdfsadhfsadfhsladkfhsadflkashflsakhflaskhfadslfhsalkdfh', 'inactive', '2021-03-16', '06:04:00', '2021-04-09', '13:02:00', NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 16, 16, 16),
-(4, 87001, 1514, 'Crossfit', 'This is for members who want to try crossfit.', 'active', '2021-04-26', '11:32:00', NULL, '00:00:00', 30, 1, 3, 2, 4, 7, 4, 8, 7, 6, 9, 10, 11, 12, 9, 10, 15, 14, 13, 16, 20, 23);
+INSERT INTO `program` (`program_id`, `admin_id`, `trainer_id`, `program_name`, `program_description`, `program_status`, `date_added`, `time_added`, `date_deleted`, `time_deleted`, `admin_delete`, `amount`, `upper_1_day_1`, `upper_2_day_1`, `upper_3_day_1`, `upper_1_day_2`, `upper_2_day_2`, `upper_3_day_2`, `upper_1_day_3`, `upper_2_day_3`, `upper_3_day_3`, `lower_1_day_1`, `lower_2_day_1`, `lower_3_day_1`, `lower_1_day_2`, `lower_2_day_2`, `lower_3_day_2`, `lower_1_day_3`, `lower_2_day_3`, `lower_3_day_3`, `abdominal_day_1`, `abdominal_day_2`, `abdominal_day_3`) VALUES
+(1, 87001, 1513, 'Gaining', 'This is a program for members who aim to gain weight and mass.', 'active', '2021-02-09', '19:30:00', NULL, '00:00:00', NULL, 30, 1, 2, 3, 4, 5, 6, 7, 8, 2, 9, 10, 11, 12, 13, 14, 15, 9, 11, 16, 19, 20),
+(2, 87001, 1514, 'Reducing', 'This program is for reducing weight.', 'active', '2021-02-15', '12:14:00', NULL, '00:00:00', NULL, 30, 1, 2, 3, 4, 5, 6, 7, 8, 1, 9, 10, 11, 12, 13, 14, 15, 9, 10, 21, 20, 18),
+(4, 87001, 1514, 'Crossfit', 'This is for members who want to try crossfit.', 'active', '2021-04-26', '11:32:00', NULL, '00:00:00', 'Weinnand Hasanion', 30, 1, 3, 2, 4, 7, 4, 8, 7, 6, 9, 10, 11, 12, 9, 10, 15, 14, 13, 16, 20, 23),
+(8, 87001, 1512, 'Weightlifting', 'For the weightlifting peeps.', 'inactive', '2021-05-05', '09:47:00', '2021-05-05', '21:48:54', 'Weinnand Hasanion', 30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9, 9, 9, 9, 9, 9, 9, 9, 9, 16, 16, 16);
 
 -- --------------------------------------------------------
 
@@ -952,23 +1028,23 @@ CREATE TABLE `promo` (
   `promo_ending_date` date DEFAULT NULL,
   `amount` int(100) DEFAULT NULL,
   `status` enum('Active','Expired','Deleted') NOT NULL DEFAULT 'Active',
-  `date_deleted` date DEFAULT NULL
+  `date_deleted` date DEFAULT NULL,
+  `admin_delete` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `promo`
 --
 
-INSERT INTO `promo` (`promo_id`, `promo_name`, `promo_type`, `promo_description`, `date_added`, `promo_starting_date`, `promo_ending_date`, `amount`, `status`, `date_deleted`) VALUES
-(202100, 'March-May Promo', 'Seasonal', 'Monthly subscription is P75 off for the months March, April, and May.', '2021-01-27', '2021-03-01', '2021-05-31', 75, 'Active', '2021-03-18'),
-(202101, 'Student Discount', 'Permanent', 'Monthly subscription is P100 off for students. Please show valid school ID to the counter to avail.', '2021-01-27', '1970-01-01', '1970-01-01', 100, 'Active', NULL),
-(202111, 'January-February Promo', 'Seasonal', 'P50 off for the whole month of January.', '2021-01-28', '2021-01-01', '2021-02-28', 50, 'Expired', '2021-02-28'),
-(202112, 'Senior Discount', 'Permanent', 'Monthly subscription is P100 off for ages 40 and above. Please present valid Senior Citizen ID to avail promo.', '2021-01-28', '1970-01-01', '1970-01-01', 100, 'Active', '2021-01-27'),
-(202113, 'Back-to-school Promo', 'Seasonal', 'P75 discount to all who avail our back-to-school promo. This promo is only available starting March 1, 2021 until March 31, 2021.', '2021-02-23', '2021-03-01', '2021-03-31', 75, 'Expired', '2021-03-31'),
-(202114, 'April Promo', 'Seasonal', 'P50 off for monthly subscription for the whole month of April.', '2021-03-31', '2021-04-01', '2021-04-30', 50, 'Expired', '2021-04-30'),
-(202115, 'May Promo', 'Seasonal', 'may prom ohaha', '2021-04-13', '2021-05-05', '2021-05-04', 60, 'Deleted', '2021-04-13'),
-(202116, 'girl promo haha', 'Permanent', 'asfdsadfsd', '2021-04-13', '1970-01-01', '1970-01-01', 50, 'Deleted', '2021-04-13'),
-(202117, 'Frontliner Discount', 'Permanent', 'A big discount for our frontliners who risk their lives to save others. P150 off for monthly subscriptions. Please present valid ID that indicates you are a frontliner to avail.', '2021-05-03', '1970-01-01', '1970-01-01', 150, 'Active', NULL);
+INSERT INTO `promo` (`promo_id`, `promo_name`, `promo_type`, `promo_description`, `date_added`, `promo_starting_date`, `promo_ending_date`, `amount`, `status`, `date_deleted`, `admin_delete`) VALUES
+(202100, 'March-May Promo', 'Seasonal', 'Monthly subscription is P75 off for the months of March, April, and May.', '2021-01-27', '2021-03-01', '2021-05-31', 75, 'Active', '2021-03-18', NULL),
+(202101, 'Student Discount', 'Permanent', 'Monthly subscription is P100 off for students. Please show valid school ID to the counter to avail.', '2021-01-27', NULL, NULL, 100, 'Active', NULL, NULL),
+(202111, 'January-February Promo', 'Seasonal', 'P50 off for the whole month of January.', '2021-01-28', '2021-01-01', '2021-02-28', 50, 'Expired', '2021-02-28', NULL),
+(202112, 'Senior Discount', 'Permanent', 'Monthly subscription is P100 off for ages 40 and above. Please present valid Senior Citizen ID to avail promo.', '2021-01-28', '1970-01-01', '1970-01-01', 100, 'Active', '2021-01-27', NULL),
+(202113, 'Back-to-school Promo', 'Seasonal', 'P75 discount to all who avail our back-to-school promo. This promo is only available starting March 1, 2021 until March 31, 2021.', '2021-02-23', '2021-03-01', '2021-03-31', 75, 'Expired', '2021-03-31', NULL),
+(202114, 'April Promo', 'Seasonal', 'P50 off for monthly subscription for the whole month of April.', '2021-03-31', '2021-04-01', '2021-04-30', 50, 'Expired', '2021-04-30', NULL),
+(202115, 'May Promo', 'Seasonal', 'may prom ohaha', '2021-04-13', '2021-05-05', '2021-05-04', 60, 'Deleted', '2021-05-06', 'Alvin Arnibal'),
+(202117, 'Frontliner Discount', 'Permanent', 'A big discount for our frontliners who risk their lives to save others. P150 off for monthly subscriptions. Please present valid ID that indicates you are a frontliner to avail.', '2021-05-03', '1970-01-01', '1970-01-01', 150, 'Active', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1011,8 +1087,9 @@ INSERT INTO `routines` (`routine_id`, `routine_name`, `routine_link`, `routine_t
 (19, 'Dead bug', 'https://www.youtube.com/watch?v=MCVX9wRd_h0', 'Abdominal', 20, 3),
 (20, 'Leg raise', 'https://www.youtube.com/watch?v=l4kQd9eWclE', 'Abdominal', 20, 3),
 (21, 'Abs roll-out', 'https://www.youtube.com/watch?v=5Tc7yKQysVQ', 'Abdominal', 20, 3),
-(22, 'Bird-dog', 'https://www.youtube.com/watch?v=wiFNA3sqjCA', 'Abdominal', 20, 3),
-(23, 'Hanging knee raise', 'https://www.youtube.com/watch?v=p9hhX_Sx5v0', 'Abdominal', 20, 3);
+(22, 'Bird-dog', 'https://www.youtube.com/watch?v=wiFNA3sqjCA', 'Abdominal', 25, 3),
+(23, 'Hanging knee raise', 'https://www.youtube.com/watch?v=p9hhX_Sx5v0', 'Abdominal', 20, 3),
+(24, 'Bench Press', 'https://www.youtube.com/watch?v=gRVjAtPip0Y', 'Upper Body', 15, 3);
 
 -- --------------------------------------------------------
 
@@ -1034,17 +1111,21 @@ CREATE TABLE `trainer` (
   `birthdate` date DEFAULT NULL,
   `date_hired` date DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
-  `time_deleted` time DEFAULT NULL
+  `time_deleted` time DEFAULT NULL,
+  `admin_delete` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `trainer`
 --
 
-INSERT INTO `trainer` (`trainer_id`, `trainer_status`, `trainer_position`, `first_name`, `last_name`, `address`, `gender`, `phone`, `email`, `file`, `birthdate`, `date_hired`, `date_deleted`, `time_deleted`) VALUES
-(1512, 'active', 'junior', 'George', 'Vasquez', '2nd floor G7 Suites', 'M', '09453216542', 'leeapple619@gmail.com', NULL, '1985-01-01', '2021-02-23', NULL, NULL),
-(1513, 'deleted', 'junior', 'Greg', 'Ivor', 'Cebu City', 'M', '09994562154', 'greg@gmail.com', NULL, '1990-02-16', '2021-02-23', '2021-05-01', '00:35:56'),
-(1514, 'deleted', 'junior', 'Reyland', 'Nazareth', 'Lapulapu City', 'M', '09164543211', 'reylandbogo@gmail.com', NULL, '1977-09-23', '2021-02-23', '2021-05-01', '00:34:19');
+INSERT INTO `trainer` (`trainer_id`, `trainer_status`, `trainer_position`, `first_name`, `last_name`, `address`, `gender`, `phone`, `email`, `file`, `birthdate`, `date_hired`, `date_deleted`, `time_deleted`, `admin_delete`) VALUES
+(1512, 'active', 'junior', 'George', 'Vasquez', '2nd floor G7 Suites', 'M', '09453216542', 'leeapple619@gmail.com', NULL, '1985-01-01', '2021-02-23', NULL, NULL, NULL),
+(1513, 'active', 'junior', 'Greg', 'Ivor', 'Cebu City', 'M', '09994562154', 'greg@gmail.com', NULL, '1990-02-16', '2021-02-23', NULL, NULL, NULL),
+(1514, 'deleted', 'junior', 'Reyland', 'Nazareth', 'Lapulapu City', 'M', '09164543211', 'reylandbogo@gmail.com', NULL, '1977-09-23', '2021-02-23', '2021-05-06', '14:48:22', 'Alvin Arnibal'),
+(1515, 'active', 'junior', 'Raian', 'Miro', 'Banilad, Cebu', 'M', '09453215422', 'raianmiro@gmail.com', NULL, '1998-01-01', '2021-05-06', NULL, NULL, NULL),
+(1516, 'deleted', 'junior', 'asdfsaaaaaaaaaaaaaa', 'wtf', 'Cebu City', 'M', '09455611241', 'tarongni@gmail.com', NULL, '1921-05-04', '2021-05-06', '2021-05-06', '14:30:55', 'Alvin Arnibal'),
+(1517, 'active', 'junior', 'Dexter', 'Inso', 'Tabok, Mandaue City', 'M', '09451214451', 'dexterinso@gmail.com', NULL, '1987-01-01', '2021-05-06', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -1162,43 +1243,43 @@ ALTER TABLE `trainer`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87012;
+  MODIFY `admin_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87013;
 
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `inventory_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2024;
+  MODIFY `inventory_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2025;
 
 --
 -- AUTO_INCREMENT for table `logtrail`
 --
 ALTER TABLE `logtrail`
-  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `login_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `logtrail_doing`
 --
 ALTER TABLE `logtrail_doing`
-  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=334;
+  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=403;
 
 --
 -- AUTO_INCREMENT for table `member`
 --
 ALTER TABLE `member`
-  MODIFY `member_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1921681105;
+  MODIFY `member_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1921681106;
 
 --
 -- AUTO_INCREMENT for table `memberpromos`
 --
 ALTER TABLE `memberpromos`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `member_logtrail`
 --
 ALTER TABLE `member_logtrail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `member_notifs`
@@ -1216,31 +1297,31 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `paymentlog`
 --
 ALTER TABLE `paymentlog`
-  MODIFY `payment_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `payment_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `program`
 --
 ALTER TABLE `program`
-  MODIFY `program_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `program_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `promo`
 --
 ALTER TABLE `promo`
-  MODIFY `promo_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202118;
+  MODIFY `promo_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202120;
 
 --
 -- AUTO_INCREMENT for table `routines`
 --
 ALTER TABLE `routines`
-  MODIFY `routine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `routine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `trainer`
 --
 ALTER TABLE `trainer`
-  MODIFY `trainer_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1515;
+  MODIFY `trainer_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1518;
 
 --
 -- Constraints for dumped tables
