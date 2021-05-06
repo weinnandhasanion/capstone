@@ -187,7 +187,7 @@ $res = mysqli_query($conn, $sql);
                                           ?> src="./img/<?= $row["image_pathname"] ?>" <?php
                                                                                       } else {
                                                                                         ?> src="./blank.png" <?php
-                                                                                      } ?> alt="Card image cap">
+                                                                                                            } ?> alt="Card image cap">
                 <div class="card-body inventory">
                   <h3 class="card-title font-weight-bold text-orange"><?php echo $row["inventory_name"] ?></h3>
                   <h6 class="card-subtitle text-muted font-weight-bold"><?php echo $row["inventory_category"] ?></h6>
@@ -580,139 +580,6 @@ $res = mysqli_query($conn, $sql);
       $("#update-working").val(numberOfWorking - dmg);
     });
 
-    // Sorting
-    let cardio = $("#sort-cardio");
-    let weights = $("#sort-weights");
-    let both = $("#sort-both");
-    let cont = $("#inventory-cont");
-
-    cardio.click(function() {
-      weights.removeClass("btn-orange").addClass("btn-outline-orange");
-      both.removeClass("btn-orange").addClass("btn-outline-orange");
-      cardio.addClass("btn-orange").removeClass("btn-outline-orange");
-
-      $.get("./sort_inventory.php?type=cardio", function(res) {
-        data = JSON.parse(res);
-        cont.empty();
-        data.forEach(row => {
-          let html = `<div class="col-sm-4">
-              <div class="card inventory-cards mx-3 my-3">
-                <img class="card-img-top" src="./img/${row.image_pathname}" alt="Card image cap">
-                <div class="card-body inventory">
-                  <h3 class="card-title font-weight-bold text-orange">${row.inventory_name}</h3>
-                  <h6 class="card-subtitle text-muted font-weight-bold">${row.inventory_category}</h6>
-                  <p class="card-text mt-2">${row.inventory_description}</p>
-                </div>
-                <div class="card-footer d-flex">
-                  <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View ${row.inventory_name}">
-                    <i style="cursor: pointer; color:white; font-size: 20px;"
-                    data-toggle="modal" data-target="#view"
-                    class=" fas fa-eye mx-2 get_id" data-id = "${row.inventory_id}"
-                    onclick="viewDetails(this)"></i>
-                  </div>
-                  <div class="d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update ${row.inventory_name}">
-                    <i style="cursor: pointer; color:white; font-size: 20px;"
-                    class="fas fa-pencil-alt mx-2" data-id="${row.inventory_id}"
-                    data-toggle="modal" data-target="#regular_update"
-                    onclick="viewUpdate(this)"></i>
-                  </div>
-                  <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete ${row.inventory_name}">
-                    <i style="cursor: pointer; color:white; font-size: 20px;"
-                    class=" far fa-trash-alt mx-2" data-id="${row.inventory_id}"
-                    onclick="deleted(this)"></i>
-                  </div>
-                </div>
-              </div>
-            </div>`;
-          cont.append(html);
-        });
-      });
-    });
-    weights.click(function() {
-      weights.addClass("btn-orange").removeClass("btn-outline-orange");
-      both.removeClass("btn-orange").addClass("btn-outline-orange");
-      cardio.removeClass("btn-orange").addClass("btn-outline-orange");
-
-      $.get("./sort_inventory.php?type=weights", function(res) {
-        data = JSON.parse(res);
-        cont.empty();
-        data.forEach(row => {
-          let html = `<div class="col-sm-4">
-              <div class="card inventory-cards mx-3 my-3">
-                <img class="card-img-top" src="./img/${row.image_pathname}" alt="Card image cap">
-                <div class="card-body inventory">
-                  <h3 class="card-title font-weight-bold text-orange">${row.inventory_name}</h3>
-                  <h6 class="card-subtitle text-muted font-weight-bold">${row.inventory_category}</h6>
-                  <p class="card-text mt-2">${row.inventory_description}</p>
-                </div>
-                <div class="card-footer d-flex">
-                  <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View ${row.inventory_name}">
-                    <i style="cursor: pointer; color:white; font-size: 20px;"
-                    data-toggle="modal" data-target="#view"
-                    class=" fas fa-eye mx-2 get_id" data-id = "${row.inventory_id}"
-                    onclick="viewDetails(this)"></i>
-                  </div>
-                  <div class="d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update ${row.inventory_name}">
-                    <i style="cursor: pointer; color:white; font-size: 20px;"
-                    class="fas fa-pencil-alt mx-2" data-id="${row.inventory_id}"
-                    data-toggle="modal" data-target="#regular_update"
-                    onclick="viewUpdate(this)"></i>
-                  </div>
-                  <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete ${row.inventory_name}">
-                    <i style="cursor: pointer; color:white; font-size: 20px;"
-                    class=" far fa-trash-alt mx-2" data-id="${row.inventory_id}"
-                    onclick="deleted(this)"></i>
-                  </div>
-                </div>
-              </div>
-            </div>`;
-          cont.append(html);
-        });
-      });
-    });
-    both.on("click", function() {
-      weights.removeClass("btn-orange").addClass("btn-outline-orange");
-      both.addClass("btn-orange").removeClass("btn-outline-orange");
-      cardio.removeClass("btn-orange").addClass("btn-outline-orange");
-
-      $.get("./sort_inventory.php?type=both", function(res) {
-        data = JSON.parse(res);
-        cont.empty();
-        data.forEach(row => {
-          let html = `<div class="col-sm-4">
-              <div class="card inventory-cards mx-3 my-3">
-                <img class="card-img-top" src="./img/${row.image_pathname}" alt="Card image cap">
-                <div class="card-body inventory">
-                  <h3 class="card-title font-weight-bold text-orange">${row.inventory_name}</h3>
-                  <h6 class="card-subtitle text-muted font-weight-bold">${row.inventory_category}</h6>
-                  <p class="card-text mt-2">${row.inventory_description}</p>
-                </div>
-                <div class="card-footer d-flex">
-                  <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View ${row.inventory_name}">
-                    <i style="cursor: pointer; color:white; font-size: 20px;"
-                    data-toggle="modal" data-target="#view"
-                    class=" fas fa-eye mx-2 get_id" data-id = "${row.inventory_id}"
-                    onclick="viewDetails(this)"></i>
-                  </div>
-                  <div class="d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update ${row.inventory_name}">
-                    <i style="cursor: pointer; color:white; font-size: 20px;"
-                    class="fas fa-pencil-alt mx-2" data-id="${row.inventory_id}"
-                    data-toggle="modal" data-target="#regular_update"
-                    onclick="viewUpdate(this)"></i>
-                  </div>
-                  <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete ${row.inventory_name}">
-                    <i style="cursor: pointer; color:white; font-size: 20px;"
-                    class=" far fa-trash-alt mx-2" data-id="${row.inventory_id}"
-                    onclick="deleted(this)"></i>
-                  </div>
-                </div>
-              </div>
-            </div>`;
-          cont.append(html);
-        });
-      });
-    });
-
     $("#search-item").on("keyup", function() {
       let val = $("#search-item").val();
       let data;
@@ -721,17 +588,19 @@ $res = mysqli_query($conn, $sql);
         data = JSON.parse(res);
 
         if (val == "") {
-          both.click();
+          renderItems(data);
         } else {
-          cardio.removeClass("btn-orange").addClass("btn-outline-orange");
-          weights.removeClass("btn-orange").addClass("btn-outline-orange");
-          both.removeClass("btn-orange").addClass("btn-outline-orange");
-
           results = data.filter(row => row.inventory_name.toLowerCase().includes(val.toLowerCase()));
-          if (results.length > 0) {
-            $("#inventory-cont").empty();
-            results.forEach(row => {
-              let html = `<div class="col-sm-4">
+          renderItems(results);
+        }
+      });
+    });
+
+    function renderItems(data) {
+      if (data.length > 0) {
+        $("#inventory-cont").empty();
+        data.forEach(row => {
+          let html = `<div class="col-sm-4">
                 <div class="card inventory-cards mx-3 my-3">
                   <img class="card-img-top" src="./img/${row.image_pathname}" alt="Card image cap">
                   <div class="card-body inventory">
@@ -760,14 +629,12 @@ $res = mysqli_query($conn, $sql);
                   </div>
                 </div>
               </div>`;
-              $("#inventory-cont").append(html);
-            });
-          } else {
-            $("#inventory-cont").empty();
-          }
-        }
-      });
-    });
+          $("#inventory-cont").append(html);
+        });
+      } else {
+        $("#inventory-cont").empty();
+      }
+    }
 
     function deleted(el) {
       let id = el.getAttribute('data-id');
@@ -787,7 +654,7 @@ $res = mysqli_query($conn, $sql);
                   console.log((this.responseText));
                   $.alert({
                     title: 'Success',
-                    content: 'inventory successfully deleted.',
+                    content: 'Item successfully deleted.',
                     buttons: {
                       ok: {
                         text: 'OK',
@@ -909,7 +776,6 @@ $res = mysqli_query($conn, $sql);
               let req = new XMLHttpRequest();
               req.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  console.log((this.responseText));
                   $.alert({
                     title: 'Success',
                     content: 'inventory successfully recovered!',
