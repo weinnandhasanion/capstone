@@ -243,7 +243,7 @@
           <button type='button' class='close' id='close-paymentModal' data-dismiss='modal'>&times;</button>
         </div> 
         <div class='modal-body'>
-          <form action="add_promo.php" method="post">
+          <form action="add_promo.php" id="add-promo-form" method="post">
             <div class="form-group">
               <div class="form-row">
                 <div class="col-sm-12">
@@ -258,7 +258,7 @@
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Promo Discount</label>
-                  <input  type="text" required name="promo-amount" onblur="checkIfAmount(this)"  id="promo-amount" class="form-control mb-1" placeholder="Enter amount" />
+                  <input  type="number" required name="promo-amount" onblur="checkIfAmount(this)"  id="promo-amount" class="form-control mb-1" placeholder="Enter amount" />
                   <small  style="display:none"class="validation text-danger" id="promo-amount-empty">Please fill out this field</small>
                   <small  style="display:none"class="validation text-danger" id="promo-amount-invalid">Invalid input</small>
                 </div>
@@ -601,6 +601,38 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
   <script src="./../js/pagination.js"></script>
   <script>
+    // adding promos ajax
+    $("#add-promo-form").submit(function (e) {
+      e.preventDefault();
+
+      let url = $(this).attr("action");
+      let data = $(this).serialize();
+
+      $.dialog({
+        backgroundDismiss: true,
+        closeIcon: false,
+        content: function () {
+          var self = this;
+
+          return $.post(url, data, function (res) {
+            console.log(res);
+            if (JSON.parse(res) == "success") {
+              self.setTitle("Success");
+              self.setContent("Successfully added promo.");
+              self.setType("green");
+              self.backgroundDismiss = () => window.location.reload();
+            } else {
+              self.setTitle("Error");
+              self.setContent(JSON.parse(res));
+              self.setType("red");
+            }
+          });
+        }
+      });
+    });
+
+    // updating promos ajax
+
     // View details modal
     function viewDetails(el) {
       let id = el.getAttribute("data-id");
@@ -1113,7 +1145,6 @@
         backgroundDismiss: true,
         buttons: {
           close: {
-            action: function () {},
             isHidden: true
           }
         }
