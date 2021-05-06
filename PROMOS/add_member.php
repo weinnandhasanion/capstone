@@ -22,17 +22,8 @@ if($checkIfActiveQuery) {
 
 if($isActive) {
 	if ($status == 2) {
-		$sql = "SELECT mp.id FROM memberpromos AS mp
-						INNER JOIN promo AS p
-						ON mp.promo_id = p.promo_id
-						WHERE mp.member_id = $memberId
-						AND mp.status = 'Active'
-						AND p.promo_type = 'Permanent'";
-		$res = mysqli_query($conn, $sql);
-		$row = mysqli_fetch_assoc($res);
-	
-		$sql = "UPDATE memberpromos SET status = 'Expired'
-						WHERE id = " . $row["id"];
+		$sql = "UPDATE memberpromos SET status = 'Removed'
+						WHERE member_id = $memberId AND status = 'Active'";
 		$query = mysqli_query($conn, $sql);
 	}
 	
@@ -98,15 +89,9 @@ if($isActive) {
 		 ( '$login_id_new','$admin_id', '$promoId', '$fullname','$description','$identity', '$timeNow')";
 		mysqli_query($conn, $sql1);
 	
-		echo "<script>
-		alert('Member successfully availed promo!');
-		window.location.href = './promos.php';
-		</script>";
+		echo json_encode("success");
 	}
 } else {
-	echo "<script>
-	alert('Member is already inactive. Cannot avail promo.');
-	window.location.href = './promos.php';
-	</script>";
+	echo json_encode("Member has an expired membership. Cannot avail promo.");
 }
 ?>

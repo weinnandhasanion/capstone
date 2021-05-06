@@ -67,14 +67,8 @@ if ($res) {
 	 ( '$login_id_new','$admin_id', '$promo_id_new', '$user_fname','$description','$identity', '$timeNow')";
   mysqli_query($conn, $sql1);
 
-  echo "<script>
-    alert('Promo successfully deleted.');
-    window.location.href = './promos.php';
-  </script>";
+  echo json_encode("success");
 } else {
-  echo "<script>
-    alert('Error: " . mysqli_error($conn) . "');
-    window.location.href = './promos.php';
-  </script>";
+  echo json_encode(mysqli_error($conn));
 }
 ?>

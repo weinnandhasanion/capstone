@@ -9,7 +9,7 @@ $memberId = $_REQUEST["member_id"];
 $promoId = $_REQUEST["promo_id"];
 
 $sql = "UPDATE memberpromos 
-        SET status = 'Expired', date_expired = '".date("Y-m-d")."'
+        SET status = 'Removed', date_expired = '".date("Y-m-d")."'
         WHERE member_id = $memberId AND promo_id = $promoId";
 $res = mysqli_query($conn, $sql);
 
@@ -43,7 +43,7 @@ if($res) {
      //this is for puting login_id in the array
      $data_logtrail = array();
      $login_id;
-     $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
+     $log = "SELECT * FROM logtrail WHERE admin_id = $session_admin_id ORDER BY login_id DESC";
      $logtrail = mysqli_query($conn, $log);
      if($logtrail) {
          while($rowrow = mysqli_fetch_assoc($logtrail)) {
@@ -97,14 +97,8 @@ if($res) {
      mysqli_query($conn, $sql1);
 
 
-  echo "<script>
-    alert('Member successfully removed from promo.');
-    window.location.href = './promos.php';
-  </script>";
+  echo json_encode("success");
 } else {
-  echo "<script>
-    alert('Error: ".mysqli_error($conn)."');
-    window.location.href = './promos.php';
-  </script>";
+  echo json_encode(mysqli_error($conn));
 }
 ?>

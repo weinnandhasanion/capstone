@@ -360,7 +360,7 @@
   <div class="modal fade" id="update-promo">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form action="./update_promo.php" method="POST">
+				<form action="./update_promo.php" method="POST" id="update-promo-form">
 						<div class="modal-header">
 								<h4 class="modal-title">Update Promo</h4>
 								<button type='button' class='close' id='close-paymentModal' data-dismiss='modal'>&times;</button>
@@ -632,6 +632,34 @@
     });
 
     // updating promos ajax
+    $("#update-promo-form").submit(function (e) {
+      e.preventDefault();
+
+      let url = $(this).attr("action");
+      let data = $(this).serialize();
+
+      $.dialog({
+        backgroundDismiss: true,
+        closeIcon: false,
+        content: function () {
+          var self = this;
+
+          return $.post(url, data, function (res) {
+            console.log(res);
+            if (JSON.parse(res) == "success") {
+              self.setTitle("Success");
+              self.setContent("Successfully updated promo.");
+              self.setType("green");
+              self.backgroundDismiss = () => window.location.reload();
+            } else {
+              self.setTitle("Error");
+              self.setContent(JSON.parse(res));
+              self.setType("red");
+            }
+          });
+        }
+      });
+    });
 
     // View details modal
     function viewDetails(el) {
@@ -950,19 +978,78 @@
 		function removeMember(el) {
 			let memberId = el.getAttribute("data-id");
 			let promoId = el.parentNode.getAttribute("data-id");
-			let conf = confirm("Are you sure you want to remove this member from this promo?");
-			if(conf == 1) {
-				window.location.href = `./remove_member.php?promo_id=${promoId}&member_id=${memberId}`;
-			}
+
+      let url = `./remove_member.php?promo_id=${promoId}&member_id=${memberId}`;
+
+      $.confirm({
+        title: "Delete?",
+        backgroundDismiss: true,
+        content: "Are you sure you want to remove this member from this promo?",
+        buttons: {
+          yes: {
+            btnClass: 'btn-red',
+            action: function () {
+              $.dialog({
+                backgroundDismiss: true,
+                closeIcon: false,
+                content: function () {
+                  var self = this;
+                  return $.get(url, function (res) {
+                    if (JSON.parse(res) == "success") {
+                      self.setTitle("Success");
+                      self.setContent("Member successfully removed from promo.");
+                      self.setType("green");
+                      self.backgroundDismiss = () => window.location.reload();
+                    } else {
+                      self.setTitle("Error");
+                      self.setContent(JSON.parse(res));
+                      self.setType("red");
+                    }
+                  });
+                }
+              });
+            }
+          }
+        }
+      });
 		}
 
     // Delete promo
 		function deletePromo(el) {
 			let id = el.getAttribute("data-id");
-			let x = confirm("WARNING: Deleting this promo will also remove the current members of this promo, requiring you to add them again once you restore this promo. Are you sure you want to proceed?");
-			if(x) {
-				window.location.href = "./delete_promo.php?id=" + id;
-			}
+      let url = "./delete_promo.php?id=" + id;
+
+      $.confirm({
+        title: "Warning?",
+        backgroundDismiss: true,
+        content: " Deleting this promo will also remove the current members of this promo, requiring you to add them again once you restore this promo. Are you sure you want to proceed?",
+        buttons: {
+          yes: {
+            btnClass: 'btn-red',
+            action: function () {
+              $.dialog({
+                backgroundDismiss: true,
+                closeIcon: false,
+                content: function () {
+                  var self = this;
+                  return $.get(url, function (res) {
+                    if (JSON.parse(res) == "success") {
+                      self.setTitle("Success");
+                      self.setContent("Promo successfully deleted.");
+                      self.setType("green");
+                      self.backgroundDismiss = () => window.location.reload();
+                    } else {
+                      self.setTitle("Error");
+                      self.setContent(JSON.parse(res));
+                      self.setType("red");
+                    }
+                  });
+                }
+              });
+            }
+          }
+        }
+      });
     }
     
     // Add members to promo
@@ -1251,27 +1338,87 @@
     function addNewMember(el) {
       var promoId = el.parentNode.getAttribute("data-id");
       var memberId = el.getAttribute("data-id");
-      console.log(promoId);
-        console.log(" " + memberId);
-      let x = confirm("Do you want this member to avail this promo?");
-      if(x) {
+      
+      $.confirm({
+        backgroundDismiss: true,
+        title: "Avail?",
+        content: "Do you want this member to avail this promo?",
+        buttons: {
+          yes: {
+            btnClass: 'btn-orange',
+            action: function () {
+              $.get(`./promo_check.php?member_id=${memberId}&promo_id=${promoId}`, function(res) {
+                res = JSON.parse(res);
 
-        $.get(`./promo_check.php?member_id=${memberId}&promo_id=${promoId}`, function(res) {
-          res = JSON.parse(res);
+                if(res.status == 0) {
+                  $.dialog({
+                    title: "Error",
+                    content: res.msg,
+                    backgroundDismiss: true,
+                    type: "red"
+                  });
+                } else if(res.status == 2) {
+                  $.confirm({
+                    title: "Warning",
+                    backgroundDismiss: true,
+                    content: "This member has an existing promo (" + res.promo + "). Availing a new promo will remove this member's current promo. Proceed?",
+                    buttons: {
+                      yes: {
+                        btnClass: 'btn-orange',
+                        action: function () {
+                          $.dialog({
+                            closeIcon: false,
+                            backgroundDismiss: true,
+                            content: function () {
+                              var self = this;
+                              let url = `./add_member.php?memberId=${memberId}&promoId=${promoId}&status=2`;
 
-          console.log(res);
-          if(res.status == 0) {
-            alert(res.msg);
-          } else if(res.status == 2) {
-            var x = confirm("This member has an existing permanent promo (" + res.promo + "). Availing a new promo will remove this member's current permanent promo. Proceed?");
-            if(x) {
-              window.location.href = `./add_member.php?memberId=${memberId}&promoId=${promoId}&status=2`;
+                              return $.get(url, function (res) {
+                                if (JSON.parse(res) == "success") {
+                                  self.setTitle("Success");
+                                  self.setContent("Successfully added member to promo.");
+                                  self.setType("green");
+                                  self.backgroundDismiss = () => window.location.reload();
+                                } else {
+                                  self.setTitle("Error");
+                                  self.setContent(JSON.parse(res));
+                                  self.setType("red");
+                                }
+                              });
+                            }
+                          });
+                        }
+                      }
+                    }
+                  });
+                } else {
+                  $.dialog({
+                    closeIcon: false,
+                    backgroundDismiss: true,
+                    content: function () {
+                      var self = this;
+                      let url = `./add_member.php?memberId=${memberId}&promoId=${promoId}&status=1`;
+
+                      return $.get(url, function (res) {
+                        if (JSON.parse(res) == "success") {
+                          self.setTitle("Success");
+                          self.setContent("Successfully added member to promo.");
+                          self.setType("green");
+                          self.backgroundDismiss = () => window.location.reload();
+                        } else {
+                          self.setTitle("Error");
+                          self.setContent(JSON.parse(res));
+                          self.setType("red");
+                        }
+                      });
+                    }
+                  });
+                }
+              });
             }
-          } else {
-            window.location.href = `./add_member.php?memberId=${memberId}&promoId=${promoId}&status=1`;
           }
-        });
-      }
+        }
+      });
     }
 
     function viewDeletedDetails(el) {
@@ -1318,10 +1465,41 @@
 
     function restorePromo(el) {
       let id = el.getAttribute('data-id');
-      let x = confirm("Are you sure to restore this promo?");
-      if(x) {
-        window.location.href = "./restore_promo.php?id=" + id;
-      }
+
+      $.confirm({
+        backgroundDismiss: true,
+        title: "Restore?",
+        content: "Are you sure you want to restore this promo?",
+        buttons: {
+          yes: {
+            btnClass: 'btn-orange',
+            action: function () {
+              let url = "./restore_promo.php?id=" + id;
+
+              $.dialog({
+                backgroundDismiss: true,
+                closeIcon: false,
+                content: function () {
+                  var self = this;
+
+                  return $.get(url, function (res) {
+                    if (JSON.parse(res) == "success") {
+                      self.setTitle("Success");
+                      self.setContent("Promo successfully restored.");
+                      self.setType("green");
+                      self.backgroundDismiss = () => window.location.reload();
+                    } else {
+                      self.setTitle("Error");
+                      self.setContent(JSON.parse(res));
+                      self.setType("red");
+                    }
+                  });
+                }
+              });
+            }
+          }
+        }
+      });
     }
 
     $("#search-promo").on("keyup", function() {

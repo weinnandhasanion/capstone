@@ -73,14 +73,8 @@ if($res) {
      mysqli_query($conn, $sql1);
 
 
-  echo "<script>
-    alert('Promo successfully restored!');
-    window.location.href = './promos.php';
-  </script>";
+  echo json_encode("success");
 } else {
-  echo "<script>
-    alert('Error: ".mysqli_error($conn)."');
-    window.location.href = './promos.php';
-  </script>";
+  echo json_encode(mysqli_error($conn));
 }
 ?>

@@ -4,7 +4,7 @@ session_start();
 
 $id = $_REQUEST["id"];
 
-$sql = "SELECT * FROM memberpromos WHERE promo_id = $id AND status = 'Active'";
+$sql = "SELECT * FROM memberpromos WHERE promo_id = $id AND status = 'Active' ORDER BY id DESC";
 $res = mysqli_query($conn, $sql);
 if($res) {
   if(mysqli_num_rows($res) > 0) {
