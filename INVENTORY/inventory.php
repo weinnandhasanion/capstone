@@ -97,23 +97,21 @@ $res = mysqli_query($conn, $sql);
           ?>
         </h4>
         <div class="logout">
-        <?php 
-            $sql = "SELECT * FROM logtrail ORDER BY login_id DESC";
-            $result = mysqli_query($conn, $sql); 
-            $data = array();
-            if($result){
-              while($rows = mysqli_fetch_assoc($result)){
-                $data[] = $rows;
-              }
-
-              $row = $data[0];
+          <?php
+          $sql = "SELECT * FROM logtrail ORDER BY login_id DESC";
+          $result = mysqli_query($conn, $sql);
+          $data = array();
+          if ($result) {
+            while ($rows = mysqli_fetch_assoc($result)) {
+              $data[] = $rows;
             }
-          ?> 
 
-        <a href="#">
-          <button id="logoutBtn" type="button" class="btn btn-sm btn-danger"
-          data-id="<?php echo $row['login_id'] ?>"
-          onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
+            $row = $data[0];
+          }
+          ?>
+
+          <a href="#">
+            <button id="logoutBtn" type="button" class="btn btn-sm btn-danger" data-id="<?php echo $row['login_id'] ?>" onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
         </div>
       </div>
     </nav>
@@ -150,7 +148,7 @@ $res = mysqli_query($conn, $sql);
         <a href="./../LOGTRAIL/logtrail.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-history mr-3"></i>Logtrail
         </a>
-      </div> 
+      </div>
 
 
     </div>
@@ -160,8 +158,7 @@ $res = mysqli_query($conn, $sql);
   <!--Main layout-->
   <main class="pt-5 mx-lg-5">
     <div class="container-fluid mt-5" id="main-div">
-    <button class="btn btn-sm btn-outline-orange mb-3" id="viewDeleted" data-toggle="modal"
-        data-target="#deleteModal">
+      <button class="btn btn-sm btn-outline-orange mb-3" id="viewDeleted" data-toggle="modal" data-target="#deleteModal">
         <i class="fas fa-trash mr-2"></i>
         View Deleted Inventory
       </button>
@@ -171,7 +168,7 @@ $res = mysqli_query($conn, $sql);
             <a data-toggle="modal" data-target="#add"><i style="color:#DF3A01; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Add New Promo" class="fas fa-plus mr-4"></i></a>
             Inventory
           </h4>
-         
+
           <form class="d-flex justify-content-center">
             <input type="text" placeholder="Search equipment name" id="search-item" class="form-control">
           </form>
@@ -188,11 +185,9 @@ $res = mysqli_query($conn, $sql);
               <div class="card inventory-cards mx-3 my-3">
                 <img class="card-img-top" <?php if (!$row["image_pathname"] == null) {
                                           ?> src="./img/<?= $row["image_pathname"] ?>" <?php
-                                          } else {
-                                          ?>
-                                          src = "./blank.png"
-                                          <?php
-                                          } ?> alt="Card image cap">
+                                                                                      } else {
+                                                                                        ?> src="./blank.png" <?php
+                                                                                      } ?> alt="Card image cap">
                 <div class="card-body inventory">
                   <h3 class="card-title font-weight-bold text-orange"><?php echo $row["inventory_name"] ?></h3>
                   <h6 class="card-subtitle text-muted font-weight-bold"><?php echo $row["inventory_category"] ?></h6>
@@ -200,21 +195,13 @@ $res = mysqli_query($conn, $sql);
                 </div>
                 <div class="card-footer d-flex">
                   <div class="mr-1 d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="View <?= $row["inventory_name"] ?>">
-                    <i style="cursor: pointer; color:white; font-size: 20px;"
-                    data-toggle="modal" data-target="#view"
-                    class=" fas fa-eye mx-2 get_id" data-id = "<?php echo $row["inventory_id"] ?>"
-                    onclick="viewDetails(this)"></i>
+                    <i style="cursor: pointer; color:white; font-size: 20px;" data-toggle="modal" data-target="#view" class=" fas fa-eye mx-2 get_id" data-id="<?php echo $row["inventory_id"] ?>" onclick="viewDetails(this)"></i>
                   </div>
                   <div class="d-flex justify-content-center align-items-center bg-orange rounded-circle" style="height: 35px; width: 35px" data-toggle="tooltip" data-placement="top" title="Update <?= $row["inventory_name"] ?>">
-                    <i style="cursor: pointer; color:white; font-size: 20px;"
-                    class="fas fa-pencil-alt mx-2" data-id="<?php echo $row["inventory_id"] ?>"
-                    data-toggle="modal" data-target="#regular_update"
-                    onclick="viewUpdate(this)"></i>
+                    <i style="cursor: pointer; color:white; font-size: 20px;" class="fas fa-pencil-alt mx-2" data-id="<?php echo $row["inventory_id"] ?>" data-toggle="modal" data-target="#regular_update" onclick="viewUpdate(this)"></i>
                   </div>
                   <div class="ml-auto d-flex justify-content-center align-items-center rounded-circle" style="height: 35px; width: 35px; background: red" data-toggle="tooltip" data-placement="top" title="Delete <?= $row["inventory_name"] ?>">
-                    <i style="cursor: pointer; color:white; font-size: 20px;"
-                    class=" far fa-trash-alt mx-2" data-id="<?php echo $row["inventory_id"] ?>"
-                    onclick="deleted(this)"></i>
+                    <i style="cursor: pointer; color:white; font-size: 20px;" class=" far fa-trash-alt mx-2" data-id="<?php echo $row["inventory_id"] ?>" onclick="deleted(this)"></i>
                   </div>
                 </div>
               </div>
@@ -229,66 +216,65 @@ $res = mysqli_query($conn, $sql);
 
   <div class="modal fade" id="view-details">
     <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title">View Details</h3>
-            <button type='button' class='close' id='close-modal' data-dismiss='modal'>&times;</button>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">View Details</h3>
+          <button type='button' class='close' id='close-modal' data-dismiss='modal'>&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex justify-content-center">
+            <div id="profilepic" style="border-radius: 50px; height: 100px; width: 100px; overflow: hidden; background-position: 50% 50%; background-size: cover;  text-align: center;">
+              <img src="member.png" id="view-image" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+            </div>
           </div>
-          <div class="modal-body">
-            <div class="d-flex justify-content-center">
-              <div id="profilepic"
-                style="border-radius: 50px; height: 100px; width: 100px; overflow: hidden; background-position: 50% 50%; background-size: cover;  text-align: center;">
-                <img src="member.png" id="view-image" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+          <div class="form-group mt-5">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">Item Name</label>
+                <input class="form-control" type="text" readonly id="view-name">
               </div>
-            </div>
-            <div class="form-group mt-5">
-              <div class="row">
-                <div class="col-sm-6">
-                  <label for="">Item Name</label>
-                  <input class="form-control" type="text" readonly id="view-name">
-                </div>
-                <div class="col-sm-6">
-                  <label for="">Item Category</label>
-                  <input class="form-control" type="text" readonly id="view-category">
-                </div>
+              <div class="col-sm-6">
+                <label for="">Item Category</label>
+                <input class="form-control" type="text" readonly id="view-category">
               </div>
-            </div>
-            <div class="form-group">
-              <div class="row">
-                <div class="col-sm-12">
-                  <label for="">Item Description</label>
-                  <textarea name="" id="view-description" class="form-control" style="resize: none" rows="2" readonly></textarea>
-                </div>
             </div>
           </div>
           <div class="form-group">
             <div class="row">
-                <div class="col-sm-6">
-                  <label for="">Date Added</label>
-                  <input class="form-control" type="text" readonly id="view-date-added">
-                </div>
-                <div class="col-sm-6">
-                  <label for="">Item Quantity</label>
-                  <input class="form-control" type="text" readonly id="view-quantity">
-                </div>
+              <div class="col-sm-12">
+                <label for="">Item Description</label>
+                <textarea name="" id="view-description" class="form-control" style="resize: none" rows="2" readonly></textarea>
               </div>
+            </div>
           </div>
           <div class="form-group">
             <div class="row">
-                <div class="col-sm-6">
-                  <label for="">No. of Items Working</label>
-                  <input class="form-control" type="text" readonly id="view-working">
-                </div>
-                <div class="col-sm-6">
-                  <label for="">No. of Items Damaged</label>
-                  <input class="form-control" type="text" readonly id="view-damaged">
-                </div>
+              <div class="col-sm-6">
+                <label for="">Date Added</label>
+                <input class="form-control" type="text" readonly id="view-date-added">
               </div>
+              <div class="col-sm-6">
+                <label for="">Item Quantity</label>
+                <input class="form-control" type="text" readonly id="view-quantity">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="">No. of Items Working</label>
+                <input class="form-control" type="text" readonly id="view-working">
+              </div>
+              <div class="col-sm-6">
+                <label for="">No. of Items Damaged</label>
+                <input class="form-control" type="text" readonly id="view-damaged">
+              </div>
+            </div>
           </div>
         </div>
         <div class="modal-footer"></div>
+      </div>
     </div>
-  </div>
   </div>
 
   <div class="modal fade" id="add">
@@ -299,7 +285,7 @@ $res = mysqli_query($conn, $sql);
           <button type='button' class='close' id='close-modal' data-dismiss='modal'>&times;</button>
         </div>
         <div class="modal-body">
-          <form action="inventoryadd_process.php" method="post" enctype="multipart/form-data">
+          <form action="inventoryadd_process.php" id="add-item-form" method="post" enctype="multipart/form-data">
             <div class="row d-flex mt-1 mb-3" style="flex-direction: row; position: relative;left: 70px;">
               <div id="profilepic" style="border-radius: 50px; height: 100px; width: 100px; overflow: hidden; background-position: 50% 50%; background-size: cover;  text-align: center;">
                 <img src="blank.png" id="add-item-img" alt="" style="height: 100%; width: 100%; object-fit: cover;">
@@ -317,7 +303,7 @@ $res = mysqli_query($conn, $sql);
               <div class="form-row">
                 <div class="col-sm-6">
                   <label>Quantity</label>
-                  <input type="text" id="quantity" name="inventory_qty" onblur="checkNumber(this)" class="form-control" required="" placeholder="Quantity">
+                  <input type="number" id="quantity" min="1" max="100" name="inventory_qty" onblur="checkNumber(this)" class="form-control" required="" placeholder="Quantity">
                   <small class="validation text-danger" id="quantity-empty">Please fill out this field</small>
                   <small class="validation text-danger" id="quantity-invalid">Invalid input</small>
                   <small class="validation text-danger" id="quantity-length">number must contain 3 digits</small>
@@ -326,8 +312,11 @@ $res = mysqli_query($conn, $sql);
                   <label>Category</label><br>
                   <select id="category" class="form-control" name="inventory_category" onblur="checkCategory(this)" required="" style="left:60px;">
                     <option value="" selected>Select category</option>
-                    <option value="Cardio Equipment">Cardio Equipment</option>
-                    <option value="Weight Equipment">Weight Equipment</option>
+                    <option value="Cardio">Cardio</option>
+                    <option value="Free Weights">Free Weights</option>
+                    <option value="Calisthenics">Calisthenics</option>
+                    <option value="Strength">Strength</option>
+                    <option value="Supplies">Supplies</option>
                   </select>
                   <small class="validation text-danger" id="category-invalid">Invalid input</small>
                 </div>
@@ -355,7 +344,7 @@ $res = mysqli_query($conn, $sql);
           <button type='button' class='close' id='close-modal' data-dismiss='modal'>&times;</button>
         </div>
         <div class="modal-body">
-          <form action="update_inventory.php" method="post" enctype="multipart/form-data">
+          <form action="update_inventory.php" id="update-item-form" method="post" enctype="multipart/form-data">
             <input type="text" id="update-id" name="inventory_id" style="display: none">
             <div class="row d-flex mt-1 mb-3" style="flex-direction: row; position: relative;left: 70px;">
               <div id="profilepic" style="border-radius: 50px; height: 100px; width: 100px; overflow: hidden; background-position: 50% 50%; background-size: cover;  text-align: center;">
@@ -388,15 +377,18 @@ $res = mysqli_query($conn, $sql);
                 <div class="col-sm-6">
                   <label for="">No. of Items Damaged</label>
                   <input type="number" required name="inventory_dmg" onblur="checkNumber(this)" class="form-control" id="update-damaged" min="0">
-                  <small  style="display:none"class="validation text-danger" id="update-damaged-empty">Please fill out this field</small>
-                  <small  style="display:none"class="validation text-danger" id="update-damaged-invalid">Invalid input</small>
+                  <small style="display:none" class="validation text-danger" id="update-damaged-empty">Please fill out this field</small>
+                  <small style="display:none" class="validation text-danger" id="update-damaged-invalid">Invalid input</small>
                 </div>
                 <div class="col-sm-6 train">
                   <label>Category</label><br>
                   <select id="update-category" class="form-control" name="inventory_category" onblur="checkCategory(this)" required="" style="left:60px;">
                     <option value="" selected>Select category</option>
-                    <option value="Cardio Equipment">Cardio Equipment</option>
-                    <option value="Weight Equipment">Weight Equipment</option>
+                    <option value="Cardio">Cardio</option>
+                    <option value="Free Weights">Free Weights</option>
+                    <option value="Calisthenics">Calisthenics</option>
+                    <option value="Strength">Strength</option>
+                    <option value="Supplies">Supplies</option>
                   </select>
                   <small class="validation text-danger" id="update-category-invalid">Invalid input</small>
                 </div>
@@ -418,7 +410,7 @@ $res = mysqli_query($conn, $sql);
     </div>
   </div>
 
-  
+
   <!---------------------------------------------------- DELETED RECORD -------------------------------------->
   <div id="deleteModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -451,45 +443,35 @@ $res = mysqli_query($conn, $sql);
               </thead>
               <tbody id='deletetbody'>
                 <?php
-            /* code for display data  AND date_deleted IS NOT NULL */
-            $sql = "SELECT * FROM inventory WHERE inventory_status = 'deleted' ORDER BY  date_deleted DESC, time_deleted DESC";
-            $result = mysqli_query($conn, $sql);
-            $resultCheck = mysqli_num_rows($result);
+                /* code for display data  AND date_deleted IS NOT NULL */
+                $sql = "SELECT * FROM inventory WHERE inventory_status = 'deleted' ORDER BY  date_deleted DESC, time_deleted DESC";
+                $result = mysqli_query($conn, $sql);
+                $resultCheck = mysqli_num_rows($result);
 
-            if($resultCheck > 0){
-              while($row = mysqli_fetch_assoc($result)){
-                $dateDeleted = new DateTime($row["date_deleted"]);
-                $resultDelete = $dateDeleted->format('F d Y');
-                $dateAdded = new DateTime( $row["date_added"]);
-                $resultAdded = $dateAdded->format('F d Y');
-                $timeDeleted = new DateTime( $row["time_deleted"]);
-                $time_Deleted = $timeDeleted->format('h:i A');
+                if ($resultCheck > 0) {
+                  while ($row = mysqli_fetch_assoc($result)) {
+                    $dateDeleted = new DateTime($row["date_deleted"]);
+                    $resultDelete = $dateDeleted->format('F d Y');
+                    $dateAdded = new DateTime($row["date_added"]);
+                    $resultAdded = $dateAdded->format('F d Y');
+                    $timeDeleted = new DateTime($row["time_deleted"]);
+                    $time_Deleted = $timeDeleted->format('h:i A');
                 ?>
-                <tr>
-                  <td><?php echo $row["inventory_name"]?></td>
-                  <td><?php echo $row["inventory_category"]?></td>
-                  <td><?php echo $row["admin_delete"]?></td>
-                  <td><?php echo $resultAdded?></td>
-                  <td><?php echo $resultDelete?></td>
-                  <td><?php echo $time_Deleted?></td>
-                  <td>
-                    <!-- <span data-toggle="tooltip" data-placement="top" title="View <?php// echo $row["last_name"]?>"">
-                    <i style="cursor: pointer; color:brown; font-size: 25px;"
-                    data-toggle="modal" data-target="#view"
-                    class=" fas fa-eye mx-2 get_id" data-id="
-                    <?php //echo $row['member_id'] ?>
-                    "onclick="displayDetails(this)"></i>
-                    </span> -->
-
-                    <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
-                      title="Recover <?php echo $row["inventory_name"]?>" class="fas fa-undo mx-2"
-                      data-id="<?php echo $row['inventory_id'] ?>" onclick="recover(this)"></i>
-                  </td>
-                </tr>
+                    <tr>
+                      <td><?php echo $row["inventory_name"] ?></td>
+                      <td><?php echo $row["inventory_category"] ?></td>
+                      <td><?php echo $row["admin_delete"] ?></td>
+                      <td><?php echo $resultAdded ?></td>
+                      <td><?php echo $resultDelete ?></td>
+                      <td><?php echo $time_Deleted ?></td>
+                      <td>
+                        <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Recover <?php echo $row["inventory_name"] ?>" class="fas fa-undo mx-2" data-id="<?php echo $row['inventory_id'] ?>" onclick="recover(this)"></i>
+                      </td>
+                    </tr>
                 <?php
-              }
-             }
-             ?>
+                  }
+                }
+                ?>
               </tbody>
             </table>
           </div>
@@ -515,19 +497,17 @@ $res = mysqli_query($conn, $sql);
   <script>
     function logout(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
-
       // AJAX Request
-    
+
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200 ) {
+        if (this.readyState == 4 && this.status == 200) {
           console.log((this.responseText));
           window.location.href = "./../logout_process.php";
         }
       }
       req.open('GET', './../logout.php?id=' + id, true);
-      req.send(); 
+      req.send();
     }
 
     function loadFile(elem) {
@@ -555,7 +535,7 @@ $res = mysqli_query($conn, $sql);
     function viewDetails(elem) {
       let id = elem.getAttribute('data-id');
 
-      $.get("view_inventory.php?id=" + id, function (res) {
+      $.get("view_inventory.php?id=" + id, function(res) {
         let data = JSON.parse(res);
 
         $("#view-image").attr('src', `./img/${data.image_pathname}`);
@@ -576,7 +556,7 @@ $res = mysqli_query($conn, $sql);
     function viewUpdate(elem) {
       let id = elem.getAttribute('data-id');
 
-      $.get("view_inventory.php?id=" + id, function (res) {  
+      $.get("view_inventory.php?id=" + id, function(res) {
         let data = JSON.parse(res);
 
         $("#update-image").attr('src', `./img/${data.image_pathname}`);
@@ -739,8 +719,8 @@ $res = mysqli_query($conn, $sql);
       let results;
       $.get("./sort_inventory.php?type=both", function(res) {
         data = JSON.parse(res);
-        
-        if(val == "") {
+
+        if (val == "") {
           both.click();
         } else {
           cardio.removeClass("btn-orange").addClass("btn-outline-orange");
@@ -748,7 +728,7 @@ $res = mysqli_query($conn, $sql);
           both.removeClass("btn-orange").addClass("btn-outline-orange");
 
           results = data.filter(row => row.inventory_name.toLowerCase().includes(val.toLowerCase()));
-          if(results.length > 0) {
+          if (results.length > 0) {
             $("#inventory-cont").empty();
             results.forEach(row => {
               let html = `<div class="col-sm-4">
@@ -789,17 +769,14 @@ $res = mysqli_query($conn, $sql);
       });
     });
 
- 
-
-  function deleted(el) {
+    function deleted(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       $.confirm({
         closeIcon: true,
         title: "Delete?",
-        content: "Are you sure you want to delete this inventory?",
+        content: "Are you sure you want to delete this item?",
         buttons: {
           confirm: {
             btnClass: "btn-orange",
@@ -814,6 +791,7 @@ $res = mysqli_query($conn, $sql);
                     buttons: {
                       ok: {
                         text: 'OK',
+                        btnClass: 'btn-orange',
                         action: function() {
                           window.location.reload();
                         }
@@ -830,11 +808,94 @@ $res = mysqli_query($conn, $sql);
       });
     }
 
+    // adding item ajax
+    $("#add-item-form").submit(function(e) {
+      e.preventDefault();
 
+      let url = $(this).attr("action");
+      let data = new FormData();
+      data.append('image', $("#fileButton").prop('files')[0]);
+      let arr = $(this).serializeArray();
 
-  function recover(el) {
+      arr.forEach(row => {
+        data.append(row.name, row.value);
+      });
+
+      $.dialog({
+        backgroundDismiss: true,
+        closeIcon: false,
+        content: function() {
+          var self = this;
+
+          return $.ajax({
+            url: url,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'post',
+            success: function(res) {
+              if (JSON.parse(res) == "success") {
+                self.setTitle("Success");
+                self.setContent("Item successfully added.");
+                self.setType("green");
+                self.backgroundDismiss = () => window.location.reload();
+              } else {
+                self.setTitle("Error");
+                self.setContent(JSON.parse(res));
+                self.setType("red");
+              }
+            }
+          });
+        }
+      });
+    });
+
+    // updating item ajax
+    $("#update-item-form").submit(function(e) {
+      e.preventDefault();
+
+      let url = $(this).attr("action");
+      let data = new FormData();
+      data.append('image', $("#update_img").prop('files')[0]);
+      let arr = $(this).serializeArray();
+
+      arr.forEach(row => {
+        data.append(row.name, row.value);
+      });
+
+      $.dialog({
+        backgroundDismiss: true,
+        closeIcon: false,
+        content: function() {
+          var self = this;
+
+          return $.ajax({
+            url: url,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'post',
+            success: function(res) {
+              if (JSON.parse(res) == "success") {
+                self.setTitle("Success");
+                self.setContent("Item successfully updated.");
+                self.setType("green");
+                self.backgroundDismiss = () => window.location.reload();
+              } else {
+                self.setTitle("Error");
+                self.setContent(JSON.parse(res));
+                self.setType("red");
+              }
+            }
+          });
+        }
+      });
+    });
+
+    function recover(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       $.confirm({
@@ -855,6 +916,7 @@ $res = mysqli_query($conn, $sql);
                     buttons: {
                       ok: {
                         text: 'OK',
+                        btnClass: 'btn-orange',
                         action: function() {
                           window.location.reload();
                         }
@@ -870,8 +932,6 @@ $res = mysqli_query($conn, $sql);
         }
       });
     }
-
-
   </script>
 </body>
 
