@@ -44,9 +44,13 @@ if (isset($_GET["id"])) {
             $message = $row["first_name"] . " " . $row["last_name"] . " is not eligible to enter the gym. Please pay monthly subscription first.";
             $type = "red";
             $title = "Error";
+          } else if (empty($row["monthly_start"])) {
+            $message = $row["first_name"] . " " . $row["last_name"] . " is not eligible to enter the gym. Please pay monthly subscription first.";
+            $type = "red";
+            $title = "Error";
           } else {
             $sql = "INSERT INTO member_logtrail (member_id, login_date, scanned_by)
-          VALUES $id, '$dateNow', $adminId";
+            VALUES $id, '$dateNow', $adminId";
             $res = mysqli_query($conn, $sql);
 
             $fn = $row["first_name"];
