@@ -1,15 +1,15 @@
 <?php
-	session_start();
-    require('./../connect.php');
+session_start();
+require('./../connect.php');
 
-	if(isset($_SESSION['admin_id'])){
-		$id = $_SESSION['admin_id'];
-	} else {
-    header("Location: ./../index_admin.php");
-  }
-	
-	$sql = "select * from admin where admin_id =".$id."";
-	$res = mysqli_query($conn, $sql);
+if (isset($_SESSION['admin_id'])) {
+  $id = $_SESSION['admin_id'];
+} else {
+  header("Location: ./../index_admin.php");
+}
+
+$sql = "select * from admin where admin_id =" . $id . "";
+$res = mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -32,56 +32,54 @@
   <link rel="icon" href="../mobile/img/gym_logo.png">
   <link href="css/theme-colors.css" rel="stylesheet">
 
-<style>
-  body::-webkit-scrollbar {
-    width: 0 !important;
-  }
+  <style>
+    body::-webkit-scrollbar {
+      width: 0 !important;
+    }
 
-  .custom-date {
-    display: none;
-  }
-</style>
+    .custom-date {
+      display: none;
+    }
+  </style>
 </head>
 
 <body class="grey lighten-3">
 
   <!--Main Navigation-->
   <header>
-    <nav class="navbar fixed-top navbar-light bg-darkgrey" >
-      <div class="container-fluid" >
+    <nav class="navbar fixed-top navbar-light bg-darkgrey">
+      <div class="container-fluid">
         <h4 style="margin-bottom: 0 !important;">
-          Welcome, 
-          <?php 
-			    	$row = mysqli_fetch_array($res);
-			    	echo "<strong>".$row['first_name']."</strong>";
-		      ?>
+          Welcome,
+          <?php
+          $row = mysqli_fetch_array($res);
+          echo "<strong>" . $row['first_name'] . "</strong>";
+          ?>
         </h4>
         <div class="logout">
-        <?php 
-            $sql = "SELECT * FROM logtrail ORDER BY login_id DESC";
-            $result = mysqli_query($conn, $sql); 
-            $data = array();
-            if($result){
-              while($rows = mysqli_fetch_assoc($result)){
-                $data[] = $rows;
-              }
-
-              $row = $data[0];
+          <?php
+          $sql = "SELECT * FROM logtrail ORDER BY login_id DESC";
+          $result = mysqli_query($conn, $sql);
+          $data = array();
+          if ($result) {
+            while ($rows = mysqli_fetch_assoc($result)) {
+              $data[] = $rows;
             }
-          ?> 
 
-        <a href="#">
-          <button id="logoutBtn" type="button" class="btn btn-sm btn-danger"
-          data-id="<?php echo $row['login_id'] ?>"
-          onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
+            $row = $data[0];
+          }
+          ?>
+
+          <a href="#">
+            <button id="logoutBtn" type="button" class="btn btn-sm btn-danger" data-id="<?php echo $row['login_id'] ?>" onclick="logout(this)" style="position:relative; left:328px;">LOGOUT</button>
         </div>
       </div>
     </nav>
-    <div class="sidebar-fixed position-fixed" style="background-color:#DF3A01;" >
+    <div class="sidebar-fixed position-fixed" style="background-color:#DF3A01;">
       <br>
       <center><img src="logo.png" class="img-fluid" alt="" style="width: 200px; height: 180px;"></center>
       <br>
-      <div class="list-group list-group-flush" >
+      <div class="list-group list-group-flush">
         <a href="./../DASHBOARD/dashboard.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-chart-pie mr-3"></i>Dashboard
         </a>
@@ -104,12 +102,12 @@
         <a href="./../LOGTRAIL/logtrail.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-history mr-3"></i>Logtrail
         </a>
-      </div>  
+      </div>
     </div>
     <!-- Sidebar -->
   </header>
   <!--Main Navigation-->
-  <main class="pt-5 mx-lg-5" >
+  <main class="pt-5 mx-lg-5">
     <div class="container-fluid mt-5">
       <br>
       <ol class="breadcrumb" style="background-color:white;">
@@ -140,7 +138,7 @@
       </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#member-promos">
         <i class="fas fa-eye mr-2"></i>
-       List of members who availed a promo
+        List of members who availed a promo
       </button>
     </div>
 
@@ -155,7 +153,7 @@
       </ol>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-list">
         <i class="fas fa-eye mr-2"></i>
-        list of  trainers
+        list of trainers
       </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-active">
         <i class="fas fa-eye mr-2"></i>
@@ -163,14 +161,14 @@
       </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-inactive">
         <i class="fas fa-eye mr-2"></i>
-       list of inactive trainers
+        list of inactive trainers
       </button>
       <button class="btn btn-orange btn-sm" data-toggle="modal" data-target="#trainers-deleted">
         <i class="fas fa-eye mr-2"></i>
-       list of deleted trainers
+        list of deleted trainers
       </button>
     </div>
-  
+
     <!--inventory--->
     <div class="container-fluid mt-5">
       <br>
@@ -464,12 +462,12 @@
                 <div class="col-sm-6">
                   <label for="">Promo</label>
                   <select name="promo" class="form-control">
-                    <?php 
+                    <?php
                     $sql = "SELECT * FROM promo WHERE status = 'Active'";
                     $query = mysqli_query($conn, $sql);
-                    while($row = mysqli_fetch_assoc($query)) {
+                    while ($row = mysqli_fetch_assoc($query)) {
                     ?>
-                    <option value="<?= $row["promo_id"] ?>"><?= $row["promo_name"] ?></option>
+                      <option value="<?= $row["promo_id"] ?>"><?= $row["promo_name"] ?></option>
                     <?php
                     }
                     ?>
@@ -499,57 +497,57 @@
     </div>
   </div>
 
-<!-- list of trainers -->
-<div class="modal fade" role="dialog" id="trainers-list">
+  <!-- list of trainers -->
+  <div class="modal fade" role="dialog" id="trainers-list">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="trainers-list-form" target="_blank" action="./trainers/trainer_added.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for list of trainers</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Date added</label>
-                <select id="trainers-list-select" name="timespan_trainers_list" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
-              </div>
-              <div class="col-sm-6">
+        <form id="trainers-list-form" target="_blank" action="./trainers/trainer_added.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for list of trainers</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Date added</label>
+                  <select id="trainers-list-select" name="timespan_trainers_list" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
                   <label for="">Trainer status</label>
                   <select name="trainers_list_status" class="form-control">
-                  <option value="all">All</option>
+                    <option value="all">All</option>
                     <option value="active">Active</option>
                     <option value="inactive">inactive</option>
                     <option value="deleted">Deleted</option>
                   </select>
                 </div>
-            </div>
-          </div>
-          <div class="form-group custom-date" id="trainers-list-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date_trainers_list" id="trainers-list-from" class="form-control">
-                <small class="d-none text-red" id="trainers-list-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date_trainers_list" id="trainers-list-to" class="form-control">
-                <small class="d-none text-red" id="trainers-list-to-error"></small>
               </div>
             </div>
+            <div class="form-group custom-date" id="trainers-list-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date_trainers_list" id="trainers-list-from" class="form-control">
+                  <small class="d-none text-red" id="trainers-list-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date_trainers_list" id="trainers-list-to" class="form-control">
+                  <small class="d-none text-red" id="trainers-list-to-error"></small>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn" id="trainers-list">Generate report</button>
-        </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="trainers-list">Generate report</button>
+          </div>
         </form>
       </div>
     </div>
@@ -559,92 +557,92 @@
   <div class="modal fade" role="dialog" id="trainers-active">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="trainers-active-form" target="_blank" action="./trainers/trainer_active.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for active trainers</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="trainers-active-select" name="timespan_trainers_active" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
+        <form id="trainers-active-form" target="_blank" action="./trainers/trainer_active.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for active trainers</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="trainers-active-select" name="timespan_trainers_active" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group custom-date" id="trainers-active-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date_trainers_active" id="trainers-active-from" class="form-control">
+                  <small class="d-none text-red" id="trainers-active-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date_trainers_active" id="trainers-active-to" class="form-control">
+                  <small class="d-none text-red" id="trainers-active-to-error"></small>
+                </div>
               </div>
             </div>
           </div>
-          <div class="form-group custom-date" id="trainers-active-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date_trainers_active" id="trainers-active-from" class="form-control">
-                <small class="d-none text-red" id="trainers-active-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date_trainers_active" id="trainers-active-to" class="form-control">
-                <small class="d-none text-red" id="trainers-active-to-error"></small>
-              </div>
-            </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="trainers-active">Generate report</button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn" id="trainers-active">Generate report</button>
-        </div>
         </form>
-        
+
       </div>
     </div>
   </div>
 
-   <!-- total trainers inactive -->
-   <div class="modal fade" role="dialog" id="trainers-inactive">
+  <!-- total trainers inactive -->
+  <div class="modal fade" role="dialog" id="trainers-inactive">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="trainers-inactive-form" target="_blank" action="./trainers/trainer_inactive.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for inactive trainers</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="trainers-inactive-select"  name="timespan_trainers_inactive" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>s
-                </select>
+        <form id="trainers-inactive-form" target="_blank" action="./trainers/trainer_inactive.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for inactive trainers</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="trainers-inactive-select" name="timespan_trainers_inactive" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>s
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group custom-date" id="trainers-inactive-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date_trainers_inactive" id="trainers-inactive-from" class="form-control">
+                  <small class="d-none text-red" id="trainers-inactive-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date_trainers_inactive" id="trainers-inactive-to" class="form-control">
+                  <small class="d-none text-red" id="trainers-inactive-to-error"></small>
+                </div>
               </div>
             </div>
           </div>
-          <div class="form-group custom-date" id="trainers-inactive-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date_trainers_inactive" id="trainers-inactive-from" class="form-control">
-                <small class="d-none text-red" id="trainers-inactive-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date_trainers_inactive" id="trainers-inactive-to" class="form-control">
-                <small class="d-none text-red" id="trainers-inactive-to-error"></small>
-              </div>
-            </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="trainers-inactive">Generate report</button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn" id="trainers-inactive">Generate report</button>
-        </div>
         </form>
       </div>
     </div>
@@ -654,74 +652,74 @@
   <div class="modal fade" role="dialog" id="trainers-deleted">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="trainers-deleted-form" target="_blank" action="./trainers/trainer_deleted.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for deleted trainers</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="trainers-deleted-select"  name="timespan_trainers_deleted" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>s
-                </select>
+        <form id="trainers-deleted-form" target="_blank" action="./trainers/trainer_deleted.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for deleted trainers</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="trainers-deleted-select" name="timespan_trainers_deleted" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>s
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group custom-date" id="trainers-deleted-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date_trainers_deleted" id="trainers-deleted-from" class="form-control">
+                  <small class="d-none text-red" id="trainers-deleted-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date_trainers_deleted" id="trainers-deleted-to" class="form-control">
+                  <small class="d-none text-red" id="trainers-deleted-to-error"></small>
+                </div>
               </div>
             </div>
           </div>
-          <div class="form-group custom-date" id="trainers-deleted-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date_trainers_deleted" id="trainers-deleted-from" class="form-control">
-                <small class="d-none text-red" id="trainers-deleted-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date_trainers_deleted" id="trainers-deleted-to" class="form-control">
-                <small class="d-none text-red" id="trainers-deleted-to-error"></small>
-              </div>
-            </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="trainers-deleted">Generate report</button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn" id="trainers-deleted">Generate report</button>
-        </div>
         </form>
       </div>
     </div>
   </div>
 
- 
 
-    <!-- list of promos -->
-    <div class="modal fade" role="dialog" id="promos-list">
+
+  <!-- list of promos -->
+  <div class="modal fade" role="dialog" id="promos-list">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="promos-list-from" target="_blank" action="./promos/promo_list.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for list of promos</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="promos-list-select" name="timespan_promos_list" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
-              </div>
-              <div class="col-sm-6">
+        <form id="promos-list-from" target="_blank" action="./promos/promo_list.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for list of promos</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="promos-list-select" name="timespan_promos_list" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
                   <label for="">Promo status</label>
                   <select name="status" class="form-control">
                     <option value="all">All</option>
@@ -738,26 +736,26 @@
                     <option value="Both">Both</option>
                   </select>
                 </div>
-            </div>
-          </div>
-          <div class="form-group custom-date" id="promos-list-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date_promos_list" id="promos-list-from" class="form-control">
-                <small class="d-none text-red" id="promos-list-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date_promos_list" id="promos-list-to" class="form-control">
-                <small class="d-none text-red" id="promos-list-to-error"></small>
               </div>
             </div>
+            <div class="form-group custom-date" id="promos-list-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date_promos_list" id="promos-list-from" class="form-control">
+                  <small class="d-none text-red" id="promos-list-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date_promos_list" id="promos-list-to" class="form-control">
+                  <small class="d-none text-red" id="promos-list-to-error"></small>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn" id="promos-list">Generate report</button>
-        </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="promos-list">Generate report</button>
+          </div>
         </form>
       </div>
     </div>
@@ -767,25 +765,25 @@
   <div class="modal fade" role="dialog" id="promos-permanent">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="promos-permanent-form" target="_blank" action="./promos/promo_permanent.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for Permanent Promos</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="promos-permanent-select" name="timespan_promos_permanent" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
-              </div>
-              <div class="col-sm-6">
+        <form id="promos-permanent-form" target="_blank" action="./promos/promo_permanent.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for Permanent Promos</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="promos-permanent-select" name="timespan_promos_permanent" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
                   <label for="">Promo status</label>
                   <select name="status" class="form-control">
                     <option value="Active">Active</option>
@@ -793,55 +791,55 @@
                     <option value="Deleted">Deleted</option>
                   </select>
                 </div>
-            </div>
-          </div>
-          <div class="form-group custom-date" id="promos-permanent-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date_promos_permanent" id="promos-permanent-from" class="form-control">
-                <small class="d-none text-red" id="promos-permanent-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date_promos_permanent" id="promos-permanent-to" class="form-control">
-                <small class="d-none text-red" id="promos-permanent-to-error"></small>
               </div>
             </div>
+            <div class="form-group custom-date" id="promos-permanent-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date_promos_permanent" id="promos-permanent-from" class="form-control">
+                  <small class="d-none text-red" id="promos-permanent-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date_promos_permanent" id="promos-permanent-to" class="form-control">
+                  <small class="d-none text-red" id="promos-permanent-to-error"></small>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn" id="promos-permanent">Generate report</button>
-        </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="promos-permanent">Generate report</button>
+          </div>
         </form>
       </div>
     </div>
   </div>
 
-  
+
   <!-- list of seasonal promos -->
   <div class="modal fade" role="dialog" id="promos-seasonal">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="promos-seasonal-form" target="_blank" action="./promos/promo_seasonal.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for Seasonal Promos</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="promos-seasonal-select" name="timespan_promos_seasonal" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
-              </div>
-              <div class="col-sm-6">
+        <form id="promos-seasonal-form" target="_blank" action="./promos/promo_seasonal.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for Seasonal Promos</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="promos-seasonal-select" name="timespan_promos_seasonal" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
                   <label for="">Promo status</label>
                   <select name="status" class="form-control">
                     <option value="Active">Active</option>
@@ -849,26 +847,26 @@
                     <option value="Deleted">Deleted</option>
                   </select>
                 </div>
-            </div>
-          </div>
-          <div class="form-group custom-date" id="promos-seasonal-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date_promos_seasonal" id="promos-seasonal-from" class="form-control">
-                <small class="d-none text-red" id="promos-seasonal-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date_promos_seasonal" id="promos-seasonal-to" class="form-control">
-                <small class="d-none text-red" id="promos-seasonal-to-error"></small>
               </div>
             </div>
+            <div class="form-group custom-date" id="promos-seasonal-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date_promos_seasonal" id="promos-seasonal-from" class="form-control">
+                  <small class="d-none text-red" id="promos-seasonal-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date_promos_seasonal" id="promos-seasonal-to" class="form-control">
+                  <small class="d-none text-red" id="promos-seasonal-to-error"></small>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn" id="promos-seasonal">Generate report</button>
-        </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="promos-seasonal">Generate report</button>
+          </div>
         </form>
       </div>
     </div>
@@ -878,44 +876,44 @@
   <div class="modal fade" role="dialog" id="total-sales">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="total-sales-form" target="_blank" action="./payments/total_sales.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for total sales</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="total-sales-select" name="timespan" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
+        <form id="total-sales-form" target="_blank" action="./payments/total_sales.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for total sales</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="total-sales-select" name="timespan" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group custom-date" id="total-sales-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date" id="total-sales-from" class="form-control">
+                  <small class="d-none text-red" id="total-sales-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date" id="total-sales-to" class="form-control">
+                  <small class="d-none text-red" id="total-sales-to-error"></small>
+                </div>
               </div>
             </div>
           </div>
-          <div class="form-group custom-date" id="total-sales-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date" id="total-sales-from" class="form-control">
-                <small class="d-none text-red" id="total-sales-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date" id="total-sales-to" class="form-control">
-                <small class="d-none text-red" id="total-sales-to-error"></small>
-              </div>
-            </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="total-sales">Generate report</button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn" id="total-sales">Generate report</button>
-        </div>
         </form>
       </div>
     </div>
@@ -925,44 +923,44 @@
   <div class="modal fade" role="dialog" id="monthly-payments">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="monthly-payments-form" target="_blank" action="./payments/monthly_payments.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for monthly payments</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="monthly-payments-select" name="timespan" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
+        <form id="monthly-payments-form" target="_blank" action="./payments/monthly_payments.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for monthly payments</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="monthly-payments-select" name="timespan" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group custom-date" id="monthly-payments-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date" id="monthly-payments-from" class="form-control">
+                  <small class="d-none text-red" id="monthly-payments-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date" id="monthly-payments-to" class="form-control">
+                  <small class="d-none text-red" id="monthly-payments-to-error"></small>
+                </div>
               </div>
             </div>
           </div>
-          <div class="form-group custom-date" id="monthly-payments-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date" id="monthly-payments-from" class="form-control">
-                <small class="d-none text-red" id="monthly-payments-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date" id="monthly-payments-to" class="form-control">
-                <small class="d-none text-red" id="monthly-payments-to-error"></small>
-              </div>
-            </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="monthly-payments">Generate report</button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn"id="monthly-payments">Generate report</button>
-        </div>
         </form>
       </div>
     </div>
@@ -972,122 +970,122 @@
   <div class="modal fade" role="dialog" id="annual-payments">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="annual-payments-form" target="_blank" action="./payments/annual_payments.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for annual payments</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="annual-payments-select" name="timespan" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
+        <form id="annual-payments-form" target="_blank" action="./payments/annual_payments.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for annual payments</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="annual-payments-select" name="timespan" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group custom-date" id="annual-payments-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date" id="annual-payments-from" class="form-control">
+                  <small class="d-none text-red" id="annual-payments-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date" id="annual-payments-to" class="form-control">
+                  <small class="d-none text-red" id="annual-payments-to-error"></small>
+                </div>
               </div>
             </div>
           </div>
-          <div class="form-group custom-date" id="annual-payments-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date" id="annual-payments-from" class="form-control">
-                <small class="d-none text-red" id="annual-payments-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date" id="annual-payments-to" class="form-control">
-                <small class="d-none text-red" id="annual-payments-to-error"></small>
-              </div>
-            </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="annual-payments">Generate report</button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn" id="annual-payments">Generate report</button>
-        </div>
         </form>
       </div>
     </div>
   </div>
 
-   <!-- list of walkin payments -->
-   <div class="modal fade" role="dialog" id="walkin-payments">
+  <!-- list of walkin payments -->
+  <div class="modal fade" role="dialog" id="walkin-payments">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="walkin-payments-form" target="_blank" action="./payments/walkin_payments.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for walkin payments</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="walkin-payments-select" name="timespan" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
+        <form id="walkin-payments-form" target="_blank" action="./payments/walkin_payments.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for walkin payments</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="walkin-payments-select" name="timespan" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group custom-date" id="walkin-payments-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date" id="walkin-payments-from" class="form-control">
+                  <small class="d-none text-red" id="walkin-payments-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date" id="walkin-payments-to" class="form-control">
+                  <small class="d-none text-red" id="walkin-payments-to-error"></small>
+                </div>
               </div>
             </div>
           </div>
-          <div class="form-group custom-date" id="walkin-payments-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date" id="walkin-payments-from" class="form-control">
-                <small class="d-none text-red" id="walkin-payments-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date" id="walkin-payments-to" class="form-control">
-                <small class="d-none text-red" id="walkin-payments-to-error"></small>
-              </div>
-            </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="walkin-payments">Generate report</button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn" id="walkin-payments">Generate report</button>
-        </div>
         </form>
       </div>
     </div>
   </div>
-  
-  
-  
-  
-   <!-- list of inventory -->
-   <div class="modal fade" role="dialog" id="inventory-list">
+
+
+
+
+  <!-- list of inventory -->
+  <div class="modal fade" role="dialog" id="inventory-list">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="inventory-list-form" target="_blank" action="./inventory/inventory_list.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for list of inventory</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="inventory-list-select" name="timespan_inventory_list" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
-              </div>
-              <div class="col-sm-6">
+        <form id="inventory-list-form" target="_blank" action="./inventory/inventory_list.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for list of inventory</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="inventory-list-select" name="timespan_inventory_list" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
                   <label for="">Category</label>
                   <select name="inventory_category_list" id="" class="form-control">
                     <option value="Cardio Equipment">Cardio Equipment</option>
@@ -1095,56 +1093,56 @@
                     <option value="Both" selected>Both</option>
                   </select>
                 </div>
-            </div>
-          </div>
-          <div class="form-group custom-date" id="inventory-list-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date_inventory_list" id="inventory-list-from" class="form-control">
-                <small class="d-none text-red" id="inventory-list-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date_inventory_list" id="inventory-list-to" class="form-control">
-                <small class="d-none text-red" id="inventory-list-to-error"></small>
               </div>
             </div>
+            <div class="form-group custom-date" id="inventory-list-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date_inventory_list" id="inventory-list-from" class="form-control">
+                  <small class="d-none text-red" id="inventory-list-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date_inventory_list" id="inventory-list-to" class="form-control">
+                  <small class="d-none text-red" id="inventory-list-to-error"></small>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn" id="inventory-list">Generate report</button>
-        </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="inventory-list">Generate report</button>
+          </div>
         </form>
       </div>
     </div>
   </div>
 
 
-  
-   <!-- working  inventory -->
-   <div class="modal fade" role="dialog" id="inventory-working">
+
+  <!-- working  inventory -->
+  <div class="modal fade" role="dialog" id="inventory-working">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="inventory-working-form" target="_blank" action="./inventory/inventory_working.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for working inventory</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="inventory-working-select" name="timespan_inventory_working" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
-              </div>
-              <div class="col-sm-6">
+        <form id="inventory-working-form" target="_blank" action="./inventory/inventory_working.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for working inventory</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="inventory-working-select" name="timespan_inventory_working" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
                   <label for="">Category</label>
                   <select name="inventory_category_working" id="" class="form-control">
                     <option value="Cardio Equipment">Cardio Equipment</option>
@@ -1152,55 +1150,55 @@
                     <option value="Both" selected>Both</option>
                   </select>
                 </div>
-            </div>
-          </div>
-          <div class="form-group custom-date" id="inventory-working-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date_inventory_working" id="inventory-working-from" class="form-control">
-                <small class="d-none text-red" id="inventory-working-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date_inventory_working" id="inventory-working-to" class="form-control">
-                <small class="d-none text-red" id="inventory-working-to-error"></small>
               </div>
             </div>
+            <div class="form-group custom-date" id="inventory-working-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date_inventory_working" id="inventory-working-from" class="form-control">
+                  <small class="d-none text-red" id="inventory-working-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date_inventory_working" id="inventory-working-to" class="form-control">
+                  <small class="d-none text-red" id="inventory-working-to-error"></small>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn" id="inventory-working">Generate report</button>
-        </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="inventory-working">Generate report</button>
+          </div>
         </form>
       </div>
     </div>
   </div>
 
 
-   <!-- Damage  inventory -->
-   <div class="modal fade" role="dialog" id="inventory-damage">
+  <!-- Damage  inventory -->
+  <div class="modal fade" role="dialog" id="inventory-damage">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
-      <form id="inventory-damage-form" target="_blank" action="./inventory/inventory_damage.php" method="post">
-        <div class="modal-header">
-          <h4 class="modal-title">Generate report for damage inventory</h4>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">Time span</label>
-                <select id="inventory-damage-select" name="timespan_inventory_damage" class="form-control">
-                  <option value="Today">Today</option>
-                  <option value="This week">This week</option>
-                  <option value="This month">This month</option>
-                  <option value="This year">This year</option>
-                  <option value="All-time">All-time</option>
-                  <option value="Custom">Custom</option>
-                </select>
-              </div>
-              <div class="col-sm-6">
+        <form id="inventory-damage-form" target="_blank" action="./inventory/inventory_damage.php" method="post">
+          <div class="modal-header">
+            <h4 class="modal-title">Generate report for damage inventory</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">Time span</label>
+                  <select id="inventory-damage-select" name="timespan_inventory_damage" class="form-control">
+                    <option value="Today">Today</option>
+                    <option value="This week">This week</option>
+                    <option value="This month">This month</option>
+                    <option value="This year">This year</option>
+                    <option value="All-time">All-time</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
                   <label for="">Category</label>
                   <select name="inventory_category_damage" id="" class="form-control">
                     <option value="Cardio Equipment">Cardio Equipment</option>
@@ -1208,26 +1206,26 @@
                     <option value="Both" selected>Both</option>
                   </select>
                 </div>
-            </div>
-          </div>
-          <div class="form-group custom-date" id="inventory-damage-custom">
-            <div class="row">
-              <div class="col-sm-6">
-                <label for="">From Date</label>
-                <input type="date" name="from_date_inventory_damage" id="inventory-damage-from" class="form-control">
-                <small class="d-none text-red" id="inventory-damage-from-error"></small>
-              </div>
-              <div class="col-sm-6">
-                <label for="">To Date</label>
-                <input type="date" name="to_date_inventory_damage" id="inventory-damage-to" class="form-control">
-                <small class="d-none text-red" id="inventory-damage-to-error"></small>
               </div>
             </div>
+            <div class="form-group custom-date" id="inventory-damage-custom">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label for="">From Date</label>
+                  <input type="date" name="from_date_inventory_damage" id="inventory-damage-from" class="form-control">
+                  <small class="d-none text-red" id="inventory-damage-from-error"></small>
+                </div>
+                <div class="col-sm-6">
+                  <label for="">To Date</label>
+                  <input type="date" name="to_date_inventory_damage" id="inventory-damage-to" class="form-control">
+                  <small class="d-none text-red" id="inventory-damage-to-error"></small>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-sm btn-outline-orange generate-btn" id="inventory-damage">Generate report</button>
-        </div>
+          <div class="modal-footer">
+            <button class="btn btn-sm btn-outline-orange generate-btn" id="inventory-damage">Generate report</button>
+          </div>
         </form>
       </div>
     </div>
@@ -1239,271 +1237,272 @@
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/mdb.min.js"></script>
   <script>
- function logout(el) {
+    function logout(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
 
       // AJAX Request
-    
+
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
-        if(this.readyState == 4 && this.status == 200 ) {
+        if (this.readyState == 4 && this.status == 200) {
           console.log((this.responseText));
           window.location.href = "./../logout_process.php";
         }
       }
       req.open('GET', './../logout.php?id=' + id, true);
-      req.send(); 
+      req.send();
     }
 
-  function getMembersPromo () {
-    window.open("./members/members_promo.php", "_blank");
-  }
-
-  function getPaidMembers () {
-    window.open("./members/paid_members.php", "_blank");
-  }
-
-  function getExpiredMembers () {
-    window.open("./members/expired_members.php", "_blank");
-  }
-
-//modal custom for members
-  $("#members-added-select").on("change", function() {
-    let select = $("#members-added-select");
-    if(select.val() == "Custom") {
-      $("#members-added-custom").css("display", "block");
-    } else {
-      $("#members-added-custom").css("display", "none");
+    function getMembersPromo() {
+      window.open("./members/members_promo.php", "_blank");
     }
-  });
 
-  $("#deleted-members-select").on("change", function() {
-    let select = $("#deleted-members-select");
-    if(select.val() == "Custom") {
-      $("#deleted-members-custom").css("display", "block");
-    } else {
-      $("#deleted-members-custom").css("display", "none");
+    function getPaidMembers() {
+      window.open("./members/paid_members.php", "_blank");
     }
-  });
 
-  $("#inactive-members-select").on("change", function() {
-    let select = $("#inactive-members-select");
-    if(select.val() == "Custom") {
-      $("#inactive-members-custom").css("display", "block");
-    } else {
-      $("#inactive-members-custom").css("display", "none");
+    function getExpiredMembers() {
+      window.open("./members/expired_members.php", "_blank");
     }
-  });
 
-  $("#activated-members-select").on("change", function() {
-    let select = $("#activated-members-select");
-    if(select.val() == "Custom") {
-      $("#activated-members-custom").css("display", "block");
-    } else {
-      $("#activated-members-custom").css("display", "none");
-    }
-  });
+    //modal custom for members
+    $("#members-added-select").on("change", function() {
+      let select = $("#members-added-select");
+      if (select.val() == "Custom") {
+        $("#members-added-custom").css("display", "block");
+      } else {
+        $("#members-added-custom").css("display", "none");
+      }
+    });
 
-  // PAYMENTS
-  $("#total-sales-select").on("change", function() {
-    let select = $("#total-sales-select");
-    if(select.val() == "Custom") {
-      $("#total-sales-custom").css("display", "block");
-    } else {
-      $("#total-sales-custom").css("display", "none");
-    }
-  });
+    $("#deleted-members-select").on("change", function() {
+      let select = $("#deleted-members-select");
+      if (select.val() == "Custom") {
+        $("#deleted-members-custom").css("display", "block");
+      } else {
+        $("#deleted-members-custom").css("display", "none");
+      }
+    });
 
-  $("#monthly-payments-select").on("change", function() {
-    let select = $("#monthly-payments-select");
-    if(select.val() == "Custom") {
-      $("#monthly-payments-custom").css("display", "block");
-    } else {
-      $("#monthly-payments-custom").css("display", "none");
-    }
-  });
+    $("#inactive-members-select").on("change", function() {
+      let select = $("#inactive-members-select");
+      if (select.val() == "Custom") {
+        $("#inactive-members-custom").css("display", "block");
+      } else {
+        $("#inactive-members-custom").css("display", "none");
+      }
+    });
 
-  $("#annual-payments-select").on("change", function() {
-    let select = $("#annual-payments-select");
-    if(select.val() == "Custom") {
-      $("#annual-payments-custom").css("display", "block");
-    } else {
-      $("#annual-payments-custom").css("display", "none");
-    }
-  });
+    $("#activated-members-select").on("change", function() {
+      let select = $("#activated-members-select");
+      if (select.val() == "Custom") {
+        $("#activated-members-custom").css("display", "block");
+      } else {
+        $("#activated-members-custom").css("display", "none");
+      }
+    });
 
-  $("#walkin-payments-select").on("change", function() {
-    let select = $("#walkin-payments-select");
-    if(select.val() == "Custom") {
-      $("#walkin-payments-custom").css("display", "block");
-    } else {
-      $("#walkin-payments-custom").css("display", "none");
-    }
-  });
+    // PAYMENTS
+    $("#total-sales-select").on("change", function() {
+      let select = $("#total-sales-select");
+      if (select.val() == "Custom") {
+        $("#total-sales-custom").css("display", "block");
+      } else {
+        $("#total-sales-custom").css("display", "none");
+      }
+    });
 
-//-------------------------- TRAINERS -----------------------------
+    $("#monthly-payments-select").on("change", function() {
+      let select = $("#monthly-payments-select");
+      if (select.val() == "Custom") {
+        $("#monthly-payments-custom").css("display", "block");
+      } else {
+        $("#monthly-payments-custom").css("display", "none");
+      }
+    });
+
+    $("#annual-payments-select").on("change", function() {
+      let select = $("#annual-payments-select");
+      if (select.val() == "Custom") {
+        $("#annual-payments-custom").css("display", "block");
+      } else {
+        $("#annual-payments-custom").css("display", "none");
+      }
+    });
+
+    $("#walkin-payments-select").on("change", function() {
+      let select = $("#walkin-payments-select");
+      if (select.val() == "Custom") {
+        $("#walkin-payments-custom").css("display", "block");
+      } else {
+        $("#walkin-payments-custom").css("display", "none");
+      }
+    });
+
+    //-------------------------- TRAINERS -----------------------------
     //modal custom for active and inactive trainers
     $("#trainers-list-select").on("change", function() {
-    let select = $("#trainers-list-select");
-    if(select.val() == "Custom") {
-      $("#trainers-list-custom").css("display", "block");
-    } else {
-      $("#trainers-list-custom").css("display", "none");
-    }
-  });
+      let select = $("#trainers-list-select");
+      if (select.val() == "Custom") {
+        $("#trainers-list-custom").css("display", "block");
+      } else {
+        $("#trainers-list-custom").css("display", "none");
+      }
+    });
     //modal custom for active trainers
     $("#trainers-active-select").on("change", function() {
-    let select = $("#trainers-active-select");
-    if(select.val() == "Custom") {
-      $("#trainers-active-custom").css("display", "block");
-    } else {
-      $("#trainers-active-custom").css("display", "none");
-    }
-  });
-  //modal custom for inactive trainers
-  $("#trainers-inactive-select").on("change", function() {
-    let select = $("#trainers-inactive-select");
-    if(select.val() == "Custom") {
-      $("#trainers-inactive-custom").css("display", "block");
-    } else {
-      $("#trainers-inactive-custom").css("display", "none");
-    }
-  });
+      let select = $("#trainers-active-select");
+      if (select.val() == "Custom") {
+        $("#trainers-active-custom").css("display", "block");
+      } else {
+        $("#trainers-active-custom").css("display", "none");
+      }
+    });
+    //modal custom for inactive trainers
+    $("#trainers-inactive-select").on("change", function() {
+      let select = $("#trainers-inactive-select");
+      if (select.val() == "Custom") {
+        $("#trainers-inactive-custom").css("display", "block");
+      } else {
+        $("#trainers-inactive-custom").css("display", "none");
+      }
+    });
     //modal custom for deleted trainers
     $("#trainers-deleted-select").on("change", function() {
-    let select = $("#trainers-deleted-select");
-    if(select.val() == "Custom") {
-      $("#trainers-deleted-custom").css("display", "block");
-    } else {
-      $("#trainers-deleted-custom").css("display", "none");
-    }
-  });
-  
-  //-------------------------- PROMOS -----------------------------
+      let select = $("#trainers-deleted-select");
+      if (select.val() == "Custom") {
+        $("#trainers-deleted-custom").css("display", "block");
+      } else {
+        $("#trainers-deleted-custom").css("display", "none");
+      }
+    });
 
-   //modal custom for list of promos
-   $("#promos-list-select").on("change", function() {
-    let select = $("#promos-list-select");
-    if(select.val() == "Custom") {
-      $("#promos-list-custom").css("display", "block");
-    } else {
-      $("#promos-list-custom").css("display", "none");
-    }
-  });
-  
-   //modal custom for permanent of promos
-   $("#promos-permanent-select").on("change", function() {
-    let select = $("#promos-permanent-select");
-    if(select.val() == "Custom") {
-      $("#promos-permanent-custom").css("display", "block");
-    } else {
-      $("#promos-permanent-custom").css("display", "none");
-    }
-  });
-   //modal custom for seasonal of promos
-   $("#promos-seasonal-select").on("change", function() {
-    let select = $("#promos-seasonal-select");
-    if(select.val() == "Custom") {
-      $("#promos-seasonal-custom").css("display", "block");
-    } else {
-      $("#promos-seasonal-custom").css("display", "none");
-    }
-  });
-   //-------------------------- INVENTORY -----------------------------
+    //-------------------------- PROMOS -----------------------------
+
+    //modal custom for list of promos
+    $("#promos-list-select").on("change", function() {
+      let select = $("#promos-list-select");
+      if (select.val() == "Custom") {
+        $("#promos-list-custom").css("display", "block");
+      } else {
+        $("#promos-list-custom").css("display", "none");
+      }
+    });
+
+    //modal custom for permanent of promos
+    $("#promos-permanent-select").on("change", function() {
+      let select = $("#promos-permanent-select");
+      if (select.val() == "Custom") {
+        $("#promos-permanent-custom").css("display", "block");
+      } else {
+        $("#promos-permanent-custom").css("display", "none");
+      }
+    });
+    //modal custom for seasonal of promos
+    $("#promos-seasonal-select").on("change", function() {
+      let select = $("#promos-seasonal-select");
+      if (select.val() == "Custom") {
+        $("#promos-seasonal-custom").css("display", "block");
+      } else {
+        $("#promos-seasonal-custom").css("display", "none");
+      }
+    });
+    //-------------------------- INVENTORY -----------------------------
     //modal custom for list of inventory
     $("#inventory-list-select").on("change", function() {
-    let select = $("#inventory-list-select");
-    if(select.val() == "Custom") {
-      $("#inventory-list-custom").css("display", "block");
-    } else {
-      $("#inventory-list-custom").css("display", "none");
-    }
-  });
-  //modal custom for working of inventory
-  $("#inventory-working-select").on("change", function() {
-    let select = $("#inventory-working-select");
-    if(select.val() == "Custom") {
-      $("#inventory-working-custom").css("display", "block");
-    } else {
-      $("#inventory-working-custom").css("display", "none");
-    }
-  });
+      let select = $("#inventory-list-select");
+      if (select.val() == "Custom") {
+        $("#inventory-list-custom").css("display", "block");
+      } else {
+        $("#inventory-list-custom").css("display", "none");
+      }
+    });
+    //modal custom for working of inventory
+    $("#inventory-working-select").on("change", function() {
+      let select = $("#inventory-working-select");
+      if (select.val() == "Custom") {
+        $("#inventory-working-custom").css("display", "block");
+      } else {
+        $("#inventory-working-custom").css("display", "none");
+      }
+    });
 
     //modal custom for damage of inventory
     $("#inventory-damage-select").on("change", function() {
-    let select = $("#inventory-damage-select");
-    if(select.val() == "Custom") {
-      $("#inventory-damage-custom").css("display", "block");
-    } else {
-      $("#inventory-damage-custom").css("display", "none");
-    }
-  });
-
-  // Validation
-  $(".generate-btn").click(function() {
-    let id = $(this).attr("id") ? $(this).attr("id") : null;
-    
-    if(id != null) {
-      let select = $(`#${id}-select`).val();
-      let form = $(`#${id}-form`);
-      if(select == "Custom") {
-        validateDates(id, form);
-        event.preventDefault();
+      let select = $("#inventory-damage-select");
+      if (select.val() == "Custom") {
+        $("#inventory-damage-custom").css("display", "block");
+      } else {
+        $("#inventory-damage-custom").css("display", "none");
       }
-    }
-  });
+    });
 
-  function validateDates(id, form) {
-    let from = $(`#${id}-from`).val();
-    let to = $(`#${id}-to`).val();
-    let today = Date.parse(new Date(new Date(new Date(new Date().setHours(8)).setMinutes(0)).setSeconds(0)));
-    let fromTrue, toTrue;
+    // Validation
+    $(".generate-btn").click(function() {
+      let id = $(this).attr("id") ? $(this).attr("id") : null;
 
-    if(!from) {
-      $(`#${id}-from-error`).text("Please enter a valid date").removeClass("d-none");
-      fromTrue = false;
-    } else {
-      from = Date.parse(from);
-      
-      if(from <= 0) {
+      if (id != null) {
+        let select = $(`#${id}-select`).val();
+        let form = $(`#${id}-form`);
+        if (select == "Custom") {
+          validateDates(id, form);
+          event.preventDefault();
+        }
+      }
+    });
+
+    function validateDates(id, form) {
+      let from = $(`#${id}-from`).val();
+      let to = $(`#${id}-to`).val();
+      let today = Date.parse(new Date(new Date(new Date(new Date().setHours(8)).setMinutes(0)).setSeconds(0)));
+      let fromTrue, toTrue;
+
+      if (!from) {
         $(`#${id}-from-error`).text("Please enter a valid date").removeClass("d-none");
         fromTrue = false;
-      } else if(from > today) {
-        $(`#${id}-from-error`).text("Date must not be greater than current date").removeClass("d-none");
-        fromTrue = false;
       } else {
-        $(`#${id}-from-error`).addClass("d-none");
-        fromTrue = true;
+        from = Date.parse(from);
+
+        if (from <= 0) {
+          $(`#${id}-from-error`).text("Please enter a valid date").removeClass("d-none");
+          fromTrue = false;
+        } else if (from > today) {
+          $(`#${id}-from-error`).text("Date must not be greater than current date").removeClass("d-none");
+          fromTrue = false;
+        } else {
+          $(`#${id}-from-error`).addClass("d-none");
+          fromTrue = true;
+        }
       }
-    }
 
-    if(!to) {
-      $(`#${id}-to-error`).text("Please enter a valid date").removeClass("d-none");
-      toTrue = false;
-    } else {
-      to = Date.parse(to);
-
-      if(to <= 0) {
+      if (!to) {
         $(`#${id}-to-error`).text("Please enter a valid date").removeClass("d-none");
         toTrue = false;
-      } else if(to > today) {
-        $(`#${id}-to-error`).text("Date must not be greater than current date").removeClass("d-none");
-        toTrue = false;
-      } else if(typeof(from) == "number" && to < from && from < today) {
-        $(`#${id}-to-error`).text("Date must not be less than from date").removeClass("d-none");
-        toTrue = false;
-      } else if(typeof(from) == "number" && to == from && from < today) {
-        $(`#${id}-to-error`).text("Date must not be equal to from date").removeClass("d-none");
-        toTrue = false;
       } else {
-        $(`#${id}-to-error`).addClass("d-none");
-        toTrue = true;
-      }
-    }
+        to = Date.parse(to);
 
-    fromTrue && toTrue ? form.submit() : null;
-  }
+        if (to <= 0) {
+          $(`#${id}-to-error`).text("Please enter a valid date").removeClass("d-none");
+          toTrue = false;
+        } else if (to > today) {
+          $(`#${id}-to-error`).text("Date must not be greater than current date").removeClass("d-none");
+          toTrue = false;
+        } else if (typeof(from) == "number" && to < from && from < today) {
+          $(`#${id}-to-error`).text("Date must not be less than from date").removeClass("d-none");
+          toTrue = false;
+        } else if (typeof(from) == "number" && to == from && from < today) {
+          $(`#${id}-to-error`).text("Date must not be equal to from date").removeClass("d-none");
+          toTrue = false;
+        } else {
+          $(`#${id}-to-error`).addClass("d-none");
+          toTrue = true;
+        }
+      }
+
+      fromTrue && toTrue ? form.submit() : null;
+    }
   </script>
 </body>
+
 </html>
