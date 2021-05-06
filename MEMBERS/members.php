@@ -1026,56 +1026,54 @@ if (isset($_GET["type"])) {
           <button type='button' class='close' id='close-paymentModal' data-dismiss='modal'>&times;</button>
         </div>
         <div class="modal-body">
-          <form action="memberpayment_process.php" method="post">
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <label>Unique ID</label>
-                  <input type="text" name="member_id" class="form-control" readonly id="walkinmember_id">
-                </div>
-                <div class="col-sm-6">
-                  <label>Last Name</label>
-                  <input type="text" name="last_name" class="form-control" readonly id="walkinmember_lastname">
-                </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label>Unique ID</label>
+                <input type="text" name="member_id" class="form-control" readonly id="walkinmember_id">
+              </div>
+              <div class="col-sm-6">
+                <label>Last Name</label>
+                <input type="text" name="last_name" class="form-control" readonly id="walkinmember_lastname">
               </div>
             </div>
-            <div class="form-group">
-              <div class="form-row">
-                <div class="col-sm-6">
-                  <label>Payment Description</label>
-                  <input type="text" name="payment_description" value="Walk-in" class="form-control" readonly id="walkinpayment_description">
-                </div>
-                <div class="col-sm-6">
-                  <label>Amount</label>
-                  <input type="text" name="payment_amount" class="form-control" value="50" readonly id="walkinpayment-amount">
-                </div>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-sm-6">
+                <label>Payment Description</label>
+                <input type="text" name="payment_description" value="Walk-in" class="form-control" readonly id="walkinpayment_description">
+              </div>
+              <div class="col-sm-6">
+                <label>Amount</label>
+                <input type="text" name="payment_amount" class="form-control" value="50" readonly id="walkinpayment-amount">
               </div>
             </div>
-            <div class="d-flex justify-content-center">
-              <a href="#" class="text-darkgrey"><span id="walkinshowCalc" style="position:relative;right:100px;">Show
-                  Calculator</span>
-              </a>
-            </div>
-            <div id="walkincalculator" class="form-group" style="display: none">
-              <div class="form-row">
-                <div class="col-sm-4">
-                  <label>Cash</label>
-                  <input type="number" class="form-control" id="walkinpayment-cash">
-                </div>
-                <div class="col-sm-4">
-                  <label>Change</label>
-                  <input type="text" class="form-control" id="walkinpayment-change" readonly>
-                </div>
-                <div class="col-sm-4">
-                  <br>
-                  <input readonly class="btn btn-green" style="width: 120px;" id="walkinenterCalc" value="ENTER">
-                </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="text-darkgrey"><span id="walkinshowCalc" style="position:relative;right:100px;">Show
+                Calculator</span>
+            </a>
+          </div>
+          <div id="walkincalculator" class="form-group" style="display: none">
+            <div class="form-row">
+              <div class="col-sm-4">
+                <label>Cash</label>
+                <input type="number" class="form-control" id="walkinpayment-cash">
+              </div>
+              <div class="col-sm-4">
+                <label>Change</label>
+                <input type="text" class="form-control" id="walkinpayment-change" readonly>
+              </div>
+              <div class="col-sm-4">
+                <br>
+                <input readonly class="btn btn-green" style="width: 120px;" id="walkinenterCalc" value="ENTER">
               </div>
             </div>
-            <div class="modal-footer">
-              <button class="btn btn-orange" id="add-payment-btn">Add payment</button>
-            </div>
-          </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-orange" id="add-walkin-payment-btn">Add payment</button>
+          </div>
         </div>
       </div>
     </div>
@@ -2976,7 +2974,6 @@ if (isset($_GET["type"])) {
         showPrevious: false,
         showNext: false,
         callback: function (data) {
-          console.log(data);
           $("#member-log-tbody").empty();
           if (data.length > 0) {
             $("#no-data-div-member-log").css("display", "none");
@@ -3007,7 +3004,6 @@ if (isset($_GET["type"])) {
         showPrevious: false,
         showNext: false,
         callback: function (data) {
-          console.log(data);
           $("#routines-tbody").empty();
           if (data.length > 0) {
             $("#no-data-div-routines").css("display", "none");
@@ -3663,7 +3659,6 @@ if (isset($_GET["type"])) {
 
     function updateDetailsWalkin(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       $.confirm({
@@ -3677,7 +3672,6 @@ if (isset($_GET["type"])) {
               let req = new XMLHttpRequest();
               req.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  console.log((this.responseText));
                   $.alert({
                     title: 'Success',
                     content: 'Member successfully update to Regular!',
@@ -3705,7 +3699,6 @@ if (isset($_GET["type"])) {
 
     function deleted(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       $.confirm({
@@ -3719,7 +3712,6 @@ if (isset($_GET["type"])) {
               let req = new XMLHttpRequest();
               req.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  console.log((this.responseText));
                   $.alert({
                     title: 'Success',
                     content: 'Regular Member successfully deleted.',
@@ -3746,7 +3738,6 @@ if (isset($_GET["type"])) {
 
     function deleted_walkin(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       $.confirm({
@@ -3760,7 +3751,6 @@ if (isset($_GET["type"])) {
               let req = new XMLHttpRequest();
               req.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  console.log((this.responseText));
                   $.alert({
                     title: 'Success',
                     content: 'Walk-in Member successfully deleted.',
@@ -3841,7 +3831,6 @@ if (isset($_GET["type"])) {
 
     function deactivate_account(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       $.confirm({
@@ -3855,7 +3844,6 @@ if (isset($_GET["type"])) {
               let req = new XMLHttpRequest();
               req.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  console.log((this.responseText));
                   $.alert({
                     title: 'Success',
                     content: 'Account successfully deactivated!',
@@ -3898,7 +3886,6 @@ if (isset($_GET["type"])) {
                 content: function () {
                   var self = this;
                   $.get("./removeProgram.php?id=" + id, function (res) {
-                    console.log(res);
                     if(JSON.parse(res) == "success") {
                       self.setTitle("Success");
                       self.setContent("Successfully deleted program.");
@@ -3925,7 +3912,6 @@ if (isset($_GET["type"])) {
 
     function recover(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       $.confirm({
@@ -3939,7 +3925,6 @@ if (isset($_GET["type"])) {
               let req = new XMLHttpRequest();
               req.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  console.log((this.responseText));
                   $.alert({
                     title: 'Success',
                     content: 'Member successfully recovered!',
@@ -3962,13 +3947,8 @@ if (isset($_GET["type"])) {
       });
     }
 
-    //------------------------------------------------------------------------------ RECOVERPROGRAM JS
-
-
-
     function recoverProgram(el) {
       let id = el.getAttribute('data-id');
-      console.log(id);
 
       // AJAX Request
       $.confirm({
@@ -3982,7 +3962,6 @@ if (isset($_GET["type"])) {
               let req = new XMLHttpRequest();
               req.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  console.log((this.responseText));
                   $.alert({
                     title: 'Success',
                     content: 'Program successfully recovered!',
@@ -4079,7 +4058,41 @@ if (isset($_GET["type"])) {
       }
     });
 
-
+    // walkin adding payment
+    $("#add-walkin-payment-btn").click(function () {
+      $.dialog({
+        backgroundDismiss: true,
+        closeIcon: false,
+        content: function () {
+          var self = this;
+          return $.post(
+            "./memberpayment_process.php",
+            {
+              member_id: $("#walkinmember_id").val(),
+              payment_description: $("#walkinpayment_description").val(),
+              promo_discount: null,
+              promo_availed: null,
+              program_enrolled: null,
+              program_amount: null
+            },
+            function (res) {
+              if(JSON.parse(res) == "success walkin") {
+                self.setTitle("Success");
+                self.setContent("Payment successfully added.");
+                self.setType("green");
+                self.backgroundDismiss = function () {
+                  window.location.reload();
+                }
+              } else {
+                self.setTitle("Error");
+                self.setContent(JSON.parse(res));
+                self.setType("red");
+              }
+            }
+          );
+        }
+      });
+    });
 
 
     function logout(el) {
@@ -4481,7 +4494,6 @@ if (isset($_GET["type"])) {
           program_amount: $("#program_amount").val()
         },
         function(res) {
-          console.log(res);
           let r = JSON.parse(res);
           let message;
           let type = 'green';
@@ -4600,7 +4612,6 @@ if (isset($_GET["type"])) {
               program_id: program_id
             },
             function (res) {
-              console.log(res);
               if(JSON.parse(res) == "success") {
                 self.setTitle("Success");
                 self.setContent("Member successfully updated.");
