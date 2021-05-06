@@ -6,7 +6,8 @@ $sql = "SELECT mp.*, m.first_name, m.last_name, p.promo_name FROM memberpromos a
         ON mp.member_id = m.member_id
         INNER JOIN promo AS p
         ON mp.promo_id = p.promo_id
-        WHERE mp.status = 'Pending'";
+        WHERE mp.status = 'Pending'
+        ORDER BY date_requested DESC";
 $data = array();
 $res = mysqli_query($conn, $sql);
 
