@@ -285,7 +285,6 @@
             <table class='table table-hover'>
               <thead>
                 <tr>
-                  <th> ID</th>
                   <th>Module</th>
                   <th>Action</th>
                   <th>Name</th>
@@ -419,7 +418,6 @@ function paginateLogtrail(data) {
           data.forEach(row => {
             if(row.identity === 'Members' || row.identity === 'member'){
               var html = `<tr>
-                <td>${row.member_id}</td>
                 <td>${row.identity}</td>
                 <td>${row.description}</td>
                 <td>${row.user_fname} ${row.user_lname}</td>
@@ -427,7 +425,6 @@ function paginateLogtrail(data) {
               </tr>`;
             } else if(row.identity === 'Trainers' || row.identity === 'trainer'){
               var html = `<tr>
-                <td>${row.trainer_id}</td>
                 <td>${row.identity}</td>
                 <td>${row.description}</td>
                 <td>${row.user_fname} ${row.user_lname}</td>
@@ -435,7 +432,6 @@ function paginateLogtrail(data) {
               </tr>`;
             } else if(row.identity === 'Programs' || row.identity === 'program'){
               var html = `<tr>
-                <td>${row.program_id}</td>
                 <td>${row.identity}</td>
                 <td>${row.description}</td>
                 <td>${row.user_fname}</td>
@@ -443,7 +439,6 @@ function paginateLogtrail(data) {
               </tr>`;
             } else if(row.identity === 'Inventory' || row.identity === 'inventory'){
               var html = `<tr>
-                <td>${row.inventory_id}</td>
                 <td>${row.identity}</td>
                 <td>${row.description}</td>
                 <td>${row.user_fname}</td>
@@ -451,7 +446,6 @@ function paginateLogtrail(data) {
               </tr>`;
             } else if(row.identity === 'Promos' || row.identity === 'promo'){
               var html = `<tr>
-                <td>${row.promo_id}</td>
                 <td>${row.identity}</td>
                 <td>${row.description}</td>
                 <td>${row.user_fname} </td>
@@ -459,7 +453,6 @@ function paginateLogtrail(data) {
               </tr>`;
             }else if(row.identity === 'Reports' || row.identity === 'report'){
               var html = `<tr>
-                <td>N/A</td>
                 <td>${row.identity}</td>
                 <td>${row.description}</td>
                 <td>${row.user_fname}</td>

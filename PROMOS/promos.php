@@ -1213,6 +1213,7 @@
         content: function () {
           var self = this;
           return $.get("./promo_request_action.php?action=decline&id=" + id, function (res) {
+            console.log(res);
             if(JSON.parse(res) == "success") {
               self.setContent('Request declined.');
             }
