@@ -89,10 +89,7 @@ if (preg_match($NumberRegex, $program_name, $match)) {
     WHERE program_id =" . intval($id) . ""; 
     $query = mysqli_query($conn, $sql_update);
 
-    echo "<script>
-        alert('Program is successfully updated!');
-        window.location.href = './members.php';
-        </script>";
+    echo json_encode("success");
 
        //this is for puting login_id in the array
        $data_logtrail = array();
