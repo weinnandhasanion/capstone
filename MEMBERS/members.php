@@ -3533,7 +3533,7 @@ if (isset($_GET["type"])) {
         var stringDate = digitDate.toDateString(digitDate);
 
         $("#program-id-hidden").val(row.program_id);
-        document.getElementById("prgram_name_update").value = row.program_name;
+        document.getElementById("program_name_update").value = row.program_name;
         document.getElementById("trainer_name_update").value = row.trainer_id;
         document.getElementById("program_desc_update").value = row.program_description;
         document.getElementById("upper-1-day-1_update").value = row.upper_1_day_1;
