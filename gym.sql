@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2021 at 01:34 PM
+-- Generation Time: May 06, 2021 at 04:16 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.13
 
@@ -583,7 +583,10 @@ INSERT INTO `logtrail_doing` (`logtrail_doing_id`, `login_id`, `admin_id`, `memb
 (399, 57, 87012, NULL, NULL, NULL, NULL, 202112, 'Wallace Velasquez', NULL, 'Added a member to Senior Discount', 'Promos', '07:15 PM', NULL, NULL, NULL, NULL),
 (400, 57, 87012, NULL, NULL, NULL, NULL, 202112, 'Wallace Velasquez', NULL, 'Remove a member from Senior Discount promo', 'Promos', '07:15 PM', NULL, NULL, NULL, NULL),
 (401, 57, 87012, NULL, NULL, NULL, NULL, 202115, 'May Promo', NULL, 'Restore a promo', 'Promos', '07:30 PM', NULL, NULL, NULL, NULL),
-(402, 57, 87012, NULL, NULL, NULL, NULL, 202115, 'May Promo', NULL, 'Deleted a promo', 'Promos', '07:31 PM', NULL, NULL, NULL, NULL);
+(402, 57, 87012, NULL, NULL, NULL, NULL, 202115, 'May Promo', NULL, 'Deleted a promo', 'Promos', '07:31 PM', NULL, NULL, NULL, NULL),
+(405, 57, 87012, 1921681011, NULL, NULL, NULL, NULL, '', '', 'Declined promo request', 'Promos', '07:50 PM', NULL, NULL, NULL, NULL),
+(406, 57, 87012, 1921681011, NULL, NULL, NULL, NULL, 'John', 'Doe', 'Declined promo request', 'Promos', '07:51 PM', NULL, NULL, NULL, NULL),
+(407, 57, 87012, 1921681011, NULL, NULL, NULL, NULL, 'John Doe', NULL, 'Declined promo request', 'Promos', '07:54 PM', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -784,7 +787,12 @@ INSERT INTO `memberpromos` (`id`, `promo_id`, `member_id`, `date_added`, `date_r
 (78, 202112, 1921681022, NULL, '2021-05-04 12:51:46', '2021-05-04 12:52:17', 'Declined', NULL, '179309544_924144008420873_3664081796755861232_n.jpg'),
 (80, 202100, 1921681055, '2021-05-06', NULL, NULL, 'Active', NULL, NULL),
 (81, 202101, 1921681071, '2021-05-06', NULL, NULL, 'Active', NULL, NULL),
-(82, 202112, 1921681046, '2021-05-06', NULL, NULL, 'Removed', '2021-05-06', NULL);
+(82, 202112, 1921681046, '2021-05-06', NULL, NULL, 'Removed', '2021-05-06', NULL),
+(83, 202101, 1921681011, NULL, '2021-05-06 07:48:30', '2021-05-06 19:48:37', 'Declined', NULL, 'pull up.jpg'),
+(84, 202101, 1921681011, NULL, '2021-05-06 07:49:27', '2021-05-06 19:49:32', 'Declined', NULL, 'pull up.jpg'),
+(85, 202101, 1921681011, NULL, '2021-05-06 07:50:03', '2021-05-06 19:50:07', 'Declined', NULL, 'pull up.jpg'),
+(86, 202101, 1921681011, NULL, '2021-05-06 07:51:10', '2021-05-06 19:51:16', 'Declined', NULL, 'pull up.jpg'),
+(87, 202101, 1921681011, NULL, '2021-05-06 07:54:22', '2021-05-06 19:54:28', 'Declined', NULL, 'pull up.jpg');
 
 -- --------------------------------------------------------
 
@@ -840,7 +848,12 @@ INSERT INTO `member_notifs` (`id`, `member_id`, `notif_id`, `status`, `datetime_
 (86, 1921681022, 10, 'Read', '2021-05-04 04:41:01', '2021-05-04 04:41:16'),
 (87, 1921681022, 9, 'Unread', '2021-05-04 04:48:03', NULL),
 (88, 1921681022, 10, 'Unread', '2021-05-04 04:52:17', NULL),
-(89, 1921681103, 9, 'Read', '2021-05-04 04:55:35', '2021-05-04 04:55:53');
+(89, 1921681103, 9, 'Read', '2021-05-04 04:55:35', '2021-05-04 04:55:53'),
+(90, 1921681011, 10, 'Unread', '2021-05-06 11:48:37', NULL),
+(91, 1921681011, 10, 'Unread', '2021-05-06 11:49:32', NULL),
+(92, 1921681011, 10, 'Unread', '2021-05-06 11:50:07', NULL),
+(93, 1921681011, 10, 'Unread', '2021-05-06 11:51:16', NULL),
+(94, 1921681011, 10, 'Unread', '2021-05-06 11:54:28', NULL);
 
 -- --------------------------------------------------------
 
@@ -1261,7 +1274,7 @@ ALTER TABLE `logtrail`
 -- AUTO_INCREMENT for table `logtrail_doing`
 --
 ALTER TABLE `logtrail_doing`
-  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=403;
+  MODIFY `logtrail_doing_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=408;
 
 --
 -- AUTO_INCREMENT for table `member`
@@ -1273,7 +1286,7 @@ ALTER TABLE `member`
 -- AUTO_INCREMENT for table `memberpromos`
 --
 ALTER TABLE `memberpromos`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `member_logtrail`
@@ -1285,7 +1298,7 @@ ALTER TABLE `member_logtrail`
 -- AUTO_INCREMENT for table `member_notifs`
 --
 ALTER TABLE `member_notifs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `notifications`
