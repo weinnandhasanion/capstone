@@ -434,10 +434,9 @@ $res = mysqli_query($conn, $sql);
 
                   <th>Name</th>
                   <th>Category</th>
-                  <th>Deleted by</th>
-                  <th>Date Added</th>
                   <th>Date deleted</th>
                   <th>Time deleted</th>
+                  <th>Deleted by</th>
                   <th>action</th>
                 </tr>
               </thead>
@@ -460,10 +459,9 @@ $res = mysqli_query($conn, $sql);
                     <tr>
                       <td><?php echo $row["inventory_name"] ?></td>
                       <td><?php echo $row["inventory_category"] ?></td>
-                      <td><?php echo $row["admin_delete"] ?></td>
-                      <td><?php echo $resultAdded ?></td>
                       <td><?php echo $resultDelete ?></td>
                       <td><?php echo $time_Deleted ?></td>
+                      <td><?php echo $row["admin_delete"] ?></td>
                       <td>
                         <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Recover <?php echo $row["inventory_name"] ?>" class="fas fa-undo mx-2" data-id="<?php echo $row['inventory_id'] ?>" onclick="recover(this)"></i>
                       </td>

@@ -496,10 +496,10 @@ if (isset($_GET["type"])) {
                 <tr style="text-align:center;">
 
                   <th>program name</th>
-                  <th>Deleted by</th>
                   <th>Date Added</th>
                   <th>date deleted</th>
                   <th>Time deleted</th>
+                  <th>Deleted by</th>
                   <th>action</th>
                 </tr>
               </thead>
@@ -1404,9 +1404,9 @@ if (isset($_GET["type"])) {
                 <tr style="text-align:center;">
                   <th>Full name</th>
                   <th>Member type</th>
-                  <th>Deleted by</th>
                   <th>Time deleted</th>
                   <th>Date deleted</th>
+                  <th>Deleted by</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -2891,9 +2891,9 @@ if (isset($_GET["type"])) {
               let html = `<tr>
               <td>${row.first_name} ${row.last_name}</td>
               <td>${row.member_type}</td>
-              <td>${row.admin_delete}</td>
               <td>${row.time_deleted}</td>
               <td>${row.date_deleted}</td>
+              <td>${row.admin_delete}</td>
               <td>
                 <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
                   title="Recover ${row.last_name}" class="fas fa-undo mx-1"
@@ -2915,6 +2915,7 @@ if (isset($_GET["type"])) {
       if (val != "") {
         data = deletedMembers.filter(row => row.fullname.toLowerCase().includes(val.toLowerCase()));
         paginateDeletedMembers(data);
+        
       } else {
         paginateDeletedMembers(deletedMembers);
       }
@@ -2935,10 +2936,10 @@ if (isset($_GET["type"])) {
             data.forEach(row => {
               let html = `<tr>
               <td>${row.program_name}</td>
-              <td>${row.admin_delete}</td>
               <td>${row.date_added}</td>
               <td>${row.date_deleted}</td>
               <td>${row.time_deleted}</td>
+              <td>${row.admin_delete}</td>
               <td>
                 <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top"
                   title="Recover ${row.program_name}" class="fas fa-undo mx-1"
