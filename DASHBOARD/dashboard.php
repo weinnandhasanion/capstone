@@ -91,12 +91,12 @@
         </a>
         <a href="./../MEMBERS/members.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-user mr-3"></i>Members</a>
-        <a href="/PROJECT/TRAINER/trainers.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
+        <a href="./../TRAINER/trainers.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-user-shield mr-3"></i>Trainers
         </a>
         <a href="./../INVENTORY/inventory.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-dumbbell  mr-3"></i>Inventory</a>
-        <a href="/PROJECT/PROMOS/promos.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
+        <a href="./../PROMOS/promos.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
           <i class="fas fa-percent mr-3"></i>Promos
         </a>
         <a href="./../PAYMENT/paymentlog.php" class="list-group-item list-group-item-action waves-effect sidebar-items">
