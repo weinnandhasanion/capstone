@@ -746,6 +746,7 @@ $res = mysqli_query($conn, $sql);
             processData: false,
             type: 'post',
             success: function(res) {
+              console.log(res);
               if (JSON.parse(res) == "success") {
                 self.setTitle("Success");
                 self.setContent("Item successfully updated.");

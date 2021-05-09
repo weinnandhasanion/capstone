@@ -33,37 +33,39 @@ if (strlen($inventory_name) > 50) {
   echo json_encode("Invalid quantity.");
 } else {
   if (preg_match('/^[0-9 a-zA-Z 0-9]+$/', $inventory_name)) {
-    if ($_FILES["image"]["size"] > 0) {
-      // Uploading image
-      $target_dir = "./img/";
-      $message = "";
-      $target_file = $target_dir . basename($_FILES["image"]["name"]);
-      $uploadOk = 1;
-      $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-      $check = getimagesize($_FILES["image"]["tmp_name"]);
-      if ($check !== false) {
-        if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-          $sql = "UPDATE inventory 
-          SET inventory_name = '$inventory_name',
-              inventory_qty = $inventory_qty,
-              inventory_category = '$inventory_category',
-              inventory_description = '$inventory_description',
-              date_added = '$date_added',
-              image_pathname = '" . $_FILES["image"]["name"] . "',
-              inventory_damage = $inventory_dmg
-          WHERE inventory_id = $id";
-
-          $res = mysqli_query($conn, $sql);
-
-          if ($res) {
-            echo json_encode("success");
-          } else {
-            echo json_encode(mysqli_error($conn));
+    if (isset($_FILES["image"])) {
+      if ($_FILES["image"]["size"] > 0) {
+        // Uploading image
+        $target_dir = "./img/";
+        $message = "";
+        $target_file = $target_dir . basename($_FILES["image"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+  
+        $check = getimagesize($_FILES["image"]["tmp_name"]);
+        if ($check !== false) {
+          if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+            $sql = "UPDATE inventory 
+            SET inventory_name = '$inventory_name',
+                inventory_qty = $inventory_qty,
+                inventory_category = '$inventory_category',
+                inventory_description = '$inventory_description',
+                date_added = '$date_added',
+                image_pathname = '" . $_FILES["image"]["name"] . "',
+                inventory_damage = $inventory_dmg
+            WHERE inventory_id = $id";
+  
+            $res = mysqli_query($conn, $sql);
+  
+            if ($res) {
+              echo json_encode("success");
+            } else {
+              echo json_encode(mysqli_error($conn));
+            }
           }
+        } else {
+          echo json_encode("File is not an image.");
         }
-      } else {
-        echo json_encode("File is not an image.");
       }
     } else {
       $sql = "UPDATE inventory 
