@@ -565,7 +565,7 @@ $res = mysqli_query($conn, $sql);
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date added</label>
                   <select id="trainers-active-select" name="timespan_trainers_active" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -613,7 +613,7 @@ $res = mysqli_query($conn, $sql);
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date added</label>
                   <select id="trainers-inactive-select" name="timespan_trainers_inactive" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -660,7 +660,7 @@ $res = mysqli_query($conn, $sql);
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date deleted</label>
                   <select id="trainers-deleted-select" name="timespan_trainers_deleted" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -709,7 +709,7 @@ $res = mysqli_query($conn, $sql);
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date added</label>
                   <select id="promos-list-select" name="timespan_promos_list" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -773,7 +773,7 @@ $res = mysqli_query($conn, $sql);
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date added</label>
                   <select id="promos-permanent-select" name="timespan_promos_permanent" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -829,7 +829,7 @@ $res = mysqli_query($conn, $sql);
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date added</label>
                   <select id="promos-seasonal-select" name="timespan_promos_seasonal" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -884,7 +884,7 @@ $res = mysqli_query($conn, $sql);
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date added</label>
                   <select id="total-sales-select" name="timespan" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -931,7 +931,7 @@ $res = mysqli_query($conn, $sql);
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date added</label>
                   <select id="monthly-payments-select" name="timespan" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -978,7 +978,7 @@ $res = mysqli_query($conn, $sql);
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date added</label>
                   <select id="annual-payments-select" name="timespan" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -1025,7 +1025,7 @@ $res = mysqli_query($conn, $sql);
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date added</label>
                   <select id="walkin-payments-select" name="timespan" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -1075,7 +1075,7 @@ $res = mysqli_query($conn, $sql);
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date added</label>
                   <select id="inventory-list-select" name="timespan_inventory_list" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -1088,9 +1088,12 @@ $res = mysqli_query($conn, $sql);
                 <div class="col-sm-6">
                   <label for="">Category</label>
                   <select name="inventory_category_list" id="" class="form-control">
-                    <option value="Cardio Equipment">Cardio Equipment</option>
-                    <option value="Weight Equipment">Weight Equipment</option>
-                    <option value="Both" selected>Both</option>
+                    <option value="Cardio">Cardio</option>
+                    <option value="Free Weights">Free Weights</option>
+                    <option value="Calisthenics">Calisthenics</option>
+                    <option value="Strength">Strength</option>
+                    <option value="Supplies">Supplies</option>
+                    <option value="All" selected>All</option>
                   </select>
                 </div>
               </div>
@@ -1132,7 +1135,7 @@ $res = mysqli_query($conn, $sql);
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date added</label>
                   <select id="inventory-working-select" name="timespan_inventory_working" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -1145,9 +1148,12 @@ $res = mysqli_query($conn, $sql);
                 <div class="col-sm-6">
                   <label for="">Category</label>
                   <select name="inventory_category_working" id="" class="form-control">
-                    <option value="Cardio Equipment">Cardio Equipment</option>
-                    <option value="Weight Equipment">Weight Equipment</option>
-                    <option value="Both" selected>Both</option>
+                    <option value="Cardio">Cardio</option>
+                    <option value="Free Weights">Free Weights</option>
+                    <option value="Calisthenics">Calisthenics</option>
+                    <option value="Strength">Strength</option>
+                    <option value="Supplies">Supplies</option>
+                    <option value="All" selected>All</option>
                   </select>
                 </div>
               </div>
@@ -1188,7 +1194,7 @@ $res = mysqli_query($conn, $sql);
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="">Time span</label>
+                  <label for="">Date added</label>
                   <select id="inventory-damage-select" name="timespan_inventory_damage" class="form-control">
                     <option value="Today">Today</option>
                     <option value="This week">This week</option>
@@ -1201,9 +1207,12 @@ $res = mysqli_query($conn, $sql);
                 <div class="col-sm-6">
                   <label for="">Category</label>
                   <select name="inventory_category_damage" id="" class="form-control">
-                    <option value="Cardio Equipment">Cardio Equipment</option>
-                    <option value="Weight Equipment">Weight Equipment</option>
-                    <option value="Both" selected>Both</option>
+                    <option value="Cardio">Cardio</option>
+                    <option value="Free Weights">Free Weights</option>
+                    <option value="Calisthenics">Calisthenics</option>
+                    <option value="Strength">Strength</option>
+                    <option value="Supplies">Supplies</option>
+                    <option value="All" selected>All</option>
                   </select>
                 </div>
               </div>

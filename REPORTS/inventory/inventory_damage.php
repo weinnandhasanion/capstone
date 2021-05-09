@@ -17,145 +17,102 @@ if($timespan == "Custom") {
   $toDate = NULL;
 }
 
-if($category == "Weight Equipment" ){
-$reportTitle = "List of Damage Weight Equipment";
-  if($timespan == "Custom") {
-    $reportText = "Generating reports for damage weight inventory  from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
+if ($category == "All") {
+  $reportTitle = "List of Damaged Inventory Items";
+  if ($timespan == "Custom") {
+    $reportText = "Generating reports for damaged items from " . date("F d, Y", strtotime($fromDate)) . " to " . date("F d, Y", strtotime($toDate)) . "...";
     $sql = "SELECT * FROM inventory
-            WHERE date_added >= '$fromDate'
-            AND inventory_category = 'Weight Equipment'
-            AND date_added <= '$toDate'";
+              WHERE date_added >= '$fromDate'
+               AND inventory_damage > 0
+              AND date_added <= '$toDate' AND inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
-  } else if($timespan == "Today") {
-    $reportText = "Generating reports for damage weight inventory  today, ".date("F d, Y")."...";
+  } else if ($timespan == "Today") {
+    $reportText = "Generating reports for damaged items today, " . date("F d, Y") . "...";
     $today = date("Y-m-d");
     $sql = "SELECT * FROM inventory
-            WHERE date_added = '$today'
-            AND inventory_category = 'Weight Equipment'";
+              WHERE date_added = '$today'
+ AND inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
-  } else if($timespan == "This week") {
+  } else if ($timespan == "This week") {
     $today = date("Y-m-d");
-    $lastWeek = date("Y-m-d", strtotime($today. "- 7 days"));
-    $reportText = "Generating reports for damage weight inventory  this week (".date("F d, Y", strtotime($lastWeek))." to ".date("F d, Y").")...";
+    $lastWeek = date("Y-m-d", strtotime($today . "- 7 days"));
+    $reportText = "Generating reports for damaged items this week (" . date("F d, Y", strtotime($lastWeek)) . " to " . date("F d, Y") . ")...";
     $sql = "SELECT * FROM inventory
-            WHERE date_added >= '$lastWeek'
-            AND inventory_category = 'Weight Equipment'
-            AND date_added <= '$today'";
+              WHERE date_added >= '$lastWeek'
+ AND inventory_damage > 0
+              AND date_added <= '$today' AND inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
-  } else if($timespan == "This month") {
+  } else if ($timespan == "This month") {
     $monthStart = date("Y-m-01");
     $monthEnd = date("Y-m-t");
-    $reportText = "Generating reports for damage weight inventory  this month of ".date("F")."...";
+    $reportText = "Generating reports for damaged items this month of " . date("F") . "...";
     $sql = "SELECT * FROM inventory
-            WHERE date_added >= '$monthStart'
-            AND inventory_category = 'Weight Equipment'
-            AND date_added <= '$monthEnd'";
+              WHERE date_added >= '$monthStart'
+ AND inventory_damage > 0
+              AND date_added <= '$monthEnd' AND inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
-  } else if($timespan == "This year") {
+  } else if ($timespan == "This year") {
     $yearStart = date("Y-01-01");
     $yearEnd = date("Y-12-31");
-    $reportText = "Generating reports for damage weight inventory  this year (".date("Y").")...";
+    $reportText = "Generating reports for damaged items this year (" . date("Y") . ")...";
     $sql = "SELECT * FROM inventory
-            WHERE date_added >= '$yearStart'
-            AND inventory_category = 'Weight Equipment'
-            AND date_added <= '$yearEnd'";
+              WHERE date_added >= '$yearStart'
+ AND inventory_damage > 0
+              AND date_added <= '$yearEnd' AND inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
   } else {
-    $reportText = "Generating reports for damage weight inventory  since all of time...";
-    $sql = "SELECT * FROM inventory WHERE inventory_category = 'Weight Equipment'";
+    $reportText = "Generating reports for damaged items since all of time...";
+    $sql = "SELECT * FROM inventory WHERE inventory_status = 'notdeleted' AND inventory_damage > 0";
     $res = mysqli_query($conn, $sql);
   }
-}else if($category == "Cardio Equipment"){
-    $reportTitle = "List of Damage Cardio Equipment";
-    if($timespan == "Custom") {
-      $reportText = "Generating reports for damage Cardio inventory  from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
-      $sql = "SELECT * FROM inventory
-              WHERE date_added >= '$fromDate'
-              AND inventory_category = 'Cardio Equipment'
-              AND date_added <= '$toDate'";
-      $res = mysqli_query($conn, $sql);
-    } else if($timespan == "Today") {
-      $reportText = "Generating reports for damage Cardio inventory  today, ".date("F d, Y")."...";
-      $today = date("Y-m-d");
-      $sql = "SELECT * FROM inventory
-              WHERE date_added = '$today'
-              AND inventory_category = 'Cardio Equipment'";
-      $res = mysqli_query($conn, $sql);
-    } else if($timespan == "This week") {
-      $today = date("Y-m-d");
-      $lastWeek = date("Y-m-d", strtotime($today. "- 7 days"));
-      $reportText = "Generating reports for damage Cardio inventory  this week (".date("F d, Y", strtotime($lastWeek))." to ".date("F d, Y").")...";
-      $sql = "SELECT * FROM inventory
-              WHERE date_added >= '$lastWeek'
-              AND inventory_category = 'Cardio Equipment'
-              AND date_added <= '$today'";
-      $res = mysqli_query($conn, $sql);
-    } else if($timespan == "This month") {
-      $monthStart = date("Y-m-01");
-      $monthEnd = date("Y-m-t");
-      $reportText = "Generating reports for damage Cardio inventory  this month of ".date("F")."...";
-      $sql = "SELECT * FROM inventory
-              WHERE date_added >= '$monthStart'
-              AND inventory_category = 'Cardio Equipment'
-              AND date_added <= '$monthEnd'";
-      $res = mysqli_query($conn, $sql);
-    } else if($timespan == "This year") {
-      $yearStart = date("Y-01-01");
-      $yearEnd = date("Y-12-31");
-      $reportText = "Generating reports for damage Cardio inventory  this year (".date("Y").")...";
-      $sql = "SELECT * FROM inventory
-              WHERE date_added >= '$yearStart'
-              AND inventory_category = 'Cardio Equipment'
-              AND date_added <= '$yearEnd'";
-      $res = mysqli_query($conn, $sql);
-    } else {
-      $reportText = "Generating reports for damage Cardio inventory  since all of time...";
-      $sql = "SELECT * FROM inventory WHERE inventory_category = 'Cardio Equipment'";
-      $res = mysqli_query($conn, $sql);
-    }
-}else if($category == "Both"){
-    $reportTitle = "List of Damage Equipment";
-    if($timespan == "Custom") {
-      $reportText = "Generating reports for damage inventory  from ".date("F d, Y", strtotime($fromDate))." to ".date("F d, Y", strtotime($toDate))."...";
-      $sql = "SELECT * FROM inventory
-              WHERE date_added >= '$fromDate'
-              AND date_added <= '$toDate'";
-      $res = mysqli_query($conn, $sql);
-    } else if($timespan == "Today") {
-      $reportText = "Generating reports for damage  inventory  today, ".date("F d, Y")."...";
-      $today = date("Y-m-d");
-      $sql = "SELECT * FROM inventory
-              WHERE date_added = '$today'";
-      $res = mysqli_query($conn, $sql);
-    } else if($timespan == "This week") {
-      $today = date("Y-m-d");
-      $lastWeek = date("Y-m-d", strtotime($today. "- 7 days"));
-      $reportText = "Generating reports for damage  inventory  this week (".date("F d, Y", strtotime($lastWeek))." to ".date("F d, Y").")...";
-      $sql = "SELECT * FROM inventory
-              WHERE date_added >= '$lastWeek'
-              AND date_added <= '$today'";
-      $res = mysqli_query($conn, $sql);
-    } else if($timespan == "This month") {
-      $monthStart = date("Y-m-01");
-      $monthEnd = date("Y-m-t");
-      $reportText = "Generating reports for damage  inventory  this month of ".date("F")."...";
-      $sql = "SELECT * FROM inventory
-              WHERE date_added >= '$monthStart'
-              AND date_added <= '$monthEnd'";
-      $res = mysqli_query($conn, $sql);
-    } else if($timespan == "This year") {
-      $yearStart = date("Y-01-01");
-      $yearEnd = date("Y-12-31");
-      $reportText = "Generating reports for damage  inventory  this year (".date("Y").")...";
-      $sql = "SELECT * FROM inventory
-              WHERE date_added >= '$yearStart'
-              AND date_added <= '$yearEnd'";
-      $res = mysqli_query($conn, $sql);
-    } else {
-      $reportText = "Generating reports for damage  inventory  since all of time...";
-      $sql = "SELECT * FROM inventory";
-      $res = mysqli_query($conn, $sql);
-    }
+} else {
+  $reportTitle = "List of Damaged $category Items";
+  if ($timespan == "Custom") {
+    $reportText = "Generating reports for damaged $category items from " . date("F d, Y", strtotime($fromDate)) . " to " . date("F d, Y", strtotime($toDate)) . "...";
+    $sql = "SELECT * FROM inventory
+                WHERE date_added >= '$fromDate'
+                AND inventory_category = '$category' AND inventory_damage > 0
+                AND date_added <= '$toDate' AND inventory_status = 'notdeleted'";
+    $res = mysqli_query($conn, $sql);
+  } else if ($timespan == "Today") {
+    $reportText = "Generating reports for damaged $category items today, " . date("F d, Y") . "...";
+    $today = date("Y-m-d");
+    $sql = "SELECT * FROM inventory
+                WHERE date_added = '$today'
+                AND inventory_category = '$category' AND inventory_status = 'notdeleted' AND inventory_damage > 0";
+    $res = mysqli_query($conn, $sql);
+  } else if ($timespan == "This week") {
+    $today = date("Y-m-d");
+    $lastWeek = date("Y-m-d", strtotime($today . "- 7 days"));
+    $reportText = "Generating reports for damaged $category items this week (" . date("F d, Y", strtotime($lastWeek)) . " to " . date("F d, Y") . ")...";
+    $sql = "SELECT * FROM inventory
+                WHERE date_added >= '$lastWeek'
+                AND inventory_category = '$category'
+                AND date_added <= '$today' AND inventory_status = 'notdeleted' AND inventory_damage > 0";
+    $res = mysqli_query($conn, $sql);
+  } else if ($timespan == "This month") {
+    $monthStart = date("Y-m-01");
+    $monthEnd = date("Y-m-t");
+    $reportText = "Generating reports for damaged $category items this month of " . date("F") . "...";
+    $sql = "SELECT * FROM inventory
+                WHERE date_added >= '$monthStart'
+                AND inventory_category = '$category'
+                AND date_added <= '$monthEnd' AND inventory_status = 'notdeleted' AND inventory_damage > 0";
+    $res = mysqli_query($conn, $sql);
+  } else if ($timespan == "This year") {
+    $yearStart = date("Y-01-01");
+    $yearEnd = date("Y-12-31");
+    $reportText = "Generating reports for damaged $category items this year (" . date("Y") . ")...";
+    $sql = "SELECT * FROM inventory
+                WHERE date_added >= '$yearStart'
+                AND inventory_category = '$category'
+                AND date_added <= '$yearEnd' AND inventory_status = 'notdeleted' AND inventory_damage > 0";
+    $res = mysqli_query($conn, $sql);
+  } else {
+    $reportText = "Generating reports for damaged $category items since all of time...";
+    $sql = "SELECT * FROM inventory WHERE inventory_category = '$category' AND inventory_damage > 0 AND inventory_status = 'notdeleted'";
+    $res = mysqli_query($conn, $sql);
+  }
 }
 
 

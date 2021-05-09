@@ -634,6 +634,8 @@ if($_POST["status"] == "Active" || $_POST["status"] == "Expired"){
       $row["promo_starting_date"] = date("M d, Y", strtotime($row["promo_starting_date"]));
       $row["promo_ending_date"] = date("M d, Y", strtotime($row["promo_ending_date"]));
       $row["date_deleted"] = date("M d, Y", strtotime($row["date_deleted"]));
+      $row["promo_starting_date"] = ($row["promo_starting_date"] == "Jan 01, 1970") ? "N/A" : $row["promo_starting_date"];
+      $row["promo_ending_date"] = ($row["promo_ending_date"] == "Jan 01, 1970") ? "N/A" : $row["promo_ending_date"];
       $data[] = $row;
     }
   }
@@ -659,6 +661,8 @@ if($_POST["status"] == "Active" || $_POST["status"] == "Expired"){
         $row["promo_starting_date"] = date("M d, Y", strtotime($row["promo_starting_date"]));
         $row["promo_ending_date"] = date("M d, Y", strtotime($row["promo_ending_date"]));
         $row["date_deleted"] = date("M d, Y", strtotime($row["date_deleted"]));
+        $row["promo_starting_date"] = ($row["promo_starting_date"] == "Jan 01, 1970") ? "N/A" : $row["promo_starting_date"];
+        $row["promo_ending_date"] = ($row["promo_ending_date"] == "Jan 01, 1970") ? "N/A" : $row["promo_ending_date"];
         $data[] = $row;
       }
     }
@@ -686,6 +690,8 @@ if($_POST["status"] == "Active" || $_POST["status"] == "Expired"){
       $row["promo_starting_date"] = date("M d, Y", strtotime($row["promo_starting_date"]));
       $row["promo_ending_date"] = date("M d, Y", strtotime($row["promo_ending_date"]));
       $row["date_deleted"] = date("M d, Y", strtotime($row["date_deleted"]));
+      $row["promo_starting_date"] = ($row["promo_starting_date"] == "Jan 01, 1970") ? "N/A" : $row["promo_starting_date"];
+      $row["promo_ending_date"] = ($row["promo_ending_date"] == "Jan 01, 1970") ? "N/A" : $row["promo_ending_date"];
       $data[] = $row;
     }
   }
