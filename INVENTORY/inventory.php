@@ -263,7 +263,7 @@ $res = mysqli_query($conn, $sql);
           <form action="inventoryadd_process.php" id="add-item-form" method="post" enctype="multipart/form-data">
             <div class="row d-flex mt-1 mb-3" style="flex-direction: row; position: relative;left: 70px;">
               <div id="profilepic" style="border-radius: 50px; height: 100px; width: 100px; overflow: hidden; background-position: 50% 50%; background-size: cover;  text-align: center;">
-                <img src="blank.png" id="add-item-img" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                <img src="./blank.png" id="add-item-img" alt="" style="height: 100%; width: 100%; object-fit: cover;">
               </div>
               <p><input type="file" value="upload" id="fileButton" accept="image/*" name="image" onchange="loadFile(this)" style="display: none;"></p>
               <p><label for="fileButton" style="cursor: pointer;"><i data-toggle="tooltip" data-placement="top" title="Add inventory picture" style="font-size: 35px;color:teal;" class="fas fa-plus-circle"></i></label></p>

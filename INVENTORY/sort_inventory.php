@@ -31,6 +31,7 @@ if($type == "cardio") {
   $res = mysqli_query($conn, $sql);
   if($res) {
     while($row = mysqli_fetch_assoc($res)) {
+      $row["image_pathname"] = (empty($row["image_pathname"])) ? "./blank.png" : $row["image_pathname"];
       $data[] = $row;
     }
   }
