@@ -37,8 +37,6 @@ if (strlen($name) < 5) {
     echo json_encode("Starting date is in conflict with " . $checkStart->name . " schedule. Choose another starting date.");
   } else if ($checkEnd->doesExist) {
     echo json_encode("Ending date is in conflict with " . $checkEnd->name . " schedule. Choose another ending date.");
-  } else if (!preg_match('/^[a-zA-Z]+( [a-zA-Z]+)*$/', $name)) {
-    echo json_encode("Invalid promo name. Please make sure there are no special characters.");
   } else {
     $sql = "INSERT INTO promo (promo_name, promo_type, promo_description, date_added, promo_starting_date, promo_ending_date, amount)
     VALUES ('$name', '$type', '$description', '$dateAdded', '$startDate', '$endDate', '$amount')";
