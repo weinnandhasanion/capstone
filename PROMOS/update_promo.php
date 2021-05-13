@@ -27,7 +27,7 @@ if (strlen($name) < 5) {
   echo json_encode("Invalid promo name. Maximum of 25 letters only.");
 } else if (mysqli_num_rows($duplicate_name) > 0) {
   echo json_encode("Promo name is already taken.");
-} else if ($startDate > $endDate) {
+} else if ($startDate >= $endDate) {
   echo json_encode("Ending date must be greater than starting date!");
 } else {
   $checkStart = checkExistingDates($startDate);
