@@ -1,6 +1,8 @@
 <?php 
 require "./../connect.php";
+session_start();
 
+$session = $_SESSION["admin_id"];
 $id = $_POST["id"];
 $name = $_POST["name"];
 $type = $_POST["type"];
@@ -40,7 +42,22 @@ if(preg_match($number, $name, $match)){
   $res = mysqli_query($conn, $sql);
 
   if($res) {
-    echo json_encode("success");
+    $sql = "SELECT * FROM logtrail WHERE admin_id = $session ORDER BY login_id DESC";
+    $res = mysqli_query($conn, $sql);
+    $data = array();
+    while($row = mysqli_fetch_assoc($res)) {
+      $data[] = $row;
+    }
+    $login_id = $data[0]["login_id"];
+    $timeNow = date("h:i A");
+
+    $sql = "INSERT INTO logtrail_doing (login_id, admin_id, description, user_fname, user_lname, identity, time)
+      VALUES ($login_id, $session, 'Edited routine', '$name', '', 'Members', '$timeNow')";
+    if (mysqli_query($conn, $sql)) {
+      echo json_encode("success");
+    } else {
+      echo json_encode(mysqli_error($conn));
+    }
   } else {
     echo json_encode(mysqli_error($conn));
   }

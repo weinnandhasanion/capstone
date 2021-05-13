@@ -5,7 +5,7 @@ date_default_timezone_set('Asia/Manila');
 
 if (isset($_GET["id"])) {
   $id = $_GET["id"];
-
+  $session = $_SESSION["admin_id"];
   $sql = "SELECT * FROM member WHERE member_id = $id";
   $res = mysqli_query($conn, $sql);
   $dateNow = date("Y-m-d H:i:s");
@@ -63,6 +63,19 @@ if (isset($_GET["id"])) {
             $message = "$fn $ln's monthly subscription is expired. $fn only has $diff day(s) left to pay for his/her monthly subscription. $fn can still enter the gym. Login successful.";
             $type = "green";
             $title = "Success";
+
+            $sql = "SELECT * FROM logtrail WHERE admin_id = $session ORDER BY login_id DESC";
+            $res = mysqli_query($conn, $sql);
+            $data = array();
+            while($row = mysqli_fetch_assoc($res)) {
+              $data[] = $row;
+            }
+            $login_id = $data[0]["login_id"];
+            $timeNow = date("h:i A");
+      
+            $sql = "INSERT INTO logtrail_doing (login_id, admin_id, description, user_fname, user_lname, identity, time)
+              VALUES ($login_id, $session, 'Scanned QR Code', '$fn', '$ln', 'Members', '$timeNow')";
+            mysqli_query($conn, $sql);
           }
         } else if (!$monthlyPaid && !$annualPaid) {
           $message = $row["first_name"] . " " . $row["last_name"] . " is not eligible to enter the gym. Please pay annual membership and monthly subscription.";
@@ -74,9 +87,25 @@ if (isset($_GET["id"])) {
           $res = mysqli_query($conn, $sql);
 
           if ($res) {
+            $fn = $row["first_name"];
+            $ln = $row["last_name"];
+
             $message = $row["first_name"] . " " . $row["last_name"] . " is subscribed and is eligible to enter the gym. Login successful.";
             $type = "green";
             $title = "Success";
+
+            $sql = "SELECT * FROM logtrail WHERE admin_id = $session ORDER BY login_id DESC";
+            $res = mysqli_query($conn, $sql);
+            $data = array();
+            while($row = mysqli_fetch_assoc($res)) {
+              $data[] = $row;
+            }
+            $login_id = $data[0]["login_id"];
+            $timeNow = date("h:i A");
+      
+            $sql = "INSERT INTO logtrail_doing (login_id, admin_id, description, user_fname, user_lname, identity, time)
+              VALUES ($login_id, $session, 'Scanned QR Code', '$fn', '$ln', 'Members', '$timeNow')";
+            mysqli_query($conn, $sql);
           }
         }
       } else {
@@ -85,9 +114,25 @@ if (isset($_GET["id"])) {
         $res = mysqli_query($conn, $sql);
 
         if ($res) {
+          $fn = $row["first_name"];
+          $ln = $row["last_name"];
+          
           $message = $row["first_name"] . " " . $row["last_name"] . " is a walk-in member. Login successful.";
           $type = "green";
           $title = "Success";
+
+          $sql = "SELECT * FROM logtrail WHERE admin_id = $session ORDER BY login_id DESC";
+          $res = mysqli_query($conn, $sql);
+          $data = array();
+          while($row = mysqli_fetch_assoc($res)) {
+            $data[] = $row;
+          }
+          $login_id = $data[0]["login_id"];
+          $timeNow = date("h:i A");
+    
+          $sql = "INSERT INTO logtrail_doing (login_id, admin_id, description, user_fname, user_lname, identity, time)
+            VALUES ($login_id, $session, 'Scanned QR Code', '$fn', '$ln', 'Members', '$timeNow')";
+          mysqli_query($conn, $sql);
         }
       }
     } else {

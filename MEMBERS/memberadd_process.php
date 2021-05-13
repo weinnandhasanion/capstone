@@ -121,7 +121,7 @@ else if (preg_match($phoneregex, $phone, $match)) {
                     }
     
                     $login_id_data = array();
-                    $sql31 = "SELECT * FROM logtrail ORDER BY login_id DESC";
+                    $sql31 = "SELECT * FROM logtrail WHERE admin_id = $session_admin_id ORDER BY login_id DESC";
                     $res31 = mysqli_query($conn, $sql31);
                     if ($res31) {
                         while ($row123 = mysqli_fetch_assoc($res31)) {
@@ -213,7 +213,7 @@ else if (preg_match($phoneregex, $phone, $match)) {
                     }
     
                     $login_id_data = array();
-                    $sql31 = "SELECT * FROM logtrail ORDER BY login_id DESC";
+                    $sql31 = "SELECT * FROM logtrail WHERE admin_id = $session_admin_id ORDER BY login_id DESC";
                     $res31 = mysqli_query($conn, $sql31);
                     if ($res31) {
                         while ($row123 = mysqli_fetch_assoc($res31)) {
@@ -305,7 +305,7 @@ else if (preg_match($phoneregex, $phone, $match)) {
                         $member_id = $data[0];
 
                         $login_id_data = array();
-                        $sql31 = "SELECT * FROM logtrail ORDER BY login_id DESC";
+                        $sql31 = "SELECT * FROM logtrail WHERE admin_id = $session_admin_id ORDER BY login_id DESC";
                         $res31 = mysqli_query($conn, $sql31);
                         if ($res31) {
                             while ($row123 = mysqli_fetch_assoc($res31)) {

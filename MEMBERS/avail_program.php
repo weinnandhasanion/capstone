@@ -1,6 +1,9 @@
 <?php 
 require "./../connect.php";
 date_default_timezone_set('Asia/Manila');
+session_start();
+
+$session = $_SESSION["admin_id"];
 
 $memberId = $_POST["memberId"];
 $programId = $_POST["programId"];
@@ -29,7 +32,22 @@ if($res) {
     $res2 = mysqli_query($conn, $sql2);
 
     if($res2) {
-      echo json_encode("success");
+      $sql = "SELECT * FROM logtrail WHERE admin_id = $session ORDER BY login_id DESC";
+      $res = mysqli_query($conn, $sql);
+      $data = array();
+      while($row = mysqli_fetch_assoc($res)) {
+        $data[] = $row;
+      }
+      $login_id = $data[0]["login_id"];
+      $timeNow = date("h:i A");
+
+      $sql = "INSERT INTO logtrail_doing (login_id, admin_id, description, user_fname, user_lname, identity, time)
+        VALUES ($login_id, $session, 'Paid program fee', '$first_name', '$last_name', 'Members', '$timeNow')";
+      if (mysqli_query($conn, $sql)) {
+        echo json_encode("success");
+      } else {
+        echo json_encode(mysqli_error($conn));
+      }
     }
   }
 } else {

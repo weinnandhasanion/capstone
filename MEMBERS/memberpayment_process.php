@@ -107,7 +107,7 @@ else if($payment_description == 'Monthly Subscription'){
         //this is for puting login_id in the array
         $data_logtrail = array();
         $login_id;
-        $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
+        $log = "SELECT * FROM logtrail WHERE admin_id = $session_admin_id ORDER BY login_id DESC";
         $logtrail = mysqli_query($conn, $log);
         if($logtrail) {
             while($rowrow = mysqli_fetch_assoc($logtrail)) {
@@ -194,7 +194,7 @@ else if($payment_description == 'Monthly Subscription'){
      //this is for puting login_id in the array
      $data_logtrail = array();
      $login_id;
-     $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
+     $log = "SELECT * FROM logtrail WHERE admin_id = $session_admin_id ORDER BY login_id DESC";
      $logtrail = mysqli_query($conn, $log);
      if($logtrail) {
          while($rowrow = mysqli_fetch_assoc($logtrail)) {
@@ -312,7 +312,7 @@ $query_run123 = mysqli_query($conn, $klint);
      //this is for puting login_id in the array
      $data_logtrail = array();
      $login_id;
-     $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
+     $log = "SELECT * FROM logtrail WHERE admin_id = $session_admin_id ORDER BY login_id DESC";
      $logtrail = mysqli_query($conn, $log);
      if($logtrail) {
          while($rowrow = mysqli_fetch_assoc($logtrail)) {
@@ -391,7 +391,7 @@ $query_run123 = mysqli_query($conn, $klint);
   //this is for puting login_id in the array
   $data_logtrail = array();
   $login_id;
-  $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
+  $log = "SELECT * FROM logtrail WHERE admin_id = $session_admin_id ORDER BY login_id DESC";
   $logtrail = mysqli_query($conn, $log);
   if($logtrail) {
       while($rowrow = mysqli_fetch_assoc($logtrail)) {
