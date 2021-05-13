@@ -30,7 +30,7 @@ if (empty($row["annual_start"]) || $today > $row["annual_end"]) {
             //this is for puting login_id in the array
             $data_logtrail = array();
             $login_id;
-            $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
+            $log = "SELECT * FROM logtrail WHERE admin_id = $session_admin_id ORDER BY login_id DESC";
             $logtrail = mysqli_query($conn, $log);
             if ($logtrail) {
                 while ($rowrow = mysqli_fetch_assoc($logtrail)) {
@@ -60,16 +60,9 @@ if (empty($row["annual_start"]) || $today > $row["annual_end"]) {
             $identity = "Members";
             $timeNow = date("h:i A");
 
-            // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-            $sql22 = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
-            $query_run22 = mysqli_query($conn, $sql22);
-            $rows22 = mysqli_fetch_assoc($query_run22);
-
-            $login_id_new = $rows22["login_id"];
-
             $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
                 `description`, `identity`,`time`)
-                VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
+                VALUES ( '$login_id','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
             mysqli_query($conn, $sql1);
         } else {
             echo mysqli_error($conn), 'NOT UPDATED';
@@ -85,7 +78,7 @@ if (empty($row["annual_start"]) || $today > $row["annual_end"]) {
             //this is for puting login_id in the array
             $data_logtrail = array();
             $login_id;
-            $log = "SELECT * FROM logtrail ORDER BY login_id DESC";
+            $log = "SELECT * FROM logtrail WHERE admin_id = $session_admin_id ORDER BY login_id DESC";
             $logtrail = mysqli_query($conn, $log);
             if ($logtrail) {
                 while ($rowrow = mysqli_fetch_assoc($logtrail)) {
@@ -115,16 +108,9 @@ if (empty($row["annual_start"]) || $today > $row["annual_end"]) {
             $identity = "Members";
             $timeNow = date("h:i A");
 
-            // INSERTING LOGTRAIL INFO  FOR THE LOGTRAIL DOING
-            $sql22 = "SELECT * FROM logtrail WHERE login_id = '$login_id'";
-            $query_run22 = mysqli_query($conn, $sql22);
-            $rows22 = mysqli_fetch_assoc($query_run22);
-
-            $login_id_new = $rows22["login_id"];
-
             $sql1 = "INSERT INTO `logtrail_doing` ( `login_id`,`admin_id`,`member_id`,`user_fname`,`user_lname`,
                 `description`, `identity`,`time`)
-                VALUES ( '$login_id_new','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
+                VALUES ( '$login_id','$admin_id', '$member_id_new', '$user_fname','$user_lname','$description','$identity', '$timeNow')";
             mysqli_query($conn, $sql1);
         } else {
             echo mysqli_error($conn), 'NOT UPDATED';

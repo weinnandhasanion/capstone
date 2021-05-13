@@ -1311,6 +1311,11 @@ if (isset($_GET["type"])) {
             </div>
           </div>
         </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-orange" id="reg-qr-code">
+            View QR Code
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -1378,6 +1383,11 @@ if (isset($_GET["type"])) {
               </div>
             </div>
           </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-sm btn-orange" id="walk-qr-code">
+            View QR Code
+          </button>
         </div>
       </div>
     </div>
@@ -2552,7 +2562,9 @@ if (isset($_GET["type"])) {
   <script type="text/javascript" src="js/mdb.min.js"></script>
   <script type="text/javascript" src="validation.js"></script>
   <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+  <script src="./../mobile/js/qr-code/qrcode.min.js"></script>
   <script src="./js/qrcode-scanner.js"></script>
+  <script src="./../mobile/js/FileSaver.js"></script>
 
   <script>
     function pay(elem) {
@@ -3026,11 +3038,6 @@ if (isset($_GET["type"])) {
         
                 </td>
               </tr>`;
-              // <span data-toggle="tooltip" data-placement="top"
-              //     title="Delete ${row.routine_name}">
-              //     <i style="cursor: pointer; color:red; font-size: 25px;" class=" far fa-trash-alt mx-1"
-              //       data-id="${row.routine_id}" onclick="removeRoutine(this)"></i>
-              //   </span>
               $("#routines-tbody").append(html);
             });
           } else {
@@ -3082,6 +3089,7 @@ if (isset($_GET["type"])) {
               link: link
             },
             function (res) {
+              console.log(res);
               if(JSON.parse(res) == "success") {
                 self.setTitle("Success");
                 self.setContent("Routine successfully added.");
@@ -3206,7 +3214,6 @@ if (isset($_GET["type"])) {
     //checkbox only one check
     $(document).ready(function() {
       $('input:checkbox').each(function() {
-        //$('input:checkbox').click(function() {
         $('input:checkbox').not(this).prop('checked', false);
       });
     });
@@ -3370,12 +3377,9 @@ if (isset($_GET["type"])) {
       });
     }
 
-    //------------------------------------------------------------------------------ VIEW JS
-    // View member Modal
     function displayDetails(el) {
       let id = el.getAttribute('data-id');
 
-      // AJAX Request
       let req = new XMLHttpRequest();
       req.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -3426,8 +3430,38 @@ if (isset($_GET["type"])) {
         document.getElementById("view_gender").value = row.gender;
         document.getElementById("view_username").value = checkUsername(row.username);
         document.getElementById("view_program").value = row.program_name;
+
+        $("#reg-qr-code").attr("data-id", row.member_id);
       }
     }
+
+    $("#reg-qr-code").click(function() {
+      let id = $(this).attr("data-id");
+      let name = $("#view_firstname").val() + $("#view_lastname").val();
+
+      $.alert({
+        title: "",
+        theme: "modern",
+        backgroundDismiss: true,
+        buttons: {
+          save: {
+            text: "Save Image",
+            btnClass: 'btn-black',
+            action: function() {
+              let qr = document.getElementById('qr-code-div');
+              let canvas = qr.firstChild;
+
+              var image = canvas.toDataURL("image/png").replace("image/png", "image/jpeg");
+              saveAs(image, "Qr_"  + id + "_" + name);
+            }
+          }
+        },
+        content: `<div class="d-flex justify-content-center" id="qr-code-div"></div>`,
+        onOpenBefore: function() {
+          new QRCode(document.getElementById("qr-code-div"), "./scan_qr.php?id=" + id);
+        }
+      });
+    });
 
 
     //------------------------------------------------------------------------------ VIEW JS
@@ -3442,11 +3476,10 @@ if (isset($_GET["type"])) {
           display(JSON.parse(this.responseText));
         }
       }
-      req.open('GET', 'viewmember.php?id=' + id, true);
+      req.open("GET", "viewmember.php?id=" + id, true);
       req.send();
 
       function display(row) {
-
         document.getElementById("viewwalkin_memberId").value = row.member_id;
         document.getElementById("viewwalkin_lastname").value = row.last_name;
         document.getElementById("viewwalkin_firstname").value = row.first_name;
@@ -3456,10 +3489,37 @@ if (isset($_GET["type"])) {
         document.getElementById("viewwalkin_address").value = row.address;
         document.getElementById("viewwalkin_dateregistered").value = row.date_registered;
         document.getElementById("viewwalkin_gender").value = row.gender;
+
+        $("#walk-qr-code").attr("data-id", row.member_id);
       }
     }
 
+    $("#walk-qr-code").click(function() {
+      let id = $(this).attr("data-id");
 
+      $.alert({
+        title: "",
+        theme: "modern",
+        backgroundDismiss: true,
+        buttons: {
+          save: {
+            text: "Save Image",
+            btnClass: 'btn-black',
+            action: function() {
+              let qr = document.getElementById('qr-code-div');
+              let canvas = qr.firstChild;
+
+              var image = canvas.toDataURL("image/png").replace("image/png", "image/jpeg");
+              saveAs(image, id + "'s QR Code");
+            }
+          }
+        },
+        content: `<div class="d-flex justify-content-center" id="qr-code-div"></div>`,
+        onOpenBefore: function() {
+          new QRCode(document.getElementById("qr-code-div"), "./scan_qr.php?id=" + id);
+        }
+      });
+    });
 
     //---------------------------------------------------------------------------VIEW PROGRAM INFO
     // View member Modal
