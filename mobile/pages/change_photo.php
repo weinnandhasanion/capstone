@@ -3,7 +3,7 @@
   session_start();
 
   if(!isset($_SESSION["member_id"])) {
-    header("Location: ./../index.php");
+    header("Location: ./../../index.php");
   }
 
   $sql = "SELECT * FROM member WHERE member_id = '". $_SESSION["member_id"] ."'";
