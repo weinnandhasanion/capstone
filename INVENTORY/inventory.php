@@ -162,20 +162,32 @@ $res = mysqli_query($conn, $sql);
         <i class="fas fa-trash mr-2"></i>
         View Deleted Inventory
       </button>
+      <button class="btn btn-sm btn-outline-orange mb-3" id="viewCategories" data-toggle="modal" data-target="#categoryModal">
+        <i class="fas fa-eye mr-2"></i>
+        View Categories
+      </button>
       <div class="card mb-4 wow fadeIn">
         <div class="card-body d-sm-flex justify-content-between">
           <h4 class="mb-1 mb-sm-1 pt-1">
-            <a data-toggle="modal" data-target="#add"><i style="color:#DF3A01; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Add New Promo" class="fas fa-plus mr-4"></i></a>
+            <a data-toggle="modal" data-target="#add"><i style="color:#DF3A01; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Add New Item" class="fas fa-plus"></i></a>
+            <a data-toggle="modal" data-target="#add-category"><i style="font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Add New Category" class="fas fa-folder-plus mr-2 text-success"></i></a>
             Inventory
           </h4>
           <form action="#">
             <select name="" id="sort-inventory" class="form-control">
               <option value="All">All</option>
-              <option value="Cardio">Cardio</option>
-              <option value="Free Weights">Free Weights</option>
-              <option value="Calisthenics">Calisthenics</option>
-              <option value="Strength">Strength</option>
-              <option value="Supplies">Supplies</option>
+              <?php 
+              $sql = "SELECT * FROM category";
+              $res = mysqli_query($conn, $sql);
+
+              if($res) {
+                while($row = mysqli_fetch_assoc($res)) {
+              ?>
+              <option value="<?= $row["category_id"] ?>"><?= $row["category_name"] ?></option>
+              <?php
+                }
+              }
+              ?>
             </select>
           </form>
           <form class="d-flex justify-content-center">
@@ -188,6 +200,51 @@ $res = mysqli_query($conn, $sql);
       </div>
     </div>
   </main>
+
+  <div class="modal fade" id="categoryModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Categories</h3>
+        </div>
+        <div class="modal-body table-responsive p-0">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th style="text-align: center">Category Name</th>
+                <th style="text-align: center">Date Added</th>
+                <th style="text-align: center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php 
+              $sql = "SELECT * FROM category";
+              $res = mysqli_query($conn, $sql);
+              if($res) {
+                if(mysqli_num_rows($res) > 0) {
+                  while($row = mysqli_fetch_assoc($res)) {
+              ?>
+              <tr>
+                <td><?= $row["category_name"] ?></td>
+                <td><?= date("M d, Y", strtotime($row["datetime_added"])) ?></td>
+                <td>
+                  <i style="cursor: pointer; font-size: 20px;"
+                  class="fas fa-trash text-danger" data-id="<?= $row["category_id"] ?>"
+                  data-toggle="modal" data-target="#regular_update"
+                  onclick="deleteCategory(this)"></i>
+                </td>
+              </tr>
+              <?php
+                  }
+                }
+              }
+              ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="modal fade" id="view-details">
     <div class="modal-dialog">
@@ -252,6 +309,31 @@ $res = mysqli_query($conn, $sql);
     </div>
   </div>
 
+  <div class="modal fade" id="add-category">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Add New Category</h3>
+        </div>
+        <form action="./add_category.php" id="add-category-form">
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-sm-12">
+                  <label for="">Category Name</label>
+                  <input type="text" class="form-control" placeholder="Add category here" name="category-name">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-orange" type="submit">Add Category</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="add">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -287,11 +369,18 @@ $res = mysqli_query($conn, $sql);
                   <label>Category</label><br>
                   <select id="category" class="form-control" name="inventory_category" onblur="checkCategory(this)" required="" style="left:60px;">
                     <option value="" selected>Select category</option>
-                    <option value="Cardio">Cardio</option>
-                    <option value="Free Weights">Free Weights</option>
-                    <option value="Calisthenics">Calisthenics</option>
-                    <option value="Strength">Strength</option>
-                    <option value="Supplies">Supplies</option>
+                    <?php 
+                    $sql = "SELECT * FROM category";
+                    $res = mysqli_query($conn, $sql);
+
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?= $row["category_id"] ?>"><?= $row["category_name"] ?></option>
+                    <?php
+                      }
+                    }
+                    ?>
                   </select>
                   <small class="validation text-danger" id="category-invalid">Invalid input</small>
                 </div>
@@ -359,11 +448,18 @@ $res = mysqli_query($conn, $sql);
                   <label>Category</label><br>
                   <select id="update-category" class="form-control" name="inventory_category" onblur="checkCategory(this)" required="" style="left:60px;">
                     <option value="" selected>Select category</option>
-                    <option value="Cardio">Cardio</option>
-                    <option value="Free Weights">Free Weights</option>
-                    <option value="Calisthenics">Calisthenics</option>
-                    <option value="Strength">Strength</option>
-                    <option value="Supplies">Supplies</option>
+                    <?php 
+                    $sql = "SELECT * FROM category";
+                    $res = mysqli_query($conn, $sql);
+
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?= $row["category_id"] ?>"><?= $row["category_name"] ?></option>
+                    <?php
+                      }
+                    }
+                    ?>
                   </select>
                   <small class="validation text-danger" id="update-category-invalid">Invalid input</small>
                 </div>
@@ -559,7 +655,7 @@ $res = mysqli_query($conn, $sql);
       let results;
       $.get("./sort_inventory.php?type=both", function(res) {
         data = JSON.parse(res);
-        let sortVal = $("#sort-inventory").val();
+        let sortVal = $("#sort-inventory").find("option:selected").text();
 
         if(sortVal == "All") {
           if(val == "") {
@@ -583,7 +679,7 @@ $res = mysqli_query($conn, $sql);
     });
 
     $("#sort-inventory").change(function () {
-      let val = $(this).val();
+      let val = $(this).find("option:selected").text();
 
       if(val == "All") {
         renderItems(items);
@@ -703,6 +799,7 @@ $res = mysqli_query($conn, $sql);
             processData: false,
             type: 'post',
             success: function(res) {
+              console.log(res);
               if (JSON.parse(res) == "success") {
                 self.setTitle("Success");
                 self.setContent("Item successfully added.");
@@ -800,7 +897,72 @@ $res = mysqli_query($conn, $sql);
         }
       });
     }
+
+    // Add new category
+    $("#add-category-form").submit(function(e) {
+      e.preventDefault();
+      let url = $(this).attr("action");
+      let data = $(this).serialize();
+      $.dialog({
+        closeIcon: false,
+        backgroundDismiss: true,
+        title: "",
+        content: function () {
+          var self = this;
+          $.post(url, data, function (res) {
+            if(JSON.parse(res) == "success") {
+              self.setTitle("Success");
+              self.setType("green");
+              self.setContent("Successfully added category.");
+              self.backgroundDismiss = () => window.location.reload();
+            } else {
+              self.setTitle("Error");
+              self.setType("red");
+              self.setContent(JSON.parse(res));
+            }
+          });
+        }
+      });
+    });
+
+    // Delete category
+    function deleteCategory(el) {
+      let id = el.getAttribute("data-id");
+
+      $.confirm({
+        title: "Delete?",
+        content: "Are you sure you want to delete this category?",
+        closeIcon: true,
+        buttons: {
+          yes: {
+            btnClass: "btn-danger",
+            action: function () {
+              $.dialog({
+                closeIcon: false,
+                backgroundDismiss: true,
+                content: function () {
+                  var self = this;
+                  $.get("./delete_category.php?id=" + id, function (res) {
+                    if(JSON.parse(res) == "success") {
+                      self.setTitle("Success");
+                      self.setContent("Successfully deleted category.");
+                      self.setType("green");
+                      self.backgroundDismiss = function () {
+                        window.location.reload();
+                      }
+                    } else {
+                      self.setTitle("Error");
+                      self.setContent(JSON.parse(res));
+                      self.setType("red");
+                    }
+                  });
+                }
+              });
+            }
+          }
+        }
+      });
+    }
   </script>
 </body>
-
 </html>

@@ -48,7 +48,7 @@ if (strlen($inventory_name) > 50) {
             $sql = "UPDATE inventory 
             SET inventory_name = '$inventory_name',
                 inventory_qty = $inventory_qty,
-                inventory_category = '$inventory_category',
+                category_id = '$inventory_category',
                 inventory_description = '$inventory_description',
                 date_added = '$date_added',
                 image_pathname = '" . $_FILES["image"]["name"] . "',
@@ -71,7 +71,7 @@ if (strlen($inventory_name) > 50) {
       $sql = "UPDATE inventory 
       SET inventory_name = '$inventory_name',
           inventory_qty = $inventory_qty,
-          inventory_category = '$inventory_category',
+          category_id = '$inventory_category',
           inventory_description = '$inventory_description',
           date_added = '$date_added',
           inventory_damage = $inventory_dmg
