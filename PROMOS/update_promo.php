@@ -27,14 +27,14 @@ if (strlen($name) < 5) {
   echo json_encode("Invalid promo name. Maximum of 25 letters only.");
 } else if (mysqli_num_rows($duplicate_name) > 0) {
   echo json_encode("Promo name is already taken.");
-} else if ($startDate >= $endDate) {
+} else if ($type == "Seasonal" && $startDate >= $endDate) {
   echo json_encode("Ending date must be greater than starting date!");
 } else {
   $checkStart = checkExistingDates($startDate);
   $checkEnd = checkExistingDates($endDate);
-  if ($checkStart->doesExist) {
+  if ($type == "Seasonal" && $checkStart->doesExist) {
     echo json_encode("Starting date is in conflict with " . $checkStart->name . " schedule. Choose another starting date.");
-  } else if ($checkEnd->doesExist) {
+  } else if ($type == "Seasonal" && $checkEnd->doesExist) {
     echo json_encode("Ending date is in conflict with " . $checkEnd->name . " schedule. Choose another ending date.");
   } else {
     $sql = "UPDATE promo
