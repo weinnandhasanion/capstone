@@ -1353,8 +1353,9 @@
           yes: {
             btnClass: 'btn-orange',
             action: function () {
-              $.get(`./promo_check.php?member_id=${memberId}&promo_id=${promoId}`, function(res) {
-                res = JSON.parse(res);
+              $.get(`./promo_check.php?member_id=${memberId}&promo_id=${promoId}`, function(resp) {
+                console.log(resp);
+                res = JSON.parse(resp);
 
                 if(res.status == 0) {
                   $.dialog({

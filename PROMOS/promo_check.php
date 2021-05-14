@@ -52,6 +52,8 @@ if(mysqli_num_rows($res) > 0) {
       } else {
         $status = 1;
       }
+    } else {
+      $status = 1;
     }
   }
 }
