@@ -204,7 +204,7 @@ $res = mysqli_query($conn, $sql);
   <div class="modal fade" id="categoryModal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header" style="background-color: #DF3A01; color: white;">
           <h3 class="modal-title">Equipment Categories</h3>
         </div>
         <div class="modal-body table-responsive p-0">
@@ -965,6 +965,55 @@ $res = mysqli_query($conn, $sql);
         }
       });
     }
+
+    // Getting deleted itms
+    var delItems;
+    $.get("./get_deleted.php", function(res) {
+      delItems = JSON.parse(res);
+    });
+
+    // Searching deleted items
+    $("#search-delete").on("keyup", function() {
+      let val = $(this).val();
+      let data = delItems.filter(row => row.inventory_name.toUpperCase().includes(val.toUpperCase()));
+
+      if(val == "") {
+        $("#deletetbody").empty();
+        delItems.forEach(row => {
+          let html = `
+            <tr>
+              <td>${row.inventory_name}</td>
+              <td>${row.inventory_category}</td>
+              <td>${row.date_deleted}</td>
+              <td>${row.time_deleted}</td>
+              <td>${row.admin_delete}</td>
+              <td>
+                <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Recover ${row.inventory_name}" class="fas fa-undo mx-2" data-id="${row.inventory_id}" onclick="recover(this)"></i>
+              </td>
+            </tr>
+          `;
+
+          $("#deletetbody").append(html);
+        });
+      } else {
+        $("#deletetbody").empty();
+        data.forEach(row => {
+          let html = `
+            <tr>
+              <td>${row.inventory_name}</td>
+              <td>${row.inventory_category}</td>
+              <td>${row.date_deleted}</td>
+              <td>${row.time_deleted}</td>
+              <td>${row.admin_delete}</td>
+              <td>
+                <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Recover ${row.inventory_name}" class="fas fa-undo mx-2" data-id="${row.inventory_id}" onclick="recover(this)"></i>
+              </td>
+            </tr>
+          `;
+          $("#deletetbody").append(html);
+        });
+      }
+    });
   </script>
 </body>
 </html>
