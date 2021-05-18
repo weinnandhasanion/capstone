@@ -1244,7 +1244,8 @@ CREATE TABLE `trainer` (
   `date_hired` date DEFAULT NULL,
   `date_deleted` date DEFAULT NULL,
   `time_deleted` time DEFAULT NULL,
-  `admin_delete` varchar(50) DEFAULT NULL
+  `admin_delete` varchar(50) DEFAULT NULL,
+   `image_pathname` varchar(9999) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
