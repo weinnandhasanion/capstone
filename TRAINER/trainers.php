@@ -277,38 +277,34 @@ $res = mysqli_query($conn, $sql);
   <div class="modal fade" id="add">
     <div class="modal-dialog">
       <div class="modal-content" style="width:600px;">
-        <form action="./traineradd_process.php"  method="post" id="add-item-form">
+        <form action="./traineradd_process.php" method="post" id="add-item-form">
           <div class="modal-header" style="background-color:#EB460D;color:white;">
             <h4 class="modal-title">ADD NEW TRAINER</h4>
           </div>
           <div class="modal-body">
-            <div class="row d-flex mt-1 mb-3">
-
-            <div class="row d-flex mt-1 mb-3" style="flex-direction: row; position: relative;left: 70px;">
+            <div class="row d-flex justify-content-center mb-3">
               <div id="profilepic" style="border-radius: 50px; height: 100px; width: 100px; overflow: hidden; background-position: 50% 50%; background-size: cover;  text-align: center;">
-                <img src="./blank.png" id="add-item-img" alt="" style="height: 100%; width: 100%; object-fit: cover;">
+                <img src="./../mobile/img/default_picture.png" id="add-item-img" alt="" style="height: 100%; width: 100%; object-fit: cover;">
               </div>
-              <p><input type="file" value="upload" id="fileButton" accept="image/*" name="image"
-              onchange="loadFile(this)" style="display: none;"></p>
+              <p><input type="file" value="upload" id="fileButton" accept="image/*" name="image" onchange="loadFile(this)" style="display: none;"></p>
               <p><label for="fileButton" style="cursor: pointer;">
-              <i data-toggle="tooltip" data-placement="top" title="Add inventory picture" 
-              style="font-size: 35px;color:teal;" class="fas fa-plus-circle"></i></label></p>
-              
+                <i data-toggle="tooltip" data-placement="top" title="Add inventory picture" style="font-size: 35px;color:teal;" class="fas fa-plus-circle"></i></label>
+              </p>
             </div>
-
-            <div class="col-sm-6">
-            </div>
-              <div class="col-sm-6">
-                <label>First name</label>
-                <input name="first_name" type="text" id="fname" onblur="checkIfValid(this)" class="form-control" required="" placeholder="Firstname">
-                <small class="validation text-danger" id="fname-empty">Please fill out this field</small>
-                <small class="validation text-danger" id="fname-invalid">Invalid input</small>
-              </div>
-              <div class="col-sm-6">
-                <label>Last name</label>
-                <input name="last_name" type="text" id="lname" onblur="checkIfValid(this)" class="form-control" required="" placeholder="Lastname">
-                <small class="validation text-danger" id="lname-empty">Please fill out this field</small>
-                <small class="validation text-danger" id="lname-invalid">Invalid input</small>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col-sm-6">
+                  <label>First name</label>
+                  <input name="first_name" type="text" id="fname" onblur="checkIfValid(this)" class="form-control" required="" placeholder="Firstname">
+                  <small class="validation text-danger" id="fname-empty">Please fill out this field</small>
+                  <small class="validation text-danger" id="fname-invalid">Invalid input</small>
+                </div>
+                <div class="col-sm-6">
+                  <label>Last name</label>
+                  <input name="last_name" type="text" id="lname" onblur="checkIfValid(this)" class="form-control" required="" placeholder="Lastname">
+                  <small class="validation text-danger" id="lname-empty">Please fill out this field</small>
+                  <small class="validation text-danger" id="lname-invalid">Invalid input</small>
+                </div>
               </div>
             </div>
             <div class="form-group">
@@ -578,7 +574,6 @@ $res = mysqli_query($conn, $sql);
   <script src="./../js/pagination.js"></script>
 
   <script>
-  
     var trainers, deleted;
     $.get("./gettrainers.php", function(res) {
       trainers = JSON.parse(res);
@@ -642,8 +637,8 @@ $res = mysqli_query($conn, $sql);
 
 
       $(function() {
-      $('[data-toggle="tooltip"]').tooltip();
-    });
+        $('[data-toggle="tooltip"]').tooltip();
+      });
     }
 
     // Sorting
@@ -753,7 +748,7 @@ $res = mysqli_query($conn, $sql);
       });
     }
 
-  
+
 
     // tool tip sa plus button
     $(function() {
@@ -824,7 +819,7 @@ $res = mysqli_query($conn, $sql);
     }
 
     // adding trainer ajax
-    $("#add-trainer-form").submit(function (e) {
+    $("#add-trainer-form").submit(function(e) {
       e.preventDefault();
 
       let data = $(this).serialize();
@@ -833,14 +828,14 @@ $res = mysqli_query($conn, $sql);
       $.dialog({
         backgroundDismiss: true,
         closeIcon: false,
-        content: function () {
+        content: function() {
           var self = this;
-          return $.post(url, data, function (res) {
-            if(JSON.parse(res) == "success") {
+          return $.post(url, data, function(res) {
+            if (JSON.parse(res) == "success") {
               self.setTitle("Success");
               self.setContent("Trainer successfully added.");
               self.setType("green");
-              self.backgroundDismiss = function () {
+              self.backgroundDismiss = function() {
                 window.location.reload();
               }
             } else {
@@ -848,14 +843,13 @@ $res = mysqli_query($conn, $sql);
               self.setContent(JSON.parse(res));
               self.setType("red");
             }
-            }
-          );
+          });
         }
       });
     });
 
     // updating trainer ajax
-    $("#update-trainer-form").submit(function (e) {
+    $("#update-trainer-form").submit(function(e) {
       e.preventDefault();
 
       let data = $(this).serialize();
@@ -864,14 +858,14 @@ $res = mysqli_query($conn, $sql);
       $.dialog({
         backgroundDismiss: true,
         closeIcon: false,
-        content: function () {
+        content: function() {
           var self = this;
-          return $.post(url, data, function (res) {
-            if(JSON.parse(res) == "success") {
+          return $.post(url, data, function(res) {
+            if (JSON.parse(res) == "success") {
               self.setTitle("Success");
               self.setContent("Trainer successfully updated.");
               self.setType("green");
-              self.backgroundDismiss = function () {
+              self.backgroundDismiss = function() {
                 window.location.reload();
               }
             } else {
@@ -879,8 +873,7 @@ $res = mysqli_query($conn, $sql);
               self.setContent(JSON.parse(res));
               self.setType("red");
             }
-            }
-          );
+          });
         }
       });
     });
@@ -925,7 +918,7 @@ $res = mysqli_query($conn, $sql);
     }
 
     //------------------------------------------------------------------------------ RECOVER JS 
-  
+
     function recover(el) {
       let id = el.getAttribute('data-id');
       console.log(id);
@@ -996,7 +989,7 @@ $res = mysqli_query($conn, $sql);
       }
     }
 
-    
+
 
     // adding item ajax
     $("#add-item-form").submit(function(e) {
@@ -1041,9 +1034,6 @@ $res = mysqli_query($conn, $sql);
         }
       });
     });
-
-
-
   </script>
 </body>
 
