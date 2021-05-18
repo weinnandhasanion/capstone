@@ -1088,11 +1088,18 @@ $res = mysqli_query($conn, $sql);
                 <div class="col-sm-6">
                   <label for="">Category</label>
                   <select name="inventory_category_list" id="" class="form-control">
-                    <option value="Cardio">Cardio</option>
-                    <option value="Free Weights">Free Weights</option>
-                    <option value="Calisthenics">Calisthenics</option>
-                    <option value="Strength">Strength</option>
-                    <option value="Supplies">Supplies</option>
+                    <?php 
+                    $sql = "SELECT * FROM category";
+                    $res = mysqli_query($conn, $sql);
+
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?= $row["category_id"] ?>"><?= $row["category_name"] ?></option>
+                    <?php
+                      }
+                    }
+                    ?>
                     <option value="All" selected>All</option>
                   </select>
                 </div>
@@ -1148,11 +1155,18 @@ $res = mysqli_query($conn, $sql);
                 <div class="col-sm-6">
                   <label for="">Category</label>
                   <select name="inventory_category_working" id="" class="form-control">
-                    <option value="Cardio">Cardio</option>
-                    <option value="Free Weights">Free Weights</option>
-                    <option value="Calisthenics">Calisthenics</option>
-                    <option value="Strength">Strength</option>
-                    <option value="Supplies">Supplies</option>
+                    <?php 
+                    $sql = "SELECT * FROM category";
+                    $res = mysqli_query($conn, $sql);
+
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?= $row["category_id"] ?>"><?= $row["category_name"] ?></option>
+                    <?php
+                      }
+                    }
+                    ?>
                     <option value="All" selected>All</option>
                   </select>
                 </div>
@@ -1207,11 +1221,18 @@ $res = mysqli_query($conn, $sql);
                 <div class="col-sm-6">
                   <label for="">Category</label>
                   <select name="inventory_category_damage" id="" class="form-control">
-                    <option value="Cardio">Cardio</option>
-                    <option value="Free Weights">Free Weights</option>
-                    <option value="Calisthenics">Calisthenics</option>
-                    <option value="Strength">Strength</option>
-                    <option value="Supplies">Supplies</option>
+                    <?php 
+                    $sql = "SELECT * FROM category";
+                    $res = mysqli_query($conn, $sql);
+
+                    if($res) {
+                      while($row = mysqli_fetch_assoc($res)) {
+                    ?>
+                    <option value="<?= $row["category_id"] ?>"><?= $row["category_name"] ?></option>
+                    <?php
+                      }
+                    }
+                    ?>
                     <option value="All" selected>All</option>
                   </select>
                 </div>

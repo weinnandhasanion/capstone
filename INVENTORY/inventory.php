@@ -204,8 +204,8 @@ $res = mysqli_query($conn, $sql);
   <div class="modal fade" id="categoryModal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title">Categories</h3>
+        <div class="modal-header" style="background-color: #DF3A01; color: white;">
+          <h3 class="modal-title">Equipment Categories</h3>
         </div>
         <div class="modal-body table-responsive p-0">
           <table class="table table-hover">
@@ -490,7 +490,7 @@ $res = mysqli_query($conn, $sql);
       <div class="modal-content" style="width: 700px;">
 
         <div class="modal-header" style="background-color: #DF3A01; color: white;">
-          <h4 class="modal-title">Deleted Inventory</h4>
+          <h4 class="modal-title">Deleted Equipments</h4>
           <form class="d-flex justify-content-center">
             <input type="text" placeholder="Search deleted name" id="search-delete" class="form-control">
           </form>
@@ -514,7 +514,9 @@ $res = mysqli_query($conn, $sql);
               <tbody id='deletetbody'>
                 <?php
                 /* code for display data  AND date_deleted IS NOT NULL */
-                $sql = "SELECT * FROM inventory WHERE inventory_status = 'deleted' ORDER BY  date_deleted DESC, time_deleted DESC";
+                $sql = "SELECT i.*, c.category_name FROM inventory AS i
+                  INNER JOIN category AS c ON i.category_id = c.category_id
+                  WHERE i.inventory_status = 'deleted' ORDER BY i.date_deleted DESC, i.time_deleted DESC";
                 $result = mysqli_query($conn, $sql);
                 $resultCheck = mysqli_num_rows($result);
 
@@ -529,7 +531,7 @@ $res = mysqli_query($conn, $sql);
                 ?>
                     <tr>
                       <td><?php echo $row["inventory_name"] ?></td>
-                      <td><?php echo $row["inventory_category"] ?></td>
+                      <td><?php echo $row["category_name"] ?></td>
                       <td><?php echo $resultDelete ?></td>
                       <td><?php echo $time_Deleted ?></td>
                       <td><?php echo $row["admin_delete"] ?></td>
@@ -867,7 +869,7 @@ $res = mysqli_query($conn, $sql);
       $.confirm({
         closeIcon: true,
         title: "Recover?",
-        content: "Are you sure you want to recover this inventory?",
+        content: "Are you sure you want to recover this equipment?",
         buttons: {
           confirm: {
             btnClass: "btn-orange",
@@ -877,7 +879,7 @@ $res = mysqli_query($conn, $sql);
                 if (this.readyState == 4 && this.status == 200) {
                   $.alert({
                     title: 'Success',
-                    content: 'inventory successfully recovered!',
+                    content: 'Equipment successfully recovered!',
                     buttons: {
                       ok: {
                         text: 'OK',
@@ -963,6 +965,55 @@ $res = mysqli_query($conn, $sql);
         }
       });
     }
+
+    // Getting deleted itms
+    var delItems;
+    $.get("./get_deleted.php", function(res) {
+      delItems = JSON.parse(res);
+    });
+
+    // Searching deleted items
+    $("#search-delete").on("keyup", function() {
+      let val = $(this).val();
+      let data = delItems.filter(row => row.inventory_name.toUpperCase().includes(val.toUpperCase()));
+
+      if(val == "") {
+        $("#deletetbody").empty();
+        delItems.forEach(row => {
+          let html = `
+            <tr>
+              <td>${row.inventory_name}</td>
+              <td>${row.inventory_category}</td>
+              <td>${row.date_deleted}</td>
+              <td>${row.time_deleted}</td>
+              <td>${row.admin_delete}</td>
+              <td>
+                <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Recover ${row.inventory_name}" class="fas fa-undo mx-2" data-id="${row.inventory_id}" onclick="recover(this)"></i>
+              </td>
+            </tr>
+          `;
+
+          $("#deletetbody").append(html);
+        });
+      } else {
+        $("#deletetbody").empty();
+        data.forEach(row => {
+          let html = `
+            <tr>
+              <td>${row.inventory_name}</td>
+              <td>${row.inventory_category}</td>
+              <td>${row.date_deleted}</td>
+              <td>${row.time_deleted}</td>
+              <td>${row.admin_delete}</td>
+              <td>
+                <i style="cursor: pointer; color:green; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Recover ${row.inventory_name}" class="fas fa-undo mx-2" data-id="${row.inventory_id}" onclick="recover(this)"></i>
+              </td>
+            </tr>
+          `;
+          $("#deletetbody").append(html);
+        });
+      }
+    });
   </script>
 </body>
 </html>
