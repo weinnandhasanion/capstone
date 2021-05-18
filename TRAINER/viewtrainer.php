@@ -10,4 +10,8 @@ $res = mysqli_query($conn, $sql);
 if($row = mysqli_fetch_assoc($res)) {
   echo json_encode($row);
 }
+
 ?>
+
+
+
