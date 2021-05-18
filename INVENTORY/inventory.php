@@ -514,7 +514,9 @@ $res = mysqli_query($conn, $sql);
               <tbody id='deletetbody'>
                 <?php
                 /* code for display data  AND date_deleted IS NOT NULL */
-                $sql = "SELECT * FROM inventory WHERE inventory_status = 'deleted' ORDER BY  date_deleted DESC, time_deleted DESC";
+                $sql = "SELECT i.*, c.category_name FROM inventory AS i
+                  INNER JOIN category AS c ON i.category_id = c.category_id
+                  WHERE i.inventory_status = 'deleted' ORDER BY i.date_deleted DESC, i.time_deleted DESC";
                 $result = mysqli_query($conn, $sql);
                 $resultCheck = mysqli_num_rows($result);
 
@@ -529,7 +531,7 @@ $res = mysqli_query($conn, $sql);
                 ?>
                     <tr>
                       <td><?php echo $row["inventory_name"] ?></td>
-                      <td><?php echo $row["inventory_category"] ?></td>
+                      <td><?php echo $row["category_name"] ?></td>
                       <td><?php echo $resultDelete ?></td>
                       <td><?php echo $time_Deleted ?></td>
                       <td><?php echo $row["admin_delete"] ?></td>
