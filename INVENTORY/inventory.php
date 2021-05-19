@@ -170,7 +170,7 @@ $res = mysqli_query($conn, $sql);
         <div class="card-body d-sm-flex justify-content-between">
           <h4 class="mb-1 mb-sm-1 pt-1">
             <a data-toggle="modal" data-target="#add"><i style="color:#DF3A01; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Add New Item" class="fas fa-plus"></i></a>
-            <a data-toggle="modal" data-target="#add-category"><i style="font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Add New Category" class="fas fa-folder-plus mr-2 text-success"></i></a>
+            <a data-toggle="modal" data-target="#add-category"><i style="color:#DF3A01; font-size: 25px;" data-toggle="tooltip" data-placement="top" title="Add New Category" class="fas fa-folder-plus mr-2"></i></a>
             Inventory
           </h4>
           <form action="#">
@@ -214,6 +214,7 @@ $res = mysqli_query($conn, $sql);
                 <th style="text-align: center">Category Name</th>
                 <th style="text-align: center">Date Added</th>
                 <th style="text-align: center">Action</th>
+                <th style="text-align: center">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -232,6 +233,12 @@ $res = mysqli_query($conn, $sql);
                   class="fas fa-trash text-danger" data-id="<?= $row["category_id"] ?>"
                   data-toggle="modal" data-target="#regular_update"
                   onclick="deleteCategory(this)"></i>
+                </td>
+                <td>
+                  <i style="cursor: pointer; font-size: 20px;"
+                  class="fas fa-eraser text-danger" data-id="<?= $row["category_id"] ?>"
+                  data-toggle="modal" data-target="#regular_update"
+                  onclick="deleteItemCategory(this)"></i>
                 </td>
               </tr>
               <?php
@@ -945,6 +952,43 @@ $res = mysqli_query($conn, $sql);
                 content: function () {
                   var self = this;
                   $.get("./delete_category.php?id=" + id, function (res) {
+                    if(JSON.parse(res) == "success") {
+                      self.setTitle("Success");
+                      self.setContent("Successfully deleted category.");
+                      self.setType("green");
+                      self.backgroundDismiss = function () {
+                        window.location.reload();
+                      }
+                    } else {
+                      self.setTitle("Error");
+                      self.setContent(JSON.parse(res));
+                      self.setType("red");
+                    }
+                  });
+                }
+              });
+            }
+          }
+        }
+      });
+    }
+    function deleteItemCategory(el) {
+      let id = el.getAttribute("data-id");
+
+      $.confirm({
+        title: "Delete?",
+        content: "Are you sure you want to delete all items in this category?",
+        closeIcon: true,
+        buttons: {
+          yes: {
+            btnClass: "btn-danger",
+            action: function () {
+              $.dialog({
+                closeIcon: false,
+                backgroundDismiss: true,
+                content: function () {
+                  var self = this;
+                  $.get("./deleteitem_category.php?id=" + id, function (res) {
                     if(JSON.parse(res) == "success") {
                       self.setTitle("Success");
                       self.setContent("Successfully deleted category.");

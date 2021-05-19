@@ -4,11 +4,12 @@ session_start();
 
 $id = $_GET["id"];
 
-$sql = "SELECT i.*, c.category_id
+$sql = "SELECT i.*, c.category_name
   FROM inventory AS i
   INNER JOIN category AS c
   ON i.category_id = c.category_id
   WHERE i.inventory_status = 'notdeleted'
+  AND i.inventory_id = $id
   ORDER BY i.inventory_id DESC";
 $res = mysqli_query($conn, $sql);
 
