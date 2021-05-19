@@ -20,96 +20,114 @@ if ($category == "All") {
   $reportTitle = "List of Working Inventory Items";
   if ($timespan == "Custom") {
     $reportText = "Generating reports for working items from " . date("F d, Y", strtotime($fromDate)) . " to " . date("F d, Y", strtotime($toDate)) . "...";
-    $sql = "SELECT * FROM inventory
-              WHERE date_added >= '$fromDate'
-               AND inventory_damage < inventory_qty
-              AND date_added <= '$toDate' AND inventory_status = 'notdeleted'";
+    $sql = "SELECT i.*, c.category_name FROM inventory AS i
+      INNER JOIN category AS c
+      ON i.category_id = c.category_id
+      WHERE i.date_added >= '$fromDate'
+      AND i.inventory_damage < i.inventory_qty
+      AND i.date_added <= '$toDate' AND i.inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
   } else if ($timespan == "Today") {
     $reportText = "Generating reports for working items today, " . date("F d, Y") . "...";
     $today = date("Y-m-d");
-    $sql = "SELECT * FROM inventory
-              WHERE date_added = '$today'
- AND inventory_status = 'notdeleted'";
+    $sql = "SELECT i.*, c.category_name FROM inventory AS i
+      INNER JOIN category AS c
+      ON i.category_id = c.category_id
+      AND i.inventory_damage < i.inventory_qty
+      WHERE i.date_added = '$today'
+      AND i.inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
   } else if ($timespan == "This week") {
     $today = date("Y-m-d");
     $lastWeek = date("Y-m-d", strtotime($today . "- 7 days"));
     $reportText = "Generating reports for working items this week (" . date("F d, Y", strtotime($lastWeek)) . " to " . date("F d, Y") . ")...";
-    $sql = "SELECT * FROM inventory
-              WHERE date_added >= '$lastWeek'
- AND inventory_damage < inventory_qty
-              AND date_added <= '$today' AND inventory_status = 'notdeleted'";
+    $sql = "SELECT i.*, c.category_name FROM inventory AS i
+      INNER JOIN category AS c
+      ON i.category_id = c.category_id
+      WHERE i.date_added >= '$lastWeek'
+      AND i.inventory_damage < i.inventory_qty
+      AND i.date_added <= '$today' AND i.inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
   } else if ($timespan == "This month") {
     $monthStart = date("Y-m-01");
     $monthEnd = date("Y-m-t");
     $reportText = "Generating reports for working items this month of " . date("F") . "...";
-    $sql = "SELECT * FROM inventory
-              WHERE date_added >= '$monthStart'
- AND inventory_damage < inventory_qty
-              AND date_added <= '$monthEnd' AND inventory_status = 'notdeleted'";
+    $sql = "SELECT i.*, c.category_name FROM inventory AS i
+      INNER JOIN category AS c
+      ON i.category_id = c.category_id
+      WHERE i.date_added >= '$monthStart'
+      AND i.inventory_damage < i.inventory_qty
+      AND i.date_added <= '$monthEnd' AND i.inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
   } else if ($timespan == "This year") {
     $yearStart = date("Y-01-01");
     $yearEnd = date("Y-12-31");
     $reportText = "Generating reports for working items this year (" . date("Y") . ")...";
-    $sql = "SELECT * FROM inventory
-              WHERE date_added >= '$yearStart'
- AND inventory_damage < inventory_qty
-              AND date_added <= '$yearEnd' AND inventory_status = 'notdeleted'";
+    $sql = "SELECT i.*, c.category_name FROM inventory AS i
+      INNER JOIN category AS c
+      ON i.category_id = c.category_id
+      WHERE i.date_added >= '$yearStart'
+      AND i.inventory_damage < i.inventory_qty
+      AND i.date_added <= '$yearEnd' AND i.inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
   } else {
     $reportText = "Generating reports for working items since all of time...";
-    $sql = "SELECT * FROM inventory WHERE inventory_status = 'notdeleted' AND inventory_damage < inventory_qty";
+    $sql = "SELECT i.*, c.category_name FROM inventory AS i
+      INNER JOIN category AS c
+      ON i.category_id = c.category_id
+      WHERE i.inventory_status = 'notdeleted' AND i.inventory_damage < inventory_qty";
     $res = mysqli_query($conn, $sql);
   }
 } else {
-  $reportTitle = "List of Working $category Items";
+  $sql2 = "SELECT category_name FROM category WHERE category_id = $category";
+  $res2 = mysqli_query($conn, $sql2);
+  $row2 = mysqli_fetch_assoc($res2);
+  $category_name = $row2["category_name"];
+  $reportTitle = "List of Working $category_name Items";
   if ($timespan == "Custom") {
-    $reportText = "Generating reports for working $category items from " . date("F d, Y", strtotime($fromDate)) . " to " . date("F d, Y", strtotime($toDate)) . "...";
+    $reportText = "Generating reports for working $category_name items from " . date("F d, Y", strtotime($fromDate)) . " to " . date("F d, Y", strtotime($toDate)) . "...";
     $sql = "SELECT * FROM inventory
                 WHERE date_added >= '$fromDate'
-                AND inventory_category = '$category' AND inventory_damage < inventory_qty
+                AND category_id = '$category' AND inventory_damage < inventory_qty
                 AND date_added <= '$toDate' AND inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
   } else if ($timespan == "Today") {
-    $reportText = "Generating reports for working $category items today, " . date("F d, Y") . "...";
+    $reportText = "Generating reports for working $category_name items today, " . date("F d, Y") . "...";
     $today = date("Y-m-d");
     $sql = "SELECT * FROM inventory
                 WHERE date_added = '$today'
-                AND inventory_category = '$category' AND inventory_status = 'notdeleted' AND inventory_damage < inventory_qty";
+                AND category_id = '$category' AND inventory_status = 'notdeleted' AND inventory_damage < inventory_qty";
     $res = mysqli_query($conn, $sql);
   } else if ($timespan == "This week") {
     $today = date("Y-m-d");
     $lastWeek = date("Y-m-d", strtotime($today . "- 7 days"));
-    $reportText = "Generating reports for working $category items this week (" . date("F d, Y", strtotime($lastWeek)) . " to " . date("F d, Y") . ")...";
+    $reportText = "Generating reports for working $category_name items this week (" . date("F d, Y", strtotime($lastWeek)) . " to " . date("F d, Y") . ")...";
     $sql = "SELECT * FROM inventory
                 WHERE date_added >= '$lastWeek'
-                AND inventory_category = '$category'
+                AND category_id = '$category'
                 AND date_added <= '$today' AND inventory_status = 'notdeleted' AND inventory_damage < inventory_qty";
     $res = mysqli_query($conn, $sql);
   } else if ($timespan == "This month") {
     $monthStart = date("Y-m-01");
     $monthEnd = date("Y-m-t");
-    $reportText = "Generating reports for working $category items this month of " . date("F") . "...";
+    $reportText = "Generating reports for working $category_name items this month of " . date("F") . "...";
     $sql = "SELECT * FROM inventory
                 WHERE date_added >= '$monthStart'
-                AND inventory_category = '$category'
+                AND category_id = '$category'
                 AND date_added <= '$monthEnd' AND inventory_status = 'notdeleted' AND inventory_damage < inventory_qty";
     $res = mysqli_query($conn, $sql);
   } else if ($timespan == "This year") {
     $yearStart = date("Y-01-01");
     $yearEnd = date("Y-12-31");
-    $reportText = "Generating reports for working $category items this year (" . date("Y") . ")...";
+    $reportText = "Generating reports for working $category_name items this year (" . date("Y") . ")...";
     $sql = "SELECT * FROM inventory
                 WHERE date_added >= '$yearStart'
-                AND inventory_category = '$category'
+                AND category_id = '$category'
                 AND date_added <= '$yearEnd' AND inventory_status = 'notdeleted' AND inventory_damage < inventory_qty";
     $res = mysqli_query($conn, $sql);
   } else {
-    $reportText = "Generating reports for working $category items since all of time...";
-    $sql = "SELECT * FROM inventory WHERE inventory_category = '$category' AND inventory_damage < inventory_qty AND inventory_status = 'notdeleted'";
+    $reportText = "Generating reports for working $category_name items since all of time...";
+    $sql = "SELECT * FROM inventory WHERE category_id = '$category' AND inventory_damage < inventory_qty AND inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
   }
 }
@@ -125,11 +143,14 @@ if ($category == "All") {
             $row["inventory_working"] = 0;
         }
         $row["inventory_working"] = $row["inventory_qty"] - $row["inventory_damage"];
+        if(isset($category_name)) {
+          $row["category_name"] = $category_name;
+        }
         $data[] = $row;
       }
     }
     $labels = array("Item ID", "Name", "Category", "Quantity","Number of Working");
-    $rowLabels = array("inventory_id", "inventory_name", "inventory_category", "inventory_qty","inventory_working");
+    $rowLabels = array("inventory_id", "inventory_name", "category_name", "inventory_qty","inventory_working");
     
     $object = (object) [
       'data' => $data,

@@ -19,14 +19,14 @@ if ($timespan == "Custom") {
 if ($category == "All") {
   $reportTitle = "List of Inventory Items";
   if ($timespan == "Custom") {
-    $reportText = "Generating reports for  weight inventory  from " . date("F d, Y", strtotime($fromDate)) . " to " . date("F d, Y", strtotime($toDate)) . "...";
+    $reportText = "Generating reports for inventory from " . date("F d, Y", strtotime($fromDate)) . " to " . date("F d, Y", strtotime($toDate)) . "...";
     $sql = "SELECT * FROM inventory
               WHERE date_added >= '$fromDate'
 
               AND date_added <= '$toDate' AND inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
   } else if ($timespan == "Today") {
-    $reportText = "Generating reports for  weight inventory  today, " . date("F d, Y") . "...";
+    $reportText = "Generating reports for inventory today, " . date("F d, Y") . "...";
     $today = date("Y-m-d");
     $sql = "SELECT * FROM inventory
               WHERE date_added = '$today'
@@ -35,7 +35,7 @@ if ($category == "All") {
   } else if ($timespan == "This week") {
     $today = date("Y-m-d");
     $lastWeek = date("Y-m-d", strtotime($today . "- 7 days"));
-    $reportText = "Generating reports for  weight inventory  this week (" . date("F d, Y", strtotime($lastWeek)) . " to " . date("F d, Y") . ")...";
+    $reportText = "Generating reports for inventory this week (" . date("F d, Y", strtotime($lastWeek)) . " to " . date("F d, Y") . ")...";
     $sql = "SELECT * FROM inventory
               WHERE date_added >= '$lastWeek'
 
@@ -44,7 +44,7 @@ if ($category == "All") {
   } else if ($timespan == "This month") {
     $monthStart = date("Y-m-01");
     $monthEnd = date("Y-m-t");
-    $reportText = "Generating reports for  weight inventory  this month of " . date("F") . "...";
+    $reportText = "Generating reports for inventory this month of " . date("F") . "...";
     $sql = "SELECT * FROM inventory
               WHERE date_added >= '$monthStart'
 
@@ -53,14 +53,14 @@ if ($category == "All") {
   } else if ($timespan == "This year") {
     $yearStart = date("Y-01-01");
     $yearEnd = date("Y-12-31");
-    $reportText = "Generating reports for  weight inventory  this year (" . date("Y") . ")...";
+    $reportText = "Generating reports for inventory this year (" . date("Y") . ")...";
     $sql = "SELECT * FROM inventory
               WHERE date_added >= '$yearStart'
 
               AND date_added <= '$yearEnd' AND inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
   } else {
-    $reportText = "Generating reports for  weight inventory  since all of time...";
+    $reportText = "Generating reports for inventory since all of time...";
     $sql = "SELECT * FROM inventory WHERE inventory_status = 'notdeleted'";
     $res = mysqli_query($conn, $sql);
   }
@@ -123,13 +123,12 @@ $data = array();
 if ($res) {
   while ($row = mysqli_fetch_assoc($res)) {
     $sql = "SELECT category_name FROM category WHERE category_id = ". $row["category_id"];
-    $res = mysqli_query($conn, $sql);
-    $row2 = mysqli_fetch_assoc($res);
+    $res2 = mysqli_query($conn, $sql);
+    $row2 = mysqli_fetch_assoc($res2);
     $row["category_id"] = $row2["category_name"];
     $row["date_added"] = date("M d, Y", strtotime($row["date_added"]));
     if ($row["inventory_damage"] == null) {
       $row["inventory_damage"] = 0;
-      $row["category_id"] = $category_name;
     }
     $row["inventory_working"] = $row["inventory_qty"] - $row["inventory_damage"];
     $data[] = $row;

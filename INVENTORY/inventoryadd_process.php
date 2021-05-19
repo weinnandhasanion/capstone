@@ -40,8 +40,8 @@ if (isset($_FILES["image"])) {
       echo json_encode("Item description must not exceed 100 characters.");
     } else {
       if (preg_match('/^[0-9 a-zA-Z 0-9]+$/', $inventory_name)) {
-        $sql = "INSERT INTO `inventory` ( inventory_name,inventory_qty,category_id,inventory_description,date_added, image_pathname)
-      VALUES ( '$inventory_name', '$inventory_qty', '$inventory_category', '$inventory_description', '$date_added', '" . $_FILES["image"]["name"] . "')";
+        $sql = "INSERT INTO `inventory` ( inventory_name,inventory_qty,inventory_damage,category_id,inventory_description,date_added, image_pathname)
+      VALUES ( '$inventory_name', '$inventory_qty', 0, '$inventory_category', '$inventory_description', '$date_added', '" . $_FILES["image"]["name"] . "')";
 
         $query_run = mysqli_query($conn, $sql);
 
@@ -132,8 +132,8 @@ if (isset($_FILES["image"])) {
     echo json_encode("Item description must not exceed 100 characters.");
   } else {
     if (preg_match('/^[0-9 a-zA-Z 0-9]+$/', $inventory_name)) {
-      $sql = "INSERT INTO `inventory` ( inventory_name,inventory_qty,category_id,inventory_description,date_added)
-      VALUES ( '$inventory_name', '$inventory_qty', '$inventory_category', '$inventory_description', '$date_added')";
+      $sql = "INSERT INTO `inventory` ( inventory_name,inventory_qty,inventory_damage,category_id,inventory_description,date_added)
+      VALUES ( '$inventory_name', '$inventory_qty', 0, '$inventory_category', '$inventory_description', '$date_added')";
 
       $query_run = mysqli_query($conn, $sql);
 
